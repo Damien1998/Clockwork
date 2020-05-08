@@ -99,6 +99,15 @@ public class Player : MonoBehaviour
         freeToPickup = false;
     }
 
+    public void ClearItem()
+    {
+        //Resets the state of the player-held item  
+        droppedItemActivator = null;
+        itemSprite.sprite = null;
+        itemStateSprite.sprite = null;
+        carriesItem = false;
+    }
+
     //Picks up the specified item
     public void PickupItem(Sprite itemImage, Sprite itemState, Activator itemToPickup)
     {
