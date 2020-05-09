@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Refactoring is done! You may enter safely
 public class WorkbenchPost : MonoBehaviour
 {
     public Activator item;

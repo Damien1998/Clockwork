@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Refactoring is done! You may enter safely
 public class CheckoutTable : MonoBehaviour
 {
     public Activator watch;
@@ -10,7 +11,7 @@ public class CheckoutTable : MonoBehaviour
     public Player[] interactingPlayer;
     public bool pickedUp;
     public int watchID;
-    public ComponentList cl;
+    public ComponentList watchComponentList;
 
     // Start is called before the first frame update
     void Start()
@@ -26,85 +27,60 @@ public class CheckoutTable : MonoBehaviour
         //Generate watch
         if (watch == null && Input.GetKeyDown("return"))
         {
-            Debug.Log("fdsfs");
             watchID = Random.Range(0, 5);
             watch = Instantiate(GameManager.instance.items[watchID], transform.position, transform.rotation);
-            //watch.SetChildState(false);
             pickedUp = false;
         }
 
         if (interactingPlayer[0] != null)
         {
-            
-            //Pickup watch
-            if(!pickedUp && watch != null && Input.GetButtonDown("Pickup" + interactingPlayer[0].playerNumber) && !interactingPlayer[0].carriesItem && interactingPlayer[0].freeToPickup)
-            {
-                interactingPlayer[0].droppedItemActivator = watch;
-                interactingPlayer[0].carriesItem = true;
-                interactingPlayer[0].freeToPickup = false;
-                interactingPlayer[0].itemSprite.sprite = watch.child.itemImage;
-                interactingPlayer[0].itemStateSprite.sprite = watch.child.stateSprite.sprite;
-                watchSlot.sprite = watch.child.itemImage;
-                watch.SetChildState(false);
-                pickedUp = true;
-            }
-            //See watch checklist
-            if (watch != null && Input.GetButtonDown("Action" + interactingPlayer[0].playerNumber) && cl.transform.position != new Vector3(cl.pos.x, cl.pos.y))
-            {
-                Debug.Log("hfugufgauf");
-                cl.watch = watch.child.GetComponent<Watch>();
-                cl.Activate();
-            }
-            if (watch != null && Input.GetButtonDown("Action" + interactingPlayer[0].playerNumber) && cl.transform.position == new Vector3(cl.pos.x, cl.pos.y))
-            {
-                cl.Deactivate();
-            }
-
-            //Return fixed watch
-            if (pickedUp && watch != null && Input.GetButtonDown("Pickup" + interactingPlayer[0].playerNumber) && interactingPlayer[0].carriesItem)
-            {
-                if(interactingPlayer[0].droppedItemActivator.child.itemID == watchID && !interactingPlayer[0].droppedItemActivator.child.broken)
-                {
-                    interactingPlayer[0].droppedItemActivator = null;
-                    interactingPlayer[0].itemSprite.sprite = null;
-                    interactingPlayer[0].itemStateSprite.sprite = null;
-                    interactingPlayer[0].carriesItem = false;
-                    interactingPlayer[0].freeToPickup = false;
-                    watchSlot.sprite = null;
-                    watch = null;
-                }
-            }
+            UseCheckoutTable(0);           
         }
         if (interactingPlayer[1] != null)
         {
+            UseCheckoutTable(1);
+        }
+    }
 
-            //Pickup watch
-            if (!pickedUp && watch != null && Input.GetButtonDown("Pickup" + interactingPlayer[1].playerNumber) && !interactingPlayer[1].carriesItem && interactingPlayer[1].freeToPickup)
-            {
-                interactingPlayer[1].droppedItemActivator = watch;
-                interactingPlayer[1].carriesItem = true;
-                interactingPlayer[1].freeToPickup = false;
-                interactingPlayer[1].itemSprite.sprite = watch.child.itemImage;
-                interactingPlayer[1].itemStateSprite.sprite = watch.child.stateSprite.sprite;
-                watchSlot.sprite = watch.child.itemImage;
-                watch.SetChildState(false);
-                pickedUp = true;
-            }
-            //See watch checklist
+    private void UseCheckoutTable(int playerID)
+    {
+        if (!pickedUp && watch != null 
+            && Input.GetButtonDown("Pickup" + interactingPlayer[playerID].playerNumber) 
+            && !interactingPlayer[playerID].carriesItem 
+            && interactingPlayer[playerID].freeToPickup)
+        {
+            interactingPlayer[playerID].PickupItem(watch.child.itemImage, watch.child.stateSprite.sprite, watch);           
+            watchSlot.sprite = watch.child.itemImage;
+            watch.SetChildState(false);
+            pickedUp = true;
+        }
 
-            //Return fixed watch
-            if (pickedUp && watch != null && Input.GetButtonDown("Pickup" + interactingPlayer[1].playerNumber) && interactingPlayer[1].carriesItem)
+        //See watch checklist
+        if (watch != null 
+            && Input.GetButtonDown("Action" + interactingPlayer[playerID].playerNumber) 
+            && watchComponentList.transform.position != new Vector3(watchComponentList.pos.x, watchComponentList.pos.y))
+        {
+            watchComponentList.watch = watch.child.GetComponent<Watch>();
+            watchComponentList.Activate();
+        }
+        if (watch != null 
+            && Input.GetButtonDown("Action" + interactingPlayer[0].playerNumber) 
+            && watchComponentList.transform.position == new Vector3(watchComponentList.pos.x, watchComponentList.pos.y))
+        {
+            watchComponentList.Deactivate();
+        }
+
+        //Return fixed watch
+        if (pickedUp && watch != null 
+            && Input.GetButtonDown("Pickup" + interactingPlayer[playerID].playerNumber) 
+            && interactingPlayer[playerID].carriesItem)
+        {
+            if (interactingPlayer[playerID].droppedItemActivator.child.itemID == watchID 
+                && !interactingPlayer[playerID].droppedItemActivator.child.broken)
             {
-                if (interactingPlayer[1].droppedItemActivator.child.itemID == watchID && !interactingPlayer[1].droppedItemActivator.child.broken)
-                {
-                    interactingPlayer[1].droppedItemActivator = null;
-                    interactingPlayer[1].itemSprite.sprite = null;
-                    interactingPlayer[1].itemStateSprite.sprite = null;
-                    interactingPlayer[1].carriesItem = false;
-                    interactingPlayer[1].freeToPickup = false;
-                    watchSlot.sprite = null;
-                    watch = null;
-                }
+                interactingPlayer[playerID].ClearItem();
+                watchSlot.sprite = null;
+                watch = null;
             }
         }
     }
@@ -134,7 +110,7 @@ public class CheckoutTable : MonoBehaviour
         {
             interactingPlayer[1] = null;
         }
-        cl.Deactivate();
+        watchComponentList.Deactivate();
         Debug.Log("Item odkolidowuje");
     }
 }

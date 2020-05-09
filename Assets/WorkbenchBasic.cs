@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+//Refactoring is done! You may enter safely
 public class WorkbenchBasic : MonoBehaviour
 {
     public Activator[] item;

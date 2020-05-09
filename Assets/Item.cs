@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This place is an incomprehensible mess. Abandon all hope, ye who enter here.
 public class Item : MonoBehaviour
 {
     //State markers

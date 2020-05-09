@@ -6,7 +6,7 @@ using System.Linq;
 public class Workbench : MonoBehaviour
 {
     //This code is outdated and filled with ancient, forbidden knowledge
-    //Ye fool, do not venture further
+    //Do not venture any further
 
     public int type;
     public Activator[] item;

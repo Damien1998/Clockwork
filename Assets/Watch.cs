@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This place is an incomprehenisble mess. Abandon all hope, ye who enter here.
 public class Watch : Item
 {
     public bool casingBroken, mechanismBroken, hasDecor;
