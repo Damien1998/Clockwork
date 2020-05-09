@@ -5,6 +5,9 @@ using System.Linq;
 
 public class Workbench : MonoBehaviour
 {
+    //This code is outdated and filled with ancient, forbidden knowledge
+    //Do not venture any further
+
     public int type;
     public Activator[] item;
     public bool playerCollided;

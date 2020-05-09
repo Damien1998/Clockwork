@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//This place is an incomprehensible mess. Abandon all hope, ye who enter here.
 public class ComponentList : MonoBehaviour
 {
     public Watch watch;

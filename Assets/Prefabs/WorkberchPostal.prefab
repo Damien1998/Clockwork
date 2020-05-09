@@ -69,7 +69,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -92,8 +92,8 @@ GameObject:
   - component: {fileID: 1985302574302679731}
   - component: {fileID: 1985302574302679730}
   - component: {fileID: 1985302574302679629}
-  - component: {fileID: 1985302574302679628}
   - component: {fileID: 1985302574302679631}
+  - component: {fileID: 7873512091968502979}
   m_Layer: 0
   m_Name: WorkberchPostal
   m_TagString: Untagged
@@ -129,7 +129,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.01565805}
+  m_Offset: {x: -1.2383695, y: -0.522383}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -140,7 +140,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.26, y: 1.0618477}
+  m_Size: {x: 6.031193, y: 2.1379294}
   m_EdgeRadius: 0
 --- !u!61 &1985302574302679629
 BoxCollider2D:
@@ -155,7 +155,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.03523028}
+  m_Offset: {x: -0.075408936, y: -0.20932889}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -166,30 +166,8 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.35, y: 3.085198}
+  m_Size: {x: 1.2939844, y: 2.5960793}
   m_EdgeRadius: 0
---- !u!114 &1985302574302679628
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985302574302679630}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f5292f50d407e5418212353e1ddc571, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 3
-  item: []
-  playerCollided: 0
-  interactingPlayer: []
-  timerBaseShort: 3
-  timerBaseLong: 5
-  timer: -1
-  itemSlotsNumber: 0
-  itemSlots:
-  - {fileID: 1985302573462301947}
 --- !u!212 &1985302574302679631
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -229,7 +207,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fc2b18ea58b87f846a544029cc406e71, type: 3}
+  m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -237,6 +215,24 @@ SpriteRenderer:
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7873512091968502979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1985302574302679630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ccdf68d4d9f0cd408a17f155bf20274, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 0}
+  playerInRange: 0
+  interactingPlayer: []
+  timerBase: 5
+  timer: -1
+  itemSlot: {fileID: 1985302573462301947}
