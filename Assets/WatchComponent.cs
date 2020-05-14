@@ -33,13 +33,13 @@ public class WatchComponent : Item
     // Update is called once per frame
     void Update()
     {
-        if (!knownState) stateSprite.sprite = unknownImage;
-        else if (unfixable) stateSprite.sprite = unfixableImage;
-        else if (broken) stateSprite.sprite = brokenImage;
+        if (!knownState) stateSprite.sprite = GameManager.instance.unknownImage;
+        else if (unfixable) stateSprite.sprite = GameManager.instance.unfixableImage;
+        else if (broken) stateSprite.sprite = GameManager.instance.brokenImage2;
         else if (isEmpty) stateSprite.sprite = emptyImage;
-        else stateSprite.sprite = repairedImage;
+        else stateSprite.sprite = GameManager.instance.repairedImage;
 
-        if (playerCollided)
+        if (playerInRange)
         {
             if (interactingPlayer[0] != null)
             {

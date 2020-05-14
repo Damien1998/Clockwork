@@ -58,14 +58,15 @@ public class CheckoutTable : MonoBehaviour
         //See watch checklist
         if (watch != null 
             && Input.GetButtonDown("Action" + interactingPlayer[playerID].playerNumber) 
-            && watchComponentList.transform.position != new Vector3(watchComponentList.pos.x, watchComponentList.pos.y))
+            && !watchComponentList.componentList.activeInHierarchy)
         {
+            Debug.Log("AAAAAAAAAAAAAA");
             watchComponentList.watch = watch.child.GetComponent<Watch>();
             watchComponentList.Activate();
         }
-        if (watch != null 
+        else if (watch != null 
             && Input.GetButtonDown("Action" + interactingPlayer[0].playerNumber) 
-            && watchComponentList.transform.position == new Vector3(watchComponentList.pos.x, watchComponentList.pos.y))
+            && watchComponentList.componentList.activeInHierarchy)
         {
             watchComponentList.Deactivate();
         }
