@@ -8,6 +8,12 @@ public class GameManager : MonoBehaviour
     public Activator[] items;
     public static GameManager instance;
 
+    public Sprite repairedImage;
+    public Sprite brokenImage;
+    public Sprite unfixableImage;
+    public Sprite unknownImage;
+    public Sprite brokenImage2;
+
     public int minBrokenPieces = 1;
     public int maxBrokenPieces = 8;
 

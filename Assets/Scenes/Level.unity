@@ -261,6 +261,36 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 335662118423761821, guid: 7e29a53a9a76c3f48aad63fe1c8a483f,
+        type: 3}
+      propertyPath: brokenImage
+      value: 
+      objectReference: {fileID: 21300000, guid: b101fa9d9bc264c478e45ff4f5b5989a,
+        type: 3}
+    - target: {fileID: 335662118423761821, guid: 7e29a53a9a76c3f48aad63fe1c8a483f,
+        type: 3}
+      propertyPath: unfixableImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 706862c5c50162a47801f294e280133b,
+        type: 3}
+    - target: {fileID: 335662118423761821, guid: 7e29a53a9a76c3f48aad63fe1c8a483f,
+        type: 3}
+      propertyPath: repairedImage
+      value: 
+      objectReference: {fileID: 21300000, guid: 4a1c843fb750af3479c0b23312126593,
+        type: 3}
+    - target: {fileID: 335662118423761821, guid: 7e29a53a9a76c3f48aad63fe1c8a483f,
+        type: 3}
+      propertyPath: unknownImage
+      value: 
+      objectReference: {fileID: 21300000, guid: d0308379e3603ef4c9d46a19c90235d3,
+        type: 3}
+    - target: {fileID: 335662118423761821, guid: 7e29a53a9a76c3f48aad63fe1c8a483f,
+        type: 3}
+      propertyPath: brokenImage2
+      value: 
+      objectReference: {fileID: 21300000, guid: 31a4134c87e8fbb45aebf7d394c608fc,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7e29a53a9a76c3f48aad63fe1c8a483f, type: 3}
 --- !u!1 &220573006
@@ -1523,20 +1553,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   watch: {fileID: 0}
-  bg: {fileID: 220573008}
-  componentList: {fileID: 1183991886}
+  background: {fileID: 220573008}
+  componentList: {fileID: 220573006}
   watchImg: {fileID: 1584109566}
   casingImg: {fileID: 1381590601}
-  mechImg1: {fileID: 2111447070}
+  mechImg:
+  - {fileID: 2111447070}
+  - {fileID: 1699521964}
   decorImg: {fileID: 244196644}
-  mechImg2: {fileID: 1699521964}
-  bitImg1: {fileID: 483328086}
-  bitImg2: {fileID: 5962046}
-  bitImg3: {fileID: 558239504}
-  boxImg: {fileID: 634826089}
-  beltImg: {fileID: 2068642318}
-  glassImg: {fileID: 1378738283}
-  pos: {x: 0, y: 0}
+  mechComponentImg:
+  - {fileID: 483328086}
+  - {fileID: 5962046}
+  - {fileID: 558239504}
+  casingComponentImg:
+  - {fileID: 634826089}
+  - {fileID: 2068642318}
+  - {fileID: 1378738283}
   nullImg: {fileID: 21300000, guid: 36c7df01602a85a4f913bfc800ef5b38, type: 3}
 --- !u!1001 &1174739763
 PrefabInstance:

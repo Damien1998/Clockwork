@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+//This code is outdated and filled with ancient, forbidden knowledge
+//Do not venture any further
 public class Workbench : MonoBehaviour
 {
-    //This code is outdated and filled with ancient, forbidden knowledge
-    //Do not venture any further
-
     public int type;
     public Activator[] item;
     public bool playerCollided;
