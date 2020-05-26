@@ -17,10 +17,10 @@ public class WatchComponent : Item
     // Start is called before the first frame update
     void Start()
     {
-        //TODO sorting component IDs
         interactingPlayer = new Player[2];
         interactingPlayer[0] = null;
         interactingPlayer[1] = null;
+
         itemImage = GetComponent<SpriteRenderer>().sprite;
         activator = GetComponentInParent<Activator>();
 
@@ -35,36 +35,15 @@ public class WatchComponent : Item
     {
         if (!knownState) stateSprite.sprite = GameManager.instance.unknownImage;
         else if (unfixable) stateSprite.sprite = GameManager.instance.unfixableImage;
-        else if (broken) stateSprite.sprite = GameManager.instance.brokenImage2;
+        else if (broken) stateSprite.sprite = GameManager.instance.complexBrokenImage;
         else if (isEmpty) stateSprite.sprite = emptyImage;
         else stateSprite.sprite = GameManager.instance.repairedImage;
 
         if (playerInRange)
         {
-            if (interactingPlayer[0] != null)
-            {
-                if (Input.GetButton("Pickup" + interactingPlayer[0].playerNumber) && !interactingPlayer[0].carriesItem && interactingPlayer[0].freeToPickup)
-                {
-                    interactingPlayer[0].carriesItem = true;
-                    interactingPlayer[0].freeToPickup = false;
-                    interactingPlayer[0].itemSprite.sprite = itemImage;
-                    interactingPlayer[0].itemStateSprite.sprite = stateSprite.sprite;
-                    interactingPlayer[0].droppedItemActivator = activator;
-                    gameObject.SetActive(false);
-                }
-            }
-            if (interactingPlayer[1] != null)
-            {
-                if (Input.GetButton("Pickup" + interactingPlayer[1].playerNumber) && !interactingPlayer[1].carriesItem && interactingPlayer[1].freeToPickup)
-                {
-                    interactingPlayer[1].carriesItem = true;
-                    interactingPlayer[1].freeToPickup = false;
-                    interactingPlayer[1].itemSprite.sprite = itemImage;
-                    interactingPlayer[1].itemStateSprite.sprite = stateSprite.sprite;
-                    interactingPlayer[1].droppedItemActivator = activator;
-                    gameObject.SetActive(false);
-                }
-            }
+            PickUp(0);
+
+            PickUp(1);
         }
     }
 }

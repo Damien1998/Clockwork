@@ -93,7 +93,7 @@ public class WorkbenchBasic : MonoBehaviour
     {
         if (interactingPlayer[playerID] != null)
         {
-            if (interactingPlayer[playerID] != null && item[0] != null)
+            if (item[0] != null)
             {
                 //While the player holds the input, the timer ticks down
                 if (Input.GetButton("Action" + interactingPlayer[playerID].playerNumber))
@@ -111,100 +111,18 @@ public class WorkbenchBasic : MonoBehaviour
                     //if the time is almost up
                     if (timer <= 0.3)
                     {
-                        Watch watch = item[0].child.GetComponent<Watch>();
-                        WatchComponent casing = item[0].child.GetComponent<WatchComponent>();
-
-                        //Is the item a watch
-                        if (watch != null)
-                        {
-                            FillSlot(1, watch.componentID[0], watch.casingBroken);
-                            item[1].child.GetComponent<WatchComponent>().componentBroken = new bool[] { watch.componentBroken[0], watch.componentBroken[1], watch.componentBroken[2] };
-                            item[1].child.knownState = true;
-
-                            FillSlot(2, 10, watch.mechanismBroken);
-                            item[2].child.GetComponent<WatchComponent>().componentBroken = new bool[] { watch.componentBroken[3], watch.componentBroken[4], watch.componentBroken[5] };
-                            item[2].child.GetComponent<WatchComponent>().componentID = watch.mechComponentID;
-                            item[2].child.GetComponent<WatchComponent>().componentExists = watch.hasMechComponent;                        
-                            item[2].child.knownState = true;
-
-                            if (watch.hasDecor)
-                            {
-                                FillSlot(0, watch.componentID[2], watch.componentBroken[6]);
-                            }
-                            else item[0] = null;
-                            DropItems();
-                        }
-                        //Is the item a casing
-                        if (item[0] != null && casing != null)
-                        {
-                            FillSlot(0, casing.componentID[0], casing.componentBroken[0]);
-                            FillSlot(1, casing.componentID[1], casing.componentBroken[1]);
-                            FillSlot(2, casing.componentID[2], casing.componentBroken[2]);
-                            DropItems();
-                        }
+                        SearchRecipesBreak();
+                        DropItems();
                     }
                 }
             
                 //is the item to be combined (isn't broken)
                 else if (item[1] != null)
-                {
-                    int outputID = -1;
+                {                   
                     if (timer <= 0.3)
                     {
-                        //Is the first item a watch component
-                        if (item[0].child.itemID < 13)
-                        {
-                            //checking if all 5 watches can be assembled;
-                            if (item[2] == null)
-                            {
-                                SortItems(1);
-                                //Assemble silver watch
-                                if (item[0].child.itemID == 5 && item[1].child.itemID == 10) outputID = 0;
-                                //Assemble brass watch
-                                else if (item[0].child.itemID == 7 && item[1].child.itemID == 10) outputID = 2;
-                                //Assemble black watch
-                                else if (item[0].child.itemID == 9 && item[1].child.itemID == 10) outputID = 4;
-                            }
-                            else
-                            {
-                                //Sorting
-                                SortItems();
-                                //Assemble golden watch
-                                if (item[0].child.itemID == 6 && item[1].child.itemID == 10 && item[2].child.itemID == 11) outputID = 1;
-                                //Assemble blue watch
-                                if (item[0].child.itemID == 8 && item[1].child.itemID == 10 && item[2].child.itemID == 12) outputID = 3;
-                            }
-                        }
-                        //are all slots filled with casing components
-                        else if (item[2] != null)
-                        {
-                            //Sorting
-                            SortItems();
-                            if (item[0].child.itemID == 13 && item[1].child.itemID == 14 && item[2].child.itemID == 17) outputID = 5;
-                            else if (item[0].child.itemID == 15 && item[1].child.itemID == 16 && item[2].child.itemID == 17) outputID = 6;
-                            else if (item[0].child.itemID == 18 && item[1].child.itemID == 19 && item[2].child.itemID == 20) outputID = 7;
-                            else if (item[0].child.itemID == 21 && item[1].child.itemID == 22 && item[2].child.itemID == 24) outputID = 8;
-                            else if (item[0].child.itemID == 23 && item[1].child.itemID == 24 && item[2].child.itemID == 25) outputID = 9;
-                        }
-                        else DropItems();
-
-                        if (outputID != -1)
-                        {
-                            item[0] = Instantiate(GameManager.instance.items[outputID]);
-                            if (item[0].child.GetComponent<Watch>() != null)
-                            {
-                                item[0].child.GetComponent<Watch>().ResetComponents();
-                            }
-                            if (item[0].child.GetComponent<WatchComponent>() != null)
-                            {
-                                item[0].child.GetComponent<WatchComponent>().componentBroken = new bool[3];
-                            }
-                            item[0].child.broken = false;
-                            item[0].child.knownState = true;
-                            item[1] = null;
-                            item[2] = null;
-                            DropItems();
-                        }
+                        SearchRecipesCombine();
+                        DropItems();
                     }
                 }
             }
@@ -272,6 +190,98 @@ public class WorkbenchBasic : MonoBehaviour
             itemSlots[i].sprite = null;
         }
         timer = -1;
+    }
+
+    private void SearchRecipesCombine()
+    {
+        GameManager gameManager = GameManager.instance;
+
+        SortItems();
+
+        for(int i = 0; i < gameManager.basicRecipes.Length; i++)
+        {
+            int counter = 0;
+            for(int j = 0; j < 3; j++)
+            {
+                if ((item[j] != null && item[j].child.itemID == gameManager.basicRecipes[i].partID[j])
+                    ||(item[j] == null && gameManager.basicRecipes[i].partID[j] == -1))
+                {
+                    counter++;
+                }
+            }
+
+            if(counter == 3)
+            {
+                item[0] = Instantiate(gameManager.items[gameManager.basicRecipes[i].resultID]);
+                if (item[0].child.GetComponent<Watch>() != null)
+                {
+                    item[0].child.GetComponent<Watch>().ResetComponents();
+                }
+                if (item[0].child.GetComponent<WatchComponent>() != null)
+                {
+                    item[0].child.GetComponent<WatchComponent>().componentBroken = new bool[3];
+                }
+                item[0].child.broken = false;
+                item[0].child.knownState = true;
+                item[1] = null;
+                item[2] = null;
+            }
+        }
+    }
+
+    private void SearchRecipesBreak()
+    {
+        GameManager gameManager = GameManager.instance;
+
+        bool hasBeenUsed = false;
+
+        for (int i = 0; (i < gameManager.basicRecipes.Length && !hasBeenUsed); i++)
+        {
+            if(gameManager.basicRecipes[i].resultID == item[0].child.itemID)
+            {
+                hasBeenUsed = true;
+
+                Activator tempItem = item[0];
+                Watch watch = tempItem.child.GetComponent<Watch>();
+                WatchComponent casing = tempItem.child.GetComponent<WatchComponent>();
+
+                if(watch != null)
+                {
+                    FillSlot(0, gameManager.basicRecipes[i].partID[0], watch.casingBroken);
+                    item[0].child.GetComponent<WatchComponent>().componentBroken = new bool[] { watch.componentBroken[0], watch.componentBroken[1], watch.componentBroken[2] };
+                    item[0].child.knownState = true;
+
+                    FillSlot(1, gameManager.basicRecipes[i].partID[1], watch.mechanismBroken);
+                    item[1].child.GetComponent<WatchComponent>().componentBroken = new bool[] { watch.componentBroken[3], watch.componentBroken[4], watch.componentBroken[5] };
+                    item[1].child.GetComponent<WatchComponent>().componentID = watch.mechComponentID;
+                    item[1].child.GetComponent<WatchComponent>().componentExists = watch.hasMechComponent;
+                    item[1].child.knownState = true;
+
+                    if (gameManager.basicRecipes[i].partID[2] != -1)
+                    {
+                        FillSlot(2, gameManager.basicRecipes[i].partID[2], watch.componentBroken[6]);
+                    }
+                    else
+                    {
+                        item[2] = null;
+                    }
+                }
+                else if(casing != null)
+                {
+                    for(int j = 0; j < 3; j++)
+                    {
+                        if(gameManager.basicRecipes[i].partID[j] != -1)
+                        {
+                            FillSlot(j, gameManager.basicRecipes[i].partID[j], casing.componentBroken[j]);
+                        }
+                        else
+                        {
+                            item[j] = null;
+                        }
+                    }                  
+                }
+            }
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
