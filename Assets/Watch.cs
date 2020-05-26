@@ -5,17 +5,20 @@ using UnityEngine;
 //Refactoring is done! You may enter safely
 public class Watch : Item
 {
+    //
     public bool casingBroken, mechanismBroken, hasDecor;
     public bool[] componentBroken, hasMechComponent;
 
     public int[] componentOrder = new int[] { 0, 1, 2, 3, 4, 5, 6 };
     public int[] componentOrderNoDecor = new int[] { 0, 1, 2, 3, 4, 5 };
 
-    public int componentsBroken;
+    public int componentsToRepair;
     public int casingID;
     public int[] componentID;
+    //Mechanism component identificators
     public int[] mechComponentID;
 
+    //Don't turn this to true!!!
     public bool testMode;
 
     // Start is called before the first frame update
@@ -43,7 +46,7 @@ public class Watch : Item
 
         if (!knownState) stateSprite.sprite = GameManager.instance.unknownImage;
         else if (unfixable) stateSprite.sprite = GameManager.instance.unfixableImage;
-        else if (broken) stateSprite.sprite = GameManager.instance.brokenImage2;
+        else if (broken) stateSprite.sprite = GameManager.instance.complexBrokenImage;
         else stateSprite.sprite = GameManager.instance.repairedImage;
 
         if (playerInRange)
@@ -71,10 +74,10 @@ public class Watch : Item
         hasMechComponent = new bool[3];
         mechComponentID = new int[3];
 
-        componentsBroken = Random.Range(minBroken, maxBroken);
+        componentsToRepair = Random.Range(minBroken, maxBroken);
         Shuffle();
 
-        for(int i = 0; i < componentsBroken; i++)
+        for(int i = 0; i < componentsToRepair; i++)
         {
             if(hasDecor)
             {
