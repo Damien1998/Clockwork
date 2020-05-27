@@ -18,10 +18,12 @@ public class Player : MonoBehaviour
     public bool carriesItem;
         //Can the player pick up a new item. Mostly used to avoid the player dropping an item and instantly picking it up
     public bool freeToPickup = true;
+
         //Image of the currently held item
     public SpriteRenderer itemSprite;
         //Its state icon
     public SpriteRenderer itemStateSprite;
+
 
     //Private properties
 
@@ -41,7 +43,7 @@ public class Player : MonoBehaviour
     {
         //Initialising - fetching needed components
         animator = GetComponent<Animator>();
-        rigidBody = GetComponent<Rigidbody2D>();       
+        rigidBody = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -100,6 +102,7 @@ public class Player : MonoBehaviour
         freeToPickup = false;
     }
 
+    //Clears the currently held item
     public void ClearItem()
     {
         //Resets the state of the player-held item  

@@ -5,8 +5,11 @@ using System.Linq;
 
 //This code is outdated and filled with ancient, forbidden knowledge
 //Do not venture any further
+
+//Also, I needed to comment LITERALLY EVERYTHING out because of compiler errors. Lol.
 public class Workbench : MonoBehaviour
 {
+    /**
     public int type;
     public Activator[] item;
     public bool playerCollided;
@@ -825,4 +828,5 @@ public class Workbench : MonoBehaviour
         }
        
     }
+    **/
 }

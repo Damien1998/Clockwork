@@ -2039,6 +2039,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2141297325, guid: 67b7bf22fb51d814d8ace7acd2ff1225, type: 3}
+      propertyPath: timerBase
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 3408346832450855056, guid: 67b7bf22fb51d814d8ace7acd2ff1225,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2323,6 +2327,11 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 7526747224497750288, guid: 617997a7667f1bf4885497b1804b5971,
+        type: 3}
+      propertyPath: itemStateSprite
+      value: 
+      objectReference: {fileID: 2094029071}
     - target: {fileID: 7526747224497750289, guid: 617997a7667f1bf4885497b1804b5971,
         type: 3}
       propertyPath: m_Name
@@ -2530,6 +2539,16 @@ PrefabInstance:
       propertyPath: moveSpeed
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4127051505231375698, guid: cb158cbfebb64ef4c939e29a8fd45da7,
+        type: 3}
+      propertyPath: itemSprite
+      value: 
+      objectReference: {fileID: 1706368623}
+    - target: {fileID: 4127051505231375698, guid: cb158cbfebb64ef4c939e29a8fd45da7,
+        type: 3}
+      propertyPath: itemStateSprite
+      value: 
+      objectReference: {fileID: 1963935989}
     - target: {fileID: 4127051505231375699, guid: cb158cbfebb64ef4c939e29a8fd45da7,
         type: 3}
       propertyPath: m_Name
@@ -2710,6 +2729,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699521962}
   m_CullTransparentMesh: 0
+--- !u!212 &1706368623 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4127051504290439342, guid: cb158cbfebb64ef4c939e29a8fd45da7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1611838374}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1714423493
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2928,6 +2953,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5a8c13c37fb4fc04e840ca72c1990b59, type: 3}
+--- !u!212 &1963935989 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 4127051505751657688, guid: cb158cbfebb64ef4c939e29a8fd45da7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1611838374}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2068642316
 GameObject:
   m_ObjectHideFlags: 0
@@ -3001,6 +3032,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2068642316}
   m_CullTransparentMesh: 0
+--- !u!212 &2094029071 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 7526747224597454978, guid: 617997a7667f1bf4885497b1804b5971,
+    type: 3}
+  m_PrefabInstance: {fileID: 1575911534}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2111447068
 GameObject:
   m_ObjectHideFlags: 0
