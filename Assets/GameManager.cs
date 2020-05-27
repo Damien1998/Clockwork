@@ -76,11 +76,13 @@ public class GameManager : MonoBehaviour
     private void LoadRecipes()
     {
         basicRecipes = new Recipe[10];
+        //Five watches
         basicRecipes[0] = new Recipe(0, 5, 10, -1);
         basicRecipes[1] = new Recipe(1, 6, 10, 11);
         basicRecipes[2] = new Recipe(2, 7, 10, -1);
         basicRecipes[3] = new Recipe(3, 8, 10, 12);
         basicRecipes[4] = new Recipe(4, 9, 10, -1);
+        //Watch casings
         basicRecipes[5] = new Recipe(5, 13, 14, 17);
         basicRecipes[6] = new Recipe(6, 15, 16, 17);
         basicRecipes[7] = new Recipe(7, 18, 19, 20);

@@ -5,10 +5,12 @@ using UnityEngine;
 //Refactoring is done! You may enter safely
 public class WatchComponent : Item
 {
+    //Internal part states and IDs
     public bool[] componentBroken;
     public bool[] componentExists;
     public int[] componentID;
 
+    //For mechanisms
     public bool isEmpty;
     public int numberOfComponents;
 
@@ -17,6 +19,7 @@ public class WatchComponent : Item
     // Start is called before the first frame update
     void Start()
     {
+        //Multiplayer setup
         interactingPlayer = new Player[2];
         interactingPlayer[0] = null;
         interactingPlayer[1] = null;
@@ -33,6 +36,7 @@ public class WatchComponent : Item
     // Update is called once per frame
     void Update()
     {
+        //State sprites
         if (!knownState) stateSprite.sprite = GameManager.instance.unknownImage;
         else if (unfixable) stateSprite.sprite = GameManager.instance.unfixableImage;
         else if (broken) stateSprite.sprite = GameManager.instance.complexBrokenImage;

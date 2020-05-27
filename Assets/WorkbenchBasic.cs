@@ -6,23 +6,29 @@ using System.Linq;
 //Refactoring is done! You may enter safely
 public class WorkbenchBasic : MonoBehaviour
 {
+    //Item slots
     public Activator[] item;
+
     public bool playerInRange;
     public Player[] interactingPlayer;
 
+    //Workbench timer
     public float timerBase;
     public float timer;
-    private int itemSlotsNumber = 3;
+
+    //Item slot images
     public SpriteRenderer[] itemSlots;
+    private int itemSlotsNumber = 3;
 
     // Start is called before the first frame update
     void Start()
     {
+        //Multiplayer stuff
         interactingPlayer = new Player[2];
         interactingPlayer[0] = null;
         interactingPlayer[1] = null;
-        item = new Activator[itemSlotsNumber];
 
+        item = new Activator[itemSlotsNumber];
     }
 
     // Update is called once per frame
@@ -45,16 +51,16 @@ public class WorkbenchBasic : MonoBehaviour
     {
         if (interactingPlayer[playerID] != null)
         {
+            //If the player has an item in hand..
             if (Input.GetButton("Pickup" + interactingPlayer[playerID].playerNumber) 
                 && interactingPlayer[playerID].carriesItem 
                 && interactingPlayer[playerID].freeToPickup 
                 && interactingPlayer[playerID].droppedItemActivator.child.knownState)
             {
-                //timer = timerBase;
 
                 //Is the item valid for the basic workbench:
 
-                //1. Is there nothing on the table and the item is a broken watch or casing
+                //1. Is there nothing on the table and the item is a broken watch or casing?
                 if (item[0] == null 
                     && interactingPlayer[playerID].droppedItemActivator.child.itemID < 10 
                     && interactingPlayer[0].droppedItemActivator.child.broken)
@@ -93,6 +99,7 @@ public class WorkbenchBasic : MonoBehaviour
     {
         if (interactingPlayer[playerID] != null)
         {
+            //Is there anything on the table?
             if (item[0] != null)
             {
                 //While the player holds the input, the timer ticks down
@@ -105,21 +112,25 @@ public class WorkbenchBasic : MonoBehaviour
                     timer = timerBase;
                 }
 
-                //Is the item to be dissected
+                //Is the item to be dissected?
+                //All that needs to be checked is whether it is broken
                 if (item[0].child.broken)
                 {
                     //if the time is almost up
-                    if (timer <= 0.3)
+                    //This is probably not needed now that the workbenches are separated into different script files
+                    //TODO - see if the world breaks down once I change the argument to "timer <= 0"
+                    if (timer <= 0)
                     {
                         SearchRecipesBreak();
                         DropItems();
                     }
                 }
             
-                //is the item to be combined (isn't broken)
+                //Is the item to be combined (isn't broken)
+                //Adding a check for more than item means this part of the script doesn't run when not needed - with single items
                 else if (item[1] != null)
                 {                   
-                    if (timer <= 0.3)
+                    if (timer <= 0)
                     {
                         SearchRecipesCombine();
                         DropItems();
@@ -129,6 +140,7 @@ public class WorkbenchBasic : MonoBehaviour
         }            
     }
 
+    //There maybe I should add a way to fill slots without specifying the state of the item inside
     private void FillSlot(int slotID, int itemID, bool broken)
     {
         item[slotID] = Instantiate(GameManager.instance.items[itemID]);
@@ -136,6 +148,7 @@ public class WorkbenchBasic : MonoBehaviour
         item[slotID].SetChildState(false);
     }
 
+    //Sorts ALL items in the workbench
     private void SortItems()
     {
         Debug.Log("Sort!");
@@ -154,6 +167,7 @@ public class WorkbenchBasic : MonoBehaviour
         }
     }
 
+    //Sorts items up to a point - probably not needed
     private void SortItems(int lastSlot)
     {
         Debug.Log("Sort!");
@@ -175,6 +189,8 @@ public class WorkbenchBasic : MonoBehaviour
         }      
     }
 
+    //Drops everything. The area specified is implemented in an extremely clunky way by providing the direction in code
+    //TODO - making a better algorithm
     private void DropItems()
     {
         for (int i = 0; i < itemSlotsNumber; i++)
@@ -192,15 +208,22 @@ public class WorkbenchBasic : MonoBehaviour
         timer = -1;
     }
 
+    //Searches through all recipes to find one that combines all items on the workbench
     private void SearchRecipesCombine()
     {
         GameManager gameManager = GameManager.instance;
 
         SortItems();
 
+        //A loop through all basic workbench recipes
         for(int i = 0; i < gameManager.basicRecipes.Length; i++)
         {
             int counter = 0;
+            //A loop for all slots checking whether all of them match
+            //This is the reason all recipes must be sorted
+            //This makes the algorithm faster by 'a shitload'
+            //It's a mathematical term
+            //Cue flashbacks from algorithmics extra classes
             for(int j = 0; j < 3; j++)
             {
                 if ((item[j] != null && item[j].child.itemID == gameManager.basicRecipes[i].partID[j])
@@ -210,8 +233,10 @@ public class WorkbenchBasic : MonoBehaviour
                 }
             }
 
+            //If a matching recipe is found..
             if(counter == 3)
             {
+                //Fills the first slot with the recipe result and empties all other slots
                 item[0] = Instantiate(gameManager.items[gameManager.basicRecipes[i].resultID]);
                 if (item[0].child.GetComponent<Watch>() != null)
                 {
@@ -229,34 +254,45 @@ public class WorkbenchBasic : MonoBehaviour
         }
     }
 
+    //Searches through all recipes to find one that breaks down the item inside 
     private void SearchRecipesBreak()
     {
         GameManager gameManager = GameManager.instance;
 
+        //For making sure an item doesn't get broken down again
         bool hasBeenUsed = false;
 
+        //A loop that goes through all recipes until an item is broken down
         for (int i = 0; (i < gameManager.basicRecipes.Length && !hasBeenUsed); i++)
         {
+            //Shearching for the recipe for the item inside the first slot
             if(gameManager.basicRecipes[i].resultID == item[0].child.itemID)
             {
+                //Stops the loop from going after this iteration
                 hasBeenUsed = true;
 
+                //A temporary variable for storing the original item data
                 Activator tempItem = item[0];
+                //For ease of use
                 Watch watch = tempItem.child.GetComponent<Watch>();
                 WatchComponent casing = tempItem.child.GetComponent<WatchComponent>();
 
+                //Is the item a watch?
                 if(watch != null)
                 {
+                    //Fills the first slot with the casing and sets all part states
                     FillSlot(0, gameManager.basicRecipes[i].partID[0], watch.casingBroken);
                     item[0].child.GetComponent<WatchComponent>().componentBroken = new bool[] { watch.componentBroken[0], watch.componentBroken[1], watch.componentBroken[2] };
                     item[0].child.knownState = true;
 
+                    //Fills the second slot with the mechanism, sets all part states and data
                     FillSlot(1, gameManager.basicRecipes[i].partID[1], watch.mechanismBroken);
                     item[1].child.GetComponent<WatchComponent>().componentBroken = new bool[] { watch.componentBroken[3], watch.componentBroken[4], watch.componentBroken[5] };
                     item[1].child.GetComponent<WatchComponent>().componentID = watch.mechComponentID;
                     item[1].child.GetComponent<WatchComponent>().componentExists = watch.hasMechComponent;
                     item[1].child.knownState = true;
 
+                    //Fills the last slot with the decoration if needed
                     if (gameManager.basicRecipes[i].partID[2] != -1)
                     {
                         FillSlot(2, gameManager.basicRecipes[i].partID[2], watch.componentBroken[6]);
@@ -266,8 +302,10 @@ public class WorkbenchBasic : MonoBehaviour
                         item[2] = null;
                     }
                 }
+                //Is the item a casing?
                 else if(casing != null)
                 {
+                    //Fills all slots with casing components
                     for(int j = 0; j < 3; j++)
                     {
                         if(gameManager.basicRecipes[i].partID[j] != -1)
@@ -284,6 +322,7 @@ public class WorkbenchBasic : MonoBehaviour
         }
     }
 
+    //Searching for nearby players
     private void OnTriggerEnter2D(Collider2D collision)
     {
         playerInRange = true;

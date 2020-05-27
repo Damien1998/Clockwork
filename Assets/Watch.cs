@@ -5,17 +5,29 @@ using UnityEngine;
 //Refactoring is done! You may enter safely
 public class Watch : Item
 {
-    //
-    public bool casingBroken, mechanismBroken, hasDecor;
+    //bools for storing information on the state of parts or existence of parts
+    public bool casingBroken, mechanismBroken;
+    public bool hasDecor;
     public bool[] componentBroken, hasMechComponent;
 
+    /// <summary>
+    /// Used for shuffling broken components
+    /// 0 - 2 - Casing parts
+    /// 3 - 5 - Mechanism parts
+    /// 6 - Decoration
+    /// </summary>
     public int[] componentOrder = new int[] { 0, 1, 2, 3, 4, 5, 6 };
     public int[] componentOrderNoDecor = new int[] { 0, 1, 2, 3, 4, 5 };
 
+    //Amount of broken parts
     public int componentsToRepair;
+
+    //ID of casing inside, probably obsolete
     public int casingID;
+
+    //Casing component IDs
     public int[] componentID;
-    //Mechanism component identificators
+    //Mechanism component IDs
     public int[] mechComponentID;
 
     //Don't turn this to true!!!
@@ -27,10 +39,12 @@ public class Watch : Item
         RandomiseComponents(3, 7);
         ListComponents();
 
+        //Multiplayer setup
         interactingPlayer = new Player[2];
         interactingPlayer[0] = null;
         interactingPlayer[1] = null;
 
+        //Components
         itemImage = GetComponent<SpriteRenderer>().sprite;
         activator = GetComponentInParent<Activator>();
     }
@@ -38,17 +52,20 @@ public class Watch : Item
     // Update is called once per frame
     void Update()
     {
+        //Test mode randimisation
         if(Input.GetKeyDown("p") && testMode)
         {
             RandomiseComponents(3, 7);
             ListComponents();
         }
 
+        //Sprite icons
         if (!knownState) stateSprite.sprite = GameManager.instance.unknownImage;
         else if (unfixable) stateSprite.sprite = GameManager.instance.unfixableImage;
         else if (broken) stateSprite.sprite = GameManager.instance.complexBrokenImage;
         else stateSprite.sprite = GameManager.instance.repairedImage;
 
+        //Pickups - see Item scripts
         if (playerInRange)
         {
             PickUp(0);
@@ -57,6 +74,7 @@ public class Watch : Item
         }
     }
 
+    //Juts what it says on the tin
     public void ResetComponents()
     {
         componentBroken = new bool[7];
@@ -118,6 +136,7 @@ public class Watch : Item
         }
     }
 
+    //Randomises the order of broken components
     public void Shuffle()
     {
         if(hasDecor)
@@ -147,7 +166,7 @@ public class Watch : Item
         
     }
 
-    //Testing only
+    //Testing only - listing stuff in console
     private void ListComponents()
     {
         for (int i = 0; i < 7; i++)
