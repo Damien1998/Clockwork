@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
 public class WorkbenchPrecise : MonoBehaviour
@@ -14,6 +15,8 @@ public class WorkbenchPrecise : MonoBehaviour
     public float timer;
     private int itemSlotsNumber = 4;
     public SpriteRenderer[] itemSlots;
+
+    public Slider timerDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -91,16 +94,26 @@ public class WorkbenchPrecise : MonoBehaviour
             //Managing timers
             if (Input.GetButton("Action" + interactingPlayer[0].playerNumber))
             {
+                if (!timerDisplay.gameObject.activeInHierarchy)
+                {
+                    timerDisplay.gameObject.SetActive(true);
+                }
+                float temp = (timerBase - timer) / timerBase;
+                timerDisplay.value = temp;
+
                 timer -= Time.deltaTime;
             }
             if (Input.GetButtonUp("Action" + interactingPlayer[0].playerNumber))
             {
+                timerDisplay.gameObject.SetActive(false);
+
                 timer = timerBase;
             }
 
-            //if the timer is almost up
-            if (timer <= 0.3)
+            //if the timer is up
+            if (timer <= 0)
             {
+                timerDisplay.gameObject.SetActive(false);
                 SortItems();
 
                 //Is the item a broken mechanism

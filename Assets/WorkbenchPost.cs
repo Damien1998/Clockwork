@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
 public class WorkbenchPost : MonoBehaviour
@@ -12,6 +13,8 @@ public class WorkbenchPost : MonoBehaviour
     public float timerBase;
     public float timer;
     public SpriteRenderer itemSlot;
+
+    public Slider timerDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +29,18 @@ public class WorkbenchPost : MonoBehaviour
     {
         if (timer > 0)
         {
+            if (!timerDisplay.gameObject.activeInHierarchy)
+            {
+                timerDisplay.gameObject.SetActive(true);
+            }
+            float temp = (timerBase - timer) / timerBase;
+            timerDisplay.value = temp;
+
             timer -= Time.deltaTime;
         }
         if (timer <= 0 && timer > -1)
         {
+            timerDisplay.gameObject.SetActive(false);
             DropItems();
         }
 

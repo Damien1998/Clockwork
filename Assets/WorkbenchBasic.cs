@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
 public class WorkbenchBasic : MonoBehaviour
@@ -19,6 +20,8 @@ public class WorkbenchBasic : MonoBehaviour
     //Item slot images
     public SpriteRenderer[] itemSlots;
     private int itemSlotsNumber = 3;
+
+    public Slider timerDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -105,10 +108,19 @@ public class WorkbenchBasic : MonoBehaviour
                 //While the player holds the input, the timer ticks down
                 if (Input.GetButton("Action" + interactingPlayer[playerID].playerNumber))
                 {
+                    if (!timerDisplay.gameObject.activeInHierarchy)
+                    {
+                        timerDisplay.gameObject.SetActive(true);
+                    }
+                    float temp = (timerBase - timer) / timerBase;
+                    timerDisplay.value = temp;
+
                     timer -= Time.deltaTime;
                 }
                 if (Input.GetButtonUp("Action" + interactingPlayer[playerID].playerNumber))
                 {
+                    timerDisplay.gameObject.SetActive(false);
+
                     timer = timerBase;
                 }
 
@@ -121,6 +133,7 @@ public class WorkbenchBasic : MonoBehaviour
                     //TODO - see if the world breaks down once I change the argument to "timer <= 0"
                     if (timer <= 0)
                     {
+                        timerDisplay.gameObject.SetActive(false);
                         SearchRecipesBreak();
                         DropItems();
                     }
@@ -132,6 +145,7 @@ public class WorkbenchBasic : MonoBehaviour
                 {                   
                     if (timer <= 0)
                     {
+                        timerDisplay.gameObject.SetActive(false);
                         SearchRecipesCombine();
                         DropItems();
                     }

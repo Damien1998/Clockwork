@@ -10,6 +10,9 @@ public class Watch : Item
     public bool hasDecor;
     public bool[] componentBroken, hasMechComponent;
 
+    //Has the watch been examined for a list
+    public bool examined;
+
     /// <summary>
     /// Used for shuffling broken components
     /// 0 - 2 - Casing parts
