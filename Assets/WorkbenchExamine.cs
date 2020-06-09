@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
 public class WorkbenchExamine : MonoBehaviour
@@ -12,6 +13,8 @@ public class WorkbenchExamine : MonoBehaviour
     public float timerBase;
     public float timer;
     public SpriteRenderer itemSlot;
+
+    public Slider timerDisplay;
 
     // Start is called before the first frame update
     void Start()
@@ -26,10 +29,18 @@ public class WorkbenchExamine : MonoBehaviour
     {
         if (timer > 0)
         {
+            if(!timerDisplay.gameObject.activeInHierarchy)
+            {
+                timerDisplay.gameObject.SetActive(true);
+            }
+            float temp = (timerBase - timer) / timerBase;
+            timerDisplay.value = temp;
+
             timer -= Time.deltaTime;
         }
         if (timer <= 0 && timer > -1)
         {
+            timerDisplay.gameObject.SetActive(false);
             DropItems();
         }
 
@@ -43,6 +54,13 @@ public class WorkbenchExamine : MonoBehaviour
         }
     }
 
+    private bool IsItemValid(Activator item)
+    {
+        return (!item.child.GetComponent<Watch>() 
+            && !item.child.GetComponent<WatchComponent>()
+            && !item.child.GetComponent<ListItem>());
+    }
+
     private void UseExamineWorkbench(int playerID)
     {
         //TODO Examining a watch for a list of components;
@@ -52,9 +70,9 @@ public class WorkbenchExamine : MonoBehaviour
                 && interactingPlayer[playerID].carriesItem 
                 && interactingPlayer[playerID].freeToPickup)
             {
-                //Is the item valid for examination
+                //Is the item valid for examination (i.e. is the item not a watch, list, casing or mechanism
                 if (!interactingPlayer[playerID].droppedItemActivator.child.knownState
-                    && interactingPlayer[playerID].droppedItemActivator.child.itemID > 10)
+                    && IsItemValid(interactingPlayer[playerID].droppedItemActivator))
                 {
                     timer = timerBase;
                     item = interactingPlayer[playerID].droppedItemActivator;
@@ -68,6 +86,18 @@ public class WorkbenchExamine : MonoBehaviour
                         item.child.unfixable = true;
                     }                                     
                 }
+
+                //This line makes a null reference exception that apparently does literally nothing. lol
+                if(interactingPlayer[playerID].droppedItemActivator.child.GetComponent<Watch>() != null
+                    && !interactingPlayer[playerID].droppedItemActivator.child.GetComponent<Watch>().examined)
+                {
+                    timer = timerBase;
+                    item = interactingPlayer[playerID].droppedItemActivator;
+                    itemSlot.sprite = item.child.itemImage;
+                    item.child.GetComponent<Watch>().examined = true;
+
+                    interactingPlayer[playerID].ClearItem();
+                }
             }
         }       
     }
@@ -77,6 +107,12 @@ public class WorkbenchExamine : MonoBehaviour
         if (item != null)
         {
             Vector3 direction = Vector3.zero;
+            if(item.child.GetComponent<Watch>())
+            {
+                direction = new Vector3(Random.Range(1, 3), Random.Range(0, -1), 0);
+                Activator temp = Instantiate(GameManager.instance.items[44], transform.position + direction, transform.rotation);
+                temp.child.GetComponent<ListItem>().watch = item;
+            }
             direction = new Vector3(Random.Range(1, 3), Random.Range(0, -1), 0);
             item.transform.position = transform.position + direction;
             item.SetChildState(true);

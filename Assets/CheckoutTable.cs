@@ -11,7 +11,9 @@ public class CheckoutTable : MonoBehaviour
     public Player[] interactingPlayer;
     public bool pickedUp;
     public int watchID;
-    public ComponentList watchComponentList;
+
+    //Abandoned functionality
+    //public ComponentList watchComponentList;
 
     // Start is called before the first frame update
     void Start()
@@ -54,7 +56,8 @@ public class CheckoutTable : MonoBehaviour
             watch.SetChildState(false);
             pickedUp = true;
         }
-
+        
+        /**
         //See watch checklist
         if (watch != null 
             && Input.GetButtonDown("Action" + interactingPlayer[playerID].playerNumber) 
@@ -70,6 +73,7 @@ public class CheckoutTable : MonoBehaviour
         {
             watchComponentList.Deactivate();
         }
+        **/
 
         //Return fixed watch
         if (pickedUp && watch != null 
@@ -111,7 +115,7 @@ public class CheckoutTable : MonoBehaviour
         {
             interactingPlayer[1] = null;
         }
-        watchComponentList.Deactivate();
+        //watchComponentList.Deactivate();
         Debug.Log("Item odkolidowuje");
     }
 }
