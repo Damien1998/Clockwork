@@ -10,7 +10,7 @@ public class CheckoutTable : MonoBehaviour
     public bool playerCollided;
     public Player[] interactingPlayer;
     public bool pickedUp;
-    public int watchID;
+    public int watchID = -1;
 
     //Abandoned functionality
     //public ComponentList watchComponentList;
@@ -21,19 +21,20 @@ public class CheckoutTable : MonoBehaviour
         interactingPlayer = new Player[2];
         interactingPlayer[0] = null;
         interactingPlayer[1] = null;
+
+        GenerateNewWatch();
     }
 
     // Update is called once per frame
     void Update()
     {
         //Generate watch
-        if (watch == null && Input.GetKeyDown("return"))
+        /**
+        if (watch == null && watchID == -1)
         {
-            watchID = Random.Range(0, 5);
-            watch = Instantiate(GameManager.instance.items[watchID], transform.position, transform.rotation);
-            pickedUp = false;
+            GenerateNewWatch();
         }
-
+        **/
         if (interactingPlayer[0] != null)
         {
             UseCheckoutTable(0);           
@@ -42,12 +43,19 @@ public class CheckoutTable : MonoBehaviour
         {
             UseCheckoutTable(1);
         }
+
+        if(!watch.child.gameObject.activeInHierarchy)
+        {
+            watchSlot.sprite = watch.child.itemImage;
+            watch.SetChildState(false);
+            pickedUp = true;
+        }
     }
 
     private void UseCheckoutTable(int playerID)
     {
         if (!pickedUp && watch != null 
-            && Input.GetButtonDown("Pickup" + interactingPlayer[playerID].playerNumber) 
+            && Input.GetButtonUp("Pickup" + interactingPlayer[playerID].playerNumber) 
             && !interactingPlayer[playerID].carriesItem 
             && interactingPlayer[playerID].freeToPickup)
         {
@@ -56,38 +64,31 @@ public class CheckoutTable : MonoBehaviour
             watch.SetChildState(false);
             pickedUp = true;
         }
-        
-        /**
-        //See watch checklist
-        if (watch != null 
-            && Input.GetButtonDown("Action" + interactingPlayer[playerID].playerNumber) 
-            && !watchComponentList.componentList.activeInHierarchy)
-        {
-            Debug.Log("AAAAAAAAAAAAAA");
-            watchComponentList.watch = watch.child.GetComponent<Watch>();
-            watchComponentList.Activate();
-        }
-        else if (watch != null 
-            && Input.GetButtonDown("Action" + interactingPlayer[0].playerNumber) 
-            && watchComponentList.componentList.activeInHierarchy)
-        {
-            watchComponentList.Deactivate();
-        }
-        **/
 
         //Return fixed watch
         if (pickedUp && watch != null 
-            && Input.GetButtonDown("Pickup" + interactingPlayer[playerID].playerNumber) 
+            && Input.GetButtonUp("Pickup" + interactingPlayer[playerID].playerNumber) 
             && interactingPlayer[playerID].carriesItem)
         {
+            Debug.Log("Oddawanko");
             if (interactingPlayer[playerID].droppedItemActivator.child.itemID == watchID 
                 && !interactingPlayer[playerID].droppedItemActivator.child.broken)
             {
                 interactingPlayer[playerID].ClearItem();
                 watchSlot.sprite = null;
-                watch = null;
+                GenerateNewWatch();
+                GameManager.instance.AddPoints(1);
             }
         }
+    }
+
+    public void GenerateNewWatch()
+    {
+        Debug.Log("Generowanko");
+        watchID = Random.Range(0, 5);
+        watch = Instantiate(GameManager.instance.items[watchID], transform.position, transform.rotation);
+        watchSlot.sprite = watch.child.itemImage;
+        pickedUp = false;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
