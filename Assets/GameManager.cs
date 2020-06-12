@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
 public class GameManager : MonoBehaviour
@@ -25,6 +26,14 @@ public class GameManager : MonoBehaviour
     //Will probably be needed for difficulty settings and scaling
     public int minBrokenPieces = 1;
     public int maxBrokenPieces = 8;
+
+    private int points;
+    public Slider timerDisplay;
+    public Text pointDisplay;
+    public Text pointDisplayEnd;
+    public GameObject endDisplay;
+    public float levelTimerBase;
+    private float levelTimer;
 
     //A data type for holding workbench recipies
     public struct Recipe
@@ -64,13 +73,28 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
 
+        levelTimer = levelTimerBase;
         LoadRecipes();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        levelTimer -= Time.deltaTime;
+        float temp = levelTimer / levelTimerBase;
+        timerDisplay.value = temp;
+        if(levelTimer <= 0)
+        {
+            endDisplay.gameObject.SetActive(true);
+            pointDisplayEnd.text = "Punkty: " + points;
+            Time.timeScale = 0;
+        }
+    }
+
+    public void AddPoints(int pointAmount)
+    {
+        points += pointAmount;
+        pointDisplay.text = "Punkty: " + points;
     }
 
     private void LoadRecipes()
