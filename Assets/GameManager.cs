@@ -62,9 +62,10 @@ public class GameManager : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {   
+    {
+        Time.timeScale = 1f;
         //Keeping the population of game managers in check
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(gameObject);
         }
