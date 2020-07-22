@@ -15,7 +15,14 @@ public class MainMenu : MonoBehaviour
     public void StartLevel(int sceneID)
     {
         Time.timeScale = 1f;
+        GameManager.instance.HUD.gameObject.SetActive(true);
         SceneManager.LoadScene(sceneID);
+    }
+
+    public void SetGameManagerLevel(int levelID)
+    {
+        Time.timeScale = 1f;
+        GameManager.instance.levelID = levelID;
     }
 
     public void QuitGame ()
