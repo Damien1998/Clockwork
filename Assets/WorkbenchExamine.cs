@@ -87,8 +87,7 @@ public class WorkbenchExamine : MonoBehaviour
                     }                                     
                 }
 
-                //This line makes a null reference exception that apparently does literally nothing. lol
-                if(interactingPlayer[playerID].droppedItemActivator.child.GetComponent<Watch>() != null
+                if(interactingPlayer[playerID].droppedItemActivator != null && interactingPlayer[playerID].droppedItemActivator.child.GetComponent<Watch>() != null
                     && !interactingPlayer[playerID].droppedItemActivator.child.GetComponent<Watch>().examined)
                 {
                     timer = timerBase;
