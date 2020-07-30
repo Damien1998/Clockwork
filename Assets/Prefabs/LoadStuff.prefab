@@ -609,6 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6d5cb5f2f9dbb4fbb6ca72082173e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelButtons: []
 --- !u!1 &890458371
 GameObject:
   m_ObjectHideFlags: 0
@@ -2395,6 +2396,11 @@ PrefabInstance:
       propertyPath: itemStateSprite
       value: 
       objectReference: {fileID: 705765979264983444}
+    - target: {fileID: 7526747224497750288, guid: 617997a7667f1bf4885497b1804b5971,
+        type: 3}
+      propertyPath: dashSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7526747224497750289, guid: 617997a7667f1bf4885497b1804b5971,
         type: 3}
       propertyPath: m_Name
@@ -2551,6 +2557,11 @@ PrefabInstance:
       propertyPath: itemStateSprite
       value: 
       objectReference: {fileID: 6411218945017216518}
+    - target: {fileID: 4127051505231375698, guid: cb158cbfebb64ef4c939e29a8fd45da7,
+        type: 3}
+      propertyPath: dashSpeed
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4127051505231375699, guid: cb158cbfebb64ef4c939e29a8fd45da7,
         type: 3}
       propertyPath: m_Name
