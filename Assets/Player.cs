@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
         //Which player controls the character - for co-op
     public int playerNumber;
         //Movement speed modifier
-    public float moveSpeed;
+    public float moveSpeed, dashSpeed;
         //For checking if the player is in range of a workbench
     public bool isByWorkbench;
         //Currently held item
@@ -26,7 +26,12 @@ public class Player : MonoBehaviour
 
 
     //Private properties
-
+        //Running boo;
+    private bool isDashing;
+        //Direction of the dash
+    private Vector2 dashDirection;
+    //For repeating dashes etc
+    private bool dashReleased;
 
     //Components
     private Animator animator;
@@ -77,13 +82,49 @@ public class Player : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical" + playerNumber);
         Vector2 movementInput = new Vector2(moveX, moveY).normalized;
 
-        if (movementInput != Vector2.zero)
+
+        if (movementInput != Vector2.zero && Input.GetButton("Dash") && !isDashing && dashReleased)
+        {
+            isDashing = true;
+            Vector2 xInput = new Vector2(moveX, 0);
+            Vector2 yInput = new Vector2(0, moveY);
+
+            Debug.Log(xInput.magnitude + " " + yInput.magnitude);
+
+            if (xInput.magnitude >= yInput.magnitude)
+            {
+                dashDirection = xInput.normalized;
+            }
+            else
+            {
+                dashDirection = yInput.normalized;
+            }
+        }
+        else if (!Input.GetButton("Dash"))
+        {
+            isDashing = false;          
+        }
+
+        if (movementInput != Vector2.zero && !isDashing)
         {
             rigidBody.velocity = new Vector2(movementInput.x * moveSpeed, movementInput.y * moveSpeed);
+        }
+        else if(movementInput != Vector2.zero)
+        {
+            rigidBody.velocity = new Vector2(dashDirection.x * dashSpeed, dashDirection.y * dashSpeed);
         }
         else
         {
             rigidBody.velocity = Vector2.zero;
+        }
+
+        if(Input.GetButton("Dash"))
+        {
+            dashReleased = false;
+        }
+        else
+        {
+            dashReleased = true;
         }
     }
 
