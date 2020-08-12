@@ -48,6 +48,8 @@ public class GameManager : MonoBehaviour
 
     public Canvas HUD;
 
+    public bool sideQuestActive;
+
     //Save stuff
     //Al the level and POI names will have to be set up manually
     //At least until I find a better way to do it
@@ -247,5 +249,42 @@ public class GameManager : MonoBehaviour
         }
 
         return saveData;
+    }
+
+    public void CompletePOI(string pOIName)
+    {
+        for(int i = 0; i < pointsOfInterest.Count; i++)
+        {
+            if(pointsOfInterest[i].name == pOIName)
+            {
+                pointsOfInterest[i] = new SaveData.Flag(pOIName, true);
+            }
+        }
+    }
+
+    public void StartQuest(string questName)
+    {
+        for (int i = 0; i < sideQuests.Count; i++)
+        {
+            if (sideQuests[i].name == questName)
+            {
+                if(!sideQuests[i].found)
+                {
+                    sideQuests[i] = new SaveData.SideQuest(questName, false, true);
+                }
+                sideQuestActive = true;
+            }
+        }
+    }
+
+    public void CompleteQuest(string questName)
+    {
+        for (int i = 0; i < sideQuests.Count; i++)
+        {
+            if (sideQuests[i].name == questName)
+            {
+                sideQuests[i] = new SaveData.SideQuest(questName, true, true);
+            }
+        }
     }
 }
