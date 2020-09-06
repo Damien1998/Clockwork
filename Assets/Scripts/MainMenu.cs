@@ -37,6 +37,7 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         GameManager.instance.HUD.gameObject.SetActive(true);
+        GameManager.instance.endDisplay.gameObject.SetActive(false);
         SceneManager.LoadScene(sceneID);
     }
 

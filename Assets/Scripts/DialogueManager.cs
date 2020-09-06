@@ -23,6 +23,8 @@ public class DialogueManager : MonoBehaviour
     public Sprite[] portraits;
     public string[] characters;
 
+    private bool options;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +42,7 @@ public class DialogueManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Submit") && dialogueBox.activeInHierarchy)
+        if(Input.GetButtonDown("Submit") && dialogueBox.activeInHierarchy && !options)
         {
             if(currentLine >= dialogue.Length)
             {
@@ -89,6 +91,26 @@ public class DialogueManager : MonoBehaviour
        
     }
 
+    public void StartDialogue(TextAsset textFile)
+    {
+        dialogue = textFile.text.Split('\n');
+
+        for(int i = 0; i < dialogue.Length; i++)
+        {
+            Debug.Log(dialogue[i]);
+        }
+
+        dialogueBox.SetActive(true);
+        currentLine = 0;
+        CheckIfCommand();
+
+        if (currentLine < dialogue.Length)
+        {
+            dialogueText.text = dialogue[currentLine];
+            currentLine++;
+        }
+    }
+
     private int FindCharacterID(string characterName)
     {
         for(int i = 0; i < characters.Length; i++)
@@ -103,7 +125,9 @@ public class DialogueManager : MonoBehaviour
 
     private Sprite FindPortrait(string characterName)
     {
-        int id = FindCharacterID(characterName);
+        var cName = characterName.Trim();
+
+        int id = FindCharacterID(cName);
         if(id != -1)
         {
             return portraits[id];
@@ -120,7 +144,7 @@ public class DialogueManager : MonoBehaviour
         dialogueOptions.SetActive(false);
         option1.onClick.RemoveAllListeners();
         option2.onClick.RemoveAllListeners();
-        Debug.Log("lmknjbhvgf");
+        options = false;
         currentLine = lineID;
         CheckIfCommand();
 
@@ -137,15 +161,19 @@ public class DialogueManager : MonoBehaviour
         {
             if (dialogue[currentLine].StartsWith("--quest_start"))
             {
-                GameManager.instance.StartQuest(dialogue[currentLine].Replace("--quest_start", ""));
+                GameManager.instance.StartQuest(dialogue[currentLine].Replace("--quest_start ", ""));
             }
             else if (dialogue[currentLine].StartsWith("--poi"))
             {
-                GameManager.instance.CompletePOI(dialogue[currentLine].Replace("--poi", ""));
+                GameManager.instance.CompletePOI(dialogue[currentLine].Replace("--poi ", ""));
             }   
             else if(dialogue[currentLine].StartsWith("--end"))
             {
                 ExitDialogue();
+            }
+            else if(dialogue[currentLine].StartsWith("--portrait"))
+            {
+                portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
             }
             else if(!dialogue[currentLine].StartsWith("--options"))
             {
@@ -155,6 +183,7 @@ public class DialogueManager : MonoBehaviour
 
             if (dialogue[currentLine].StartsWith("--options"))
             {
+                options = true;
                 dialogueText.gameObject.SetActive(false);
                 dialogueOptions.SetActive(true);
                 int o1 = 0, o2 = 0;
@@ -166,8 +195,12 @@ public class DialogueManager : MonoBehaviour
                 option2.onClick.AddListener(() => SwitchLine(o2));
                 currentLine += 4;
             }
+            else
+            {
+                options = false;
+            }
             
             currentLine++;
-        }
+        }       
     }
 }
