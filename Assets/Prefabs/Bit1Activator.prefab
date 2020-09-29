@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 2726196317079653015}
   - component: {fileID: 1292403979320781294}
   - component: {fileID: 4399091690189358821}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Bit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,17 +168,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
-  repairedImage: {fileID: 21300000, guid: 4a1c843fb750af3479c0b23312126593, type: 3}
-  brokenImage: {fileID: 21300000, guid: b101fa9d9bc264c478e45ff4f5b5989a, type: 3}
-  unfixableImage: {fileID: 21300000, guid: 706862c5c50162a47801f294e280133b, type: 3}
-  unknownImage: {fileID: 21300000, guid: d0308379e3603ef4c9d46a19c90235d3, type: 3}
   stateSprite: {fileID: 1859885869341219392}
   itemID: 43
   broken: 0
   unfixable: 0
   knownState: 0
-  playerCollided: 0
+  playerInRange: 0
   interactingPlayer: []
+  isSelected: 0
   activator: {fileID: 1549372818917338213}
 --- !u!1 &6146740654492336566
 GameObject:
@@ -190,7 +187,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6440625965815049361}
   - component: {fileID: 1859885869341219392}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: State
   m_TagString: Untagged
   m_Icon: {fileID: 0}

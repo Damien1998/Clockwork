@@ -8,6 +8,7 @@ public class Item : MonoBehaviour
     //Images: item and state icons
     public Sprite itemImage;    
     public SpriteRenderer stateSprite;
+    protected SpriteRenderer itemSpriteRenderer;
 
     //Item ID
     public int itemID;
@@ -20,6 +21,8 @@ public class Item : MonoBehaviour
     //For player interactions
     public bool playerInRange;
     public Player[] interactingPlayer;
+
+    public bool isSelected;
 
     //Components:
     //Dropped item activator
@@ -35,8 +38,9 @@ public class Item : MonoBehaviour
         interactingPlayer[1] = null;
 
         //Getting components
-        itemImage = GetComponent<SpriteRenderer>().sprite;
         activator = GetComponentInParent<Activator>();
+        itemSpriteRenderer = GetComponent<SpriteRenderer>();
+        itemImage = itemSpriteRenderer.sprite;
     }
 
     // Update is called once per frame
@@ -52,9 +56,20 @@ public class Item : MonoBehaviour
         //Picking up items
         if (playerInRange)
         {
-            PickUp(0);
+            //PickUp(0);
 
-            PickUp(1);
+           // PickUp(1);
+        }
+
+        if(isSelected)
+        {
+            itemSpriteRenderer.sortingOrder = 2;
+            itemSpriteRenderer.color = Color.black;
+        }
+        else
+        {
+            itemSpriteRenderer.sortingOrder = 1;
+            itemSpriteRenderer.color = Color.white;
         }
     }
 
@@ -78,6 +93,7 @@ public class Item : MonoBehaviour
         if (interactingPlayer[0] == null)
         {
             interactingPlayer[0] = collision.GetComponent<Player>();
+            interactingPlayer[0].itemsInRange = true;
         }
         else
         {
@@ -88,8 +104,10 @@ public class Item : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         playerInRange = false;
+        isSelected = false;
         if(interactingPlayer[0] == collision.GetComponent<Player>())
         {
+            interactingPlayer[0].itemsInRange = false;
             interactingPlayer[0] = null;
         }
         else

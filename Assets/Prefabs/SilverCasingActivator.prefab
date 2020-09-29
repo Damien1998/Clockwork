@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4116719067770481289}
   - component: {fileID: 8759379536430455896}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: State
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 5014001739710041231}
   - component: {fileID: 8191976860338237430}
   - component: {fileID: 7276694121681185112}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SilverCasing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,17 +249,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
-  repairedImage: {fileID: 21300000, guid: 4a1c843fb750af3479c0b23312126593, type: 3}
-  brokenImage: {fileID: 21300000, guid: 31a4134c87e8fbb45aebf7d394c608fc, type: 3}
-  unfixableImage: {fileID: 21300000, guid: 706862c5c50162a47801f294e280133b, type: 3}
-  unknownImage: {fileID: 21300000, guid: d0308379e3603ef4c9d46a19c90235d3, type: 3}
   stateSprite: {fileID: 8759379536430455896}
   itemID: 5
   broken: 0
   unfixable: 0
   knownState: 0
-  playerCollided: 0
+  playerInRange: 0
   interactingPlayer: []
+  isSelected: 0
   activator: {fileID: 8484868842268387965}
   componentBroken: 
   componentExists: 

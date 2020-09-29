@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,7 +20,9 @@ public class Player : MonoBehaviour
     public bool carriesItem;
         //Can the player pick up a new item. Mostly used to avoid the player dropping an item and instantly picking it up
     public bool freeToPickup = true;
-
+        //For picking up items
+    public bool itemsInRange;
+    
         //Image of the currently held item
     public SpriteRenderer itemSprite;
         //Its state icon
@@ -32,6 +36,18 @@ public class Player : MonoBehaviour
     private Vector2 dashDirection;
     //For repeating dashes etc
     private bool dashReleased;
+
+    [SerializeField]
+    private float pickupRange;
+
+    private Collider2D[] nearbyItems;
+
+    private float itemSwitchTimer;
+
+    private int itemToPickUpID;
+    private Activator itemToPickUp;
+
+    private bool lockMovement;
 
     //Components
     private Animator animator;
@@ -54,6 +70,40 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //Reworked item pick up mechanic
+        if(Input.GetButtonDown("Pickup" + playerNumber) && freeToPickup)
+        {
+            nearbyItems = Physics2D.OverlapCircleAll(transform.position, pickupRange, LayerMask.GetMask("Item"));
+
+            nearbyItems = nearbyItems.OrderBy(item => item.transform.parent.position.y).ToArray();
+            Array.Reverse(nearbyItems);
+
+            if(nearbyItems != null && nearbyItems.Length > 0)
+            {
+                itemToPickUpID = 0;
+                nearbyItems[0].GetComponent<Item>().isSelected = true;
+                //itemToPickUp = nearbyItems[0].GetComponentInParent<Activator>();
+                //Debug.Log(itemToPickUp.name);
+                //itemToPickUp.GetComponentInChildren<Item>().isSelected = true;
+            }         
+        }
+
+        if(Input.GetButton("Pickup" + playerNumber) && freeToPickup && nearbyItems.Length > 0)
+        {
+            lockMovement = true;
+
+            if(Input.GetButtonDown("Action" + playerNumber))
+            {
+                nearbyItems[itemToPickUpID].GetComponent<Item>().isSelected = false;
+                itemToPickUpID++;
+                if(itemToPickUpID >= nearbyItems.Length)
+                {
+                    itemToPickUpID = 0;
+                }
+                nearbyItems[itemToPickUpID].GetComponent<Item>().isSelected = true;
+            }           
+        }
+        
         //Dropping items on input
         if (!isByWorkbench && carriesItem && freeToPickup && Input.GetButtonDown("Pickup" + playerNumber))
         {
@@ -61,6 +111,17 @@ public class Player : MonoBehaviour
         }
         if(Input.GetButtonUp("Pickup" + playerNumber))
         {
+            lockMovement = false;
+            if(nearbyItems != null && nearbyItems.Length > 0 && freeToPickup)
+            {
+                for(int i = 0; i < nearbyItems.Length; i++)
+                {
+                    nearbyItems[i].GetComponent<Item>().isSelected = false;
+                }
+                var item = nearbyItems[itemToPickUpID].GetComponent<Item>();
+                PickupItem(item.itemImage, item.stateSprite.sprite, nearbyItems[itemToPickUpID].GetComponentInParent<Activator>());
+                item.gameObject.SetActive(false);
+            }
             freeToPickup = true;
         }
 
@@ -73,6 +134,8 @@ public class Player : MonoBehaviour
         {
             animator.SetBool("carriesItem", false);
         }
+
+        itemSwitchTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -82,37 +145,43 @@ public class Player : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical" + playerNumber);
         Vector2 movementInput = new Vector2(moveX, moveY).normalized;
 
-
-        if (movementInput != Vector2.zero && Input.GetButton("Dash") && !isDashing && dashReleased)
+        if(!lockMovement)
         {
-            isDashing = true;
-            Vector2 xInput = new Vector2(moveX, 0);
-            Vector2 yInput = new Vector2(0, moveY);
-
-            Debug.Log(xInput.magnitude + " " + yInput.magnitude);
-
-            if (xInput.magnitude >= yInput.magnitude)
+            if (movementInput != Vector2.zero && Input.GetButton("Dash") && !isDashing && dashReleased)
             {
-                dashDirection = xInput.normalized;
+                isDashing = true;
+                Vector2 xInput = new Vector2(moveX, 0);
+                Vector2 yInput = new Vector2(0, moveY);
+
+                Debug.Log(xInput.magnitude + " " + yInput.magnitude);
+
+                if (xInput.magnitude >= yInput.magnitude)
+                {
+                    dashDirection = xInput.normalized;
+                }
+                else
+                {
+                    dashDirection = yInput.normalized;
+                }
+            }
+            else if (!Input.GetButton("Dash"))
+            {
+                isDashing = false;
+            }
+
+            if (movementInput != Vector2.zero && !isDashing)
+            {
+                rigidBody.velocity = new Vector2(movementInput.x * moveSpeed, movementInput.y * moveSpeed);
+            }
+            else if (movementInput != Vector2.zero)
+            {
+                rigidBody.velocity = new Vector2(dashDirection.x * dashSpeed, dashDirection.y * dashSpeed);
             }
             else
             {
-                dashDirection = yInput.normalized;
+                rigidBody.velocity = Vector2.zero;
             }
-        }
-        else if (!Input.GetButton("Dash"))
-        {
-            isDashing = false;          
-        }
-
-        if (movementInput != Vector2.zero && !isDashing)
-        {
-            rigidBody.velocity = new Vector2(movementInput.x * moveSpeed, movementInput.y * moveSpeed);
-        }
-        else if(movementInput != Vector2.zero)
-        {
-            rigidBody.velocity = new Vector2(dashDirection.x * dashSpeed, dashDirection.y * dashSpeed);
-        }
+        }     
         else
         {
             rigidBody.velocity = Vector2.zero;
@@ -134,8 +203,10 @@ public class Player : MonoBehaviour
         //Places the held item in-world
         droppedItemActivator.transform.position = transform.position;
         droppedItemActivator.SetChildState(true);
+        droppedItemActivator.child.GetComponent<Item>().isSelected = false;
 
         //Resets the state of the player-held item  
+        itemToPickUp = null;
         droppedItemActivator = null;
         itemSprite.sprite = null;
         itemStateSprite.sprite = null;

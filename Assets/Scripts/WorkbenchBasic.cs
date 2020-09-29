@@ -135,7 +135,7 @@ public class WorkbenchBasic : MonoBehaviour
                     {
                         timerDisplay.gameObject.SetActive(false);
                         SearchRecipesBreak();
-                        DropItems();
+                        
                     }
                 }
             
@@ -147,8 +147,13 @@ public class WorkbenchBasic : MonoBehaviour
                     {
                         timerDisplay.gameObject.SetActive(false);
                         SearchRecipesCombine();
-                        DropItems();
+                        
                     }
+                }
+                if (timer <= 0)
+                {
+                    timerDisplay.gameObject.SetActive(false);
+                    DropItems();
                 }
             }
         }            

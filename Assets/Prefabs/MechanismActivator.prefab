@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 25464290359465507}
   - component: {fileID: 3774183795962475866}
   - component: {fileID: 2392296952687768564}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Mechanism
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,17 +168,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
-  repairedImage: {fileID: 21300000, guid: 4a1c843fb750af3479c0b23312126593, type: 3}
-  brokenImage: {fileID: 21300000, guid: 31a4134c87e8fbb45aebf7d394c608fc, type: 3}
-  unfixableImage: {fileID: 21300000, guid: 706862c5c50162a47801f294e280133b, type: 3}
-  unknownImage: {fileID: 21300000, guid: d0308379e3603ef4c9d46a19c90235d3, type: 3}
   stateSprite: {fileID: 4341671114813834996}
   itemID: 10
   broken: 0
   unfixable: 0
   knownState: 0
-  playerCollided: 0
+  playerInRange: 0
   interactingPlayer: []
+  isSelected: 0
   activator: {fileID: 3463101978054308049}
   componentBroken: 010101
   componentExists: 
@@ -196,7 +193,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9002310314964267045}
   - component: {fileID: 4341671114813834996}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: State
   m_TagString: Untagged
   m_Icon: {fileID: 0}
