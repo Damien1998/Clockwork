@@ -47,9 +47,10 @@ public class Watch : Item
         interactingPlayer[0] = null;
         interactingPlayer[1] = null;
 
-        //Components
-        itemImage = GetComponent<SpriteRenderer>().sprite;
+        //Getting components
         activator = GetComponentInParent<Activator>();
+        itemSpriteRenderer = GetComponent<SpriteRenderer>();
+        itemImage = itemSpriteRenderer.sprite;
     }
 
     // Update is called once per frame
@@ -71,9 +72,20 @@ public class Watch : Item
         //Pickups - see Item scripts
         if (playerInRange)
         {
-            PickUp(0);
+            //PickUp(0);
 
-            PickUp(1);
+            //PickUp(1);
+        }
+
+        if (isSelected)
+        {
+            itemSpriteRenderer.sortingOrder = 2;
+            itemSpriteRenderer.color = Color.black;
+        }
+        else
+        {
+            itemSpriteRenderer.sortingOrder = 1;
+            itemSpriteRenderer.color = Color.white;
         }
     }
 

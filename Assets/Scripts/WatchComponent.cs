@@ -24,10 +24,12 @@ public class WatchComponent : Item
         interactingPlayer[0] = null;
         interactingPlayer[1] = null;
 
-        itemImage = GetComponent<SpriteRenderer>().sprite;
+        //Getting components
         activator = GetComponentInParent<Activator>();
+        itemSpriteRenderer = GetComponent<SpriteRenderer>();
+        itemImage = itemSpriteRenderer.sprite;
 
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
             if (i < componentExists.Length && componentExists[i]) numberOfComponents++;
         }
@@ -45,9 +47,20 @@ public class WatchComponent : Item
 
         if (playerInRange)
         {
-            PickUp(0);
+            //PickUp(0);
 
-            PickUp(1);
+            //PickUp(1);
+        }
+
+        if (isSelected)
+        {
+            itemSpriteRenderer.sortingOrder = 2;
+            itemSpriteRenderer.color = Color.black;
+        }
+        else
+        {
+            itemSpriteRenderer.sortingOrder = 1;
+            itemSpriteRenderer.color = Color.white;
         }
     }
 }

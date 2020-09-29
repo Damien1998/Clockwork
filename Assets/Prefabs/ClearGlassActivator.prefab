@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1337143826258653492}
   - component: {fileID: 5917846804519110629}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: State
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 7942848993696028466}
   - component: {fileID: 6485258894915908683}
   - component: {fileID: 8179214587698416229}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ClearGlass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -249,15 +249,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
-  repairedImage: {fileID: 21300000, guid: 4a1c843fb750af3479c0b23312126593, type: 3}
-  brokenImage: {fileID: 21300000, guid: b101fa9d9bc264c478e45ff4f5b5989a, type: 3}
-  unfixableImage: {fileID: 21300000, guid: 706862c5c50162a47801f294e280133b, type: 3}
-  unknownImage: {fileID: 21300000, guid: d0308379e3603ef4c9d46a19c90235d3, type: 3}
   stateSprite: {fileID: 5917846804519110629}
   itemID: 17
   broken: 0
   unfixable: 0
   knownState: 0
-  playerCollided: 0
+  playerInRange: 0
   interactingPlayer: []
+  isSelected: 0
   activator: {fileID: 6804855844218761664}
