@@ -218,15 +218,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 1
-  speed: {x: 6, y: 6}
-  body: {fileID: 0}
-  carriedItem: {fileID: 0}
+  moveSpeed: 0
+  dashSpeed: 0
+  isByWorkbench: 0
+  droppedItemActivator: {fileID: 0}
   carriesItem: 0
   freeToPickup: 1
+  itemsInRange: 0
   itemSprite: {fileID: 4127051504290439342}
   itemStateSprite: {fileID: 4127051505751657688}
-  droppedItemActivator: {fileID: 0}
-  isByWorkbench: 0
+  pickupRange: 1
 --- !u!95 &2037045816
 Animator:
   serializedVersion: 3

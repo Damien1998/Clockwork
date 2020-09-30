@@ -42,7 +42,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6398816823808899268}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -155,7 +155,6 @@ MonoBehaviour:
   interactingPlayer: []
   pickedUp: 0
   watchID: 0
-  watchComponentList: {fileID: 0}
 --- !u!1 &6398816824286092224
 GameObject:
   m_ObjectHideFlags: 0
