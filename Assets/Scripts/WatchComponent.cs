@@ -55,7 +55,11 @@ public class WatchComponent : Item
         if (isSelected)
         {
             itemSpriteRenderer.sortingOrder = 2;
-            itemSpriteRenderer.color = Color.black;
+            itemSpriteRenderer.color = new Color(0.1f, 0.1f, 0.1f);
+            if (!Physics2D.OverlapCircle(transform.position, 1, LayerMask.GetMask("Player")))
+            {
+                isSelected = false;
+            }
         }
         else
         {

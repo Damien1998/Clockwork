@@ -46,6 +46,8 @@ public class Item : MonoBehaviour
     // Update is called once per frame
     void Update()
     {        
+        //Everything here could be done more elegantly, there are too many if checks every frame
+
         //State sprites
         if (!knownState) stateSprite.sprite = GameManager.instance.unknownImage;
         else if (unfixable) stateSprite.sprite = GameManager.instance.unfixableImage;
@@ -53,18 +55,24 @@ public class Item : MonoBehaviour
         else stateSprite.sprite = GameManager.instance.repairedImage;
 
         //This used to be in OnTriggerStay2D, but Unity hates us
-        //Picking up items
+        //Picking up items (old method)
+        /*
         if (playerInRange)
         {
             //PickUp(0);
 
            // PickUp(1);
         }
-
+        */
+      
         if(isSelected)
         {
             itemSpriteRenderer.sortingOrder = 2;
-            itemSpriteRenderer.color = Color.black;
+            itemSpriteRenderer.color = new Color(0.1f, 0.1f, 0.1f);
+            if (!Physics2D.OverlapCircle(transform.position, 1, LayerMask.GetMask("Player")))
+            {
+                isSelected = false;
+            }
         }
         else
         {
@@ -73,6 +81,9 @@ public class Item : MonoBehaviour
         }
     }
 
+    //Old item pickup method
+    //Obsolete
+    /*
     public void PickUp(int playerID)
     {
         //If the player inputs the pickup button, the specified player's PickupItem method is called and the item is disactivated
@@ -84,6 +95,17 @@ public class Item : MonoBehaviour
                 gameObject.SetActive(false);
             }
         }
+    }
+    */
+
+    //Returns the rotation from the up vector in degrees 
+    //The player variable is the player attempting to pick up the item
+    public float GetItemRotation(Player player)
+    {
+        var direction = transform.position - player.transform.position;
+        var angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+        return angle - 90;
     }
 
     //Checking for players in range

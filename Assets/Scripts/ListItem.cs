@@ -35,18 +35,18 @@ public class ListItem : Item
         //State sprites
         stateSprite.sprite = null;
 
+        
         if (playerInRange && !watchComponentList.componentList.activeInHierarchy)
         {
             PickUp(0);
 
             PickUp(1);
         }
+        
     }
 
-    //The inherited pick up method needs to be changed to account for the designer's programmer torture fantasies
-    //Jk, this isn't that bad actually
-    //But I'm.. let's say, not a mature individual
-    public new void PickUp(int playerID)
+    //Everything here needs to be changed - picking items up is on the side of the player.
+    public void PickUp(int playerID)
     {
         //If the player inputs the pickup button, the specified player's PickupItem method is called and the item is deactivated
         if (interactingPlayer[playerID] != null)
