@@ -49,6 +49,11 @@ public class Player : MonoBehaviour
 
     private bool lockMovement;
 
+    [SerializeField]
+    private float dashDuration;
+
+    private Vector2 movementInput;
+
     //Components
     private Animator animator;
     private Rigidbody2D rigidBody;
@@ -71,17 +76,22 @@ public class Player : MonoBehaviour
     void Update()
     {
         //Reworked item pick up mechanic
-        if(Input.GetButtonDown("Pickup" + playerNumber) && freeToPickup)
+        //if(Input.GetButtonDown("Pickup" + playerNumber) && freeToPickup)
+        if(!Input.GetButton("Pickup" + playerNumber) && !Input.GetButtonUp("Pickup" + playerNumber))
         {
             nearbyItems = Physics2D.OverlapCircleAll(transform.position, pickupRange, LayerMask.GetMask("Item"));
 
-            nearbyItems = nearbyItems.OrderBy(item => item.transform.parent.position.y).ToArray();
+            nearbyItems = nearbyItems.OrderBy(item => item.GetComponent<Item>().GetItemRotation(this)).ToArray();
             Array.Reverse(nearbyItems);
 
             if(nearbyItems != null && nearbyItems.Length > 0)
             {
                 itemToPickUpID = 0;
                 nearbyItems[0].GetComponent<Item>().isSelected = true;
+                for(int i = 1; i < nearbyItems.Length; i++)
+                {
+                    nearbyItems[i].GetComponent<Item>().isSelected = false;
+                }
                 //itemToPickUp = nearbyItems[0].GetComponentInParent<Activator>();
                 //Debug.Log(itemToPickUp.name);
                 //itemToPickUp.GetComponentInChildren<Item>().isSelected = true;
@@ -93,7 +103,7 @@ public class Player : MonoBehaviour
             lockMovement = true;
 
             if(Input.GetButtonDown("Action" + playerNumber))
-            {
+            {               
                 nearbyItems[itemToPickUpID].GetComponent<Item>().isSelected = false;
                 itemToPickUpID++;
                 if(itemToPickUpID >= nearbyItems.Length)
@@ -101,6 +111,7 @@ public class Player : MonoBehaviour
                     itemToPickUpID = 0;
                 }
                 nearbyItems[itemToPickUpID].GetComponent<Item>().isSelected = true;
+
             }           
         }
         
@@ -109,6 +120,7 @@ public class Player : MonoBehaviour
         {
             DropItem();
         }
+        //Picking up items
         if(Input.GetButtonUp("Pickup" + playerNumber))
         {
             lockMovement = false;
@@ -136,44 +148,50 @@ public class Player : MonoBehaviour
         }
 
         itemSwitchTimer -= Time.deltaTime;
+
+        //Dash - only in 4 directions, quick burst of speed
+        //This only handles dash input, velocity is managed in fixedupdate
+        //For some reason this has to be here
+
+        float moveX = Input.GetAxisRaw("Horizontal" + playerNumber);
+        float moveY = Input.GetAxisRaw("Vertical" + playerNumber);
+        movementInput = new Vector2(moveX, moveY).normalized;
+
+        if (movementInput != Vector2.zero && Input.GetButtonDown("Dash") && !isDashing)
+        {
+
+            Vector2 xInput = new Vector2(moveX, 0);
+            Vector2 yInput = new Vector2(0, moveY);
+
+            Debug.Log("Dash");
+
+            if (xInput.magnitude >= yInput.magnitude)
+            {
+                dashDirection = xInput.normalized;
+            }
+            else
+            {
+                dashDirection = yInput.normalized;
+            }
+            StartCoroutine(Dash());
+        }
     }
 
     private void FixedUpdate()
     {
-        //Player movement        
+        //Player movement      
         float moveX = Input.GetAxisRaw("Horizontal" + playerNumber);
         float moveY = Input.GetAxisRaw("Vertical" + playerNumber);
-        Vector2 movementInput = new Vector2(moveX, moveY).normalized;
+        movementInput = new Vector2(moveX, moveY).normalized;      
 
         if(!lockMovement)
-        {
-            if (movementInput != Vector2.zero && Input.GetButton("Dash") && !isDashing && dashReleased)
-            {
-                isDashing = true;
-                Vector2 xInput = new Vector2(moveX, 0);
-                Vector2 yInput = new Vector2(0, moveY);
-
-                Debug.Log(xInput.magnitude + " " + yInput.magnitude);
-
-                if (xInput.magnitude >= yInput.magnitude)
-                {
-                    dashDirection = xInput.normalized;
-                }
-                else
-                {
-                    dashDirection = yInput.normalized;
-                }
-            }
-            else if (!Input.GetButton("Dash"))
-            {
-                isDashing = false;
-            }
-
+        {          
+            //Managing player speed
             if (movementInput != Vector2.zero && !isDashing)
             {
                 rigidBody.velocity = new Vector2(movementInput.x * moveSpeed, movementInput.y * moveSpeed);
             }
-            else if (movementInput != Vector2.zero)
+            else if (isDashing)
             {
                 rigidBody.velocity = new Vector2(dashDirection.x * dashSpeed, dashDirection.y * dashSpeed);
             }
@@ -187,6 +205,7 @@ public class Player : MonoBehaviour
             rigidBody.velocity = Vector2.zero;
         }
 
+        /*
         if(Input.GetButton("Dash"))
         {
             dashReleased = false;
@@ -195,6 +214,15 @@ public class Player : MonoBehaviour
         {
             dashReleased = true;
         }
+        */
+    }
+
+    //This coroutine flags the dash bool as false after the specified duration
+    IEnumerator Dash()
+    {
+        isDashing = true;
+        yield return new WaitForSeconds(dashDuration);
+        isDashing = false;
     }
 
     //Drops the currently held item
