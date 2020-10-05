@@ -1,96 +1,92 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 //Refactoring is done! You may enter safely
 public class CheckoutTable : MonoBehaviour
 {
-    public Activator watch;
-    public SpriteRenderer watchSlot;
-    public bool playerCollided;
-    public Player[] interactingPlayer;
-    public bool pickedUp;
-    public int watchID = -1;
+    private bool playerCollided;
+    private Player[] interactingPlayer;
+    private int watchIndex = 0;
+    private WatchList workbenchWatchList;
 
-    //Abandoned functionality
-    //public ComponentList watchComponentList;
-
-    // Start is called before the first frame update
     void Start()
     {
         interactingPlayer = new Player[2];
         interactingPlayer[0] = null;
         interactingPlayer[1] = null;
-
-        GenerateNewWatch();
+        //PS
+        //<summary>
+        //About the WatchList ScriptableObject script
+        //</summary>
+        //Since we will have more then 1 level expected at the moment of making this
+        //It's more comfortable to have a quick and easy to use object that can specify what kind of watches will spawn in the order that is put in
+        //This way we can make list of watches that will be used instantly
+        //If you want to change the order which the watches spawn in go into "Assets/Prefabs/WatchOrderLists/Level" directory
+        workbenchWatchList = (WatchList)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/WatchOrderLists/Level" + GameManager.instance.levelID +".asset", typeof(WatchList));
+        ThrowNewWatch(null);
     }
-
-    // Update is called once per frame
     void Update()
     {
-        //Generate watch
-        /**
-        if (watch == null && watchID == -1)
-        {
-            GenerateNewWatch();
-        }
-        **/
         if (interactingPlayer[0] != null)
         {
-            UseCheckoutTable(0);           
+            ReturningWatches(0);           
         }
         if (interactingPlayer[1] != null)
         {
-            UseCheckoutTable(1);
-        }
-
-        if(!watch.child.gameObject.activeInHierarchy)
-        {
-            watchSlot.sprite = watch.child.itemImage;
-            watch.SetChildState(false);
-            pickedUp = true;
+            ReturningWatches(1);
         }
     }
-
-    private void UseCheckoutTable(int playerID)
+    /*
+     * PS
+     * <summary>
+     * Function Checks for CorrectWatch and Spawns new One if it's given the repaired correct one
+     * </summary>
+     * Currently because of no easy way to access the and store the item that player holds i used the currentWatch variable as a storage
+     * Possibly in the future it would be more efficient and comfortable if we had one method to handle putting watches in the workbenches
+     */
+    private Activator currentWatch;
+    private void ReturningWatches(int playerID)
     {
-        if (!pickedUp && watch != null 
-            && Input.GetButtonUp("Pickup" + interactingPlayer[playerID].playerNumber) 
-            && !interactingPlayer[playerID].carriesItem 
-            && interactingPlayer[playerID].freeToPickup)
+        if (playerCollided
+            &&interactingPlayer[playerID].droppedItemActivator != null)
         {
-            interactingPlayer[playerID].PickupItem(watch.child.itemImage, watch.child.stateSprite.sprite, watch);           
-            watchSlot.sprite = watch.child.itemImage;
-            watch.SetChildState(false);
-            pickedUp = true;
+            currentWatch = interactingPlayer[playerID].droppedItemActivator;
         }
-
-        //Return fixed watch
-        if (pickedUp && watch != null 
-            && Input.GetButtonUp("Pickup" + interactingPlayer[playerID].playerNumber) 
-            && interactingPlayer[playerID].carriesItem)
+        if (Input.GetButtonUp("Pickup" + interactingPlayer[playerID].playerNumber)&&currentWatch!=null)
         {
-            Debug.Log("Oddawanko");
-            if (interactingPlayer[playerID].droppedItemActivator.child.itemID == watchID 
-                && !interactingPlayer[playerID].droppedItemActivator.child.broken)
+            currentWatch.transform.position = transform.position;
+            if (CheckWatch(currentWatch.child) == true)
             {
-                interactingPlayer[playerID].ClearItem();
-                watchSlot.sprite = null;
-                GenerateNewWatch();
-                GameManager.instance.AddPoints(1);
+                watchIndex++;
+                ThrowNewWatch(currentWatch.gameObject);
+                // GameManager.instance.AddPoints(1);      Since the game ends when the point is added as of now i'll just leave it commented 
             }
         }
     }
-
-    public void GenerateNewWatch()
+    /*
+    PS
+    <summary>
+    This is a simple method to make new watch if there is none at the moment of creating 
+    It also replaces any watch that matches the requirements
+    </summary> 
+    Sadly as of now it does not pool the watch due to the nature of watch components and fact that the watch object constantly changes in scene
+    But it can be noted that this might be changed to pooling later on in the production
+    */
+    private void ThrowNewWatch(GameObject mywatch)
     {
-        Debug.Log("Generowanko");
-        watchID = Random.Range(0, 5);
-        watch = Instantiate(GameManager.instance.items[watchID], transform.position, transform.rotation);
-        watchSlot.sprite = watch.child.itemImage;
-        pickedUp = false;
+        if (mywatch == null)
+        {
+            Instantiate(workbenchWatchList.listOfWatches[watchIndex],transform.position,Quaternion.identity);
+        }
+        else
+        {
+            Destroy(mywatch);
+            Instantiate(workbenchWatchList.listOfWatches[watchIndex],transform.position,Quaternion.identity);
+        }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         playerCollided = true;
@@ -116,7 +112,52 @@ public class CheckoutTable : MonoBehaviour
         {
             interactingPlayer[1] = null;
         }
-        //watchComponentList.Deactivate();
         Debug.Log("Item odkolidowuje");
     }
+    /*
+     PS
+     <summary>
+     The bool checks if the Item we placed matches the requirements of the CheckoutTable
+     </summary>
+     */
+    private bool CheckWatch(Item currentWatch)
+    {
+        if (!currentWatch.broken&&currentWatch.itemID == workbenchWatchList.listOfWatches[watchIndex].GetComponent<Activator>().child.itemID)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
+// I'll just leave it here if we need it in the future
+// private void UseCheckoutTable(int playerID)
+// {
+//     if (!pickedUp && watch != null 
+//         && Input.GetButtonUp("Pickup" + interactingPlayer[playerID].playerNumber) 
+//         && !interactingPlayer[playerID].carriesItem 
+//         && interactingPlayer[playerID].freeToPickup)
+//     {
+//         interactingPlayer[playerID].PickupItem(watch.child.itemImage, watch.child.stateSprite.sprite, watch);           
+//         watchSlot.sprite = watch.child.itemImage;
+//         watch.SetChildState(false);
+//         pickedUp = true;
+//     }
+//
+//     //Return fixed watch
+//     if (pickedUp && watch != null 
+//         && Input.GetButtonUp("Pickup" + interactingPlayer[playerID].playerNumber) 
+//         && interactingPlayer[playerID].carriesItem)
+//     {
+//         Debug.Log("Oddawanko");
+//         if (interactingPlayer[playerID].droppedItemActivator.child.itemID == _watchID 
+//             && !interactingPlayer[playerID].droppedItemActivator.child.broken)
+//         {
+//             interactingPlayer[playerID].ClearItem();
+//             watchSlot.sprite = null;
+//             GameManager.instance.AddPoints(1);
+//         }
+//     }
+// }
