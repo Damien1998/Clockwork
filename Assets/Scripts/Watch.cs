@@ -1,16 +1,53 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 //Refactoring is done! You may enter safely
-public class Watch : Item
+public class Watch : MonoBehaviour
 {
+    private Item myItem;
+    public Item WatchItem
+    {
+        get => myItem;
+        set
+        {
+            var oldItem = myItem;
+            myItem = value;
+            if (myItem != null && oldItem != myItem) myItem.RegisterItemCallback(OnItemStateChange);
+            OnItemStateChange(myItem);
+            OnItemChange(myItem);
+        }
+    }
+    public SpriteRenderer itemRenderer;
+
+    public SpriteRenderer stateRenderer;
+   
+    private void OnItemChange(Item changedItem)
+    {
+        itemRenderer.sprite = changedItem.itemImage;
+    }
+    private void OnItemStateChange(Item item)
+    {
+        Debug.Log("Hello there");
+        if (item.State == ItemState.UnknownState) stateRenderer.sprite = GameManager.instance.unknownImage;
+        else if (item.State == ItemState.Unfixable) stateRenderer.sprite = GameManager.instance.unfixableImage;
+        else if (item.State == ItemState.Broken) stateRenderer.sprite = GameManager.instance.brokenImage;
+        else stateRenderer.sprite = GameManager.instance.repairedImage;
+    }
+    //-------------------------------------------------------------------------------------------------------------------
+    //Essentially everything in items is done , we can add new functions if we need to but other then that if should be fine
+    
     //bools for storing information on the state of parts or existence of parts
     public bool casingBroken, mechanismBroken;
     public bool hasDecor;
     public bool[] componentBroken, hasMechComponent;
 
     //Has the watch been examined for a list
+    public bool isSelected;
     public bool examined;
 
     /// <summary>
@@ -25,8 +62,7 @@ public class Watch : Item
     //Amount of broken parts
     public int componentsToRepair;
 
-    //ID of casing inside, probably obsolete
-    public int casingID;
+
 
     //Casing component IDs
     public int[] componentID;
@@ -35,60 +71,6 @@ public class Watch : Item
 
     //Don't turn this to true!!!
     public bool testMode;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        RandomiseComponents(3, 7);
-        ListComponents();
-
-        //Multiplayer setup
-        interactingPlayer = new Player[2];
-        interactingPlayer[0] = null;
-        interactingPlayer[1] = null;
-
-        //Getting components
-        activator = GetComponentInParent<Activator>();
-        itemSpriteRenderer = GetComponent<SpriteRenderer>();
-        itemImage = itemSpriteRenderer.sprite;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        //Test mode randimisation
-        if(Input.GetKeyDown("p") && testMode)
-        {
-            RandomiseComponents(3, 7);
-            ListComponents();
-        }
-
-        //Sprite icons
-        if (!knownState) stateSprite.sprite = GameManager.instance.unknownImage;
-        else if (unfixable) stateSprite.sprite = GameManager.instance.unfixableImage;
-        else if (broken) stateSprite.sprite = GameManager.instance.complexBrokenImage;
-        else stateSprite.sprite = GameManager.instance.repairedImage;
-
-        //Pickups - see Item scripts
-        if (playerInRange)
-        {
-            //PickUp(0);
-
-            //PickUp(1);
-        }
-
-        if (isSelected)
-        {
-            itemSpriteRenderer.sortingOrder = 2;
-            itemSpriteRenderer.color = Color.black;
-        }
-        else
-        {
-            itemSpriteRenderer.sortingOrder = 1;
-            itemSpriteRenderer.color = Color.white;
-        }
-    }
-
     //Juts what it says on the tin
     public void ResetComponents()
     {
@@ -96,9 +78,23 @@ public class Watch : Item
         hasMechComponent = new bool[3];
         casingBroken = false;
         mechanismBroken = false;
-        broken = false;
     }
-
+    // Start is called before the first frame update
+    void Start()
+    {
+        RandomiseComponents(3, 7);
+        ListComponents();
+    }
+    // // Update is called once per frame
+    // void Update()
+    // {
+    //     //Test mode randimisation
+    //     if(Input.GetKeyDown("p") && testMode)
+    //     {
+    //         RandomiseComponents(3, 7);
+    //         ListComponents();
+    //     }
+    // }
     //Randomises the watch
     //No more than 7 broken basic components
     public void RandomiseComponents(int minBroken, int maxBroken)
@@ -186,13 +182,14 @@ public class Watch : Item
     {
         for (int i = 0; i < 7; i++)
         {
-            Debug.Log("Component " + (i + 1) + " broken " + componentBroken[i]);
+          //  Debug.Log("Component " + (i + 1) + " broken " + componentBroken[i]);
         }
-        Debug.Log("Casing broken " + casingBroken);
-        Debug.Log("Mech broken " + mechanismBroken);
+        //Debug.Log("Casing broken " + casingBroken);
+      //  Debug.Log("Mech broken " + mechanismBroken);
         for(int i = 0; i < 3; i++)
         {
-            Debug.Log("Mech component " + (i + 1) + " exists " + hasMechComponent[i]);
+         //   Debug.Log("Mech component " + (i + 1) + " exists " + hasMechComponent[i]);
         }
     }
 }
+
