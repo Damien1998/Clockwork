@@ -36,14 +36,14 @@ public class Watch : MonoBehaviour
     }
     private void OnItemStateChange(Item item)
     {
-        Debug.Log("Hello there");
         if (item.State == ItemState.UnknownState) stateRenderer.sprite = GameManager.instance.unknownImage;
         else if (item.State == ItemState.Unfixable) stateRenderer.sprite = GameManager.instance.unfixableImage;
         else if (item.State == ItemState.Broken) stateRenderer.sprite = GameManager.instance.brokenImage;
-        else stateRenderer.sprite = GameManager.instance.repairedImage;
+        else if (item.State == ItemState.Repaired) stateRenderer.sprite = GameManager.instance.repairedImage;
+        else stateRenderer.sprite = null;
     }
     //-------------------------------------------------------------------------------------------------------------------
-    //Essentially everything in items is done , we can add new functions if we need to but other then that if should be fine
+    //Essentially everything in items is done , we can add new functions if we need to but other then that it should be fine
     
     //bools for storing information on the state of parts or existence of parts
     public bool casingBroken, mechanismBroken;
@@ -86,8 +86,8 @@ public class Watch : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        RandomiseComponents(3, 7);
-        ListComponents();
+       // RandomiseComponents(3, 7);
+       // ListComponents();
     }
     // // Update is called once per frame
     // void Update()

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemState { Broken,Unfixable,Repaired,UnknownState};
+public enum ItemState { Broken,Unfixable,Repaired,UnknownState,EmptyState};
 
 [CreateAssetMenu(fileName = "New Item",menuName = "Item")]
 public class Item : ScriptableObject
 {
     private ItemState state = ItemState.UnknownState;
     private Action<Item> itemStateChangeCb;
+    public ItemState TrueState;
     public int itemID;
     public Sprite itemImage;
     public List<Item> components = new List<Item>();
