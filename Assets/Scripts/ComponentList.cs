@@ -30,7 +30,7 @@ public class ComponentList : MonoBehaviour
     {
         background.gameObject.SetActive(true);
 
-        SetItemImage(watchImg, watch.itemID);
+        //SetItemImage(watchImg, watch.itemID);
         SetItemImage(casingImg, watch.componentID[0]);
         SetItemImage(mechImg[0], 10);
         if (watch.hasDecor)
@@ -53,13 +53,13 @@ public class ComponentList : MonoBehaviour
             {
                 mechComponentImg[i].sprite = nullImg;
             }
-            SetItemImage(casingComponentImg[i], GameManager.instance.items[watch.componentID[0]].child.GetComponent<WatchComponent>().componentID[i]);
+          //  SetItemImage(casingComponentImg[i], GameManager.instance.items[watch.componentID[0]].child.GetComponent<WatchComponent>().componentID[i]);
         }
     }
 
     private void SetItemImage(Image imgToChange, int itemID)
     {
-        imgToChange.sprite = GameManager.instance.items[itemID].child.GetComponent<SpriteRenderer>().sprite;
+        //imgToChange.sprite = GameManager.instance.items[itemID].child.GetComponent<SpriteRenderer>().sprite;
     }
 
     public void Deactivate()

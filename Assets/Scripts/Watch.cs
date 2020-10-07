@@ -29,6 +29,10 @@ public class Watch : MonoBehaviour
     private void OnItemChange(Item changedItem)
     {
         itemRenderer.sprite = changedItem.itemImage;
+        for (int i = 0; i < myItem.componentsStates.Count; i++)
+        {
+            myItem.components[i].State = myItem.componentsStates[i];
+        }
     }
     private void OnItemStateChange(Item item)
     {
