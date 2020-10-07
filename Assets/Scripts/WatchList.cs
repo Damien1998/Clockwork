@@ -6,5 +6,5 @@ using UnityEngine.Serialization;
 [CreateAssetMenu(fileName = "New Watch List",menuName = "watchlist")]
 public class WatchList : ScriptableObject
 { 
-    public List<GameObject> listOfWatches = new List<GameObject>();
+    public List<Item> listOfWatches = new List<Item>();
 }
