@@ -81,8 +81,8 @@ public class Player : MonoBehaviour
         {
             nearbyItems = Physics2D.OverlapCircleAll(transform.position, pickupRange, LayerMask.GetMask("Item"));
 
-            nearbyItems = nearbyItems.OrderBy(item => item.GetComponent<Item>().GetItemRotation(this)).ToArray();
-            Array.Reverse(nearbyItems);
+            //nearbyItems = nearbyItems.OrderBy(item => item.GetComponent<Item>().GetItemRotation(this)).ToArray();
+            //Array.Reverse(nearbyItems);
 
             if(nearbyItems != null && nearbyItems.Length > 0)
             {
