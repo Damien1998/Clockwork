@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
         //For checking if the player is in range of a workbench
     public bool isByWorkbench;
         //Currently held item
-    public Activator droppedItemActivator;
+    public Watch HeldWatch;
         //True if the player is holding an item
     public bool carriesItem;
         //Can the player pick up a new item. Mostly used to avoid the player dropping an item and instantly picking it up
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
     private float itemSwitchTimer;
 
     private int itemToPickUpID;
-    private Activator itemToPickUp;
+    //private Activator itemToPickUp;
 
     private bool lockMovement;
 
@@ -87,11 +87,9 @@ public class Player : MonoBehaviour
             if(nearbyItems != null && nearbyItems.Length > 0)
             {
                 itemToPickUpID = 0;
-                nearbyItems[0].GetComponent<Item>().isSelected = true;
-                for(int i = 1; i < nearbyItems.Length; i++)
-                {
-                    nearbyItems[i].GetComponent<Item>().isSelected = false;
-                }
+
+                nearbyItems[0].GetComponent<Watch>().isSelected = true;
+
                 //itemToPickUp = nearbyItems[0].GetComponentInParent<Activator>();
                 //Debug.Log(itemToPickUp.name);
                 //itemToPickUp.GetComponentInChildren<Item>().isSelected = true;
@@ -103,14 +101,17 @@ public class Player : MonoBehaviour
             lockMovement = true;
 
             if(Input.GetButtonDown("Action" + playerNumber))
-            {               
-                nearbyItems[itemToPickUpID].GetComponent<Item>().isSelected = false;
+
+            {
+                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
+
                 itemToPickUpID++;
                 if(itemToPickUpID >= nearbyItems.Length)
                 {
                     itemToPickUpID = 0;
                 }
-                nearbyItems[itemToPickUpID].GetComponent<Item>().isSelected = true;
+
+                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
 
             }           
         }
@@ -128,11 +129,11 @@ public class Player : MonoBehaviour
             {
                 for(int i = 0; i < nearbyItems.Length; i++)
                 {
-                    nearbyItems[i].GetComponent<Item>().isSelected = false;
+                    nearbyItems[i].GetComponent<Watch>().isSelected = false;
                 }
                 var item = nearbyItems[itemToPickUpID].GetComponent<Item>();
-                PickupItem(item.itemImage, item.stateSprite.sprite, nearbyItems[itemToPickUpID].GetComponentInParent<Activator>());
-                item.gameObject.SetActive(false);
+                PickupItem(item.itemImage, HeldWatch.stateRenderer.sprite, nearbyItems[itemToPickUpID].GetComponent<Watch>());
+                HeldWatch.gameObject.SetActive(false);
             }
             freeToPickup = true;
         }
@@ -229,13 +230,12 @@ public class Player : MonoBehaviour
     public void DropItem()
     {
         //Places the held item in-world
-        droppedItemActivator.transform.position = transform.position;
-        droppedItemActivator.SetChildState(true);
-        droppedItemActivator.child.GetComponent<Item>().isSelected = false;
+        HeldWatch.transform.position = transform.position;
+        HeldWatch.isSelected = false;
 
         //Resets the state of the player-held item  
-        itemToPickUp = null;
-        droppedItemActivator = null;
+        //itemToPickUp = null;
+        HeldWatch = null;
         itemSprite.sprite = null;
         itemStateSprite.sprite = null;
         carriesItem = false;
@@ -246,7 +246,7 @@ public class Player : MonoBehaviour
     public void ClearItem()
     {
         //Resets the state of the player-held item  
-        droppedItemActivator = null;
+        HeldWatch = null;
         itemSprite.sprite = null;
         itemStateSprite.sprite = null;
         carriesItem = false;
@@ -254,10 +254,10 @@ public class Player : MonoBehaviour
     }
 
     //Picks up the specified item
-    public void PickupItem(Sprite itemImage, Sprite itemState, Activator itemToPickup)
+    public void PickupItem(Sprite itemImage, Sprite itemState, Watch itemToPickup)
     {
         //Sets the state of the player-held item
-        droppedItemActivator = itemToPickup;
+        HeldWatch = itemToPickup;
         itemSprite.sprite = itemImage;
         itemStateSprite.sprite = itemState;
         carriesItem = true;

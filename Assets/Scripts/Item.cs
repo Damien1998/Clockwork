@@ -12,6 +12,7 @@ public class Item : ScriptableObject
     public int itemID;
     public Sprite itemImage;
     public List<Item> components = new List<Item>();
+    public List<ItemState> componentsStates = new List<ItemState>();
     public ItemState State
     {
         get => state;

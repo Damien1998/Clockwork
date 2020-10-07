@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 {
     //List of ALL avaliable items
     //God help us
-    public Activator[] items;
+    //public Activator[] items;
 
     //The only game manager allowed to stay in this world of flesh
     public static GameManager instance;

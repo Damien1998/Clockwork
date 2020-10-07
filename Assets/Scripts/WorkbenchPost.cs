@@ -6,7 +6,7 @@ using UnityEngine.UI;
 //Refactoring is done! You may enter safely
 public class WorkbenchPost : MonoBehaviour
 {
-    public Activator item;
+   // public Activator item;
     public bool playerInRange;
     public Player[] interactingPlayer;
 
@@ -64,33 +64,33 @@ public class WorkbenchPost : MonoBehaviour
                 && interactingPlayer[playerID].freeToPickup)
             {
                 //Is the item valid for examination
-                if (interactingPlayer[playerID].droppedItemActivator.child.knownState 
-                    && interactingPlayer[playerID].droppedItemActivator.child.unfixable
-                    && interactingPlayer[playerID].droppedItemActivator.child.itemID > 10)
-                {
-                    timer = timerBase;
-                    item = interactingPlayer[playerID].droppedItemActivator;
-                    //itemSlot.sprite = null;
-
-                    interactingPlayer[playerID].ClearItem();
-
-                    item.child.broken = false;
-                    item.child.unfixable = false;
-                }
+                // if (interactingPlayer[playerID].droppedItemActivator.child.knownState 
+                //     && interactingPlayer[playerID].droppedItemActivator.child.unfixable
+                //     && interactingPlayer[playerID].droppedItemActivator.child.itemID > 10)
+                // {
+                //     timer = timerBase;
+                //     item = interactingPlayer[playerID].droppedItemActivator;
+                //     //itemSlot.sprite = null;
+                //
+                //     interactingPlayer[playerID].ClearItem();
+                //
+                //     item.child.broken = false;
+                //     item.child.unfixable = false;
+                // }
             }
         }
     }
 
     private void DropItems()
     {
-        if (item != null)
-        {
-            Vector3 direction = Vector3.zero;
-            direction = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(1, 3), 0);
-            item.transform.position = transform.position + direction;
-            item.SetChildState(true);
-            item = null;
-        }
+        // if (item != null)
+        // {
+        //     Vector3 direction = Vector3.zero;
+        //     direction = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(1, 3), 0);
+        //     item.transform.position = transform.position + direction;
+        //     item.SetChildState(true);
+        //     item = null;
+        // }
         //itemSlot.sprite = null;
         timer = -1;
     }
