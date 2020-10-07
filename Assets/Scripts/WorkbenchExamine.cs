@@ -4,54 +4,79 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
-public class WorkbenchExamine : MonoBehaviour
+public class WorkbenchExamine : Workbench
 {
-    //public Activator item;
-    public bool playerInRange;
-    public Player[] interactingPlayer;
-
-    public float timerBase;
-    public float timer;
-    public SpriteRenderer itemSlot;
-
-    public Slider timerDisplay;
+    private bool invalidItemInside;
 
     // Start is called before the first frame update
     void Start()
     {
-        interactingPlayer = new Player[2];
-        interactingPlayer[0] = null;
-        interactingPlayer[1] = null;
+        //This workbench only has one slot
+        //Use multiple if you want more at the same time
+        numberOfSlots = 1;
+        itemSlots = new Watch[1];
+
+        workTimer = workTimerBase;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timer > 0)
+        if (itemSlots[0] != null)
         {
-            if(!timerDisplay.gameObject.activeInHierarchy)
+            Work();
+        }
+
+        if (workTimer <= 0)
+        {
+            DropItems();
+            workTimer = workTimerBase;
+        }
+
+        //I made a different check for this
+        //There will be different particle fx for dropping valid and invalid items
+        if (invalidItemInside && workTimer <= (workTimerBase / 10))
+        {
+            DropItems();
+            workTimer = workTimerBase;
+        }
+    }
+
+    //Fixing the item is done when the item is placed on the workbench
+    public override void PlaceItem(Watch itemToPlace)
+    {
+        for (int i = 0; i < numberOfSlots; i++)
+        {
+            if (itemSlots[i] == null)
             {
-                timerDisplay.gameObject.SetActive(true);
+                //I need to figure out a better way to check if an item is a watch
+                if (itemToPlace.WatchItem.State == ItemState.UnknownState
+                    || itemToPlace.WatchItem.itemID < 5)
+                {
+                    invalidItemInside = false;
+                    //Here the function will set the state
+                }
+                else
+                {
+                    invalidItemInside = true;
+                }
+
+                itemSlots[i] = itemToPlace;
+                itemToPlace.gameObject.SetActive(false);
+                break;
             }
-            float temp = (timerBase - timer) / timerBase;
-            timerDisplay.value = temp;
-
-            timer -= Time.deltaTime;
         }
-        if (timer <= 0 && timer > -1)
-        {
-            timerDisplay.gameObject.SetActive(false);
-                //DropItems();
-        }
+    }
 
-        // if (interactingPlayer[0] != null)
-        // {
-        //     UseExamineWorkbench(0);
-        // }
-        // if (interactingPlayer[1] != null)
-        // {
-        //     UseExamineWorkbench(1);
-        // }
+    protected override void Work()
+    {
+        workTimer -= Time.deltaTime;
+    }
+
+    protected override void DropItems()
+    {
+        //Here the function will generate the list of watch components
+        base.DropItems();
     }
 
     // private bool IsItemValid(Activator item)
