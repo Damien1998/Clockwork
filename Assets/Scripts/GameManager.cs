@@ -61,16 +61,20 @@ public class GameManager : MonoBehaviour
     public List<SaveData.Flag> trophies = new List<SaveData.Flag>();
 
     //A data type for holding workbench recipies
+    //TODO: remake it so that it works like the WatchOrderLists
+    //The recipe structure needs to contain ID's of needed parts
     public struct Recipe
     {
         public Recipe(int result, int part0, int part1, int part2)
         {
+            resultItem = null;
             resultID = result;
             partID = new int[] { part0, part1, part2 };           
         }
 
         //Recipe result item ID
         public int resultID;
+        public Item resultItem;
         //Required part IDs
         /// <summary>
         /// It's an array for less clunky management, but it has to have 3 items inside

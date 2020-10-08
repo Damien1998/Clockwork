@@ -29,6 +29,7 @@ public class WorkbenchExamine : Workbench
 
         if (workTimer <= 0)
         {
+            timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
         }
@@ -54,7 +55,7 @@ public class WorkbenchExamine : Workbench
                     || itemToPlace.WatchItem.itemID < 5)
                 {
                     invalidItemInside = false;
-                    //Here the function will set the state
+                    itemToPlace.WatchItem.State = itemToPlace.WatchItem.TrueState;
                 }
                 else
                 {
@@ -68,24 +69,12 @@ public class WorkbenchExamine : Workbench
         }
     }
 
-    protected override void Work()
-    {
-        workTimer -= Time.deltaTime;
-    }
-
-    protected override void DropItems()
+    private void GenerateComponentList()
     {
         //Here the function will generate the list of watch components
-        base.DropItems();
     }
 
-    // private bool IsItemValid(Activator item)
-    // {
-    //     // return (!item.child.GetComponent<Watch>() 
-    //     //     && !item.child.GetComponent<WatchComponent>()
-    //     //     && !item.child.GetComponent<ListItem>());
-    //     return false;
-    // }
+    //I'm leaving this in in case I need it later
 
     // private void UseExamineWorkbench(int playerID)
     // {
@@ -127,55 +116,4 @@ public class WorkbenchExamine : Workbench
     //     }       
     // }
 
-    // private void DropItems()
-    // {
-    //     if (item != null)
-    //     {
-    //         Vector3 direction = Vector3.zero;
-    //         if(item.child.GetComponent<Watch>())
-    //         {
-    //             direction = new Vector3(Random.Range(1, 3), Random.Range(0, -1), 0);
-    //             Activator temp = Instantiate(GameManager.instance.items[44], transform.position + direction, transform.rotation);
-    //             temp.child.GetComponent<ListItem>().watch = item;
-    //         }
-    //         direction = new Vector3(Random.Range(1, 3), Random.Range(0, -1), 0);
-    //         item.transform.position = transform.position + direction;
-    //         item.SetChildState(true);
-    //         item = null;
-    //     }
-    //     itemSlot.sprite = null;
-    //     timer = -1;
-    // }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        playerInRange = true;
-        if (interactingPlayer[0] == null)
-        {
-            interactingPlayer[0] = collision.GetComponent<Player>();
-            interactingPlayer[0].isByWorkbench = true;
-        }
-        else
-        {
-            interactingPlayer[1] = collision.GetComponent<Player>();
-            interactingPlayer[1].isByWorkbench = true;
-        }
-
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        playerInRange = false;
-        if (interactingPlayer[0] == collision.GetComponent<Player>())
-        {
-            interactingPlayer[0].isByWorkbench = false;
-            interactingPlayer[0] = null;
-        }
-        else
-        {
-            interactingPlayer[1].isByWorkbench = false;
-            interactingPlayer[1] = null;
-        }
-
-    }
 }
