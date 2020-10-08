@@ -5,268 +5,109 @@ using System.Linq;
 using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
-public class WorkbenchPrecise : MonoBehaviour
+public class WorkbenchPrecise : Workbench
 {
-    public Watch[] item;
-    public bool playerInRange;
-    public Player[] interactingPlayer;
-
-    public float timerBase;
-    public float timer;
-    private int itemSlotsNumber = 4;
-    public SpriteRenderer[] itemSlots;
-
-    public Slider timerDisplay;
+    private List<Item> mechanismComponents;
 
     // Start is called before the first frame update
     void Start()
     {
-        interactingPlayer = new Player[2];
-        interactingPlayer[0] = null;
-        interactingPlayer[1] = null;
-        item = new Watch[itemSlotsNumber];
+        //The basic workbench has four slots
+        //If there needs to be more, I can work out a way to specify the number in the editor
+        numberOfSlots = 4;
+        itemSlots = new Watch[4];
 
+        workTimer = workTimerBase;
+    }
+
+    //PlaceItem() remembers the components of an inserted mechanism
+    public override void PlaceItem(Watch itemToPlace)
+    {
+        base.PlaceItem(itemToPlace);
+
+        if (itemToPlace.WatchItem.itemID == 10)
+        {
+            mechanismComponents = itemToPlace.WatchItem.components;
+        }
     }
 
     // Update is called once per frame
-    // void Update()
-    // {
-    //     if (interactingPlayer[0] != null)
-    //     {
-    //         PreciseWorkbenchInput(0);
-    //         PreciseWorkbenchOutput(0);
-    //     }
-    //     if (interactingPlayer[1] != null)
-    //     {
-    //         PreciseWorkbenchInput(1);
-    //         PreciseWorkbenchOutput(1);
-    //     }
-    // }
-    //
-    // private void PreciseWorkbenchInput(int playerID)
-    // {
-    //     if (Input.GetButton("Pickup" + interactingPlayer[0].playerNumber)
-    //         && interactingPlayer[playerID].carriesItem
-    //         && interactingPlayer[playerID].freeToPickup)
-    //     {
-    //         timer = timerBase;
-    //
-    //         //Is the item valid for precise workbench
-    //         //1. Is there nothing on the table and the item is a broken component or an empty mechanism
-    //         if (item[playerID] == null
-    //             && ((interactingPlayer[playerID].droppedItemActivator.child.broken && !interactingPlayer[playerID].droppedItemActivator.child.unfixable && interactingPlayer[playerID].droppedItemActivator.child.itemID > 9)
-    //             || (interactingPlayer[playerID].droppedItemActivator.child.itemID == 10 && interactingPlayer[playerID].droppedItemActivator.child.GetComponent<WatchComponent>().isEmpty)))
-    //         {
-    //             Debug.Log("Item Placed");
-    //             item[0] = interactingPlayer[playerID].droppedItemActivator;
-    //             itemSlots[0].sprite = item[0].child.itemImage;
-    //             interactingPlayer[playerID].ClearItem();
-    //             timer = timerBase;
-    //         }
-    //
-    //         //2. Is there an empty mechanism and is the item a repaired bit
-    //         else if (item[0] != null && item[0].child.itemID == 10
-    //             && item[0].child.GetComponent<WatchComponent>().isEmpty
-    //             && interactingPlayer[playerID].droppedItemActivator.child.itemID >= 26
-    //             && !interactingPlayer[playerID].droppedItemActivator.child.broken)
-    //         {
-    //             for (int i = 0; i < itemSlotsNumber; i++)
-    //             {
-    //                 //if the slot is empty place the item
-    //                 if (item[i] == null)
-    //                 {
-    //                     Debug.Log("Item Placed2");
-    //                     item[i] = interactingPlayer[playerID].droppedItemActivator;
-    //                     itemSlots[i].sprite = item[i].child.itemImage;
-    //                     interactingPlayer[playerID].ClearItem();
-    //                     timer = timerBase;
-    //                     break;
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
-
-    // private void PreciseWorkbenchOutput(int playerID)
-    // {
-    //     if (item[0] != null)
-    //     {
-    //         //Managing timers
-    //         if (Input.GetButton("Action" + interactingPlayer[0].playerNumber))
-    //         {
-    //             if (!timerDisplay.gameObject.activeInHierarchy)
-    //             {
-    //                 timerDisplay.gameObject.SetActive(true);
-    //             }
-    //             float temp = (timerBase - timer) / timerBase;
-    //             timerDisplay.value = temp;
-    //
-    //             timer -= Time.deltaTime;
-    //         }
-    //         if (Input.GetButtonUp("Action" + interactingPlayer[0].playerNumber))
-    //         {
-    //             timerDisplay.gameObject.SetActive(false);
-    //
-    //             timer = timerBase;
-    //         }
-    //
-    //         //if the timer is up
-    //         if (timer <= 0)
-    //         {
-    //             timerDisplay.gameObject.SetActive(false);
-    //             SortItems();
-    //
-    //             //Is the item a broken mechanism
-    //             if (item[0].child.itemID == 10 && item[0].child.broken)
-    //             {
-    //                 WatchComponent mech = item[0].child.GetComponent<WatchComponent>();
-    //                 for (int i = 0; i < 3; i++)
-    //                 {
-    //                     if (mech.componentExists[i])
-    //                     {
-    //                         FillSlot(i + 1, mech.componentID[i], mech.componentBroken[i]);
-    //                     }
-    //                 }
-    //                 item[0].child.GetComponent<WatchComponent>().isEmpty = true;
-    //                 item[0].child.GetComponent<WatchComponent>().broken = false;
-    //                 item[0].child.GetComponent<WatchComponent>().knownState = true;
-    //             }
-    //
-    //             //Is the item a broken component
-    //             else if (item[0].child.itemID != 10 && item[0].child.broken)
-    //             {
-    //                 item[0].child.broken = false;
-    //             }
-    //
-    //             //Are there enough items to fix an empty mechanism
-    //             else if (item[0].child.itemID == 10 && !item[0].child.broken)
-    //             {
-    //                 WatchComponent mech = item[0].child.GetComponent<WatchComponent>();
-    //                 bool[] used = new bool[] { false, false, false };
-    //                 int counter = 0;
-    //                 for (int i = 0; i < 3; i++)
-    //                 {
-    //                     if (mech.componentExists[i])
-    //                     {
-    //                         //Searching through the slots
-    //                         for (int j = 0; j < 3; j++)
-    //                         {
-    //                             if (!used[j] && item[j + 1] != null && item[j + 1].child.itemID == mech.componentID[i])
-    //                             {
-    //                                 used[j] = true;
-    //                                 Debug.Log(item[j + 1].child.itemID + mech.componentID[i]);
-    //                                 counter++;
-    //                             }
-    //                         }
-    //                     }
-    //                 }
-    //                 if (counter >= mech.numberOfComponents)
-    //                 {
-    //                     FillSlot(0, 10, false);
-    //                     item[0].child.knownState = true;
-    //                     item[1] = null;
-    //                     item[2] = null;
-    //                     item[3] = null;
-    //                 }
-    //             }
-    //             DropItems();
-    //         }
-    //
-    //     }
-    // }
-    //
-    // private void FillSlot(int slotID, int itemID, bool broken)
-    // {
-    //     item[slotID] = Instantiate(GameManager.instance.items[itemID]);
-    //     item[slotID].WatchItem.State = ItemState.Broken;
-    //     item[slotID].SetChildState(false);
-    // }
-    //
-    // private void SortItems()
-    // {
-    //     Debug.Log("Sort!");
-    //     List<Watch> temp = new List<Watch>();
-    //     for (int i = 0; i < itemSlotsNumber; i++)
-    //     {
-    //         if (item[i] != null)
-    //         {
-    //             temp.Add(item[i]);
-    //         }
-    //     }
-    //     temp = temp.OrderBy(it => it.child.itemID).ToList();
-    //     for (int i = 0; i < temp.Count; i++)
-    //     {
-    //         item[i] = temp[i];
-    //     }
-    // }
-    //
-    // private void SortItems(int lastSlot)
-    // {
-    //     Debug.Log("Sort!");
-    //     if (lastSlot <= itemSlotsNumber)
-    //     {
-    //         List<Activator> temp = new List<Activator>();
-    //         for (int i = 0; i < lastSlot; i++)
-    //         {
-    //             if (item[i] != null)
-    //             {
-    //                 temp.Add(item[i]);
-    //             }
-    //         }
-    //         temp = temp.OrderBy(it => it.child.itemID).ToList();
-    //         for (int i = 0; i < temp.Count; i++)
-    //         {
-    //             item[i] = temp[i];
-    //         }
-    //     }
-    // }
-    //
-    // private void DropItems()
-    // {
-    //     for (int i = 0; i < itemSlotsNumber; i++)
-    //     {
-    //         if (item[i] != null)
-    //         {
-    //             Vector3 direction = Vector3.zero;
-    //             direction = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-1, -3), 0);
-    //             item[i].transform.position = transform.position + direction;
-    //             item[i].SetChildState(true);
-    //             item[i] = null;
-    //         }
-    //         itemSlots[i].sprite = null;
-    //     }
-    //     timer = -1;
-    // }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    void Update()
     {
-        playerInRange = true;
-        if (interactingPlayer[0] == null)
+        if (isOperated && itemSlots[0] != null)
         {
-            interactingPlayer[0] = collision.GetComponent<Player>();
-            interactingPlayer[0].isByWorkbench = true;
+            Work();
         }
         else
         {
-            interactingPlayer[1] = collision.GetComponent<Player>();
-            interactingPlayer[1].isByWorkbench = true;
+            workTimer = workTimerBase;
+        }
+
+        if (workTimer <= 0)
+        {
+            timerDisplay.gameObject.SetActive(false);
+            DropItems();
+            workTimer = workTimerBase;
         }
 
     }
 
-    private void OnTriggerExit2D(Collider2D collision)
+    protected override void DropItems()
     {
-        playerInRange = false;
-        if (interactingPlayer[0] == collision.GetComponent<Player>())
+        //Here the items are combined, broken down, or repaired
+
+        //If there is only one item, it is either a mechanism or needs repair
+        if (itemSlots[1] == null)
         {
-            interactingPlayer[0].isByWorkbench = false;
-            interactingPlayer[0] = null;
+            if (itemSlots[0] != null)
+            {
+                if(itemSlots[0].WatchItem.State == ItemState.Broken && itemSlots[0].WatchItem.components == null)
+                {
+                    itemSlots[0].WatchItem.State = ItemState.Repaired;
+                }
+                else if(itemSlots[0].WatchItem.State != ItemState.EmptyState && itemSlots[0].WatchItem.itemID == 10)
+                {
+                    itemSlots[0].WatchItem.State = ItemState.EmptyState;
+                    for(int i = 0; i < itemSlots[0].WatchItem.components.Count; i++)
+                    {
+                        itemSlots[i] = GenerateItem(itemSlots[0].WatchItem.components[i]);
+                    }
+                }
+            }
         }
-        else
+        //If there are more items, the workbench tries to combine them using the mechanism's component list
+        else if(mechanismComponents != null)
         {
-            interactingPlayer[1].isByWorkbench = false;
-            interactingPlayer[1] = null;
+            SortItems();
+            mechanismComponents = mechanismComponents.OrderBy(item => item.itemID).ToList();
+
+            if(itemSlots[0].WatchItem.itemID == 10 && itemSlots[0].WatchItem.State == ItemState.EmptyState)
+            {
+                var recipeFilled = true;
+
+                for (int i = 0; i < mechanismComponents.Count; i++)
+                {
+                    if((itemSlots[i+1] != null && mechanismComponents[i] != null && itemSlots[i+1].WatchItem.itemID != mechanismComponents[i].itemID)
+                        || (itemSlots[i + 1] != null && itemSlots[i + 1].WatchItem.State != ItemState.Repaired)
+                        || (itemSlots[i + 1] != null && mechanismComponents[i] == null)
+                        || (itemSlots[i + 1] != null && mechanismComponents[i] == null))
+                    {
+                        recipeFilled = false;
+                    }
+                }
+
+                if(recipeFilled)
+                {
+                    itemSlots[0].WatchItem.State = ItemState.Repaired;
+
+                    for (int i = 0; i < mechanismComponents.Count; i++)
+                    {
+                        EmptySlot(i + 1);
+                    }
+                }
+            }
         }
 
+        base.DropItems();
     }
 }

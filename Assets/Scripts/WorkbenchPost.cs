@@ -29,6 +29,7 @@ public class WorkbenchPost : Workbench
         
         if(workTimer <= 0)
         {
+            timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
         }
@@ -65,10 +66,5 @@ public class WorkbenchPost : Workbench
                 break;
             }
         }        
-    }
-
-    protected override void Work()
-    {
-        workTimer -= Time.deltaTime;
     }
 }
