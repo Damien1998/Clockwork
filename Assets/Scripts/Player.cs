@@ -8,46 +8,35 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     //Public properties
+        //Position where item should be after picking it up
+    public Transform ItemPosition;
         //Which player controls the character - for co-op
     public int playerNumber;
         //Movement speed modifier
     public float moveSpeed, dashSpeed;
-        //For checking if the player is in range of a workbench
-    public bool isByWorkbench;
-        //Currently held item
-    public Watch HeldWatch;
-        //True if the player is holding an item
-    public bool carriesItem;
-        //Can the player pick up a new item. Mostly used to avoid the player dropping an item and instantly picking it up
-    public bool freeToPickup = true;
-        //For picking up items
-    public bool itemsInRange;
-    
-        //Image of the currently held item
-    public SpriteRenderer itemSprite;
-        //Its state icon
-    public SpriteRenderer itemStateSprite;
 
 
     //Private properties
-        //Running boo;
+        //Currently held item
+    private GameObject HeldWatch;
+        //Running bool
     private bool isDashing;
         //Direction of the dash
     private Vector2 dashDirection;
-    //For repeating dashes etc
+        //For repeating dashes etc
     private bool dashReleased;
 
     [SerializeField]
     private float pickupRange;
 
     private Collider2D[] nearbyItems;
-
-    private float itemSwitchTimer;
+    
 
     private int itemToPickUpID;
     //private Activator itemToPickUp;
 
     private bool lockMovement;
+    public bool isByWorkbench;
 
     //Components
     private Animator animator;
@@ -67,31 +56,26 @@ public class Player : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void PickUp()
     {
         //Reworked item pick up mechanic
-        if(Input.GetButtonDown("Pickup" + playerNumber) && freeToPickup)
+        if(Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch == null)
         {
             nearbyItems = Physics2D.OverlapCircleAll(transform.position, pickupRange, LayerMask.GetMask("Item"));
-
-            nearbyItems = nearbyItems.OrderBy(item => item.transform.parent.position.y).ToArray();
+            //nearbyItems = nearbyItems.OrderBy(item => item.transform.parent.position.y).ToArray();
             Array.Reverse(nearbyItems);
-
+        
             if(nearbyItems != null && nearbyItems.Length > 0)
             {
                 itemToPickUpID = 0;
                 nearbyItems[0].GetComponent<Watch>().isSelected = true;
-                //itemToPickUp = nearbyItems[0].GetComponentInParent<Activator>();
-                //Debug.Log(itemToPickUp.name);
-                //itemToPickUp.GetComponentInChildren<Item>().isSelected = true;
+                PickUpItem(nearbyItems[0].gameObject);
             }         
-        }
-
-        if(Input.GetButton("Pickup" + playerNumber) && freeToPickup && nearbyItems.Length > 0)
+        } 
+        if(Input.GetButton("Pickup" + playerNumber) && HeldWatch == null && nearbyItems.Length > 0)
         {
             lockMovement = true;
-
+        
             if(Input.GetButtonDown("Action" + playerNumber))
             {
                 nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
@@ -103,39 +87,32 @@ public class Player : MonoBehaviour
                 nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
             }           
         }
-        
-        //Dropping items on input
-        if (!isByWorkbench && carriesItem && freeToPickup && Input.GetButtonDown("Pickup" + playerNumber))
-        {
-            DropItem();
-        }
         if(Input.GetButtonUp("Pickup" + playerNumber))
         {
             lockMovement = false;
-            if(nearbyItems != null && nearbyItems.Length > 0 && freeToPickup)
+            if(nearbyItems != null && nearbyItems.Length > 0 && HeldWatch == null)
             {
                 for(int i = 0; i < nearbyItems.Length; i++)
                 {
                     nearbyItems[i].GetComponent<Watch>().isSelected = false;
                 }
-                var item = nearbyItems[itemToPickUpID].GetComponent<Item>();
-                PickupItem(item.itemImage, HeldWatch.stateRenderer.sprite, nearbyItems[itemToPickUpID].GetComponent<Watch>());
-                HeldWatch.gameObject.SetActive(false);
+                var item = nearbyItems[itemToPickUpID].GetComponent<Watch>().WatchItem;
+                //PickupItem(item.itemImage, HeldWatch.stateRenderer.sprite, nearbyItems[itemToPickUpID].GetComponent<Watch>());
             }
-            freeToPickup = true;
+        }
+    }
+    // Update is called once per frame
+    void Update()
+    {
+        if (Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch == null)
+        {
+            PickUp();
+        }
+        else if(Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch != null)
+        {
+            DropItem();
         }
 
-        //Switching animations
-        if(carriesItem)
-        {
-            animator.SetBool("carriesItem", true);
-        }
-        else
-        {
-            animator.SetBool("carriesItem", false);
-        }
-
-        itemSwitchTimer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -197,43 +174,59 @@ public class Player : MonoBehaviour
         }
     }
 
-    //Drops the currently held item
-    public void DropItem()
+    private void PickUpItem(GameObject pickedupItem)
     {
-        //Places the held item in-world
-        HeldWatch.transform.position = transform.position;
-        HeldWatch.isSelected = false;
-
-        //Resets the state of the player-held item  
-        //itemToPickUp = null;
-        HeldWatch = null;
-        itemSprite.sprite = null;
-        itemStateSprite.sprite = null;
-        carriesItem = false;
-        freeToPickup = false;
+        HeldWatch = pickedupItem;
+        pickedupItem.transform.position = ItemPosition.position;
+        pickedupItem.transform.SetParent(transform);
+        animator.SetBool("carriesItem", true);
     }
+
+    private void DropItem()
+    {
+        HeldWatch.transform.position = transform.position;
+        HeldWatch.GetComponent<Watch>().isSelected = false;
+        HeldWatch.transform.SetParent(null); 
+        HeldWatch = null;
+        animator.SetBool("carriesItem", false);
+    }
+    //Drops the currently held item
+    // public void DropItem()
+    // {
+    //     //Places the held item in-world
+    //     HeldWatch.transform.position = transform.position;
+    //     HeldWatch.isSelected = false;
+    //
+    //     //Resets the state of the player-held item  
+    //     //itemToPickUp = null;
+    //     HeldWatch = null;
+    //     itemSprite.sprite = null;
+    //     itemStateSprite.sprite = null;
+    //     carriesItem = false;
+    //     freeToPickup = false;
+    // }
 
     //Clears the currently held item
-    public void ClearItem()
-    {
-        //Resets the state of the player-held item  
-        HeldWatch = null;
-        itemSprite.sprite = null;
-        itemStateSprite.sprite = null;
-        carriesItem = false;
-        freeToPickup = false;
-    }
-
-    //Picks up the specified item
-    public void PickupItem(Sprite itemImage, Sprite itemState, Watch itemToPickup)
-    {
-        //Sets the state of the player-held item
-        HeldWatch = itemToPickup;
-        itemSprite.sprite = itemImage;
-        itemStateSprite.sprite = itemState;
-        carriesItem = true;
-        freeToPickup = false;
-    }
+    // public void ClearItem()
+    // {
+    //     //Resets the state of the player-held item  
+    //     HeldWatch = null;
+    //     itemSprite.sprite = null;
+    //     itemStateSprite.sprite = null;
+    //     carriesItem = false;
+    //     freeToPickup = false;
+    // }
+    //
+    // //Picks up the specified item
+    // public void PickupItem(Sprite itemImage, Sprite itemState, Watch itemToPickup)
+    // {
+    //     //Sets the state of the player-held item
+    //     HeldWatch = itemToPickup;
+    //     itemSprite.sprite = itemImage;
+    //     itemStateSprite.sprite = itemState;
+    //     carriesItem = true;
+    //     freeToPickup = false;
+    // }
 
     public void OnCollisionEnter2D(Collision2D collision)
     {

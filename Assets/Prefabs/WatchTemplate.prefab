@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 855254023159188947}
   - component: {fileID: 1932768020480315916}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: WatchState
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,7 +92,8 @@ GameObject:
   - component: {fileID: 4433641487428653035}
   - component: {fileID: 46742726722100478}
   - component: {fileID: 2319434836598225803}
-  m_Layer: 0
+  - component: {fileID: 9187065899042717128}
+  m_Layer: 9
   m_Name: WatchTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +127,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9ccc658d8473dc4b860643d8363ffcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WatchItem: {fileID: 0}
   itemRenderer: {fileID: 2319434836598225803}
   stateRenderer: {fileID: 1932768020480315916}
   casingBroken: 0
@@ -139,7 +139,6 @@ MonoBehaviour:
   componentOrder: 00000000010000000200000003000000040000000500000006000000
   componentOrderNoDecor: 000000000100000002000000030000000400000005000000
   componentsToRepair: 0
-  casingID: 0
   componentID: 
   mechComponentID: 
   testMode: 0
@@ -193,3 +192,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &9187065899042717128
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8284863839568129727}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0

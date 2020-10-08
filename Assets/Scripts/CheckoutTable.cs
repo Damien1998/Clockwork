@@ -34,7 +34,7 @@ public class CheckoutTable : MonoBehaviour
      */
     private void ReturningWatches(Watch returnedWatch)
     {
-        returnedWatch.transform.position = transform.position;
+      //  returnedWatch.transform.position = transform.position;
             if (CheckWatch(returnedWatch) == true)
             {
                 watchIndex++;
