@@ -60,8 +60,8 @@ public class WorkbenchPost : MonoBehaviour
         if (interactingPlayer[playerID] != null && timer <= -1)
         {
             if (Input.GetButton("Pickup" + interactingPlayer[playerID].playerNumber)
-                && interactingPlayer[playerID].carriesItem
-                && interactingPlayer[playerID].freeToPickup)
+                
+                )
             {
                 //Is the item valid for examination
                 // if (interactingPlayer[playerID].droppedItemActivator.child.knownState 
@@ -101,12 +101,12 @@ public class WorkbenchPost : MonoBehaviour
         if (interactingPlayer[0] == null)
         {
             interactingPlayer[0] = collision.GetComponent<Player>();
-            interactingPlayer[0].isByWorkbench = true;
+            //interactingPlayer[0].isByWorkbench = true;
         }
         else
         {
             interactingPlayer[1] = collision.GetComponent<Player>();
-            interactingPlayer[1].isByWorkbench = true;
+           // interactingPlayer[1].isByWorkbench = true;
         }
 
     }
@@ -116,12 +116,12 @@ public class WorkbenchPost : MonoBehaviour
         playerInRange = false;
         if (interactingPlayer[0] == collision.GetComponent<Player>())
         {
-            interactingPlayer[0].isByWorkbench = false;
+            //interactingPlayer[0].isByWorkbench = false;
             interactingPlayer[0] = null;
         }
         else
         {
-            interactingPlayer[1].isByWorkbench = false;
+            //interactingPlayer[1].isByWorkbench = false;
             interactingPlayer[1] = null;
         }
 

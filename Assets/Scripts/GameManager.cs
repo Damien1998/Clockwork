@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public Text pointDisplayEnd;
     //End of level screen
     public GameObject endDisplay;
+    public List<Recipe> RecipesList = new List<Recipe>();
     //The timer of doom
     public float levelTimerBase;
     private float levelTimer;
@@ -61,25 +62,7 @@ public class GameManager : MonoBehaviour
     public List<SaveData.Flag> trophies = new List<SaveData.Flag>();
 
     //A data type for holding workbench recipies
-    public struct Recipe
-    {
-        public Recipe(int result, int part0, int part1, int part2)
-        {
-            resultID = result;
-            partID = new int[] { part0, part1, part2 };           
-        }
-
-        //Recipe result item ID
-        public int resultID;
-        //Required part IDs
-        /// <summary>
-        /// It's an array for less clunky management, but it has to have 3 items inside
-        /// Input '-1' as IDs for blank items
-        /// I.e. when a recipe only takes two or one item to make
-        /// PLEASE sort the values and put blank items at the end
-        /// </summary>       
-        public int[] partID;
-    }
+    
 
     //ALL recipies for the "basic" workbench
     //They work both ways, according to the workbench's functionality
@@ -110,7 +93,6 @@ public class GameManager : MonoBehaviour
         }
 
         levelTimer = 0;
-        LoadRecipes();
         LoadGame();
         if(!File.Exists(Application.persistentDataPath + "/savefile.clk"))
         {
@@ -163,24 +145,7 @@ public class GameManager : MonoBehaviour
         points += pointAmount;
         pointDisplay.text = "Punkty: " + points;
     }
-
-    private void LoadRecipes()
-    {
-        basicRecipes = new Recipe[10];
-        //Five watches
-        basicRecipes[0] = new Recipe(0, 5, 10, -1);
-        basicRecipes[1] = new Recipe(1, 6, 10, 11);
-        basicRecipes[2] = new Recipe(2, 7, 10, -1);
-        basicRecipes[3] = new Recipe(3, 8, 10, 12);
-        basicRecipes[4] = new Recipe(4, 9, 10, -1);
-        //Watch casings
-        basicRecipes[5] = new Recipe(5, 13, 14, 17);
-        basicRecipes[6] = new Recipe(6, 15, 16, 17);
-        basicRecipes[7] = new Recipe(7, 18, 19, 20);
-        basicRecipes[8] = new Recipe(8, 21, 22, 24);
-        basicRecipes[9] = new Recipe(9, 23, 24, 25);
-    }
-
+    
     private void LoadGameData()
     {
         levels.Add(new SaveData.Level("Tutorial", false, true, 0f, 0f));
@@ -287,4 +252,20 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+}
+[CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
+public class Recipe : ScriptableObject
+{
+    public List<int> ItemsID = new List<int>();
+
+    /// <summary>
+    /// It's an array for less clunky management, but it has to have 3 items inside
+    /// Input '-1' as IDs for blank items
+    /// I.e. when a recipe only takes two or one item to make
+    /// PLEASE sort the values and put blank items at the end
+    /// </summary>       
+    //Recipe result item ID
+    public Watch resultWatch;
+
+    //Required part IDs
 }
