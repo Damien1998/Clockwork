@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
@@ -32,9 +30,7 @@ public class GameManager : MonoBehaviour
 
     //Points and timers
     private int points;
-    public Slider timerDisplay;
-    public Text pointDisplay;
-    public Text pointDisplayEnd;
+
     //End of level screen
     public GameObject endDisplay;
     public List<Recipe> RecipesList = new List<Recipe>();
@@ -46,8 +42,6 @@ public class GameManager : MonoBehaviour
     public int pointsToComplete;
 
     public bool levelCompletionCalled;
-
-    public Canvas HUD;
 
     public bool sideQuestActive;
 
@@ -71,15 +65,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        if(SceneManager.GetActiveScene().buildIndex != 0 && SceneManager.GetActiveScene().buildIndex != 2)
-        {
-            HUD.gameObject.SetActive(true);
-        }
-        else
-        {
-            HUD.gameObject.SetActive(false);
-        }
-
         Debug.Log(Application.persistentDataPath);
         Time.timeScale = 1f;
         //Keeping the population of game managers in check
@@ -102,7 +87,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log(levels[i].name + ": " + levels[i].completed + ", " + levels[i].completionTime);
         }
-        timerDisplay.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -114,7 +98,7 @@ public class GameManager : MonoBehaviour
         if(points >= pointsToComplete && !levelCompletionCalled)
         {
             endDisplay.gameObject.SetActive(true);
-            pointDisplayEnd.text = "Czas: " + levelTimer;
+            UIManager.instance.pointDisplayEnd.text = "Czas: " + levelTimer;
             CompleteLevel();
             SaveGame();
             levelCompletionCalled = true;
@@ -143,7 +127,7 @@ public class GameManager : MonoBehaviour
     public void AddPoints(int pointAmount)
     {
         points += pointAmount;
-        pointDisplay.text = "Punkty: " + points;
+        UIManager.instance.pointDisplay.text = "Punkty: " + points;
     }
     
     private void LoadGameData()
