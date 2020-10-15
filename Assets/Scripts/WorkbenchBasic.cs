@@ -71,7 +71,7 @@ public class WorkbenchBasic : Workbench
 
                 for (int j = 0; j < itemSlots.Length; j++)
                 {
-                    if ((itemSlots[j] != null && itemSlots[j].WatchItem.itemID != GameManager.instance.basicRecipes[i].partID[j])
+                    if ((itemSlots[j] != null && itemSlots[j].WatchItem.itemID != GameManager.instance.basicRecipes[i].ItemsID[j])
                         || (itemSlots[j] == null && itemSlots[j].WatchItem.itemID != -1)
                         || (itemSlots[j] != null && itemSlots[j].WatchItem.State != ItemState.Repaired))
                     {
@@ -84,8 +84,7 @@ public class WorkbenchBasic : Workbench
                     EmptySlot(0);
                     EmptySlot(1);
                     EmptySlot(2);
-                    //This won't work until we overhaul recipe code
-                    itemSlots[0] = GenerateItem(GameManager.instance.basicRecipes[i].resultItem);                 
+                    itemSlots[0] = Instantiate(GameManager.instance.basicRecipes[i].resultWatch, transform.position, Quaternion.identity);             
                     break;
                 }
             }

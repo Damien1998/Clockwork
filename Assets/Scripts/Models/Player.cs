@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
             DropItem();
         }
 
-    }
+    
 
         //Dash - only in 4 directions, quick burst of speed
         //This only handles dash input, velocity is managed in fixedupdate
