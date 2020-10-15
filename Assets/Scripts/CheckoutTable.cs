@@ -35,12 +35,12 @@ public class CheckoutTable : MonoBehaviour
     private void ReturningWatches(Watch returnedWatch)
     {
         returnedWatch.transform.position = transform.position;
-            if (CheckWatch(returnedWatch) == true)
-            {
+        if (CheckWatch(returnedWatch) == true)
+        {
                 watchIndex++;
                 ThrowNewWatch();
                 // GameManager.instance.AddPoints(1);      Since the game ends when the point is added as of now i'll just leave it commented 
-            }
+        }
         
     }
     /*
@@ -60,7 +60,7 @@ public class CheckoutTable : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.TryGetComponent(out Watch watch))
+        if (collision.gameObject.TryGetComponent(out Watch watch)&&!watch.isSelected)
         {
             ReturningWatches(watch);
         }
