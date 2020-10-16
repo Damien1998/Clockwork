@@ -38,6 +38,7 @@ public class WorkbenchExamine : Workbench
         //There will be different particle fx for dropping valid and invalid items
         if (invalidItemInside && workTimer <= (workTimerBase / 10))
         {
+            timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
         }
@@ -55,7 +56,14 @@ public class WorkbenchExamine : Workbench
                     || itemToPlace.WatchItem.itemID < 5)
                 {
                     invalidItemInside = false;
-                    itemToPlace.WatchItem.State = itemToPlace.WatchItem.TrueState;
+                    if(itemToPlace.WatchItem.components == null)
+                    {
+                        itemToPlace.WatchItem.State = itemToPlace.WatchItem.TrueState;
+                    }
+                    else if(itemToPlace.WatchItem.itemID < 5)
+                    {
+                        GenerateComponentList();
+                    }
                 }
                 else
                 {

@@ -28,8 +28,6 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private float pickupRange;
-
-   
     
 
     private int itemToPickUpID;
@@ -37,6 +35,7 @@ public class Player : MonoBehaviour
 
     private bool lockMovement;
     public bool isByWorkbench;
+    private Workbench nearbyWorkbench;
 
     [SerializeField]
     private float dashDuration;
@@ -100,7 +99,23 @@ public class Player : MonoBehaviour
         }
         else if(Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch != null)
         {
-            DropItem();
+            if (isByWorkbench)
+            {
+                PlaceItemInWorkbench();
+            }
+            else
+            {
+                DropItem();
+            }
+        }
+
+        if(isByWorkbench && Input.GetButton("Action" + playerNumber))
+        {
+            nearbyWorkbench.isOperated = true;
+        }
+        else if(isByWorkbench)
+        {
+            nearbyWorkbench.isOperated = false;
         }
 
     
@@ -198,6 +213,16 @@ public class Player : MonoBehaviour
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
     }
+
+    private void PlaceItemInWorkbench()
+    {
+        nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
+        HeldWatch.GetComponent<Watch>().isSelected = false;
+        HeldWatch.transform.SetParent(null);
+        HeldWatch = null;
+        animator.SetBool("carriesItem", false);
+    }
+
     //Drops the currently held item
     // public void DropItem()
     // {
@@ -235,6 +260,30 @@ public class Player : MonoBehaviour
     //     carriesItem = true;
     //     freeToPickup = false;
     // }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.CompareTag("Workbench"))
+        {
+            nearbyWorkbench = collision.GetComponent<Workbench>();
+            isByWorkbench = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Workbench"))
+        {
+            if(nearbyWorkbench != null)
+            {
+                nearbyWorkbench.isOperated = false;
+            }
+            
+            nearbyWorkbench = null;
+            isByWorkbench = false;
+        }
+    }
+
 
     public void OnCollisionEnter2D(Collision2D collision)
     {

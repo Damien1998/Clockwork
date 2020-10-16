@@ -38,8 +38,11 @@ public class Workbench : MonoBehaviour
         {
             if(itemSlots[i] == null)
             {
+                //TODO - actual places for items
+                itemToPlace.transform.position = transform.position;
                 itemSlots[i] = itemToPlace;
-                itemToPlace.gameObject.SetActive(false);
+                //itemToPlace.gameObject.SetActive(false);
+                
                 break;
             }
         }

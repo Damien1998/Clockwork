@@ -128,26 +128,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 7366631356647637391, guid: e333f39d9836bab4fbf9bd6ce31c4183,
-        type: 3}
-      propertyPath: WatchTemplate
-      value: 
-      objectReference: {fileID: 8284863839568129727, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
-        type: 3}
-    - target: {fileID: 7366631356647637391, guid: e333f39d9836bab4fbf9bd6ce31c4183,
-        type: 3}
-      propertyPath: workTimerBase
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7799352412371734992, guid: e333f39d9836bab4fbf9bd6ce31c4183,
         type: 3}
       propertyPath: m_Name
       value: WorkberchExamine (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7799352412371734993, guid: e333f39d9836bab4fbf9bd6ce31c4183,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7799352412371735006, guid: e333f39d9836bab4fbf9bd6ce31c4183,
         type: 3}
@@ -401,11 +385,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorkberchPostal
       objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679730, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1985302574302679731, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -460,17 +439,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7873512091968502979, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: WatchTemplate
-      value: 
-      objectReference: {fileID: 8284863839568129727, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
-        type: 3}
-    - target: {fileID: 7873512091968502979, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: workTimerBase
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1, type: 3}
@@ -612,19 +580,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 377017963, guid: 26b0c14c43c30c649be68e8caef517cc, type: 3}
-      propertyPath: timerBase
-      value: 0.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 377017963, guid: 26b0c14c43c30c649be68e8caef517cc, type: 3}
-      propertyPath: WatchTemplate
-      value: 
-      objectReference: {fileID: 8284863839568129727, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
-        type: 3}
-    - target: {fileID: 377017963, guid: 26b0c14c43c30c649be68e8caef517cc, type: 3}
-      propertyPath: workTimerBase
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5772151120321187217, guid: 26b0c14c43c30c649be68e8caef517cc,
         type: 3}
       propertyPath: m_Name
@@ -684,11 +639,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5772151120321187221, guid: 26b0c14c43c30c649be68e8caef517cc,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7374914584844388236, guid: 26b0c14c43c30c649be68e8caef517cc,
         type: 3}
@@ -982,75 +932,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1985302573462301947, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_SortingOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679628, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: timerBaseLong
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679629, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Offset.x
-      value: 0.7226913
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679629, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 2.7373204
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679629, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: -0.16155839
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679629, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 2.6916203
-      objectReference: {fileID: 0}
     - target: {fileID: 1985302574302679630, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
         type: 3}
       propertyPath: m_Name
       value: WorkberchPostal (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679631, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679631, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679730, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Offset.x
-      value: -1.3362331
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679730, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: -0.522383
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679730, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 5.8354654
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679730, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 2.1379294
-      objectReference: {fileID: 0}
-    - target: {fileID: 1985302574302679730, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1985302574302679731, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
         type: 3}
@@ -1107,17 +992,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7873512091968502979, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: WatchTemplate
-      value: 
-      objectReference: {fileID: 8284863839568129727, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
-        type: 3}
-    - target: {fileID: 7873512091968502979, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
-        type: 3}
-      propertyPath: workTimerBase
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1, type: 3}
 --- !u!20 &1335929541 stripped
@@ -1137,26 +1011,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1335929541}
-    - target: {fileID: 7366631356647637391, guid: e333f39d9836bab4fbf9bd6ce31c4183,
-        type: 3}
-      propertyPath: WatchTemplate
-      value: 
-      objectReference: {fileID: 8284863839568129727, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
-        type: 3}
-    - target: {fileID: 7366631356647637391, guid: e333f39d9836bab4fbf9bd6ce31c4183,
-        type: 3}
-      propertyPath: workTimerBase
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 7799352412371734992, guid: e333f39d9836bab4fbf9bd6ce31c4183,
         type: 3}
       propertyPath: m_Name
       value: WorkberchExamine
-      objectReference: {fileID: 0}
-    - target: {fileID: 7799352412371734993, guid: e333f39d9836bab4fbf9bd6ce31c4183,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7799352412371735006, guid: e333f39d9836bab4fbf9bd6ce31c4183,
         type: 3}
@@ -1292,15 +1150,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1335929541}
-    - target: {fileID: 2141297325, guid: 67b7bf22fb51d814d8ace7acd2ff1225, type: 3}
-      propertyPath: WatchTemplate
-      value: 
-      objectReference: {fileID: 8284863839568129727, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
-        type: 3}
-    - target: {fileID: 2141297325, guid: 67b7bf22fb51d814d8ace7acd2ff1225, type: 3}
-      propertyPath: workTimerBase
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3408346832450855056, guid: 67b7bf22fb51d814d8ace7acd2ff1225,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1355,11 +1204,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3408346832450855063, guid: 67b7bf22fb51d814d8ace7acd2ff1225,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3408346832450855083, guid: 67b7bf22fb51d814d8ace7acd2ff1225,
         type: 3}
