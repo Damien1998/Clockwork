@@ -75,6 +75,7 @@ public class Watch : MonoBehaviour
 
     //Don't turn this to true!!!
     public bool testMode;
+
     //Juts what it says on the tin
     public void ResetComponents()
     {

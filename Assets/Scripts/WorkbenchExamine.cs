@@ -4,63 +4,85 @@ using UnityEngine;
 using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
-public class WorkbenchExamine : MonoBehaviour
+public class WorkbenchExamine : Workbench
 {
-    //public Activator item;
-    public bool playerInRange;
-    public Player[] interactingPlayer;
-
-    public float timerBase;
-    public float timer;
-    public SpriteRenderer itemSlot;
-
-    public Slider timerDisplay;
+    private bool invalidItemInside;
 
     // Start is called before the first frame update
     void Start()
     {
-        interactingPlayer = new Player[2];
-        interactingPlayer[0] = null;
-        interactingPlayer[1] = null;
+        //This workbench only has one slot
+        //Use multiple if you want more at the same time
+        numberOfSlots = 1;
+        itemSlots = new Watch[1];
+
+        workTimer = workTimerBase;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timer > 0)
+        if (itemSlots[0] != null)
         {
-            if(!timerDisplay.gameObject.activeInHierarchy)
-            {
-                timerDisplay.gameObject.SetActive(true);
-            }
-            float temp = (timerBase - timer) / timerBase;
-            timerDisplay.value = temp;
-
-            timer -= Time.deltaTime;
+            Work();
         }
-        if (timer <= 0 && timer > -1)
+
+        if (workTimer <= 0)
         {
             timerDisplay.gameObject.SetActive(false);
-                //DropItems();
+            DropItems();
+            workTimer = workTimerBase;
         }
 
-        // if (interactingPlayer[0] != null)
-        // {
-        //     UseExamineWorkbench(0);
-        // }
-        // if (interactingPlayer[1] != null)
-        // {
-        //     UseExamineWorkbench(1);
-        // }
+        //I made a different check for this
+        //There will be different particle fx for dropping valid and invalid items
+        if (invalidItemInside && workTimer <= (workTimerBase / 10))
+        {
+            timerDisplay.gameObject.SetActive(false);
+            DropItems();
+            workTimer = workTimerBase;
+        }
     }
 
-    // private bool IsItemValid(Activator item)
-    // {
-    //     // return (!item.child.GetComponent<Watch>() 
-    //     //     && !item.child.GetComponent<WatchComponent>()
-    //     //     && !item.child.GetComponent<ListItem>());
-    //     return false;
-    // }
+    //Fixing the item is done when the item is placed on the workbench
+    public override void PlaceItem(Watch itemToPlace)
+    {
+        for (int i = 0; i < numberOfSlots; i++)
+        {
+            if (itemSlots[i] == null)
+            {
+                //I need to figure out a better way to check if an item is a watch
+                if (itemToPlace.WatchItem.State == ItemState.UnknownState
+                    || itemToPlace.WatchItem.itemID < 5)
+                {
+                    invalidItemInside = false;
+                    if(itemToPlace.WatchItem.components == null)
+                    {
+                        itemToPlace.WatchItem.State = itemToPlace.WatchItem.TrueState;
+                    }
+                    else if(itemToPlace.WatchItem.itemID < 5)
+                    {
+                        GenerateComponentList();
+                    }
+                }
+                else
+                {
+                    invalidItemInside = true;
+                }
+
+                itemSlots[i] = itemToPlace;
+                itemToPlace.gameObject.SetActive(false);
+                break;
+            }
+        }
+    }
+
+    private void GenerateComponentList()
+    {
+        //Here the function will generate the list of watch components
+    }
+
+    //I'm leaving this in in case I need it later
 
     // private void UseExamineWorkbench(int playerID)
     // {
@@ -102,55 +124,4 @@ public class WorkbenchExamine : MonoBehaviour
     //     }       
     // }
 
-    // private void DropItems()
-    // {
-    //     if (item != null)
-    //     {
-    //         Vector3 direction = Vector3.zero;
-    //         if(item.child.GetComponent<Watch>())
-    //         {
-    //             direction = new Vector3(Random.Range(1, 3), Random.Range(0, -1), 0);
-    //             Activator temp = Instantiate(GameManager.instance.items[44], transform.position + direction, transform.rotation);
-    //             temp.child.GetComponent<ListItem>().watch = item;
-    //         }
-    //         direction = new Vector3(Random.Range(1, 3), Random.Range(0, -1), 0);
-    //         item.transform.position = transform.position + direction;
-    //         item.SetChildState(true);
-    //         item = null;
-    //     }
-    //     itemSlot.sprite = null;
-    //     timer = -1;
-    // }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        playerInRange = true;
-        if (interactingPlayer[0] == null)
-        {
-            interactingPlayer[0] = collision.GetComponent<Player>();
-            interactingPlayer[0].isByWorkbench = true;
-        }
-        else
-        {
-            interactingPlayer[1] = collision.GetComponent<Player>();
-            interactingPlayer[1].isByWorkbench = true;
-        }
-
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        playerInRange = false;
-        if (interactingPlayer[0] == collision.GetComponent<Player>())
-        {
-            interactingPlayer[0].isByWorkbench = false;
-            interactingPlayer[0] = null;
-        }
-        else
-        {
-            interactingPlayer[1].isByWorkbench = false;
-            interactingPlayer[1] = null;
-        }
-
-    }
 }

@@ -39,6 +39,7 @@ public class WatchComponent : MonoBehaviour
     void Update()
     {
         //State sprites
+
         // if (!knownState) stateSprite.sprite = GameManager.instance.unknownImage;
         // else if (unfixable) stateSprite.sprite = GameManager.instance.unfixableImage;
         // else if (broken) stateSprite.sprite = GameManager.instance.complexBrokenImage;
@@ -61,6 +62,7 @@ public class WatchComponent : MonoBehaviour
         // {
         //     itemSpriteRenderer.sortingOrder = 1;
         //     itemSpriteRenderer.color = Color.white;
+
         }
     }
 

@@ -3,127 +3,69 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-//Refactoring is done! You may enter safely
-public class WorkbenchPost : MonoBehaviour
+//
+public class WorkbenchPost : Workbench
 {
-   // public Activator item;
-    public bool playerInRange;
-    public Player[] interactingPlayer;
-
-    public float timerBase;
-    public float timer;
-    public SpriteRenderer itemSlot;
-
-    public Slider timerDisplay;
+    private bool invalidItemInside;
 
     // Start is called before the first frame update
     void Start()
     {
-        interactingPlayer = new Player[2];
-        interactingPlayer[0] = null;
-        interactingPlayer[1] = null;
+        //This workbench only has one slot
+        //Use multiple if you want more at the same time
+        numberOfSlots = 1;
+        itemSlots = new Watch[1];
+
+        workTimer = workTimerBase;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (timer > 0)
+        if(itemSlots[0] != null)
         {
-            if (!timerDisplay.gameObject.activeInHierarchy)
-            {
-                timerDisplay.gameObject.SetActive(true);
-            }
-            float temp = (timerBase - timer) / timerBase;
-            timerDisplay.value = temp;
-
-            timer -= Time.deltaTime;
+            Work();
         }
-        if (timer <= 0 && timer > -1)
+        
+        if(workTimer <= 0)
         {
             timerDisplay.gameObject.SetActive(false);
             DropItems();
+            workTimer = workTimerBase;
         }
 
-        if (interactingPlayer[0] != null)
+        //I made a different check for this
+        //There will be different particle fx for dropping valid and invalid items
+        if(invalidItemInside && workTimer <= (workTimerBase / 10))
         {
-            UsePost(0);
-        }
-        if (interactingPlayer[1] != null)
-        {
-            UsePost(1);
+            timerDisplay.gameObject.SetActive(false);
+            DropItems();
+            workTimer = workTimerBase;
         }
     }
 
-    private void UsePost(int playerID)
+    //Fixing the item is done when the item is placed on the workbench
+
+    public override void PlaceItem(Watch itemToPlace)
     {
-        //TODO Examining a watch for a list of components;
-        if (interactingPlayer[playerID] != null && timer <= -1)
+        for (int i = 0; i < numberOfSlots; i++)
         {
-            if (Input.GetButton("Pickup" + interactingPlayer[playerID].playerNumber)
-                
-                )
+            if (itemSlots[i] == null)
             {
-                //Is the item valid for examination
-                // if (interactingPlayer[playerID].droppedItemActivator.child.knownState 
-                //     && interactingPlayer[playerID].droppedItemActivator.child.unfixable
-                //     && interactingPlayer[playerID].droppedItemActivator.child.itemID > 10)
-                // {
-                //     timer = timerBase;
-                //     item = interactingPlayer[playerID].droppedItemActivator;
-                //     //itemSlot.sprite = null;
-                //
-                //     interactingPlayer[playerID].ClearItem();
-                //
-                //     item.child.broken = false;
-                //     item.child.unfixable = false;
-                // }
+                if (itemToPlace.WatchItem.State == ItemState.Unfixable)
+                {
+                    invalidItemInside = false;
+                    itemToPlace.WatchItem.State = ItemState.Repaired;
+                }
+                else
+                {
+                    invalidItemInside = true;
+                }
+
+                itemSlots[i] = itemToPlace;
+                itemToPlace.gameObject.SetActive(false);
+                break;
             }
-        }
-    }
-
-    private void DropItems()
-    {
-        // if (item != null)
-        // {
-        //     Vector3 direction = Vector3.zero;
-        //     direction = new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(1, 3), 0);
-        //     item.transform.position = transform.position + direction;
-        //     item.SetChildState(true);
-        //     item = null;
-        // }
-        //itemSlot.sprite = null;
-        timer = -1;
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        playerInRange = true;
-        if (interactingPlayer[0] == null)
-        {
-            interactingPlayer[0] = collision.GetComponent<Player>();
-            //interactingPlayer[0].isByWorkbench = true;
-        }
-        else
-        {
-            interactingPlayer[1] = collision.GetComponent<Player>();
-           // interactingPlayer[1].isByWorkbench = true;
-        }
-
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        playerInRange = false;
-        if (interactingPlayer[0] == collision.GetComponent<Player>())
-        {
-            //interactingPlayer[0].isByWorkbench = false;
-            interactingPlayer[0] = null;
-        }
-        else
-        {
-            //interactingPlayer[1].isByWorkbench = false;
-            interactingPlayer[1] = null;
-        }
-
+        }        
     }
 }

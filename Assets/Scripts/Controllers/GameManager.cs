@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviour
     public List<SaveData.Flag> trophies = new List<SaveData.Flag>();
 
     //A data type for holding workbench recipies
-    
+
 
     //ALL recipies for the "basic" workbench
     //They work both ways, according to the workbench's functionality
