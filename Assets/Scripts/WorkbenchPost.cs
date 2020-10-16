@@ -38,6 +38,7 @@ public class WorkbenchPost : Workbench
         //There will be different particle fx for dropping valid and invalid items
         if(invalidItemInside && workTimer <= (workTimerBase / 10))
         {
+            timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
         }

@@ -501,7 +501,7 @@ GameObject:
   - component: {fileID: 2141297325}
   m_Layer: 0
   m_Name: WorkberchSimple
-  m_TagString: Untagged
+  m_TagString: Workbench
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -521,6 +521,7 @@ Transform:
   - {fileID: 3408346833037994453}
   - {fileID: 3408346831919852514}
   - {fileID: 1308071321}
+  - {fileID: 6807822505973014525}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -531,7 +532,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3408346832450855083}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IsTrigger: 0
@@ -638,16 +639,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46ddbf8d360521648a08fe40aa731f86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: []
-  playerInRange: 0
-  interactingPlayer: []
-  timerBase: 0.7
-  timer: -1
-  itemSlots:
-  - {fileID: 3408346833174734373}
-  - {fileID: 3408346833037994452}
-  - {fileID: 3408346831919852513}
+  numberOfSlots: 0
+  workTimerBase: 1
+  dropLocation: {fileID: 6807822505973014525}
   timerDisplay: {fileID: 849230220}
+  WatchTemplate: {fileID: 8284863839568129727, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+    type: 3}
+  isOperated: 0
 --- !u!1 &3408346833037994475
 GameObject:
   m_ObjectHideFlags: 0
@@ -810,3 +808,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &5096868457903842310
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6807822505973014525}
+  m_Layer: 0
+  m_Name: DropLocation
+  m_TagString: Untagged
+  m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6807822505973014525
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5096868457903842310}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.1, y: 1.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3408346832450855056}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
