@@ -850,7 +850,6 @@ GameObject:
   - component: {fileID: 1081977363}
   - component: {fileID: 1081977362}
   - component: {fileID: 1081977361}
-  - component: {fileID: 1081977365}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -941,36 +940,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1081977365
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1081977360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d413238cf5b9e944f877c93eb9a637e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  watch: {fileID: 0}
-  background: {fileID: 220573008}
-  componentList: {fileID: 220573006}
-  watchImg: {fileID: 1584109566}
-  casingImg: {fileID: 1381590601}
-  mechImg:
-  - {fileID: 2111447070}
-  - {fileID: 1699521964}
-  decorImg: {fileID: 244196644}
-  mechComponentImg:
-  - {fileID: 483328086}
-  - {fileID: 5962046}
-  - {fileID: 558239504}
-  casingComponentImg:
-  - {fileID: 634826089}
-  - {fileID: 2068642318}
-  - {fileID: 1378738283}
-  nullImg: {fileID: 21300000, guid: 36c7df01602a85a4f913bfc800ef5b38, type: 3}
 --- !u!1 &1183991886
 GameObject:
   m_ObjectHideFlags: 0
@@ -2669,6 +2638,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb158cbfebb64ef4c939e29a8fd45da7, type: 3}
+--- !u!4 &6411218945539202952 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4127051505231375702, guid: cb158cbfebb64ef4c939e29a8fd45da7,
+    type: 3}
+  m_PrefabInstance: {fileID: 7043351451402302174}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &6411218945539202957 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4127051505231375699, guid: cb158cbfebb64ef4c939e29a8fd45da7,
@@ -2684,12 +2659,6 @@ SpriteRenderer:
 --- !u!212 &6411218945971966576 stripped
 SpriteRenderer:
   m_CorrespondingSourceObject: {fileID: 4127051504290439342, guid: cb158cbfebb64ef4c939e29a8fd45da7,
-    type: 3}
-  m_PrefabInstance: {fileID: 7043351451402302174}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6411218945539202952 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4127051505231375702, guid: cb158cbfebb64ef4c939e29a8fd45da7,
     type: 3}
   m_PrefabInstance: {fileID: 7043351451402302174}
   m_PrefabAsset: {fileID: 0}

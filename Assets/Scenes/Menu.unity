@@ -528,7 +528,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea4ab521570796247bda6cdcf38bb3ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerDisplay: {fileID: 0}
+  timerDisplay: {fileID: 1273729217}
   pointDisplay: {fileID: 5866492451885296351}
   pointDisplayEnd: {fileID: 5866492451885296351}
   HUD: {fileID: 5866492451885296350}
@@ -755,6 +755,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1228090434}
   m_CullTransparentMesh: 0
+--- !u!114 &1273729217 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 144637590, guid: e5cbe9d1804311b4ba663e446bea231e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5866492451885296348}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1380715719
 GameObject:
   m_ObjectHideFlags: 0
@@ -1900,7 +1912,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1081977365, guid: e5cbe9d1804311b4ba663e446bea231e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e5cbe9d1804311b4ba663e446bea231e, type: 3}
 --- !u!4 &5866492451885296349 stripped
 Transform:
