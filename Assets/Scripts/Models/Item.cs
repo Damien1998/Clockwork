@@ -10,8 +10,7 @@ public class Item : ScriptableObject
     private ItemState state = ItemState.UnknownState;
     private Action<Item> itemStateChangeCb;
     
-    //A true state that should be only used when item leaves the unknown state
-    public ItemState TrueState;
+   
     
     public int itemID;
     public Sprite itemImage;

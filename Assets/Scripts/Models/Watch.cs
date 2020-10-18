@@ -10,6 +10,8 @@ using Random = UnityEngine.Random;
 public class Watch : MonoBehaviour
 {
     private Item myItem;
+    //A true state that should be only used when item leaves the unknown state
+    public ItemState TrueState;
     public Item WatchItem
     {
         get => myItem;

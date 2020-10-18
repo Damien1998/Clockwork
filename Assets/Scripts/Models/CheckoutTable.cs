@@ -57,6 +57,7 @@ public class CheckoutTable : MonoBehaviour
         var newItem = ScriptableObject.CreateInstance<Item>();
         newItem.SetParameters(workbenchWatchList.listOfWatches[watchIndex]);
         newWatch.GetComponent<Watch>().WatchItem = newItem;
+        newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
