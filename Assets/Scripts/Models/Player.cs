@@ -30,7 +30,7 @@ public class Player : MonoBehaviour
     private float pickupRange;
     
 
-    private int itemToPickUpID;
+    private int itemToPickUpID = 0;
     //private Activator itemToPickUp;
 
     private bool lockMovement;
@@ -59,41 +59,53 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
     }
-
+    private Collider2D[] nearbyItems = null;
     void PickUp()
     {
         //Reworked item pick up mechanic
-        Collider2D[] nearbyItems;
-        if(Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch == null)
+        if (Input.GetButtonDown("Pickup" + playerNumber))
         {
+            lockMovement = true;
             nearbyItems = Physics2D.OverlapCircleAll(transform.position, pickupRange, LayerMask.GetMask("Item"));
-            //nearbyItems = nearbyItems.OrderBy(item => item.transform.parent.position.y).ToArray();
+            nearbyItems = nearbyItems.OrderBy(item => item.transform.position.y).ToArray();
             Array.Reverse(nearbyItems);
-        
-            if(nearbyItems != null && nearbyItems.Length > 0)
+            if (nearbyItems.Length > 0)
             {
+                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
+            }
+        }
+        if (nearbyItems != null && nearbyItems.Length > 0&&Input.GetButtonDown("Action" + playerNumber))
+        {
+            
+            if (itemToPickUpID < nearbyItems.Length - 1)
+            {
+                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
+                itemToPickUpID++;
+                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
+            }
+            else
+            {
+                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
                 itemToPickUpID = 0;
-                PickUpItem(nearbyItems[0].gameObject);
-                if (HeldWatch == null)
-                {
-                    lockMovement = true;
-                    if(Input.GetButtonDown("Action" + playerNumber))
-                    {
-                        itemToPickUpID++;
-                        if(itemToPickUpID >= nearbyItems.Length)
-                        {
-                            itemToPickUpID = 0;
-                        }
-                    }
-                    lockMovement = false;
-                }
-            }         
+                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
+            }
+        }
+        if(nearbyItems != null && Input.GetButtonUp("Pickup" + playerNumber))
+        {
+            if (itemToPickUpID < nearbyItems.Length)
+            {
+                PickUpItem(nearbyItems[itemToPickUpID].gameObject);
+                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
+            }
+            itemToPickUpID = 0;
+            nearbyItems = null;
+            lockMovement = false;
         }
     }
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch == null)
+        if (HeldWatch == null)
         {
             PickUp();
         }
@@ -199,7 +211,6 @@ public class Player : MonoBehaviour
     private void PickUpItem(GameObject pickedupItem)
     {
         HeldWatch = pickedupItem;
-        HeldWatch.GetComponent<Watch>().isSelected = true;
         pickedupItem.transform.position = ItemPosition.position;
         pickedupItem.transform.SetParent(transform);
         animator.SetBool("carriesItem", true);

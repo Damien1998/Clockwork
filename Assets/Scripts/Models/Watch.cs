@@ -27,8 +27,17 @@ public class Watch : MonoBehaviour
     public SpriteRenderer itemRenderer;
 
     public SpriteRenderer stateRenderer;
-    
-    public bool isSelected;
+    private bool selected;
+
+    public bool isSelected
+    {
+        get => selected;
+        set
+        {
+            selected = value;
+            OnSelectChange();
+        }
+    }
 
     private void OnItemChange(Item changedItem)
     {
@@ -49,6 +58,18 @@ public class Watch : MonoBehaviour
         else if (item.State == ItemState.Broken) stateRenderer.sprite = GameManager.instance.brokenImage;
         else if (item.State == ItemState.Repaired) stateRenderer.sprite = GameManager.instance.repairedImage;
         else stateRenderer.sprite = null;
+    }
+
+    private void OnSelectChange()
+    {
+        if (isSelected == true)
+        {
+            itemRenderer.color = Color.black;;
+        }
+        else
+        {
+            itemRenderer.color = Color.white;
+        }
     }
 }
 
