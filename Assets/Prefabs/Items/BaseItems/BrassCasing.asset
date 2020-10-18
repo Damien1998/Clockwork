@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d192423e1dca95b42b54e70fffb8d9cf, type: 3}
+  m_Name: BrassCasing
+  m_EditorClassIdentifier: 
+  TrueState: 2
+  itemID: 7
+  itemImage: {fileID: 21300000, guid: 6cabccb4aff75d5429469148a79c79a1, type: 3}
+  components:
+  - {fileID: 11400000, guid: 0eebd0243758dcb4d8206a54f7b9d795, type: 2}
+  - {fileID: 11400000, guid: 9c40193b61a85534887b813304fd1ca3, type: 2}
+  - {fileID: 11400000, guid: e11960075c8d3e3418aab03f817cc429, type: 2}
+  componentsStates: 

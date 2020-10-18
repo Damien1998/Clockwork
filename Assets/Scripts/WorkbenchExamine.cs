@@ -51,14 +51,16 @@ public class WorkbenchExamine : Workbench
         {
             if (itemSlots[i] == null)
             {
+                Debug.Log(itemToPlace.WatchItem.State);
                 //I need to figure out a better way to check if an item is a watch
                 if (itemToPlace.WatchItem.State == ItemState.UnknownState
                     || itemToPlace.WatchItem.itemID < 5)
                 {
                     invalidItemInside = false;
-                    if(itemToPlace.WatchItem.components == null)
+                    if(itemToPlace.WatchItem.components.Count == 0)
                     {
                         itemToPlace.WatchItem.State = itemToPlace.WatchItem.TrueState;
+                        Debug.Log(itemToPlace.WatchItem.State);
                     }
                     else if(itemToPlace.WatchItem.itemID < 5)
                     {

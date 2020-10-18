@@ -237,19 +237,4 @@ public class GameManager : MonoBehaviour
         }
     }
 }
-[CreateAssetMenu(fileName = "New Recipe", menuName = "Recipe")]
-public class Recipe : ScriptableObject
-{
-    public List<int> ItemsID = new List<int>();
 
-    /// <summary>
-    /// It's an array for less clunky management, but it has to have 3 items inside
-    /// Input '-1' as IDs for blank items
-    /// I.e. when a recipe only takes two or one item to make
-    /// PLEASE sort the values and put blank items at the end
-    /// </summary>       
-    //Recipe result item ID
-    public Watch resultWatch;
-
-    //Required part IDs
-}

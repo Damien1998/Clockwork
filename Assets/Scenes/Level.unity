@@ -1613,6 +1613,23 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7284431902967774191, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: RecipesList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284431902967774191, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: RecipesList.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: e04df337f91c6594495dad22a860ce4a,
+        type: 2}
+    - target: {fileID: 7284431902967774191, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: RecipesList.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: c1e9810a748dbe84f98f82c47bf60c5c,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5cbe9d1804311b4ba663e446bea231e, type: 3}
 --- !u!4 &7043351449790726521 stripped
