@@ -58,7 +58,7 @@ public class WorkbenchExamine : Workbench
                     invalidItemInside = false;
                     if(itemToPlace.WatchItem.components == null)
                     {
-                        itemToPlace.WatchItem.State = itemToPlace.WatchItem.TrueState;
+                        itemToPlace.WatchItem.State = itemToPlace.TrueState;
                     }
                     else if(itemToPlace.WatchItem.itemID < 5)
                     {
