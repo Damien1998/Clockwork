@@ -65,16 +65,18 @@ public class WorkbenchBasic : Workbench
         {
             SortItems();
 
-            for (int i = 0; i < GameManager.instance.basicRecipes.Length; i++)
+            for (int i = 0; i < GameManager.instance.RecipesList.Count; i++)
             {
+                Debug.Log("Trying a recipe");
                 var recipeFilled = true;               
 
                 for (int j = 0; j < itemSlots.Length; j++)
                 {
-                    if ((itemSlots[j] != null && itemSlots[j].WatchItem.itemID != GameManager.instance.basicRecipes[i].ItemsID[j])
-                        || (itemSlots[j] == null && itemSlots[j].WatchItem.itemID != -1)
+                    if ((itemSlots[j] != null && GameManager.instance.RecipesList[i].Items.Count > j && itemSlots[j].WatchItem.itemID != GameManager.instance.RecipesList[i].Items[j].itemID)
+                        || (itemSlots[j] == null && GameManager.instance.RecipesList[i].Items.Count <= j)
                         || (itemSlots[j] != null && itemSlots[j].WatchItem.State != ItemState.Repaired))
                     {
+                        Debug.Log("Uh-oh, bad item");
                         recipeFilled = false;
                     }                  
                 }
@@ -84,7 +86,9 @@ public class WorkbenchBasic : Workbench
                     EmptySlot(0);
                     EmptySlot(1);
                     EmptySlot(2);
-                    itemSlots[0] = Instantiate(GameManager.instance.basicRecipes[i].resultWatch, transform.position, Quaternion.identity);             
+                    //itemSlots[0] = Instantiate(GameManager.instance.basicRecipes[i].resultWatch, transform.position, Quaternion.identity);     
+                    itemSlots[0] = GenerateItem(GameManager.instance.RecipesList[i].result);
+                    itemSlots[0].WatchItem.State = itemSlots[0].WatchItem.TrueState;
                     break;
                 }
             }

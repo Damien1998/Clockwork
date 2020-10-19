@@ -61,7 +61,7 @@ public class WorkbenchPrecise : Workbench
         {
             if (itemSlots[0] != null)
             {
-                if(itemSlots[0].WatchItem.State == ItemState.Broken && itemSlots[0].WatchItem.components == null)
+                if(itemSlots[0].WatchItem.State == ItemState.Broken && itemSlots[0].WatchItem.components.Count == 0)
                 {
                     itemSlots[0].WatchItem.State = ItemState.Repaired;
                 }
@@ -70,7 +70,7 @@ public class WorkbenchPrecise : Workbench
                     itemSlots[0].WatchItem.State = ItemState.EmptyState;
                     for(int i = 0; i < itemSlots[0].WatchItem.components.Count; i++)
                     {
-                        itemSlots[i] = GenerateItem(itemSlots[0].WatchItem.components[i]);
+                        itemSlots[i+1] = GenerateItem(itemSlots[0].WatchItem.components[i]);
                     }
                 }
             }
