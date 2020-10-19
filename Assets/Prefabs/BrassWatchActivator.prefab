@@ -57,7 +57,7 @@ GameObject:
   - component: {fileID: 176319921130250917}
   - component: {fileID: 3911523069226549724}
   - component: {fileID: 8334157625425465239}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BrassWatch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,29 +168,28 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
-  repairedImage: {fileID: 21300000, guid: 4a1c843fb750af3479c0b23312126593, type: 3}
-  brokenImage: {fileID: 21300000, guid: 31a4134c87e8fbb45aebf7d394c608fc, type: 3}
-  unfixableImage: {fileID: 21300000, guid: 706862c5c50162a47801f294e280133b, type: 3}
-  unknownImage: {fileID: 21300000, guid: d0308379e3603ef4c9d46a19c90235d3, type: 3}
   stateSprite: {fileID: 4497032569066615410}
   itemID: 2
   broken: 1
   unfixable: 0
   knownState: 1
-  playerCollided: 0
+  playerInRange: 0
   interactingPlayer: []
+  isSelected: 0
   activator: {fileID: 3613986200408245335}
   casingBroken: 0
   mechanismBroken: 0
   hasDecor: 0
   componentBroken: 
   hasMechComponent: 
+  examined: 0
   componentOrder: 00000000010000000200000003000000040000000500000006000000
   componentOrderNoDecor: 000000000100000002000000030000000400000005000000
-  componentsBroken: 0
+  componentsToRepair: 0
   casingID: 0
   componentID: 070000000a000000
   mechComponentID: 
+  testMode: 0
 --- !u!1 &8280592619637975428
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +200,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9135195751165052067}
   - component: {fileID: 4497032569066615410}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: State
   m_TagString: Untagged
   m_Icon: {fileID: 0}

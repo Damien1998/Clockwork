@@ -217,16 +217,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: decae2e2e489bd349af59d5c88df3fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ItemPosition: {fileID: 0}
   playerNumber: 1
-  speed: {x: 6, y: 6}
-  body: {fileID: 0}
-  carriedItem: {fileID: 0}
-  carriesItem: 0
-  freeToPickup: 1
-  itemSprite: {fileID: 4127051504290439342}
-  itemStateSprite: {fileID: 4127051505751657688}
-  droppedItemActivator: {fileID: 0}
+  moveSpeed: 8
+  dashSpeed: 28
+  pickupRange: 1
   isByWorkbench: 0
+  dashDuration: 0.08
 --- !u!95 &2037045816
 Animator:
   serializedVersion: 3
