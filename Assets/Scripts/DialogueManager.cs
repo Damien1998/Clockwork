@@ -60,7 +60,7 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
-    private void ExitDialogue()
+    public void ExitDialogue()
     {
         dialogueBox.SetActive(false);
     }
