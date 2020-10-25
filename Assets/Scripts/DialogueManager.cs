@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using UnityEditor;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -65,6 +65,13 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.SetActive(false);
     }
 
+    public void AcceptQuest(Item WatchToMake)
+    {
+        if (GameManager.instance.sideQuestActive == false)
+        {
+         GameManager.instance.StartQuest("Epic Quest",WatchToMake);
+        }
+    }
     public void StartDialogue(string fileName)
     {
         if (File.Exists(Application.persistentDataPath + "/dialogue/" + fileName + ".txt"))
@@ -161,7 +168,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (dialogue[currentLine].StartsWith("--quest_start"))
             {
-                GameManager.instance.StartQuest(dialogue[currentLine].Replace("--quest_start ", ""));
+                GameManager.instance.StartQuest(dialogue[currentLine].Replace("--quest_start ", ""),null);
             }
             else if (dialogue[currentLine].StartsWith("--poi"))
             {

@@ -9,9 +9,9 @@ public class Item : ScriptableObject
 {
     private ItemState state = ItemState.UnknownState;
     private Action<Item> itemStateChangeCb;
-    
-   
-    
+
+
+    public ItemState TrueState;
     public int itemID;
     public Sprite itemImage;
     public List<Item> components = new List<Item>();

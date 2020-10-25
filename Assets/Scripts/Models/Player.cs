@@ -63,6 +63,7 @@ public class Player : MonoBehaviour
     void PickUp()
     {
         //Reworked item pick up mechanic
+        //First checks for input and Locks movement then Searches for items in Range and sorts them accordingly to their position
         if (Input.GetButtonDown("Pickup" + playerNumber))
         {
             lockMovement = true;
@@ -74,6 +75,7 @@ public class Player : MonoBehaviour
                 nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
             }
         }
+        //After the first action if player is performing secondary action ie right click it highlights the item in sorted list
         if (nearbyItems != null && nearbyItems.Length > 0&&Input.GetButtonDown("Action" + playerNumber))
         {
             
@@ -90,12 +92,12 @@ public class Player : MonoBehaviour
                 nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
             }
         }
+        //At the end checks if player is not holding a button anymore and picksup  highlighted item
         if(nearbyItems != null && Input.GetButtonUp("Pickup" + playerNumber))
         {
             if (itemToPickUpID < nearbyItems.Length)
             {
                 PickUpItem(nearbyItems[itemToPickUpID].gameObject);
-                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
             }
             itemToPickUpID = 0;
             nearbyItems = null;

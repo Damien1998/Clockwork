@@ -1990,6 +1990,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7284431902967774191, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: sideQuests.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7284431902967774191, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: sideQuests.Array.data[0].name
+      value: Epic Quest
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1081977365, guid: e5cbe9d1804311b4ba663e446bea231e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e5cbe9d1804311b4ba663e446bea231e, type: 3}

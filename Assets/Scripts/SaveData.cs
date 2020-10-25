@@ -43,6 +43,7 @@ public class SaveData
         public string name;
         public bool completed;
         public bool found;
+        public Item itemToMake;
 
         //Use for adding side quests
         public SideQuest(string questName)
@@ -50,14 +51,16 @@ public class SaveData
             name = questName;
             completed = false;
             found = false;
+            itemToMake = null;
         }
 
         //Use for modifying data
-        public SideQuest(string questName, bool questCompleted, bool questFound)
+        public SideQuest(string questName, bool questCompleted, bool questFound, Item ItemToMake)
         {
             name = questName;
             completed = questCompleted;
             found = questFound;
+            itemToMake = ItemToMake;
         }
     }
 

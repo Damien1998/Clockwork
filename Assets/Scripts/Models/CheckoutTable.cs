@@ -22,7 +22,8 @@ public class CheckoutTable : MonoBehaviour
         //This way we can make list of watches that will be used instantly
         //If you want to change the order which the watches spawn in go into "Assets/Prefabs/WatchOrderLists/Level" directory
         workbenchWatchList = (WatchList)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/WatchOrderLists/Level" + GameManager.instance.levelID +".asset", typeof(WatchList));
-        ThrowNewWatch();
+        ThrowNewWatch(workbenchWatchList.listOfWatches[watchIndex]);
+        CheckForQuests();
     }
     /*
      * PS
@@ -38,10 +39,18 @@ public class CheckoutTable : MonoBehaviour
         if (CheckWatch(returnedWatch) == true)
         {
                 watchIndex++;
-                ThrowNewWatch();
+                ThrowNewWatch(workbenchWatchList.listOfWatches[watchIndex]);
                 // GameManager.instance.AddPoints(1);      Since the game ends when the point is added as of now i'll just leave it commented 
         }
         
+    }
+
+    private void CheckForQuests()
+    {
+        if (GameManager.instance.sideQuestActive)
+        {
+            ThrowNewWatch(GameManager.instance.sideQuests[0].itemToMake);  
+        }
     }
     /*
     PS
@@ -51,11 +60,11 @@ public class CheckoutTable : MonoBehaviour
     Sadly as of now it does not pool the watch due to the nature of watch components and fact that the watch object constantly changes in scene
     But it can be noted that this might be changed to pooling later on in the production
     */
-    private void ThrowNewWatch()
+    private void ThrowNewWatch(Item itemParameters)
     {
         var newWatch = Instantiate(WatchTemplate, transform.position, Quaternion.identity);
         var newItem = ScriptableObject.CreateInstance<Item>();
-        newItem.SetParameters(workbenchWatchList.listOfWatches[watchIndex]);
+        newItem.SetParameters(itemParameters);
         newWatch.GetComponent<Watch>().WatchItem = newItem;
         newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
     }
