@@ -211,18 +211,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartQuest(string questName)
+    public void StartQuest(string questName,Item QuestItem)
     {
-        for (int i = 0; i < sideQuests.Count; i++)
+        if (sideQuestActive == false)
         {
-            if (sideQuests[i].name == questName)
-            {
-                if(!sideQuests[i].found)
-                {
-                    sideQuests[i] = new SaveData.SideQuest(questName, false, true);
-                }
-                sideQuestActive = true;
-            }
+            sideQuests.Add(new SaveData.SideQuest(questName, false, true,QuestItem));  
+            sideQuestActive = true;
         }
     }
 
@@ -232,7 +226,7 @@ public class GameManager : MonoBehaviour
         {
             if (sideQuests[i].name == questName)
             {
-                sideQuests[i] = new SaveData.SideQuest(questName, true, true);
+                sideQuests[i] = new SaveData.SideQuest(questName, true, true,null);
             }
         }
     }

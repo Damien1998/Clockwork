@@ -16,7 +16,6 @@ public class SceneController : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(this);
         }
         if(SceneManager.GetActiveScene().buildIndex != 0 && SceneManager.GetActiveScene().buildIndex != 2)
         {
