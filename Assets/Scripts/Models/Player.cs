@@ -34,8 +34,16 @@ public class Player : MonoBehaviour
     //private Activator itemToPickUp;
 
     private bool lockMovement;
+
+    //We wanted to handle interaction from the side of the player 
+    //having a bool for every type of interactable object in the workshop feels clunky
+    //Especially if some more of them will be there
+    //Idk what to do
     public bool isByWorkbench;
+    public bool isByLevelStart;
     private Workbench nearbyWorkbench;
+    private LevelStart nearbyLevelStart;
+    
 
     [SerializeField]
     private float dashDuration;
@@ -77,8 +85,7 @@ public class Player : MonoBehaviour
         }
         //After the first action if player is performing secondary action ie right click it highlights the item in sorted list
         if (nearbyItems != null && nearbyItems.Length > 0&&Input.GetButtonDown("Action" + playerNumber))
-        {
-            
+        {         
             if (itemToPickUpID < nearbyItems.Length - 1)
             {
                 nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
@@ -121,6 +128,13 @@ public class Player : MonoBehaviour
             {
                 DropItem();
             }
+        }
+
+        if(isByLevelStart && Input.GetButtonDown("Action" + playerNumber))
+        {
+            nearbyLevelStart.StartLevel();
+            nearbyLevelStart = null;
+            isByLevelStart = false;
         }
 
         if(isByWorkbench && Input.GetButton("Action" + playerNumber))
@@ -228,51 +242,13 @@ public class Player : MonoBehaviour
     }
 
     private void PlaceItemInWorkbench()
-    {
-        nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
+    {       
         HeldWatch.GetComponent<Watch>().isSelected = false;
         HeldWatch.transform.SetParent(null);
+        nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
     }
-
-    //Drops the currently held item
-    // public void DropItem()
-    // {
-    //     //Places the held item in-world
-    //     HeldWatch.transform.position = transform.position;
-    //     HeldWatch.isSelected = false;
-    //
-    //     //Resets the state of the player-held item  
-    //     //itemToPickUp = null;
-    //     HeldWatch = null;
-    //     itemSprite.sprite = null;
-    //     itemStateSprite.sprite = null;
-    //     carriesItem = false;
-    //     freeToPickup = false;
-    // }
-
-    //Clears the currently held item
-    // public void ClearItem()
-    // {
-    //     //Resets the state of the player-held item  
-    //     HeldWatch = null;
-    //     itemSprite.sprite = null;
-    //     itemStateSprite.sprite = null;
-    //     carriesItem = false;
-    //     freeToPickup = false;
-    // }
-    //
-    // //Picks up the specified item
-    // public void PickupItem(Sprite itemImage, Sprite itemState, Watch itemToPickup)
-    // {
-    //     //Sets the state of the player-held item
-    //     HeldWatch = itemToPickup;
-    //     itemSprite.sprite = itemImage;
-    //     itemStateSprite.sprite = itemState;
-    //     carriesItem = true;
-    //     freeToPickup = false;
-    // }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -280,6 +256,11 @@ public class Player : MonoBehaviour
         {
             nearbyWorkbench = collision.GetComponent<Workbench>();
             isByWorkbench = true;
+        }
+        else if (collision.CompareTag("LevelStart"))
+        {
+            nearbyLevelStart = collision.GetComponent<LevelStart>();
+            isByLevelStart = true;
         }
     }
 
@@ -295,8 +276,12 @@ public class Player : MonoBehaviour
             nearbyWorkbench = null;
             isByWorkbench = false;
         }
+        else if (collision.CompareTag("LevelStart"))
+        {
+            nearbyLevelStart = null;
+            isByLevelStart = false;
+        }
     }
-
 
     public void OnCollisionEnter2D(Collision2D collision)
     {

@@ -5,11 +5,11 @@ using UnityEditor;
 using UnityEngine;
 
 //Refactoring is done! You may enter safely
-public class CheckoutTable : MonoBehaviour
+public class CheckoutTable : Workbench
 {
     private int watchIndex = 0;
     private WatchList workbenchWatchList;
-    public GameObject WatchTemplate;
+    //public GameObject WatchTemplate;
 
     void Start()
     {
@@ -33,6 +33,7 @@ public class CheckoutTable : MonoBehaviour
      * Currently because of no easy way to access the and store the item that player holds i used the currentWatch variable as a storage
      * Possibly in the future it would be more efficient and comfortable if we had one method to handle putting watches in the workbenches
      */
+     /**
     private void ReturningWatches(Watch returnedWatch)
     {
         returnedWatch.transform.position = transform.position;
@@ -42,6 +43,25 @@ public class CheckoutTable : MonoBehaviour
                 ThrowNewWatch(workbenchWatchList.listOfWatches[watchIndex]);
                 // GameManager.instance.AddPoints(1);      Since the game ends when the point is added as of now i'll just leave it commented 
         }
+        
+    }
+    **/
+
+    public override void PlaceItem(Watch itemToPlace)
+    {
+        
+        if(CheckWatch(itemToPlace) == true)
+        {
+            //I'm not sure whether we really need that there:
+            //base.PlaceItem(itemToPlace);
+            watchIndex++;
+            Destroy(itemToPlace.gameObject);
+            ThrowNewWatch(workbenchWatchList.listOfWatches[watchIndex]);
+        }
+    }
+
+    protected override void DropItems()
+    {
         
     }
 
@@ -68,6 +88,9 @@ public class CheckoutTable : MonoBehaviour
         newWatch.GetComponent<Watch>().WatchItem = newItem;
         newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
     }
+
+    //Placing items in done on the side of the player
+    /**
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.TryGetComponent(out Watch watch)&&!watch.isSelected)
@@ -75,6 +98,7 @@ public class CheckoutTable : MonoBehaviour
             ReturningWatches(watch);
         }
     }
+    **/
     /*
      PS
      <summary>

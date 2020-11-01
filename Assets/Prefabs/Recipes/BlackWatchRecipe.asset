@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 018f012a2a00ad147983f2668afa75f7, type: 3}
+  m_Name: BlackWatchRecipe
+  m_EditorClassIdentifier: 
+  Items:
+  - {fileID: 11400000, guid: 657fbc44a71c13e46bae439fb9652637, type: 2}
+  - {fileID: 11400000, guid: d05ceb8d0e0abba43812e8cfb9cdcae1, type: 2}
+  result: {fileID: 11400000, guid: d3e97010a27e9a9439c10082e575afb1, type: 2}

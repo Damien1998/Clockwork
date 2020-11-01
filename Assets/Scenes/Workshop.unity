@@ -269,12 +269,12 @@ PrefabInstance:
         type: 3}
       propertyPath: cl
       value: 
-      objectReference: {fileID: 1081977365}
+      objectReference: {fileID: 0}
     - target: {fileID: 6398816823808899267, guid: 5a8c13c37fb4fc04e840ca72c1990b59,
         type: 3}
       propertyPath: watchComponentList
       value: 
-      objectReference: {fileID: 1081977365}
+      objectReference: {fileID: 0}
     - target: {fileID: 6398816823808899267, guid: 5a8c13c37fb4fc04e840ca72c1990b59,
         type: 3}
       propertyPath: WatchTemplate
@@ -483,12 +483,12 @@ PrefabInstance:
         type: 3}
       propertyPath: cl
       value: 
-      objectReference: {fileID: 1081977365}
+      objectReference: {fileID: 0}
     - target: {fileID: 6398816823808899267, guid: 5a8c13c37fb4fc04e840ca72c1990b59,
         type: 3}
       propertyPath: watchComponentList
       value: 
-      objectReference: {fileID: 1081977365}
+      objectReference: {fileID: 0}
     - target: {fileID: 6398816823808899267, guid: 5a8c13c37fb4fc04e840ca72c1990b59,
         type: 3}
       propertyPath: WatchTemplate
@@ -912,18 +912,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1081977365 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1081977365, guid: e5cbe9d1804311b4ba663e446bea231e,
-    type: 3}
-  m_PrefabInstance: {fileID: 7043351449790726520}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d413238cf5b9e944f877c93eb9a637e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1174739763
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1370,12 +1358,12 @@ PrefabInstance:
         type: 3}
       propertyPath: cl
       value: 
-      objectReference: {fileID: 1081977365}
+      objectReference: {fileID: 0}
     - target: {fileID: 6398816823808899267, guid: 5a8c13c37fb4fc04e840ca72c1990b59,
         type: 3}
       propertyPath: watchComponentList
       value: 
-      objectReference: {fileID: 1081977365}
+      objectReference: {fileID: 0}
     - target: {fileID: 6398816823808899267, guid: 5a8c13c37fb4fc04e840ca72c1990b59,
         type: 3}
       propertyPath: WatchTemplate
@@ -1588,6 +1576,11 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1985302574302679630, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
+        type: 3}
+      propertyPath: m_TagString
+      value: LevelStart
+      objectReference: {fileID: 0}
     - target: {fileID: 1985302574302679731, guid: 6a1b2258b0bb31d48b8bd47c4c6901b1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1664,8 +1657,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7beb1011109803c4a9e925dbd3015089, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerInRange: 0
-  interactingPlayer: []
   levelID: 1
 --- !u!1001 &7043351449790726520
 PrefabInstance:
@@ -1687,12 +1678,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LoadStuff
       objectReference: {fileID: 0}
-    - target: {fileID: 7043351449963490436, guid: e5cbe9d1804311b4ba663e446bea231e,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000,
-        type: 0}
     - target: {fileID: 7043351449963490437, guid: e5cbe9d1804311b4ba663e446bea231e,
         type: 3}
       propertyPath: m_LocalPosition.x

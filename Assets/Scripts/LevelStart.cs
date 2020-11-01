@@ -5,56 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class LevelStart : MonoBehaviour
 {
-    public bool playerInRange;
-    public Player[] interactingPlayer;
     public int levelID = 1;
 
     // Start is called before the first frame update
     void Start()
     {
-        interactingPlayer = new Player[2];
-        interactingPlayer[0] = null;
-        interactingPlayer[1] = null;
+        levelID = GameManager.instance.levelID;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(playerInRange && Input.GetButtonDown("Action" + interactingPlayer[0].playerNumber))
-        {
-            SceneManager.LoadScene(levelID);
-        }
+        
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
+    
+    //This will not work in the long run
+    //How about making a consistent scene naming scheme?
+    //WorkshopLevel0, WorkshopLevel1, etc.
+    public void StartLevel()
     {
-        playerInRange = true;
-        if (interactingPlayer[0] == null)
-        {
-            interactingPlayer[0] = collision.GetComponent<Player>();
-            interactingPlayer[0].isByWorkbench = true;
-        }
-        else
-        {
-            interactingPlayer[1] = collision.GetComponent<Player>();
-            interactingPlayer[1].isByWorkbench = true;
-        }
-
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        playerInRange = false;
-        if (interactingPlayer[0] == collision.GetComponent<Player>())
-        {
-            interactingPlayer[0].isByWorkbench = false;
-            interactingPlayer[0] = null;
-        }
-        else
-        {
-            interactingPlayer[1].isByWorkbench = false;
-            interactingPlayer[1] = null;
-        }
-
+        SceneManager.LoadScene("Level");
     }
 }

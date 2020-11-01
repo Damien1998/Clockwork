@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class Workbench : MonoBehaviour
 {
-    //Note: Will we keep using sprites to show items on the bench, or will there be actual items placed there
-
     [SerializeField]
     protected int numberOfSlots;
     protected Watch[] itemSlots;
@@ -21,6 +19,9 @@ public class Workbench : MonoBehaviour
 
     [SerializeField]
     protected Slider timerDisplay;
+
+    [SerializeField]
+    public Transform[] slotPositions;
 
     public GameObject WatchTemplate;
 
@@ -39,7 +40,7 @@ public class Workbench : MonoBehaviour
             if(itemSlots[i] == null)
             {
                 //TODO - actual places for items
-                itemToPlace.transform.position = transform.position;
+                itemToPlace.transform.position = slotPositions[i].position;
                 itemSlots[i] = itemToPlace;
                 //itemToPlace.gameObject.SetActive(false);
                 
@@ -87,8 +88,12 @@ public class Workbench : MonoBehaviour
 
     protected void EmptySlot(int slot)
     {
-        Destroy(itemSlots[slot].gameObject);
-        itemSlots[slot] = null;
+        Debug.Log("Emptying slot: " + slot);
+        if(itemSlots[slot] != null)
+        {
+            Destroy(itemSlots[slot].gameObject);
+            itemSlots[slot] = null;
+        }       
     }
 
     //Sorts items in the workbench by their ID

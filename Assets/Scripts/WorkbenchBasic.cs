@@ -56,7 +56,12 @@ public class WorkbenchBasic : Workbench
                 for (int i = 0; i < currentItem.WatchItem.components.Count; i++)
                 {
                     itemSlots[i] = GenerateItem(currentItem.WatchItem.components[i]);
+                    if(itemSlots[i].WatchItem.TrueState == ItemState.Repaired && itemSlots[0].WatchItem.components.Count != 0)
+                    {
+                        itemSlots[i].WatchItem.State = itemSlots[i].WatchItem.TrueState;
+                    }
                 }
+                Destroy(currentItem.gameObject);
             }           
         }
         //If there are more items, the workbench tries to combine them
@@ -64,6 +69,14 @@ public class WorkbenchBasic : Workbench
         else
         {
             SortItems();
+
+            for (int i = 0; i < itemSlots.Length; i++)
+            {
+                if(itemSlots[i] != null)
+                {
+                    Debug.Log("Slot: " + i + " Item: " + itemSlots[i].WatchItem.itemID);
+                }               
+            }
 
             for (int i = 0; i < GameManager.instance.RecipesList.Count; i++)
             {
@@ -73,10 +86,10 @@ public class WorkbenchBasic : Workbench
                 for (int j = 0; j < itemSlots.Length; j++)
                 {
                     if ((itemSlots[j] != null && GameManager.instance.RecipesList[i].Items.Count > j && itemSlots[j].WatchItem.itemID != GameManager.instance.RecipesList[i].Items[j].itemID)
-                        || (itemSlots[j] == null && GameManager.instance.RecipesList[i].Items.Count <= j)
+                        || (itemSlots[j] == null && GameManager.instance.RecipesList[i].Items.Count < j)
                         || (itemSlots[j] != null && itemSlots[j].WatchItem.State != ItemState.Repaired))
                     {
-                        Debug.Log("Uh-oh, bad item");
+                        //Debug.Log("Uh-oh, bad item: " + itemSlots[j].WatchItem.itemID);
                         recipeFilled = false;
                     }                  
                 }
