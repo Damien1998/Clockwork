@@ -64,11 +64,11 @@ public class Watch : MonoBehaviour
     {
         if (isSelected == true)
         {
-            itemRenderer.color = Color.black;;
+            itemRenderer.material = GameManager.instance.Selected;
         }
         else
         {
-            itemRenderer.color = Color.white;
+            itemRenderer.material = GameManager.instance.NonSelected;
         }
     }
 }

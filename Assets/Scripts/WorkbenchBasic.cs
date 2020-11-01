@@ -88,7 +88,7 @@ public class WorkbenchBasic : Workbench
                     EmptySlot(2);
                     //itemSlots[0] = Instantiate(GameManager.instance.basicRecipes[i].resultWatch, transform.position, Quaternion.identity);     
                     itemSlots[0] = GenerateItem(GameManager.instance.RecipesList[i].result);
-                    itemSlots[0].WatchItem.State = itemSlots[0].WatchItem.TrueState;
+                    itemSlots[0].WatchItem.State = itemSlots[0].WatchItem.trueState;
                     break;
                 }
             }

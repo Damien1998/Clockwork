@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public enum ItemState { Broken,Unfixable,Repaired,UnknownState,EmptyState};
 
@@ -10,8 +11,7 @@ public class Item : ScriptableObject
     private ItemState state = ItemState.UnknownState;
     private Action<Item> itemStateChangeCb;
 
-
-    public ItemState TrueState;
+    public ItemState trueState;
     public int itemID;
     public Sprite itemImage;
     public List<Item> components = new List<Item>();
@@ -36,6 +36,7 @@ public class Item : ScriptableObject
     //</summary>
     public void SetParameters(Item templateitem)
     {
+        this.trueState = templateitem.trueState;
         this.state = templateitem.state;
         this.components = templateitem.components;
         this.itemID = templateitem.itemID;

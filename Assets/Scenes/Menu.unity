@@ -121,6 +121,80 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &1625425
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2319434836598225803, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 699dddccea2eab64cb2fac7c5a840f92, type: 2}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -141.47137
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -155.39256
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4433641487428653035, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8284863839568129727, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
+        type: 3}
+      propertyPath: m_Name
+      value: WatchTemplate
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: de63fe1fc384cf54c89decbfc5f5b5cf, type: 3}
 --- !u!1 &15174695
 GameObject:
   m_ObjectHideFlags: 0
@@ -4510,7 +4584,7 @@ RectTransform:
   - {fileID: 1549386064}
   - {fileID: 1459791123}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -5402,6 +5476,16 @@ PrefabInstance:
       propertyPath: sideQuests.Array.data[0].name
       value: Epic Quest
       objectReference: {fileID: 0}
+    - target: {fileID: 7284431902967774191, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: Selected
+      value: 
+      objectReference: {fileID: 2100000, guid: 699dddccea2eab64cb2fac7c5a840f92, type: 2}
+    - target: {fileID: 7284431902967774191, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: NonSelected
+      value: 
+      objectReference: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 8720315123825185811, guid: e5cbe9d1804311b4ba663e446bea231e,
         type: 3}
       propertyPath: OutputAudioMixerGroup

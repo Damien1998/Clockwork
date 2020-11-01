@@ -15,18 +15,9 @@ public class GameManager : MonoBehaviour
     //The only game manager allowed to stay in this world of flesh
     public static GameManager instance;
 
+    public Material Selected,NonSelected;
     //All state sprites
-    public Sprite repairedImage;
-    public Sprite brokenImage;
-    public Sprite unfixableImage;
-    public Sprite unknownImage;
-    public Sprite complexBrokenImage;
-
-    //Min and max broken individual pieces per watch (the most basic ones)
-    //Currently not used
-    //Will probably be needed for difficulty settings and scaling
-    public int minBrokenPieces = 1;
-    public int maxBrokenPieces = 8;
+    public Sprite repairedImage,brokenImage,unfixableImage,unknownImage,complexBrokenImage;
 
     //Points and timers
     private int points;
