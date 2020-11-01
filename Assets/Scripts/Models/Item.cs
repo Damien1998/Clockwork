@@ -41,7 +41,7 @@ public class Item : ScriptableObject
         this.components = templateitem.components;
         this.itemID = templateitem.itemID;
         this.itemImage = templateitem.itemImage;
-        this.TrueState = templateitem.TrueState;
+        this.trueState = templateitem.trueState;
     }
     public void RegisterItemCallback(Action<Item> callback)
     {
