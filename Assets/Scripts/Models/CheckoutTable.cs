@@ -18,7 +18,7 @@ public class CheckoutTable : Workbench
         //About the WatchList ScriptableObject script
         //</summary>
         //Since we will have more then 1 level expected at the moment of making this
-        //It's more comfortable to have a quick and easy to use object that can specify what kind of watches will spawn in the order that is put in
+        //It's more comfortable to have a quick and easy to use object that can specify whawt kind of watches will spawn in the order that is put in
         //This way we can make list of watches that will be used instantly
         //If you want to change the order which the watches spawn in go into "Assets/Prefabs/WatchOrderLists/Level" directory
         workbenchWatchList = (WatchList)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/WatchOrderLists/Level" + GameManager.instance.levelID +".asset", typeof(WatchList));
