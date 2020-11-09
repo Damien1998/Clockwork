@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-    
+    public GameObject QuickSettingButton;
     public Slider timerDisplay;
     public Text pointDisplay;
     public Text pointDisplayEnd;
@@ -25,6 +25,4 @@ public class UIManager : MonoBehaviour
         
         timerDisplay.gameObject.SetActive(false);
     }
-
-
 }
