@@ -229,13 +229,13 @@ public class Player : MonoBehaviour
         HeldWatch = pickedupItem;
         pickedupItem.transform.position = ItemPosition.position;
         pickedupItem.transform.SetParent(transform);
+        HeldWatch.GetComponent<Watch>().isSelected = false;
         animator.SetBool("carriesItem", true);
     }
 
     private void DropItem()
     {
         HeldWatch.transform.position = transform.position;
-        HeldWatch.GetComponent<Watch>().isSelected = false;
         HeldWatch.transform.SetParent(null); 
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
