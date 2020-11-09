@@ -26,5 +26,9 @@ public class SceneController : MonoBehaviour
             UIManager.instance.HUD.gameObject.SetActive(false);
         }
     }
+    public void LoadMenu()
+    {
+        SceneManager.LoadScene("Menu");
+    }
 
 }
