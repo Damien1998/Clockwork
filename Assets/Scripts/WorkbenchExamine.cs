@@ -8,6 +8,11 @@ public class WorkbenchExamine : Workbench
 {
     private bool invalidItemInside;
 
+    private bool generateList;
+
+    [SerializeField]
+    private ListItem listTemplate;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,9 +57,9 @@ public class WorkbenchExamine : Workbench
             if (itemSlots[i] == null)
             {
                 Debug.Log(itemToPlace.WatchItem.State);
-                //I need to figure out a better way to check if an item is a watch
+                //If the item has 2 layers of components within, it's a watch
                 if (itemToPlace.WatchItem.State == ItemState.UnknownState
-                    || itemToPlace.WatchItem.itemID < 5)
+                    || itemToPlace.WatchItem.components[0].components[0] != null)
                 {
                     invalidItemInside = false;
                     if(itemToPlace.WatchItem.components.Count == 0)
@@ -62,9 +67,9 @@ public class WorkbenchExamine : Workbench
                         itemToPlace.WatchItem.State = itemToPlace.WatchItem.trueState;
                         Debug.Log(itemToPlace.WatchItem.State);
                     }
-                    else if(itemToPlace.WatchItem.itemID < 5)
+                    else if(itemToPlace.WatchItem.components[0].components[0] != null && !itemToPlace.listDone && itemToPlace.TrueState != ItemState.Repaired)
                     {
-                        GenerateComponentList();
+                        generateList = true;
                     }
                 }
                 else
@@ -73,15 +78,49 @@ public class WorkbenchExamine : Workbench
                 }
 
                 itemSlots[i] = itemToPlace;
-                itemToPlace.gameObject.SetActive(false);
+                //itemToPlace.gameObject.SetActive(false);
                 break;
             }
         }
     }
 
-    private void GenerateComponentList()
+    protected override void DropItems()
     {
-        //Here the function will generate the list of watch components
+        ListItem listItem = null;
+        if(generateList)
+        {
+            listItem = GenerateComponentList();
+        }
+
+        if (generateList)
+        {
+            itemSlots[0].listDone = true;
+            if (verticalSpread)
+            {
+                itemSlots[0].transform.position = new Vector3(dropLocation.position.x, dropLocation.position.y - 1f, 0);
+                listItem.transform.position = new Vector3(dropLocation.position.x, dropLocation.position.y + 1f, 0);
+            }
+            else
+            {
+                itemSlots[0].transform.position = new Vector3(dropLocation.position.x - 1f, dropLocation.position.y, 0);
+                listItem.transform.position = new Vector3(dropLocation.position.x + 1f, dropLocation.position.y, 0);
+            }
+        }
+        else
+        {
+            itemSlots[0].transform.position = dropLocation.position;
+        }
+        
+        itemSlots[0] = null;
+        generateList = false;
+    }
+
+    private ListItem GenerateComponentList()
+    {
+        var listItem = Instantiate(listTemplate, transform.position, Quaternion.identity);
+        //var listItemData = itemSlots[0].WatchItem;
+        listItem.GetComponent<ListItem>().examinedItem = itemSlots[0];
+        return listItem.GetComponent<ListItem>();
     }
 
     //I'm leaving this in in case I need it later
