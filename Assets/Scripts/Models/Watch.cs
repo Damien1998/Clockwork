@@ -57,6 +57,7 @@ public class Watch : MonoBehaviour
         else if (item.State == ItemState.Unfixable) stateRenderer.sprite = GameManager.instance.unfixableImage;
         else if (item.State == ItemState.Broken) stateRenderer.sprite = GameManager.instance.brokenImage;
         else if (item.State == ItemState.Repaired) stateRenderer.sprite = GameManager.instance.repairedImage;
+        else if (item.State == ItemState.ComplexBroken) stateRenderer.sprite = GameManager.instance.complexBrokenImage;
         else stateRenderer.sprite = null;
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum ItemState { Broken,Unfixable,Repaired,UnknownState,EmptyState};
+public enum ItemState { Broken,Unfixable,Repaired,UnknownState,ComplexBroken,EmptyState};
 
 [CreateAssetMenu(fileName = "New Item",menuName = "Item")]
 public class Item : ScriptableObject
