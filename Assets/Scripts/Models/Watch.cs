@@ -12,6 +12,7 @@ public class Watch : MonoBehaviour
     private Item myItem;
     //A true state that should be only used when item leaves the unknown state
     public ItemState TrueState;
+    public bool listDone;
     public Item WatchItem
     {
         get => myItem;
@@ -38,6 +39,8 @@ public class Watch : MonoBehaviour
             OnSelectChange();
         }
     }
+
+    
 
     private void OnItemChange(Item changedItem)
     {
