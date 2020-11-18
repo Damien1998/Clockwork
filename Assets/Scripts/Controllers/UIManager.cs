@@ -12,18 +12,6 @@ public class UIManager : MonoBehaviour
     
     public Canvas HUD;
 
-    public GameObject componentList;
-    public List<ListButton> listButtons;
-    public Image watchDisplay, casingDisplay, decorDisplay;
-    public Image[] casingComponentDisplays, mechComponentDisplays;
-
-    public GameObject buttonLayoutGroup;
-    public Button listButtonTemplate;
-
-    public Sprite nothingImage;
-
-    public Watch listItem;
-
     void Start()
     {
         if (instance != null)
@@ -35,6 +23,6 @@ public class UIManager : MonoBehaviour
             instance = this;
         }
         
-        //timerDisplay.gameObject.SetActive(false);
+        timerDisplay.gameObject.SetActive(false);
     }
 }

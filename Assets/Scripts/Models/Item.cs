@@ -11,8 +11,6 @@ public class Item : ScriptableObject
     private ItemState state = ItemState.UnknownState;
     private Action<Item> itemStateChangeCb;
 
-    //public int listID = -1;
-
     public ItemState trueState;
     public int itemID;
     public Sprite itemImage;

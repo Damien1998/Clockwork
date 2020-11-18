@@ -54,26 +54,6 @@ public class CheckoutTable : Workbench
         {
             //I'm not sure whether we really need that there:
             //base.PlaceItem(itemToPlace);
-
-            for(int i = 0; i < UIManager.instance.listButtons.Count; i++)
-            {
-                Debug.Log(UIManager.instance.listButtons[i]);
-                if(UIManager.instance.listButtons[i].examinedWatch.WatchItem.itemID == itemToPlace.WatchItem.itemID)
-                {
-                    if(UIManager.instance.componentList.activeInHierarchy)
-                    {
-                        UIManager.instance.listButtons[i].ToggleList();
-                    }
-                    
-                    Destroy(UIManager.instance.listButtons[i].gameObject);
-
-                    UIManager.instance.listButtons.RemoveAt(i);
-
-                    break;
-                }
-                
-            }
-
             watchIndex++;
             Destroy(itemToPlace.gameObject);
             ThrowNewWatch(workbenchWatchList.listOfWatches[watchIndex]);
