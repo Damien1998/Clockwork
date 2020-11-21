@@ -8,7 +8,7 @@ using UnityEngine;
 public class CheckoutTable : Workbench
 {
     private int watchIndex = 0;
-    private WatchList workbenchWatchList;
+    private LevelParams workbenchLevelParams;
     //public GameObject WatchTemplate;
 
     void Start()
@@ -18,11 +18,11 @@ public class CheckoutTable : Workbench
         //About the WatchList ScriptableObject script
         //</summary>
         //Since we will have more then 1 level expected at the moment of making this
-        //It's more comfortable to have a quick and easy to use object that can specify whawt kind of watches will spawn in the order that is put in
+        //It's more comfortable to have a quick and easy to use object that can specify what kind of watches will spawn in the order that is put in
         //This way we can make list of watches that will be used instantly
-        //If you want to change the order which the watches spawn in go into "Assets/Prefabs/WatchOrderLists/Level" directory
-        workbenchWatchList = (WatchList)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/WatchOrderLists/Level" + GameManager.instance.levelID +".asset", typeof(WatchList));
-        ThrowNewWatch(workbenchWatchList.listOfWatches[watchIndex]);
+        //If you want to change the order which the watches spawn in go into "Assets/Prefabs/LevelParams/Level" directory
+        workbenchLevelParams = (LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + GameManager.instance.levelID +".asset", typeof(LevelParams));
+        ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
         CheckForQuests();
     }
     /*
@@ -56,7 +56,7 @@ public class CheckoutTable : Workbench
             //base.PlaceItem(itemToPlace);
             watchIndex++;
             Destroy(itemToPlace.gameObject);
-            ThrowNewWatch(workbenchWatchList.listOfWatches[watchIndex]);
+            ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
         }
     }
 

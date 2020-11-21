@@ -24,6 +24,7 @@ public class LevelSelect : MonoBehaviour
     public void StartSelectedLevel()
     {
         GameManager.instance.levelID = selectedLevel;
+        UIManager.instance.LevelStart();
         SceneManager.LoadScene(1);
     }
     public void NextLevelSelect()

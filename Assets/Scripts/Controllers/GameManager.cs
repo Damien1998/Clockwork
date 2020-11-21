@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
+using UnityEditor;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using UnityEngine.Serialization;
 
 //Refactoring is done! You may enter safely
 public class GameManager : MonoBehaviour
@@ -23,19 +24,21 @@ public class GameManager : MonoBehaviour
     private int points;
 
     //End of level screen
-    public GameObject endDisplay;
     public List<Recipe> RecipesList = new List<Recipe>();
-    //The timer of doom
-    public float levelTimerBase;
-    private float levelTimer;
-
-    public int levelID;
-    public int pointsToComplete;
-
-    public bool levelCompletionCalled;
-
+    
+    public int levelID 
+    { 
+        get => _levelID;
+        set
+        {
+            _levelID = value;
+            currentLevelParams = (LevelParams) AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + _levelID + ".asset", typeof(LevelParams));
+        } 
+    }
+    
+    public LevelParams currentLevelParams;
+    
     public bool sideQuestActive;
-
     //Save stuff
     //Al the level and POI names will have to be set up manually
     //At least until I find a better way to do it
@@ -52,12 +55,11 @@ public class GameManager : MonoBehaviour
     //ALL recipies for the "basic" workbench
     //They work both ways, according to the workbench's functionality
     public Recipe[] basicRecipes;
-
+    
+    private int _levelID;
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log(Application.persistentDataPath);
-        Time.timeScale = 1f;
         //Keeping the population of game managers in check
         if (instance != null)
         {
@@ -67,8 +69,6 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-
-        levelTimer = 0;
         LoadGame();
         if(!File.Exists(Application.persistentDataPath + "/savefile.clk"))
         {
@@ -81,29 +81,29 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        levelTimer += Time.deltaTime;
-        //float temp = levelTimer / levelTimerBase;
-        //timerDisplay.value = temp;
-        if(points >= pointsToComplete && !levelCompletionCalled)
-        {
-            endDisplay.gameObject.SetActive(true);
-            UIManager.instance.pointDisplayEnd.text = "Czas: " + levelTimer;
-            CompleteLevel();
-            SaveGame();
-            levelCompletionCalled = true;
-            Time.timeScale = 0;
-        }
-    }
+    // void Update()
+    // {
+    //     levelTimer += Time.deltaTime;
+    //     float temp = levelTimer / levelTimerBase;
+    //     timerDisplay.value = temp;
+    //     if(points >= pointsToComplete && !levelCompletionCalled)
+    //     {
+    //         endDisplay.gameObject.SetActive(true);
+    //         UIManager.instance.pointDisplayEnd.text = "Czas: " + levelTimer;
+    //         CompleteLevel();
+    //         SaveGame();
+    //         levelCompletionCalled = true;
+    //         Time.timeScale = 0;
+    //     }
+    // }
 
     public void CompleteLevel()
     {
         Debug.Log("level " + levelID + " complete");
-        if(levelTimer < levels[levelID].completionTime || levels[levelID].completionTime == 0)
-        {
-            levels[levelID] = new SaveData.Level(levels[levelID].name, true, true, levelTimer, levels[levelID].completionTimeSideQuest);
-        }
+        // if(levelTimer < levels[levelID].completionTime || levels[levelID].completionTime == 0)
+        // {
+        //     levels[levelID] = new SaveData.Level(levels[levelID].name, true, true, levelTimer, levels[levelID].completionTimeSideQuest);
+        // }
         
         if(levelID < levels.Count)
         {
@@ -115,11 +115,11 @@ public class GameManager : MonoBehaviour
         Debug.Log(levels[levelID].completed);
     }
 
-    public void AddPoints(int pointAmount)
-    {
-        points += pointAmount;
-        UIManager.instance.pointDisplay.text = "Punkty: " + points;
-    }
+    // public void AddPoints(int pointAmount)
+    // {
+    //     points += pointAmount;
+    //     UIManager.instance.pointDisplay.text = "Punkty: " + points;
+    // }
     
     private void LoadGameData()
     {
