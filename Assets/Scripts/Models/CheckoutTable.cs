@@ -8,7 +8,7 @@ using UnityEngine;
 public class CheckoutTable : Workbench
 {
     private int watchIndex = 0;
-    private LevelParams workbenchLevelParams;
+    [SerializeField]private LevelParams workbenchLevelParams;
     //public GameObject WatchTemplate;
 
     void Start()
@@ -69,7 +69,7 @@ public class CheckoutTable : Workbench
     {
         if (GameManager.instance.sideQuestActive)
         {
-            ThrowNewWatch(GameManager.instance.sideQuests[0].itemToMake);  
+            ThrowNewWatch(GameManager.instance.questItem);  
         }
     }
     /*

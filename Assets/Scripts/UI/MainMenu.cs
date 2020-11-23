@@ -7,32 +7,11 @@ using UnityEngine.SceneManagement;
 //Refactoring is done! You may enter safely
 public class MainMenu : MonoBehaviour
 {
-    public Button[] levelButtons;
-
-    private void Start()
-    {
-        if(levelButtons.Length == GameManager.instance.levels.Count)
-        {
-            for(int i = 0; i < GameManager.instance.levels.Count; i++)
-            {
-                if(GameManager.instance.levels[i].unlocked)
-                {
-                    levelButtons[i].interactable = true;
-                }
-                else
-                {
-                    levelButtons[i].interactable = false;
-                }
-            }
-        }
-    }
-
     public void PlayGame ()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Level");
     }
-
     public void StartLevel(int sceneID)
     {
         Time.timeScale = 1f;
