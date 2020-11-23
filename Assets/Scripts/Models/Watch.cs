@@ -12,7 +12,6 @@ public class Watch : MonoBehaviour
     private Item myItem;
     //A true state that should be only used when item leaves the unknown state
     public ItemState TrueState;
-    public bool listDone;
     public Item WatchItem
     {
         get => myItem;
@@ -40,8 +39,6 @@ public class Watch : MonoBehaviour
         }
     }
 
-    
-
     private void OnItemChange(Item changedItem)
     {
         itemRenderer.sprite = changedItem.itemImage;
@@ -60,6 +57,7 @@ public class Watch : MonoBehaviour
         else if (item.State == ItemState.Unfixable) stateRenderer.sprite = GameManager.instance.unfixableImage;
         else if (item.State == ItemState.Broken) stateRenderer.sprite = GameManager.instance.brokenImage;
         else if (item.State == ItemState.Repaired) stateRenderer.sprite = GameManager.instance.repairedImage;
+        else if (item.State == ItemState.ComplexBroken) stateRenderer.sprite = GameManager.instance.complexBrokenImage;
         else stateRenderer.sprite = null;
     }
 

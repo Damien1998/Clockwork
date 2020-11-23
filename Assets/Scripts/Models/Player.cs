@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
                 nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
             }
         }
-        //At the end checks if player is not holding a button anymore and picks up highlighted item
+        //At the end checks if player is not holding a button anymore and picksup  highlighted item
         if(nearbyItems != null && Input.GetButtonUp("Pickup" + playerNumber))
         {
             if (itemToPickUpID < nearbyItems.Length)
@@ -226,32 +226,16 @@ public class Player : MonoBehaviour
 
     private void PickUpItem(GameObject pickedupItem)
     {
-        if(pickedupItem.CompareTag("ListItem"))
-        {
-            ListItem listItem = pickedupItem.GetComponent<ListItem>();
-            ListButton listButton = Instantiate(UIManager.instance.listButtonTemplate, UIManager.instance.buttonLayoutGroup.transform).GetComponent<ListButton>();
-            UIManager.instance.listButtons.Add(listButton);            
-
-            listButton.examinedWatch = listItem.examinedItem;
-            listButton.ToggleList();
-
-            //UIManager.instance.listButtons = UIManager.instance.listButtons.OrderBy(button => button.examinedWatch.WatchItem.listID).ToList();
-
-            Destroy(pickedupItem);
-        }
-        else
-        {
-            HeldWatch = pickedupItem;
-            pickedupItem.transform.position = ItemPosition.position;
-            pickedupItem.transform.SetParent(transform);
-            animator.SetBool("carriesItem", true);
-        }        
+        HeldWatch = pickedupItem;
+        pickedupItem.transform.position = ItemPosition.position;
+        pickedupItem.transform.SetParent(transform);
+        HeldWatch.GetComponent<Watch>().isSelected = false;
+        animator.SetBool("carriesItem", true);
     }
 
     private void DropItem()
     {
         HeldWatch.transform.position = transform.position;
-        HeldWatch.GetComponent<Watch>().isSelected = false;
         HeldWatch.transform.SetParent(null); 
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
