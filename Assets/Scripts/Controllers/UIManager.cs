@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
     public GameObject QuickSettingButton;
+    [SerializeField] private int Points; 
     [SerializeField]private GameObject gameOverScreen;
     [SerializeField]private Slider timerDisplay;
     void Start()
@@ -20,12 +21,19 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void AddPoints(int sumOfPoints)
+    {
+        Points += sumOfPoints;
+    }
     public void LevelStart()
     {
-        timerDisplay.value = 0;
-        timerDisplay.maxValue = GameManager.instance.currentLevelParams.time;
-        timerDisplay.gameObject.SetActive(true);
-        StartCoroutine(StartLevelTimer());
+        if (GameManager.instance.levelID != 4)
+        {
+            timerDisplay.value = 0;
+            timerDisplay.maxValue = GameManager.instance.currentLevelParams.time;
+            timerDisplay.gameObject.SetActive(true);
+            StartCoroutine(StartLevelTimer());
+        }
     }
 
     private IEnumerator StartLevelTimer()
