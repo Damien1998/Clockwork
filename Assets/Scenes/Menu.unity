@@ -2309,7 +2309,7 @@ MonoBehaviour:
   m_MinValue: -40
   m_MaxValue: 20
   m_WholeNumbers: 0
-  m_Value: -40
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -5366,6 +5366,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   QuickSettingButton: {fileID: 134947113}
+  Points: 0
   gameOverScreen: {fileID: 5866492453532144085}
   timerDisplay: {fileID: 5866492452029649994}
 --- !u!114 &814353830
@@ -11891,7 +11892,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 5866492452963057868}
+      objectReference: {fileID: 5866492453532144085}
     - target: {fileID: 5099490230437765849, guid: 1948f78245b2e8f44801658cf5b225d7,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
@@ -12504,7 +12505,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 5866492453348090252}
   m_HandleRect: {fileID: 0}
