@@ -24,11 +24,24 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameManager.instance.levelID = levelID;
     }
-
     public void QuitGame ()
     {
         Debug.Log("Quit!");
         Application.Quit();
     }
+    public void LoadSaves(int saveID)
+    {
+        SaveController _saveController = new SaveController();
+        if (_saveController.CheckForSaves(saveID))
+        {
+            _saveController.LoadGame(saveID);
+        }
+        GameManager.instance.SetSaveController(_saveController);
+        StartLevel(3);
+    }
 
+    public void DisplaySaveInfo()
+    {
+        
+    }
 }

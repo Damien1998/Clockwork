@@ -58,7 +58,12 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         saveController = new SaveController();
-        saveController.CheckForSaves();
+        saveController.InitializeSaveController(12,0,0,0);
+    }
+
+    public void SetSaveController(SaveController inSaveController)
+    {
+        inSaveController = saveController;
     }
     public void CompleteLevel()
     {
@@ -80,10 +85,9 @@ public class GameManager : MonoBehaviour
     {
         saveController.CompletePOI(questName);
     }
-
-    public void Save()
+    public void Save(int saveID)
     {
-        saveController.CreateSaveGame();
+        saveController.CreateSaveGame(saveID);
     }
     // Update is called once per frame
     // void Update()

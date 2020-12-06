@@ -35,7 +35,6 @@ public class UIManager : MonoBehaviour
             StartCoroutine(StartLevelTimer());
         }
     }
-
     private IEnumerator StartLevelTimer()
     {
         while(timerDisplay.value<timerDisplay.maxValue)
