@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
+    public string saveName = "No Save";
     //A struct for saving everything the player interacts with within levels - trophies, POI, etc.
     /// <summary>
     /// It contains info on the name of the interaction (so that our little human brains don't get fried up when we have to figure out why does the POI nr 7556347865 not work) and its completion status.

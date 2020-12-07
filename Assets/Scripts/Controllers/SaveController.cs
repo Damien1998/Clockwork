@@ -5,9 +5,11 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-public class SaveController 
-{
-   private List<SaveData.Level> levels;
+public class SaveController
+{ 
+    private string saveName;
+    private SaveData currentSave;
+    private List<SaveData.Level> levels;
    private List<SaveData.SideQuest> sideQuests;
    private List<SaveData.Flag> pointsOfInterest;
    private List<SaveData.Flag> trophies;
@@ -16,21 +18,25 @@ public class SaveController
    {
        return levels.Count;
    }
-    public void CheckForSaves()
+
+   public string currentSaveName()
+   {
+       return saveName;
+   }
+
+   public void ChangeSaveName(string name)
+   {
+       currentSave.saveName = name;
+   }
+    public bool CheckForSaves(int saveID)
     {
-        if(!File.Exists(Application.persistentDataPath + "/savefile.clk"))
+        if(File.Exists(Application.persistentDataPath + "/savefile"+saveID+".clk"))
         {
-            InitializeSaveController(12,0,0,0);
+            return true;
         }
-        else
-        {
-            LoadGame();
-        }
+        return false;
     }
-    // for(int i = 0; i < levels.Count; i++)
-    // {
-    //     Debug.Log(levels[i].name + ": " + levels[i].completed + ", " + levels[i].completionTime);
-    // }
+    
     public void InitializeSaveController(int numberOfLevels,int numberOfSideQuests,int numberOfPOI,int numberOfTrophies)
     { 
         levels = new List<SaveData.Level>();
@@ -39,29 +45,37 @@ public class SaveController
        trophies = new List<SaveData.Flag>();
        levels.Add(new SaveData.Level("Tutorial", false, true, 0f, 0f)); 
     }
-    public void CreateSaveGame()
+    public void CreateSaveGame(int saveID)
     {
         //Creates a new SaveData containing the current state of everything
         SaveData saveData = SaveState();
-
         //Shoves it into a file
-        BinaryFormatter formatter = new BinaryFormatter();
-        FileStream file = File.Create(Application.persistentDataPath + "/savefile.clk");
-        formatter.Serialize(file, saveData);
-        file.Close();
-    }
-    public void LoadGame()
-    {
-
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/savefile.clk", FileMode.Open);
+            FileStream file = File.Create(Application.persistentDataPath + "/savefile"+saveID+".clk");
+            formatter.Serialize(file, saveData);
+            file.Close();
+    }
+    public void LoadGame(int saveID)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+            FileStream file;
+            file = File.Open(Application.persistentDataPath + "/savefile"+saveID+".clk", FileMode.Open);
             SaveData saveData = (SaveData)formatter.Deserialize(file);
             file.Close();
-
+            currentSave = saveData;
+            saveName = saveData.saveName;
             levels = saveData.levels;
             sideQuests = saveData.sideQuests;
             trophies = saveData.trophies;
             pointsOfInterest = saveData.pointsOfInterest;
+    }
+
+    public void DeleteSave(int saveID)
+    {
+        if (CheckForSaves(saveID))
+        {
+            File.Delete(Application.persistentDataPath + "/savefile"+saveID+".clk");
+        }
     }
     //Saves everything needed from the game manager into a SaveData
     private SaveData SaveState()
