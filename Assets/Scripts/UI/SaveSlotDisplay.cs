@@ -25,12 +25,14 @@ public class SaveSlotDisplay : MonoBehaviour
          _saveController.LoadGame(saveID);
          saveInfo.text = "LoadedSave Completed Levels : " +_saveController.CompletedLevels();
          nameField.text = _saveController.currentSaveName();
+         nameField.interactable = true;
          achievments.text = "None , yet";
       }
       else
       {
          saveInfo.text = "Clear Save";
          nameField.text = "Name";
+         nameField.interactable = false;
          achievments.text = "None"; 
       }
    }
