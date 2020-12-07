@@ -12,9 +12,14 @@ public class SaveSlotDisplay : MonoBehaviour
    public Text achievments;
    private SaveController _saveController;
 
-   private void Start()
+   private void Awake()
    {
       _saveController = new SaveController();
+      DisplaySaves();
+   }
+
+   public void DisplaySaves()
+   {
       if (_saveController.CheckForSaves(saveID))
       {
          _saveController.LoadGame(saveID);
@@ -29,7 +34,11 @@ public class SaveSlotDisplay : MonoBehaviour
          achievments.text = "None"; 
       }
    }
-
+   public void ChangeSaveName(string name)
+   {
+      _saveController.LoadGame(saveID);
+      _saveController.ChangeSaveName(name);
+   }
    public void DeleteSave()
    {
       if (_saveController.CheckForSaves(saveID))

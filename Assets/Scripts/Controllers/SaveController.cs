@@ -8,7 +8,8 @@ using System.IO;
 public class SaveController
 { 
     private string saveName;
-   private List<SaveData.Level> levels;
+    private SaveData currentSave;
+    private List<SaveData.Level> levels;
    private List<SaveData.SideQuest> sideQuests;
    private List<SaveData.Flag> pointsOfInterest;
    private List<SaveData.Flag> trophies;
@@ -21,6 +22,11 @@ public class SaveController
    public string currentSaveName()
    {
        return saveName;
+   }
+
+   public void ChangeSaveName(string name)
+   {
+       currentSave.saveName = name;
    }
     public bool CheckForSaves(int saveID)
     {
@@ -56,6 +62,7 @@ public class SaveController
             file = File.Open(Application.persistentDataPath + "/savefile"+saveID+".clk", FileMode.Open);
             SaveData saveData = (SaveData)formatter.Deserialize(file);
             file.Close();
+            currentSave = saveData;
             saveName = saveData.saveName;
             levels = saveData.levels;
             sideQuests = saveData.sideQuests;

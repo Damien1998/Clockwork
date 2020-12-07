@@ -114,6 +114,10 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (HeldWatch != null)
+        {
+            HeldWatch.transform.position = transform.position + ItemPosition.localPosition;
+        }
         if (HeldWatch == null)
         {
             PickUp();
@@ -129,7 +133,6 @@ public class Player : MonoBehaviour
                 DropItem();
             }
         }
-
         if(isByLevelStart && Input.GetButtonDown("Action" + playerNumber))
         {
             nearbyLevelStart.StartLevel();
@@ -228,7 +231,6 @@ public class Player : MonoBehaviour
     {
         HeldWatch = pickedupItem;
         pickedupItem.transform.position = ItemPosition.position;
-        pickedupItem.transform.SetParent(transform);
         HeldWatch.GetComponent<Watch>().isSelected = false;
         animator.SetBool("carriesItem", true);
     }
@@ -236,7 +238,6 @@ public class Player : MonoBehaviour
     private void DropItem()
     {
         HeldWatch.transform.position = transform.position;
-        HeldWatch.transform.SetParent(null); 
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
     }
@@ -244,7 +245,6 @@ public class Player : MonoBehaviour
     private void PlaceItemInWorkbench()
     {       
         HeldWatch.GetComponent<Watch>().isSelected = false;
-        HeldWatch.transform.SetParent(null);
         nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
