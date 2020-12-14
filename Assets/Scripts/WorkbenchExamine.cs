@@ -59,17 +59,24 @@ public class WorkbenchExamine : Workbench
                 Debug.Log(itemToPlace.WatchItem.State);
                 //If the item has 2 layers of components within, it's a watch
                 if (itemToPlace.WatchItem.State == ItemState.UnknownState
-                    || itemToPlace.WatchItem.components[0].components[0] != null)
-                {
-                    invalidItemInside = false;
+                    || itemToPlace.WatchItem.components[0].components.Count > 0)
+                {                    
                     if(itemToPlace.WatchItem.components.Count == 0)
                     {
+                        invalidItemInside = false;
+                        /**
                         itemToPlace.WatchItem.State = itemToPlace.WatchItem.trueState;
                         Debug.Log(itemToPlace.WatchItem.State);
+                        **/
                     }
-                    else if(itemToPlace.WatchItem.components[0].components[0] != null && !itemToPlace.listDone && itemToPlace.TrueState != ItemState.Repaired)
+                    else if(itemToPlace.WatchItem.components[0].components.Count > 0 && !itemToPlace.listDone && itemToPlace.TrueState != ItemState.Repaired)
                     {
+                        invalidItemInside = false;
                         generateList = true;
+                    }
+                    else
+                    {
+                        invalidItemInside = true;
                     }
                 }
                 else
@@ -78,6 +85,7 @@ public class WorkbenchExamine : Workbench
                 }
 
                 itemSlots[i] = itemToPlace;
+                itemSlots[i].transform.position = slotPositions[i].position;
                 //itemToPlace.gameObject.SetActive(false);
                 break;
             }
@@ -105,6 +113,12 @@ public class WorkbenchExamine : Workbench
                 itemSlots[0].transform.position = new Vector3(dropLocation.position.x - 1f, dropLocation.position.y, 0);
                 listItem.transform.position = new Vector3(dropLocation.position.x + 1f, dropLocation.position.y, 0);
             }
+        }
+        else if(!invalidItemInside)
+        {
+            itemSlots[0].WatchItem.State = itemSlots[0].WatchItem.trueState;
+            Debug.Log(itemSlots[0].WatchItem.State);
+            itemSlots[0].transform.position = dropLocation.position;
         }
         else
         {
