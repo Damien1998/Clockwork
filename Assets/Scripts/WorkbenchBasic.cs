@@ -76,10 +76,12 @@ public class WorkbenchBasic : Workbench
 
                 for (int j = 0; j < itemSlots.Length; j++)
                 {
+                    Debug.Log("aaaaa" + j);
                     if ((itemSlots[j] != null && GameManager.instance.RecipesList[i].Items.Count > j && itemSlots[j].WatchItem.itemID != GameManager.instance.RecipesList[i].Items[j].itemID)
-                        || (itemSlots[j] == null && GameManager.instance.RecipesList[i].Items.Count < j)
+                        || (itemSlots[j] == null && GameManager.instance.RecipesList[i].Items.Count > j)
                         || (itemSlots[j] != null && itemSlots[j].WatchItem.State != ItemState.Repaired))
                     {
+                      
                         recipeFilled = false;
                     }                  
                 }
