@@ -15,13 +15,16 @@ public class Workbench : MonoBehaviour
     protected float workTimer;
 
     [SerializeField]
-    private Transform dropLocation;
+    protected Transform dropLocation;
 
     [SerializeField]
     protected Slider timerDisplay;
 
-    [SerializeField]
     public Transform[] slotPositions;
+
+    [SerializeField]
+    //This is clunky. Ugh
+    protected bool verticalSpread;
 
     public GameObject WatchTemplate;
 
@@ -66,14 +69,43 @@ public class Workbench : MonoBehaviour
     //Dropping items
     protected virtual void DropItems()
     {
-        for(int i = 0; i< numberOfSlots; i++)
+        int slotsFilled = 0;
+        for (int i = 0; i < numberOfSlots; i++)
         {
-            if(itemSlots[i] != null)
+            if (itemSlots[i] != null)
+            {
+                slotsFilled++;
+            }
+        }
+
+        //Current way of handling offset is kind of clunky
+        //I gotta think of a better algorithm
+        var offset = 0f;
+        if(slotsFilled > 1)
+        {
+            offset = 2f / (slotsFilled - 1);
+        }
+
+        for(int i = 0; i< slotsFilled; i++)
+        {
+            if (numberOfSlots > 1)
+            {
+                if (verticalSpread)
+                {
+                    itemSlots[i].transform.position = new Vector3(dropLocation.position.x, dropLocation.position.y - 1f + (offset * i), 0);
+                }
+                else
+                {
+                    itemSlots[i].transform.position = new Vector3(dropLocation.position.x - 1f + (offset * i), dropLocation.position.y, 0);
+                }
+            }
+            else
             {
                 itemSlots[i].transform.position = dropLocation.position;
-                itemSlots[i].gameObject.SetActive(true);
-                itemSlots[i] = null;
             }
+
+            itemSlots[i].gameObject.SetActive(true);
+            itemSlots[i] = null;
         }
     }
 

@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum ItemState { Broken,Unfixable,Repaired,UnknownState,ComplexBroken,EmptyState};
+public enum ItemState { Broken,Unfixable,Repaired,UnknownState,EmptyState};
 
 [CreateAssetMenu(fileName = "New Item",menuName = "Item")]
 public class Item : ScriptableObject
 {
     private ItemState state = ItemState.UnknownState;
     private Action<Item> itemStateChangeCb;
+
+    //public int listID = -1;
 
     public ItemState trueState;
     public int itemID;

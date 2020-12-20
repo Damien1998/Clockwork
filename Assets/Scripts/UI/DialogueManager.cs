@@ -172,7 +172,7 @@ public class DialogueManager : MonoBehaviour
             }
             else if (dialogue[currentLine].StartsWith("--poi"))
             {
-                GameManager.instance.CompleteQuest(dialogue[currentLine].Replace("--poi ", ""));
+                GameManager.instance.CompletePOI(dialogue[currentLine].Replace("--poi ", ""));
             }   
             else if(dialogue[currentLine].StartsWith("--end"))
             {

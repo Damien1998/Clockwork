@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4127051504290439343}
   - component: {fileID: 4127051504290439342}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Item
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4127051504290439340}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.4, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalPosition: {x: 0, y: -0.0356, z: 0}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_Children:
   - {fileID: 4127051505751657689}
   m_Father: {fileID: 4127051505231375702}
@@ -70,7 +70,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 4
+  m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -96,10 +96,9 @@ GameObject:
   - component: {fileID: 4127051505231375701}
   - component: {fileID: 4127051505231375698}
   - component: {fileID: 2037045816}
-  - component: {fileID: 3519269668843986657}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Player1
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,7 +112,7 @@ Transform:
   m_GameObject: {fileID: 4127051505231375699}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1, y: 0.35, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 1}
+  m_LocalScale: {x: 6, y: 6, z: 1}
   m_Children:
   - {fileID: 4127051504290439343}
   m_Father: {fileID: 0}
@@ -203,8 +202,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.012087822, y: -1.0034364}
-  m_Size: {x: 5.5497837, y: 6}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.2, y: 0.2}
   m_Direction: 0
 --- !u!114 &4127051505231375698
 MonoBehaviour:
@@ -218,13 +217,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: decae2e2e489bd349af59d5c88df3fa3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemPosition: {fileID: 4127051504290439343}
+  ItemPosition: {fileID: 0}
   playerNumber: 1
   moveSpeed: 8
   dashSpeed: 28
   pickupRange: 1
   isByWorkbench: 0
-  isByLevelStart: 0
   dashDuration: 0.08
 --- !u!95 &2037045816
 Animator:
@@ -245,21 +243,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!111 &3519269668843986657
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4127051505231375699}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &4127051505751657670
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +253,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4127051505751657689}
   - component: {fileID: 4127051505751657688}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: State
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +312,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 3
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

@@ -7,15 +7,38 @@ using UnityEngine.SceneManagement;
 //Refactoring is done! You may enter safely
 public class MainMenu : MonoBehaviour
 {
+    public Button[] levelButtons;
+
+    private void Start()
+    {
+        if(levelButtons.Length == GameManager.instance.levels.Count)
+        {
+            for(int i = 0; i < GameManager.instance.levels.Count; i++)
+            {
+                if(GameManager.instance.levels[i].unlocked)
+                {
+                    levelButtons[i].interactable = true;
+                }
+                else
+                {
+                    levelButtons[i].interactable = false;
+                }
+            }
+        }
+    }
+
     public void PlayGame ()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene("Level");
     }
+
     public void StartLevel(int sceneID)
     {
         Time.timeScale = 1f;
         UIManager.instance.QuickSettingButton.SetActive(true);
+        UIManager.instance.HUD.gameObject.SetActive(true);
+        GameManager.instance.endDisplay.gameObject.SetActive(false);
         SceneManager.LoadScene(sceneID);
     }
 
@@ -24,24 +47,11 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameManager.instance.levelID = levelID;
     }
+
     public void QuitGame ()
     {
         Debug.Log("Quit!");
         Application.Quit();
     }
-    public void LoadSaves(int saveID)
-    {
-        SaveController _saveController = new SaveController();
-        if (_saveController.CheckForSaves(saveID))
-        {
-            _saveController.LoadGame(saveID);
-        }
-        GameManager.instance.SetSaveController(_saveController);
-        StartLevel(3);
-    }
 
-    public void DisplaySaveInfo()
-    {
-        
-    }
 }
