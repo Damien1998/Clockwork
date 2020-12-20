@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
     {
         //Reworked item pick up mechanic
         //First checks for input and Locks movement then Searches for items in Range and sorts them accordingly to their position
-        if (Input.GetButtonDown("Pickup" + playerNumber) && !MouseBlocker.mouseBlocked)
+        if (Input.GetButtonDown("Pickup" + playerNumber))
         {
             lockMovement = true;
             nearbyItems = Physics2D.OverlapCircleAll(transform.position, pickupRange, LayerMask.GetMask("Item"));
@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
             }
         }
         //After the first action if player is performing secondary action ie right click it highlights the item in sorted list
-        if (nearbyItems != null && nearbyItems.Length > 0&&Input.GetButtonDown("Action" + playerNumber) && !MouseBlocker.mouseBlocked)
+        if (nearbyItems != null && nearbyItems.Length > 0&&Input.GetButtonDown("Action" + playerNumber))
         {         
             if (itemToPickUpID < nearbyItems.Length - 1)
             {
@@ -99,8 +99,8 @@ public class Player : MonoBehaviour
                 nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
             }
         }
-        //At the end checks if player is not holding a button anymore and picks up highlighted item
-        if(nearbyItems != null && Input.GetButtonUp("Pickup" + playerNumber) && !MouseBlocker.mouseBlocked)
+        //At the end checks if player is not holding a button anymore and picksup  highlighted item
+        if(nearbyItems != null && Input.GetButtonUp("Pickup" + playerNumber))
         {
             if (itemToPickUpID < nearbyItems.Length)
             {
@@ -122,7 +122,7 @@ public class Player : MonoBehaviour
         {
             PickUp();
         }
-        else if(Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch != null && !MouseBlocker.mouseBlocked)
+        else if(Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch != null)
         {
             if (isByWorkbench)
             {
@@ -133,15 +133,14 @@ public class Player : MonoBehaviour
                 DropItem();
             }
         }
-
-        if(isByLevelStart && Input.GetButtonDown("Action" + playerNumber) && !MouseBlocker.mouseBlocked)
+        if(isByLevelStart && Input.GetButtonDown("Action" + playerNumber))
         {
             nearbyLevelStart.StartLevel();
             nearbyLevelStart = null;
             isByLevelStart = false;
         }
 
-        if(isByWorkbench && Input.GetButton("Action" + playerNumber) && !MouseBlocker.mouseBlocked)
+        if(isByWorkbench && Input.GetButton("Action" + playerNumber))
         {
             nearbyWorkbench.isOperated = true;
         }
