@@ -7,11 +7,6 @@
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Art" t="Include">
-          <e p="Shaders" t="Include">
-            <e p="Selected.shader" t="Include" />
-          </e>
-        </e>
         <e p="Dialogue" t="Include">
           <e p="test.txt" t="Include" />
         </e>
@@ -22,7 +17,6 @@
           <e p="CameraAnchor.cs" t="Include" />
           <e p="Controllers" t="Include">
             <e p="GameManager.cs" t="Include" />
-            <e p="SaveController.cs" t="Include" />
             <e p="SceneController.cs" t="Include" />
             <e p="UIManager.cs" t="Include" />
           </e>
@@ -31,55 +25,29 @@
           <e p="Models" t="Include">
             <e p="CheckoutTable.cs" t="Include" />
             <e p="Item.cs" t="Include" />
-            <e p="LevelParams.cs" t="Include" />
             <e p="Player.cs" t="Include" />
             <e p="POI.cs" t="Include" />
             <e p="Recipe.cs" t="Include" />
+            <e p="TownScripts" t="Include">
+              <e p="BuildingSelect.cs" t="Include" />
+            </e>
             <e p="Watch.cs" t="Include" />
+            <e p="WatchComponent.cs" t="Include" />
+            <e p="WatchList.cs" t="Include" />
           </e>
           <e p="PersistentObject.cs" t="Include" />
           <e p="SaveData.cs" t="Include" />
           <e p="UI" t="Include">
             <e p="DialogueManager.cs" t="Include" />
-            <e p="LevelSelect.cs" t="Include" />
             <e p="MainMenu.cs" t="Include" />
-            <e p="SaveSlotDisplay.cs" t="Include" />
             <e p="SettingsMenu.cs" t="Include" />
-            <e p="WorkshopMenu.cs" t="Include" />
           </e>
           <e p="Workbench.cs" t="Include" />
           <e p="WorkbenchBasic.cs" t="Include" />
           <e p="WorkbenchExamine.cs" t="Include" />
           <e p="WorkbenchPost.cs" t="Include" />
           <e p="WorkbenchPrecise.cs" t="Include" />
-        </e>
-        <e p="TextMesh Pro" t="Include">
-          <e p="Fonts" t="Include">
-            <e p="LiberationSans - OFL.txt" t="Include" />
-          </e>
-          <e p="Resources" t="Include">
-            <e p="LineBreaking Following Characters.txt" t="Include" />
-            <e p="LineBreaking Leading Characters.txt" t="Include" />
-            <e p="Shaders" t="Include">
-              <e p="TMP_Bitmap-Custom-Atlas.shader" t="Include" />
-              <e p="TMP_Bitmap-Mobile.shader" t="Include" />
-              <e p="TMP_Bitmap.shader" t="Include" />
-              <e p="TMP_SDF Overlay.shader" t="Include" />
-              <e p="TMP_SDF-Mobile Masking.shader" t="Include" />
-              <e p="TMP_SDF-Mobile Overlay.shader" t="Include" />
-              <e p="TMP_SDF-Mobile.shader" t="Include" />
-              <e p="TMP_SDF-Surface-Mobile.shader" t="Include" />
-              <e p="TMP_SDF-Surface.shader" t="Include" />
-              <e p="TMP_SDF.shader" t="Include" />
-              <e p="TMP_Sprite.shader" t="Include" />
-              <e p="TMPro.cginc" t="Include" />
-              <e p="TMPro_Properties.cginc" t="Include" />
-              <e p="TMPro_Surface.cginc" t="Include" />
-            </e>
-          </e>
-          <e p="Sprites" t="Include">
-            <e p="EmojiOne Attribution.txt" t="Include" />
-          </e>
+          <e p="WorkshopMenu.cs" t="Include" />
         </e>
       </e>
       <e p="Clockwork.sln" t="IncludeFlat" />

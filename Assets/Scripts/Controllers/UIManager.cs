@@ -1,14 +1,29 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
     public GameObject QuickSettingButton;
-    [SerializeField] private int Points; 
-    [SerializeField]private GameObject gameOverScreen;
-    [SerializeField]private Slider timerDisplay;
+    public Slider timerDisplay;
+    public Text pointDisplay;
+    public Text pointDisplayEnd;
+    
+    public Canvas HUD;
+
+    public GameObject componentList;
+    public List<ListButton> listButtons;
+    public Image watchDisplay, casingDisplay, decorDisplay;
+    public Image[] casingComponentDisplays, mechComponentDisplays;
+
+    public GameObject buttonLayoutGroup;
+    public Button listButtonTemplate;
+
+    public Sprite nothingImage;
+
+    public Watch listItem;
+
     void Start()
     {
         if (instance != null)
@@ -19,30 +34,7 @@ public class UIManager : MonoBehaviour
         {
             instance = this;
         }
-    }
-
-    public void AddPoints(int sumOfPoints)
-    {
-        Points += sumOfPoints;
-    }
-    public void LevelStart()
-    {
-        if (GameManager.instance.levelID != 4)
-        {
-            timerDisplay.value = 0;
-            timerDisplay.maxValue = GameManager.instance.currentLevelParams.time;
-            timerDisplay.gameObject.SetActive(true);
-            StartCoroutine(StartLevelTimer());
-        }
-    }
-    private IEnumerator StartLevelTimer()
-    {
-        while(timerDisplay.value<timerDisplay.maxValue)
-        {
-            timerDisplay.value++;
-            yield return new WaitForSeconds(1);
-        }
-        timerDisplay.gameObject.SetActive(false);
-        gameOverScreen.gameObject.SetActive(true);
+        
+        //timerDisplay.gameObject.SetActive(false);
     }
 }

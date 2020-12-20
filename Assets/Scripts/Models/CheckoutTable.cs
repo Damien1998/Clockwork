@@ -8,7 +8,7 @@ using UnityEngine;
 public class CheckoutTable : Workbench
 {
     private int watchIndex = 0;
-    [SerializeField]private LevelParams workbenchLevelParams;
+    private WatchList workbenchWatchList;
     //public GameObject WatchTemplate;
 
     void Start()
@@ -18,11 +18,11 @@ public class CheckoutTable : Workbench
         //About the WatchList ScriptableObject script
         //</summary>
         //Since we will have more then 1 level expected at the moment of making this
-        //It's more comfortable to have a quick and easy to use object that can specify what kind of watches will spawn in the order that is put in
+        //It's more comfortable to have a quick and easy to use object that can specify whawt kind of watches will spawn in the order that is put in
         //This way we can make list of watches that will be used instantly
-        //If you want to change the order which the watches spawn in go into "Assets/Prefabs/LevelParams/Level" directory
-        workbenchLevelParams = (LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + GameManager.instance.levelID +".asset", typeof(LevelParams));
-        ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
+        //If you want to change the order which the watches spawn in go into "Assets/Prefabs/WatchOrderLists/Level" directory
+        workbenchWatchList = (WatchList)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/WatchOrderLists/Level" + GameManager.instance.levelID +".asset", typeof(WatchList));
+        ThrowNewWatch(workbenchWatchList.listOfWatches[watchIndex]);
         CheckForQuests();
     }
     /*
@@ -54,9 +54,29 @@ public class CheckoutTable : Workbench
         {
             //I'm not sure whether we really need that there:
             //base.PlaceItem(itemToPlace);
+
+            for(int i = 0; i < UIManager.instance.listButtons.Count; i++)
+            {
+                Debug.Log(UIManager.instance.listButtons[i]);
+                if(UIManager.instance.listButtons[i].examinedWatch.WatchItem.itemID == itemToPlace.WatchItem.itemID)
+                {
+                    if(UIManager.instance.componentList.activeInHierarchy)
+                    {
+                        UIManager.instance.listButtons[i].ToggleList();
+                    }
+                    
+                    Destroy(UIManager.instance.listButtons[i].gameObject);
+
+                    UIManager.instance.listButtons.RemoveAt(i);
+
+                    break;
+                }
+                
+            }
+
             watchIndex++;
             Destroy(itemToPlace.gameObject);
-            ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
+            ThrowNewWatch(workbenchWatchList.listOfWatches[watchIndex]);
         }
     }
 
@@ -69,7 +89,7 @@ public class CheckoutTable : Workbench
     {
         if (GameManager.instance.sideQuestActive)
         {
-            ThrowNewWatch(GameManager.instance.questItem);  
+            ThrowNewWatch(GameManager.instance.sideQuests[0].itemToMake);  
         }
     }
     /*
