@@ -448,7 +448,7 @@ GameObject:
   m_Layer: 0
   m_Name: Slot
   m_TagString: Untagged
-  m_Icon: {fileID: 7866945982896999795, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -673,9 +673,6 @@ MonoBehaviour:
   timerDisplay: {fileID: 362296281}
   slotPositions:
   - {fileID: 7799352411924123365}
-  verticalSpread: 1
   WatchTemplate: {fileID: 8284863839568129727, guid: de63fe1fc384cf54c89decbfc5f5b5cf,
     type: 3}
   isOperated: 0
-  listTemplate: {fileID: 1620384548189975486, guid: 56468f3a85c622d47b915a55e262c47f,
-    type: 3}

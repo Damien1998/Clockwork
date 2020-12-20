@@ -8,11 +8,6 @@ public class WorkbenchExamine : Workbench
 {
     private bool invalidItemInside;
 
-    private bool generateList;
-
-    [SerializeField]
-    private ListItem listTemplate;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -57,7 +52,7 @@ public class WorkbenchExamine : Workbench
             if (itemSlots[i] == null)
             {
                 Debug.Log(itemToPlace.WatchItem.State);
-                //If the item has 2 layers of components within, it's a watch
+                //I need to figure out a better way to check if an item is a watch
                 if (itemToPlace.WatchItem.State == ItemState.UnknownState
                     || itemToPlace.WatchItem.components[0].components.Count > 0)
                 {                    
@@ -131,10 +126,7 @@ public class WorkbenchExamine : Workbench
 
     private ListItem GenerateComponentList()
     {
-        var listItem = Instantiate(listTemplate, transform.position, Quaternion.identity);
-        //var listItemData = itemSlots[0].WatchItem;
-        listItem.GetComponent<ListItem>().examinedItem = itemSlots[0];
-        return listItem.GetComponent<ListItem>();
+        //Here the function will generate the list of watch components
     }
 
     //I'm leaving this in in case I need it later

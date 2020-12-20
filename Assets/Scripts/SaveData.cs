@@ -6,6 +6,7 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
+    public string saveName = "No Save";
     //A struct for saving everything the player interacts with within levels - trophies, POI, etc.
     /// <summary>
     /// It contains info on the name of the interaction (so that our little human brains don't get fried up when we have to figure out why does the POI nr 7556347865 not work) and its completion status.
@@ -13,6 +14,12 @@ public class SaveData
     /// Interacting with the data type is clunky af, Unity doesn't let us edit arrays of this in the editor.
     /// Ghhh
     /// </summary>
+    
+    //Save stuff
+    //Al the level and POI names will have to be set up manually
+    //At least until I find a better way to do it
+    //*groan*
+    //At the beginning of a game everything will be set to false, except for unlocking the tutorial level
 
     //TODO: find and extension that will let us edit it all in a humanely possible way.
     [System.Serializable]
@@ -72,10 +79,10 @@ public class SaveData
     {
         public string name;
         public bool completed;
-        public bool unlocked;
+        public bool unlocked ;
         public float completionTime;
         public float completionTimeSideQuest;
-
+        
         //Use for adding new levels, except the tutorial
         public Level(string levelName)
         {

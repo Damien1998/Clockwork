@@ -29,7 +29,8 @@ public class WorkshopMenu : MonoBehaviour
     public void StartLevel(int sceneID)
     {
         Time.timeScale = 1f;
-        UIManager.instance.HUD.gameObject.SetActive(true);
+        GameManager.instance.levelID = sceneID;
+        UIManager.instance.LevelStart();
         SceneManager.LoadScene(sceneID);
     }
 
