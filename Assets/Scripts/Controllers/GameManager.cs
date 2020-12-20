@@ -16,7 +16,7 @@ public class GameManager : MonoBehaviour
     public List<Recipe> RecipesList = new List<Recipe>();
     public Item questItem;
     [SerializeField]private int _levelID;
-    [SerializeField] private bool _sideQuest;
+    [SerializeField]private bool _sideQuest;
     private SaveController saveController;
     private int points;
     /*

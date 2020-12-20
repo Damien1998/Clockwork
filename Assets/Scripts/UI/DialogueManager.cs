@@ -10,10 +10,9 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager instance;
 
     public GameObject dialogueBox;
-    public Text dialogueText, nameText, optionText1, optionText2;
+    public Text nameText ,dialogueText , optionText1, optionText2;
     public Image portrait;
-    public GameObject dialogueOptions;
-    public Button option1, option2;
+    public Button option1, option2,progressButton;
 
     private string[] dialogue;
     private int currentLine;
@@ -26,7 +25,7 @@ public class DialogueManager : MonoBehaviour
     private bool options;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         if(instance != null)
         {
@@ -38,20 +37,18 @@ public class DialogueManager : MonoBehaviour
         }
         audioSource = GetComponent<AudioSource>();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void ProgressDialogue()
     {
-        if(Input.GetButtonDown("Submit") && dialogueBox.activeInHierarchy && !options)
+        if (!options)
         {
-            if(currentLine >= dialogue.Length)
+            if (currentLine >= dialogue.Length)
             {
                 ExitDialogue();
             }
             else
             {
                 CheckIfCommand();
-                if(currentLine < dialogue.Length)
+                if (currentLine < dialogue.Length)
                 {
                     dialogueText.text = dialogue[currentLine];
                     currentLine++;
@@ -59,10 +56,11 @@ public class DialogueManager : MonoBehaviour
             }
         }
     }
-
     public void ExitDialogue()
     {
+        Debug.Log("Hello");
         dialogueBox.SetActive(false);
+        Time.timeScale = 1;
     }
 
     public void AcceptQuest(Item WatchToMake)
@@ -95,18 +93,14 @@ public class DialogueManager : MonoBehaviour
         {
             Debug.Log("No save file!");
         }
-       
+
+        Time.timeScale = 0;
     }
 
     public void StartDialogue(TextAsset textFile)
     {
         dialogue = textFile.text.Split('\n');
-
-        for(int i = 0; i < dialogue.Length; i++)
-        {
-            Debug.Log(dialogue[i]);
-        }
-
+        
         dialogueBox.SetActive(true);
         currentLine = 0;
         CheckIfCommand();
@@ -148,11 +142,13 @@ public class DialogueManager : MonoBehaviour
     public void SwitchLine(int lineID)
     {
         dialogueText.gameObject.SetActive(true);
-        dialogueOptions.SetActive(false);
+        option1.gameObject.SetActive(false);
+        option2.gameObject.SetActive(false);
         option1.onClick.RemoveAllListeners();
         option2.onClick.RemoveAllListeners();
         options = false;
         currentLine = lineID;
+        progressButton.gameObject.SetActive(true);
         CheckIfCommand();
 
         if (currentLine < dialogue.Length)
@@ -187,12 +183,13 @@ public class DialogueManager : MonoBehaviour
                 nameText.text = dialogue[currentLine].Replace("--", "");
                 portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--", ""));
             }
-
             if (dialogue[currentLine].StartsWith("--options"))
             {
                 options = true;
                 dialogueText.gameObject.SetActive(false);
-                dialogueOptions.SetActive(true);
+                progressButton.gameObject.SetActive(false);
+                option1.gameObject.SetActive(true);
+                option2.gameObject.SetActive(true);
                 int o1 = 0, o2 = 0;
                 int.TryParse(dialogue[currentLine + 2].Replace("--", ""), out o1);
                 int.TryParse(dialogue[currentLine + 4].Replace("--", ""), out o2);
@@ -202,11 +199,6 @@ public class DialogueManager : MonoBehaviour
                 option2.onClick.AddListener(() => SwitchLine(o2));
                 currentLine += 4;
             }
-            else
-            {
-                options = false;
-            }
-            
             currentLine++;
         }       
     }
