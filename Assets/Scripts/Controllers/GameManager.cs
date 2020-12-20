@@ -34,7 +34,8 @@ public class GameManager : MonoBehaviour
         set
         {
             _levelID = value;
-            currentLevelParams = (LevelParams) AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + _levelID + ".asset", typeof(LevelParams));
+            Debug.Log("VAR");
+            currentLevelParams = (LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + _levelID + ".asset", typeof(LevelParams));
         } 
     }
     public bool sideQuestActive
