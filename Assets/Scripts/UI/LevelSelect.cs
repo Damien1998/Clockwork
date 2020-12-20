@@ -12,6 +12,12 @@ public class LevelSelect : MonoBehaviour
     public Text levelText;
     [SerializeField] private GameObject selectScreen;
     private bool interactable;
+
+    private void Awake()
+    {
+        DialogueManager.instance.StartDialogue("Test");
+    }
+
     private void Update()
     {
         if (interactable && Input.GetButtonDown("Pickup1"))
