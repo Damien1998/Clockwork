@@ -17,14 +17,6 @@ public class SceneController : MonoBehaviour
         {
             instance = this;
         }
-        if(SceneManager.GetActiveScene().buildIndex != 0 && SceneManager.GetActiveScene().buildIndex != 2)
-        {
-            UIManager.instance.HUD.gameObject.SetActive(true);
-        }
-        else
-        {
-            UIManager.instance.HUD.gameObject.SetActive(false);
-        }
     }
     public void LoadMenu()
     {
