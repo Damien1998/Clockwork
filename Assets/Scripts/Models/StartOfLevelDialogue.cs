@@ -1,21 +1,19 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class POI : MonoBehaviour
+public class StartOfLevelDialogue : MonoBehaviour
 {
     public string poiName;
     public TextAsset textScript;
 
     private void Start()
     {
-        //DialogueManager.instance.StartDialogue("Test");
+        StartDialogue();
     }
 
     public void StartDialogue()
     {
-        Debug.Log("Attempting to start dialogue");
         DialogueManager.instance.StartDialogue(textScript);
     }
 }
