@@ -98,7 +98,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void StartDialogue(TextAsset textFile)
-    {
+    {        
         dialogue = textFile.text.Split('\n');
         
         dialogueBox.SetActive(true);
@@ -176,10 +176,17 @@ public class DialogueManager : MonoBehaviour
             }
             else if(dialogue[currentLine].StartsWith("--portrait"))
             {
+                portrait.gameObject.SetActive(true);               
                 portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
+            }
+            else if(dialogue[currentLine].StartsWith("--description"))
+            {
+                portrait.gameObject.SetActive(false);
+                nameText.gameObject.SetActive(false);
             }
             else if(!dialogue[currentLine].StartsWith("--options"))
             {
+                nameText.gameObject.SetActive(true);
                 nameText.text = dialogue[currentLine].Replace("--", "");
                 portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--", ""));
             }
