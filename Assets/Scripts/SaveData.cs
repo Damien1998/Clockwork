@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,7 +49,7 @@ public class SaveData
     public struct SideQuest
     {
         public string name;
-        public bool completed;
+         public bool completed;
         public bool found;
         public Item itemToMake;
 

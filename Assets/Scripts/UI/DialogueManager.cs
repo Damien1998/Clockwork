@@ -9,7 +9,7 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager instance;
 
-    public GameObject dialogueBox;
+    public GameObject dialogueBox,optionsBox;
     public Text nameText ,dialogueText , optionText1, optionText2;
     public Image portrait;
     public Button option1, option2,progressButton;
@@ -162,44 +162,44 @@ public class DialogueManager : MonoBehaviour
     {
         while (currentLine < dialogue.Length && dialogue[currentLine].StartsWith("--"))
         {
-            if (dialogue[currentLine].StartsWith("--quest_start"))
+            string[] words = dialogue[currentLine].Split(' ');
+            string firstWord = words[0];
+            switch (firstWord)
             {
-                GameManager.instance.StartQuest(dialogue[currentLine].Replace("--quest_start ", ""),null);
-            }
-            else if (dialogue[currentLine].StartsWith("--poi"))
-            {
-                GameManager.instance.CompleteQuest(dialogue[currentLine].Replace("--poi ", ""));
-            }   
-            else if(dialogue[currentLine].StartsWith("--end"))
-            {
-                ExitDialogue();
-            }
-            else if(dialogue[currentLine].StartsWith("--portrait"))
-            {
-                portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
-            }
-            else if(!dialogue[currentLine].StartsWith("--options"))
-            {
-                nameText.text = dialogue[currentLine].Replace("--", "");
-                portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--", ""));
-            }
-            if (dialogue[currentLine].StartsWith("--options"))
-            {
-                options = true;
-                dialogueText.gameObject.SetActive(false);
-                progressButton.gameObject.SetActive(false);
-                option1.gameObject.SetActive(true);
-                option2.gameObject.SetActive(true);
-                int o1 = 0, o2 = 0;
-                int.TryParse(dialogue[currentLine + 2].Replace("--", ""), out o1);
-                int.TryParse(dialogue[currentLine + 4].Replace("--", ""), out o2);
-                optionText1.text = "1: " + dialogue[currentLine + 1];
-                option1.onClick.AddListener(() => SwitchLine(o1));
-                optionText2.text = "2: " + dialogue[currentLine + 3];
-                option2.onClick.AddListener(() => SwitchLine(o2));
-                currentLine += 4;
+                case "--quest_start ":
+                    GameManager.instance.StartQuest(dialogue[currentLine].Replace("--quest_start ", ""),null);
+                    break;
+                case "--poi":
+                    GameManager.instance.CompleteQuest(dialogue[currentLine].Replace("--poi ", ""));
+                    break;
+                case "--end":
+                    ExitDialogue();
+                    break;
+                case "--portrait":
+                    portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
+                    break;
+                case "--options":
+                    nameText.text = dialogue[currentLine].Replace("--", "");
+                    portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--", ""));
+                    OpenOptions();
+                    break;
             }
             currentLine++;
-        }       
+        }
+    }
+    private void OpenOptions()
+    {
+            options = true;
+            dialogueText.gameObject.SetActive(false);
+            progressButton.gameObject.SetActive(false);
+            optionsBox.SetActive(true);
+            int o1 = 0, o2 = 0;
+            int.TryParse(dialogue[currentLine + 2].Replace("--", ""), out o1);
+            int.TryParse(dialogue[currentLine + 4].Replace("--", ""), out o2);
+            optionText1.text = "1: " + dialogue[currentLine + 1];
+            option1.onClick.AddListener(() => SwitchLine(o1));
+            optionText2.text = "2: " + dialogue[currentLine + 3];
+            option2.onClick.AddListener(() => SwitchLine(o2));
+            currentLine += 4;
     }
 }
