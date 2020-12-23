@@ -98,7 +98,7 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void StartDialogue(TextAsset textFile)
-    {
+    {        
         dialogue = textFile.text.Split('\n');
         
         dialogueBox.SetActive(true);
