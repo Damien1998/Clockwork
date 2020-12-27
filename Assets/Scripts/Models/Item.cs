@@ -8,7 +8,7 @@ public enum ItemState { Broken,Unfixable,Repaired,UnknownState,ComplexBroken,Emp
 [CreateAssetMenu(fileName = "New Item",menuName = "Item")]
 public class Item : ScriptableObject
 {
-    private ItemState state = ItemState.UnknownState;
+    public ItemState state;
     private Action<Item> itemStateChangeCb;
 
     public ItemState trueState;
@@ -16,6 +16,7 @@ public class Item : ScriptableObject
     public Sprite itemImage;
     public List<Item> components = new List<Item>();
     public List<ItemState> componentsStates = new List<ItemState>();
+
     //<summary>
     //A Getter and setter to check if the type was changed 
     //If it was it will perform itemStateChange Callback 

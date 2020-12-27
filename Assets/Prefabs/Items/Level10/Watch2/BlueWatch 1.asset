@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d192423e1dca95b42b54e70fffb8d9cf, type: 3}
+  m_Name: BlueWatch 1
+  m_EditorClassIdentifier: 
+  state: 4
+  trueState: 4
+  itemID: 4
+  itemImage: {fileID: 21300000, guid: 5bf4b33cf02848442afb17322b882058, type: 3}
+  components:
+  - {fileID: 11400000, guid: 04874da6d47836144a56d43e74389a70, type: 2}
+  - {fileID: 11400000, guid: 9ea73153a326fab4fb55a4fd514db161, type: 2}
+  - {fileID: 11400000, guid: 31e991de0291f6a4eaf08f4a7a8bd4c5, type: 2}
+  componentsStates: 

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ListItem 
+//This fucks the game up
+public class ListItem : MonoBehaviour
 {
     // public Activator watch;
     // public ComponentList watchComponentList;

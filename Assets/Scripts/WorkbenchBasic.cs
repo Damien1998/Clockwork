@@ -61,7 +61,10 @@ public class WorkbenchBasic : Workbench
                         itemSlots[i].WatchItem.State = itemSlots[i].WatchItem.trueState;
                     }
                 }
-                Destroy(currentItem.gameObject);
+                if(currentItem.WatchItem.components.Count > 0)
+                {
+                    Destroy(currentItem.gameObject);
+                }                
             }           
         }
         //If there are more items, the workbench tries to combine them
