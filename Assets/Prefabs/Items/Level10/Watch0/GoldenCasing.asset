@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d192423e1dca95b42b54e70fffb8d9cf, type: 3}
+  m_Name: GoldenCasing
+  m_EditorClassIdentifier: 
+  state: 2
+  trueState: 2
+  itemID: 6
+  itemImage: {fileID: 21300000, guid: 9e3c00a2a3cb8b7488b910d41d1fb4c2, type: 3}
+  components:
+  - {fileID: 11400000, guid: 47a6e693503417d449f86e47c9505078, type: 2}
+  - {fileID: 11400000, guid: d3b1ab8d8adbf7c4cbae8e1e09a1f320, type: 2}
+  componentsStates: 

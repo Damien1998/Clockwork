@@ -33,7 +33,7 @@ public class Player : MonoBehaviour
     private int itemToPickUpID = 0;
     //private Activator itemToPickUp;
 
-    private bool lockMovement;
+    public bool lockMovement;
 
     //We wanted to handle interaction from the side of the player 
     //having a bool for every type of interactable object in the workshop feels clunky
@@ -41,14 +41,15 @@ public class Player : MonoBehaviour
     //Idk what to do
     public bool isByWorkbench;
     public bool isByLevelStart;
+    public bool isByWarpHole;
     private Workbench nearbyWorkbench;
     private LevelStart nearbyLevelStart;
-    
+    private WarpHole nearbyWarpHole;
 
     [SerializeField]
     private float dashDuration;
 
-    private Vector2 movementInput;
+    private Vector2 movementInput, lastDirection;
 
     //Components
     private Animator animator;
@@ -149,7 +150,19 @@ public class Player : MonoBehaviour
             nearbyWorkbench.isOperated = false;
         }
 
-    
+        if (isByWarpHole && Input.GetButtonDown("Action" + playerNumber) && !lockMovement && !isByWorkbench)
+        {
+            if(HeldWatch != null)
+            {
+                DropItem();
+            }
+            
+            nearbyWarpHole.Teleport(this);
+            nearbyWarpHole = null;
+            isByWarpHole = false;
+        }
+
+
 
         //Dash - only in 4 directions, quick burst of speed
         //This only handles dash input, velocity is managed in fixedupdate
@@ -187,15 +200,30 @@ public class Player : MonoBehaviour
         movementInput = new Vector2(moveX, moveY).normalized;      
 
         if(!lockMovement)
-        {          
+        {
+            Vector2 xInput = new Vector2(moveX, 0);
+            Vector2 yInput = new Vector2(0, moveY);
+
+            if (movementInput != Vector2.zero)
+            {
+                if (xInput.magnitude >= yInput.magnitude)
+                {
+                    lastDirection = xInput;
+                }
+                else
+                {
+                    lastDirection = yInput;
+                }
+            }
+
             //Managing player speed
             if (movementInput != Vector2.zero && !isDashing)
             {
-                rigidBody.velocity = new Vector2(movementInput.x * moveSpeed, movementInput.y * moveSpeed);
+                rigidBody.velocity = movementInput.normalized * moveSpeed;
             }
             else if (isDashing)
             {
-                rigidBody.velocity = new Vector2(dashDirection.x * dashSpeed, dashDirection.y * dashSpeed);
+                rigidBody.velocity = movementInput.normalized * moveSpeed;
             }
             else
             {
@@ -229,15 +257,20 @@ public class Player : MonoBehaviour
 
     private void PickUpItem(GameObject pickedupItem)
     {
+        if (pickedupItem.TryGetComponent(out Rigidbody2D itemRigidbody))
+        {
+            itemRigidbody.velocity = Vector2.zero;
+
+        }
         HeldWatch = pickedupItem;
-        pickedupItem.transform.position = ItemPosition.position;
+        pickedupItem.transform.position = ItemPosition.localPosition;
         HeldWatch.GetComponent<Watch>().isSelected = false;
         animator.SetBool("carriesItem", true);
     }
 
     private void DropItem()
     {
-        HeldWatch.transform.position = transform.position;
+        HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
     }
@@ -262,6 +295,11 @@ public class Player : MonoBehaviour
             nearbyLevelStart = collision.GetComponent<LevelStart>();
             isByLevelStart = true;
         }
+        else if (collision.CompareTag("Warp"))
+        {
+            nearbyWarpHole = collision.GetComponent<WarpHole>();
+            isByWarpHole = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -280,6 +318,11 @@ public class Player : MonoBehaviour
         {
             nearbyLevelStart = null;
             isByLevelStart = false;
+        }
+        else if (collision.CompareTag("Warp"))
+        {
+            nearbyWarpHole = null;
+            isByWarpHole = false;
         }
     }
 
