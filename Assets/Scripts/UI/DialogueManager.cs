@@ -15,6 +15,7 @@ public class DialogueManager : MonoBehaviour
     public Text nameText ,dialogueText , optionText1, optionText2;
     public Image portrait;
     public Button option1, option2,progressButton;
+    public Scrollbar dialogueScrollBar;
 
     private string[] dialogue;
     private string name;
@@ -61,6 +62,7 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueText.text = null;
         StopAllCoroutines();
+        dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
         dialogueBox.SetActive(false);
         Time.timeScale = 1;
     }
@@ -222,7 +224,9 @@ public class DialogueManager : MonoBehaviour
         if (currentLine < dialogue.Length)
         {
             StopAllCoroutines();
+            dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,dialogueText.rectTransform.sizeDelta.y +40);
             StartCoroutine(TypeSentence(dialogue[currentLine]));
+            dialogueScrollBar.value = 0;
             currentLine++;
         }
     }
