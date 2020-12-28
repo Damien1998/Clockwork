@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Linq;
+using System.Text;
 using UnityEditor;
 
 public class DialogueManager : MonoBehaviour
@@ -15,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     public Button option1, option2,progressButton;
 
     private string[] dialogue;
+    private string name;
     private int currentLine;
 
     public AudioSource audioSource;
@@ -48,17 +51,16 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 CheckIfCommand();
-                if (currentLine < dialogue.Length)
-                {
-                    dialogueText.text = dialogue[currentLine];
-                    currentLine++;
-                }
+                DisplayText();
+
             }
         }
     }
-    public void ExitDialogue()
+    
+    void ExitDialogue()
     {
-        Debug.Log("Hello");
+        dialogueText.text = null;
+        StopAllCoroutines();
         dialogueBox.SetActive(false);
         Time.timeScale = 1;
     }
@@ -82,12 +84,8 @@ public class DialogueManager : MonoBehaviour
             dialogueBox.SetActive(true);
             currentLine = 0;
             CheckIfCommand();
-            
-            if (currentLine < dialogue.Length)
-            {
-                dialogueText.text = dialogue[currentLine];
-                currentLine++;
-            }
+
+            DisplayText();
         }
         else
         {
@@ -105,11 +103,7 @@ public class DialogueManager : MonoBehaviour
         currentLine = 0;
         CheckIfCommand();
 
-        if (currentLine < dialogue.Length)
-        {
-            dialogueText.text = dialogue[currentLine];
-            currentLine++;
-        }
+        DisplayText();
     }
 
     private int FindCharacterID(string characterName)
@@ -127,7 +121,8 @@ public class DialogueManager : MonoBehaviour
     private Sprite FindPortrait(string characterName)
     {
         var cName = characterName.Trim();
-
+        nameText.text = characterName;
+        name = characterName + ": ";
         int id = FindCharacterID(cName);
         if(id != -1)
         {
@@ -136,25 +131,6 @@ public class DialogueManager : MonoBehaviour
         else
         {
             return null;
-        }
-    }
-
-    public void SwitchLine(int lineID)
-    {
-        dialogueText.gameObject.SetActive(true);
-        option1.gameObject.SetActive(false);
-        option2.gameObject.SetActive(false);
-        option1.onClick.RemoveAllListeners();
-        option2.onClick.RemoveAllListeners();
-        options = false;
-        currentLine = lineID;
-        progressButton.gameObject.SetActive(true);
-        CheckIfCommand();
-
-        if (currentLine < dialogue.Length)
-        {
-            dialogueText.text = dialogue[currentLine];
-            currentLine++;
         }
     }
 
@@ -178,6 +154,7 @@ public class DialogueManager : MonoBehaviour
                 case "--portrait":
                     portrait.gameObject.SetActive(true);
                     portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
+                    
                     break;
                 case "--description":
                     portrait.gameObject.SetActive(false);
@@ -185,13 +162,27 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "--options":
                     nameText.gameObject.SetActive(true);
-                    nameText.text = dialogue[currentLine].Replace("--", "");
-                    portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--", ""));
+                    portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--options", ""));
                     OpenOptions();
                     break;
             }
             currentLine++;
         }
+    }
+    public void SwitchLine(int lineID)
+    {
+        dialogueText.gameObject.SetActive(true);
+        optionsBox.SetActive(false);
+        option1.onClick.RemoveAllListeners();
+        option2.onClick.RemoveAllListeners();
+        options = false;
+        currentLine = lineID;
+        progressButton.gameObject.SetActive(true);
+        
+        DisplayText();
+
+        CheckIfCommand();
+        
     }
     private void OpenOptions()
     {
@@ -207,5 +198,46 @@ public class DialogueManager : MonoBehaviour
             optionText2.text = "2: " + dialogue[currentLine + 3];
             option2.onClick.AddListener(() => SwitchLine(o2));
             currentLine += 4;
+    }
+
+    public void Skip()
+    {
+        while (currentLine < dialogue.Length)
+        {
+            if (dialogue[currentLine].StartsWith("--options"))
+            {
+                CheckIfCommand();
+                break;
+            }
+            currentLine++;
+        }
+
+        if (currentLine >= dialogue.Length)
+        {
+            ExitDialogue();
+        }
+    }
+    private void DisplayText()
+    {
+        if (currentLine < dialogue.Length)
+        {
+            StopAllCoroutines();
+            StartCoroutine(TypeSentence(dialogue[currentLine]));
+            currentLine++;
+        }
+    }
+    IEnumerator TypeSentence(string sentence)
+    {
+        StringBuilder myText = new StringBuilder();
+        if (dialogueText.text.Length!=0)
+        {
+            myText.Append(dialogueText.text+"\n");
+        }
+        dialogueText.text = myText.ToString() + name;
+        foreach (var letter in sentence.ToCharArray())
+        {
+            dialogueText.text += letter; 
+            yield return new WaitForSeconds(.025f);
+        }
     }
 }
