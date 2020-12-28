@@ -27,11 +27,12 @@ public class LevelSelect : MonoBehaviour
         }
     }
 
+    //We need a proper system for this
     public void StartSelectedLevel()
     {
         GameManager.instance.levelID = selectedLevel;
         UIManager.instance.LevelStart();
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(7);
     }
     public void NextLevelSelect()
     {

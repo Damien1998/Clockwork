@@ -8,4 +8,5 @@ public class LevelParams : ScriptableObject
 {
     public int time;
     public List<Item> listOfWatches = new List<Item>();
+    public List<Recipe> listOfRecipes = new List<Recipe>();
 }

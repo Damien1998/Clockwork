@@ -260,7 +260,7 @@ public class Player : MonoBehaviour
         if (pickedupItem.TryGetComponent(out Rigidbody2D itemRigidbody))
         {
             itemRigidbody.velocity = Vector2.zero;
-
+            pickedupItem.GetComponent<BoxCollider2D>().enabled = false;
         }
         HeldWatch = pickedupItem;
         pickedupItem.transform.position = ItemPosition.localPosition;
@@ -270,13 +270,23 @@ public class Player : MonoBehaviour
 
     private void DropItem()
     {
+        if (HeldWatch.TryGetComponent(out Rigidbody2D itemRigidbody))
+        {
+            itemRigidbody.velocity = Vector2.zero;
+            HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
+        }
         HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
     }
 
     private void PlaceItemInWorkbench()
-    {       
+    {
+        if (HeldWatch.TryGetComponent(out Rigidbody2D itemRigidbody))
+        {
+            itemRigidbody.velocity = Vector2.zero;
+            HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
+        }
         HeldWatch.GetComponent<Watch>().isSelected = false;
         nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
         HeldWatch = null;

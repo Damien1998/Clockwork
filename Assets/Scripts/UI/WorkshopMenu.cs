@@ -8,6 +8,8 @@ public class WorkshopMenu : MonoBehaviour
     public static WorkshopMenu instance;
     public GameObject menu;
 
+    public int levelID;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -29,8 +31,15 @@ public class WorkshopMenu : MonoBehaviour
     public void StartLevel(int sceneID)
     {
         Time.timeScale = 1f;
-        GameManager.instance.levelID = sceneID;
+        GameManager.instance.levelID = levelID;
         UIManager.instance.LevelStart();
+        SceneManager.LoadScene(sceneID);
+    }
+
+    public void GoIntoWorkshop(int sceneID)
+    {
+        Time.timeScale = 1f;
+        GameManager.instance.levelID = levelID;
         SceneManager.LoadScene(sceneID);
     }
 
