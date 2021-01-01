@@ -8,7 +8,9 @@ using UnityEngine;
 public class CheckoutTable : Workbench
 {
     private int watchIndex = 0;
-    [SerializeField]private LevelParams workbenchLevelParams;
+    [SerializeField] private LevelParams workbenchLevelParams;
+
+    [SerializeField] private POI endOfLevelDialogue;
     //public GameObject WatchTemplate;
 
     void Start()
@@ -21,9 +23,7 @@ public class CheckoutTable : Workbench
         //It's more comfortable to have a quick and easy to use object that can specify what kind of watches will spawn in the order that is put in
         //This way we can make list of watches that will be used instantly
         //If you want to change the order which the watches spawn in go into "Assets/Prefabs/LevelParams/Level" directory
-        workbenchLevelParams = (LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + GameManager.instance.levelID +".asset", typeof(LevelParams));
-        ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
-        CheckForQuests();
+        workbenchLevelParams = (LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + GameManager.instance.levelID +".asset", typeof(LevelParams));       
     }
     /*
      * PS
@@ -47,6 +47,12 @@ public class CheckoutTable : Workbench
     }
     **/
 
+    public void InitLevel()
+    {
+        ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
+        StartCoroutine(CheckForQuests());
+    }
+
     public override void PlaceItem(Watch itemToPlace)
     {
         
@@ -56,7 +62,17 @@ public class CheckoutTable : Workbench
             //base.PlaceItem(itemToPlace);
             watchIndex++;
             Destroy(itemToPlace.gameObject);
-            ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
+            if(workbenchLevelParams.listOfWatches.Count >  watchIndex)
+            {
+                ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
+            }
+            else
+            {
+                
+                endOfLevelDialogue.StartDialogue();
+
+                Time.timeScale = 0f;
+            }
         }
     }
 
@@ -64,7 +80,7 @@ public class CheckoutTable : Workbench
     {
         
     }
-
+    /**
     private void CheckForQuests()
     {
         if (GameManager.instance.sideQuestActive)
@@ -72,6 +88,18 @@ public class CheckoutTable : Workbench
             ThrowNewWatch(GameManager.instance.questItem);  
         }
     }
+    **/
+
+    //Checking for quests is done after a sort delay so that wathches don't go funky on converor belts
+    IEnumerator CheckForQuests()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (GameManager.instance.sideQuestActive)
+        {
+            ThrowNewWatch(GameManager.instance.questItem);
+        }
+    }
+
     /*
     PS
     <summary>

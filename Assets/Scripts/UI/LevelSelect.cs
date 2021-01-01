@@ -15,7 +15,7 @@ public class LevelSelect : MonoBehaviour
 
     private void Awake()
     {
-        DialogueManager.instance.StartDialogue("Test");
+        //DialogueManager.instance.StartDialogue("Test");
     }
 
     private void Update()
@@ -31,7 +31,8 @@ public class LevelSelect : MonoBehaviour
     public void StartSelectedLevel()
     {
         GameManager.instance.levelID = selectedLevel;
-        UIManager.instance.LevelStart();
+        //LevelStart will be called at the end of a dialogue
+        //UIManager.instance.LevelStart();
         SceneManager.LoadScene(7);
     }
     public void NextLevelSelect()

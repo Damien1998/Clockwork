@@ -184,6 +184,11 @@ public class DialogueManager : MonoBehaviour
                 portrait.gameObject.SetActive(false);
                 nameText.gameObject.SetActive(false);
             }
+            else if (dialogue[currentLine].StartsWith("--level_start"))
+            {
+                UIManager.instance.LevelStart();
+                FindObjectOfType<CheckoutTable>().InitLevel();
+            }
             else if(!dialogue[currentLine].StartsWith("--options"))
             {
                 nameText.gameObject.SetActive(true);
