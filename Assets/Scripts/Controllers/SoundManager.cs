@@ -4,11 +4,71 @@ using UnityEngine;
 
 public static class SoundManager 
 {
-    public static void PlaySound()
+    public enum Sound
     {
-        GameObject soundGameObject = new GameObject("Sound");
-        AudioSource audioSource = soundGameObject.AddComponent<AudioSource>();
-        //audioSource.PlayOneShot();
+        ButtonClick,
+        PlayerMove
+    }
 
+    private static Dictionary<Sound, float> soundTimerDictionary;
+    private static GameObject oneShotGameObject;
+    private static AudioSource oneShotAudioSource;
+
+    public static void Initialize()
+    {
+        soundTimerDictionary = new Dictionary<Sound, float>();
+        soundTimerDictionary[Sound.PlayerMove] = 0f;
+    }
+    public static void PlaySound(Sound sound)
+    {
+        if (CanPlaySound(sound))
+        {
+            if (oneShotGameObject == null)
+            {
+                oneShotGameObject = new GameObject("One ShotSound");
+                oneShotAudioSource = oneShotGameObject.AddComponent<AudioSource>();
+                oneShotAudioSource.outputAudioMixerGroup = GameManager.instance.SFX;
+            }
+            oneShotAudioSource.PlayOneShot(GetAudioClip(sound));
+        }
+    }
+
+    private static bool CanPlaySound(Sound sound)
+    {
+        switch (sound)
+        {
+            default:
+                return true;
+            case Sound.PlayerMove:
+                if (soundTimerDictionary.ContainsKey(sound))
+                {
+                    float lastTimePlayed = soundTimerDictionary[sound];
+                    float playerMoveTimerMax = .15f;
+                    if (lastTimePlayed + playerMoveTimerMax < Time.time)
+                    {
+                        soundTimerDictionary[sound] = Time.time;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+        }
+    }
+    private static AudioClip GetAudioClip(Sound sound)
+    {
+        foreach (GameManager.SoundAudioClip soundAudioClip in GameManager.instance.soundAudioClipArray)
+        {
+            if (soundAudioClip.sound == sound)
+            {
+                return soundAudioClip.audioClip;
+            }
+        }
+        return null;
     }
 }

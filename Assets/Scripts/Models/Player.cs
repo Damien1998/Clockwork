@@ -214,6 +214,7 @@ public class Player : MonoBehaviour
                 {
                     lastDirection = yInput;
                 }
+                SoundManager.PlaySound(SoundManager.Sound.PlayerMove);
             }
 
             //Managing player speed

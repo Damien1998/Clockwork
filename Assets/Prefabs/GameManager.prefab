@@ -43,13 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b64fb9f0afc3f24390d506c210dbc48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Selected: {fileID: 2100000, guid: 699dddccea2eab64cb2fac7c5a840f92, type: 2}
-  NonSelected: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
-  repairedImage: {fileID: 21300000, guid: 4a1c843fb750af3479c0b23312126593, type: 3}
-  brokenImage: {fileID: 21300000, guid: b101fa9d9bc264c478e45ff4f5b5989a, type: 3}
-  unfixableImage: {fileID: 21300000, guid: 706862c5c50162a47801f294e280133b, type: 3}
-  unknownImage: {fileID: 21300000, guid: d0308379e3603ef4c9d46a19c90235d3, type: 3}
-  complexBrokenImage: {fileID: 21300000, guid: 31a4134c87e8fbb45aebf7d394c608fc, type: 3}
+  itemStates: {fileID: 11400000, guid: 0086019d084666c4abd34e03ea5e2535, type: 2}
   RecipesList:
   - {fileID: 11400000, guid: 464838deb0025d449a0df2566568694e, type: 2}
   - {fileID: 11400000, guid: 9274dd1b2e8bc8941b6116be3bf5fa67, type: 2}
@@ -62,6 +56,12 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4bda26ceb02b93740b9d0ae10b4cfaf5, type: 2}
   - {fileID: 11400000, guid: d37adbba5c937f343a28ede39c30d41f, type: 2}
   questItem: {fileID: 0}
-  _levelID: 0
+  _levelID: 10
   _sideQuest: 0
-  currentLevelParams: {fileID: 0}
+  currentLevelParams: {fileID: 11400000, guid: c3467338c5debdc4b896580ae1dfa117, type: 2}
+  soundAudioClipArray:
+  - sound: 0
+    audioClip: {fileID: 8300000, guid: 3b3233f755994c143be8a848509eb0e1, type: 3}
+  - sound: 1
+    audioClip: {fileID: 8300000, guid: 492cbcf67a85f16458d47e68fa76edcd, type: 3}
+  SFX: {fileID: 24300002, guid: 100acb05f1500cb4f81e36206cafce2a, type: 2}

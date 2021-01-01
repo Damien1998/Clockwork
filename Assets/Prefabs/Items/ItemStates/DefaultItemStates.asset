@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7a9fdea92a09e45a6b71e2eab16613, type: 3}
   m_Name: DefaultItemStates
   m_EditorClassIdentifier: 
+  selected: {fileID: 2100000, guid: 699dddccea2eab64cb2fac7c5a840f92, type: 2}
+  notSelected: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   itemStates:
   - {fileID: 21300000, guid: d0308379e3603ef4c9d46a19c90235d3, type: 3}
   - {fileID: 21300000, guid: 706862c5c50162a47801f294e280133b, type: 3}

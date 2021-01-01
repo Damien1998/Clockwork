@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 
 public class SettingsMenu : MonoBehaviour
 {
-    public AudioMixer audioMixer;
+    public AudioMixer musicMixer,sfxMixer;
     public Dropdown resolutionDropdown;
 
     private Resolution[] resolutions;
@@ -33,11 +33,14 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
     }
 
-    public void SetVolume(float volume)
+    public void SetMusicVolume(float volume)
     {
-        audioMixer.SetFloat("Volume", volume);
+        musicMixer.SetFloat("Volume", volume);
     }
-
+    public void SetSfxVolume(float volume)
+    {
+        sfxMixer.SetFloat("SFXVolume", volume);
+    }
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);

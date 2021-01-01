@@ -25,9 +25,10 @@ public class Watch : MonoBehaviour
         }
     }
     public SpriteRenderer itemRenderer;
-
     public SpriteRenderer stateRenderer;
     private bool selected;
+    private ItemStateDisplay _currentItemDisplay = GameManager.instance.itemStates;
+
 
     public bool isSelected
     {
@@ -53,23 +54,22 @@ public class Watch : MonoBehaviour
     //</summary>
     private void OnItemStateChange(Item item)
     {
-        ItemStateDisplay currentItemDisplay = GameManager.instance.itemStates;
         switch (item.State)
         {
             case ItemState.UnknownState:
-                stateRenderer.sprite = currentItemDisplay.itemStates[0];
+                stateRenderer.sprite = _currentItemDisplay.itemStates[0];
                 break;
             case ItemState.Unfixable:
-                stateRenderer.sprite = currentItemDisplay.itemStates[1];
+                stateRenderer.sprite = _currentItemDisplay.itemStates[1];
                 break;
             case ItemState.Broken:
-                stateRenderer.sprite = currentItemDisplay.itemStates[2];
+                stateRenderer.sprite = _currentItemDisplay.itemStates[2];
                 break;
             case ItemState.Repaired:
-                stateRenderer.sprite = currentItemDisplay.itemStates[3];
+                stateRenderer.sprite = _currentItemDisplay.itemStates[3];
                 break;
             case ItemState.ComplexBroken:
-                stateRenderer.sprite = currentItemDisplay.itemStates[4];
+                stateRenderer.sprite = _currentItemDisplay.itemStates[4];
                 break;
             default:
                 stateRenderer.sprite = null;
@@ -81,11 +81,11 @@ public class Watch : MonoBehaviour
     {
         if (isSelected == true)
         {
-            itemRenderer.material = GameManager.instance.Selected;
+            itemRenderer.material = _currentItemDisplay.selected;
         }
         else
         {
-            itemRenderer.material = GameManager.instance.NonSelected;
+            itemRenderer.material = _currentItemDisplay.notSelected;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using UnityEngine.Audio;
 
 
 //Refactoring is done! You may enter safely
@@ -10,8 +11,6 @@ public class GameManager : MonoBehaviour
     //God help us
     //The only game manager allowed to stay in this world of flesh
     public static GameManager instance;
-    public Material Selected,NonSelected;
-    //All state sprites    ||||||||||||||||||This needs to be redone with scriptable object along with Shader Above
     public ItemStateDisplay itemStates;
     public List<Recipe> RecipesList = new List<Recipe>();
     public Item questItem;
@@ -28,6 +27,8 @@ public class GameManager : MonoBehaviour
     //Which is changed when a level is selected
     */
     public LevelParams currentLevelParams;
+    public SoundAudioClip[] soundAudioClipArray;
+    public AudioMixerGroup SFX;
     public int levelID 
     { 
         get => _levelID;
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
+        SoundManager.Initialize();
         saveController = new SaveController();
         saveController.InitializeSaveController(12,0,0,0);
     }
@@ -112,5 +114,12 @@ public class GameManager : MonoBehaviour
     //     points += pointAmount;
     //     UIManager.instance.pointDisplay.text = "Punkty: " + points;
     // }
+    [System.Serializable]
+    public class SoundAudioClip
+    {
+        public SoundManager.Sound sound;
+        public AudioClip audioClip;
+    }
 }
+
 

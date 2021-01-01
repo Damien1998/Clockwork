@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,8 +40,8 @@ public class MainMenu : MonoBehaviour
         StartLevel(3);
     }
 
-    public void DisplaySaveInfo()
+    public void PlayButtonSound(string sound)
     {
-        
+        SoundManager.PlaySound((SoundManager.Sound)Enum.Parse(typeof(SoundManager.Sound),sound));
     }
 }
