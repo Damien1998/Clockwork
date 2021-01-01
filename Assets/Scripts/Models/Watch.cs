@@ -53,12 +53,28 @@ public class Watch : MonoBehaviour
     //</summary>
     private void OnItemStateChange(Item item)
     {
-        if (item.State == ItemState.UnknownState) stateRenderer.sprite = GameManager.instance.unknownImage;
-        else if (item.State == ItemState.Unfixable) stateRenderer.sprite = GameManager.instance.unfixableImage;
-        else if (item.State == ItemState.Broken) stateRenderer.sprite = GameManager.instance.brokenImage;
-        else if (item.State == ItemState.Repaired) stateRenderer.sprite = GameManager.instance.repairedImage;
-        else if (item.State == ItemState.ComplexBroken) stateRenderer.sprite = GameManager.instance.complexBrokenImage;
-        else stateRenderer.sprite = null;
+        ItemStateDisplay currentItemDisplay = GameManager.instance.itemStates;
+        switch (item.State)
+        {
+            case ItemState.UnknownState:
+                stateRenderer.sprite = currentItemDisplay.itemStates[0];
+                break;
+            case ItemState.Unfixable:
+                stateRenderer.sprite = currentItemDisplay.itemStates[1];
+                break;
+            case ItemState.Broken:
+                stateRenderer.sprite = currentItemDisplay.itemStates[2];
+                break;
+            case ItemState.Repaired:
+                stateRenderer.sprite = currentItemDisplay.itemStates[3];
+                break;
+            case ItemState.ComplexBroken:
+                stateRenderer.sprite = currentItemDisplay.itemStates[4];
+                break;
+            default:
+                stateRenderer.sprite = null;
+                break;
+        }
     }
 
     private void OnSelectChange()

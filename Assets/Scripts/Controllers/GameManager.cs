@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public Material Selected,NonSelected;
     //All state sprites    ||||||||||||||||||This needs to be redone with scriptable object along with Shader Above
-    public Sprite repairedImage,brokenImage,unfixableImage,unknownImage,complexBrokenImage;
+    public ItemStateDisplay itemStates;
     public List<Recipe> RecipesList = new List<Recipe>();
     public Item questItem;
     [SerializeField]private int _levelID;
