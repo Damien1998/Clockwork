@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour
     {
         if (GameManager.instance.levelID != 4)
         {
+            Time.timeScale = 1f;
             timerDisplay.value = 0;
             timerDisplay.maxValue = GameManager.instance.currentLevelParams.time;
             timerDisplay.gameObject.SetActive(true);

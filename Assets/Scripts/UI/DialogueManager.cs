@@ -167,6 +167,10 @@ public class DialogueManager : MonoBehaviour
                     portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--options", ""));
                     OpenOptions();
                     break;
+                case "--level_start":
+                    UIManager.instance.LevelStart();
+                    FindObjectOfType<CheckoutTable>().InitLevel();
+                    break;
             }
             currentLine++;
         }
