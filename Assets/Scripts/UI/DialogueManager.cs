@@ -228,7 +228,7 @@ public class DialogueManager : MonoBehaviour
         if (currentLine < dialogue.Length)
         {
             StopAllCoroutines();
-            dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,dialogueText.rectTransform.sizeDelta.y +40);
+            dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,dialogueText.rectTransform.sizeDelta.y +30);
             StartCoroutine(TypeSentence(dialogue[currentLine]));
             dialogueScrollBar.value = 0;
             currentLine++;
