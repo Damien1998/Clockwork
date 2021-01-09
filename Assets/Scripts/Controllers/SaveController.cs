@@ -7,12 +7,12 @@ using System.IO;
 
 public class SaveController
 { 
-    private string saveName;
-    private SaveData currentSave;
-    private List<SaveData.Level> levels;
-   private List<SaveData.SideQuest> sideQuests;
-   private List<SaveData.Flag> pointsOfInterest;
-   private List<SaveData.Flag> trophies;
+    private static string saveName;
+    public static SaveData currentSave;
+    private static List<SaveData.Level> levels;
+   private static List<SaveData.SideQuest> sideQuests;
+   private static List<SaveData.Flag> pointsOfInterest;
+   public static List<SaveData.Flag> trophies;
 
    public int CompletedLevels()
    {
@@ -43,7 +43,8 @@ public class SaveController
        sideQuests = new List<SaveData.SideQuest>();
        pointsOfInterest = new List<SaveData.Flag>();
        trophies = new List<SaveData.Flag>();
-       levels.Add(new SaveData.Level("Tutorial", false, true, 0f, 0f)); 
+       levels.Add(new SaveData.Level("Tutorial", false, true, 0f, 0f));
+       trophies.Add(new SaveData.Flag("firstTrophy",true));
     }
     public void CreateSaveGame(int saveID)
     {
@@ -55,7 +56,7 @@ public class SaveController
             formatter.Serialize(file, saveData);
             file.Close();
     }
-    public void LoadGame(int saveID)
+    public static void LoadGame(int saveID)
     {
         BinaryFormatter formatter = new BinaryFormatter();
             FileStream file;

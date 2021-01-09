@@ -22,7 +22,7 @@ public class SaveSlotDisplay : MonoBehaviour
    {
       if (_saveController.CheckForSaves(saveID))
       {
-         _saveController.LoadGame(saveID);
+         SaveController.LoadGame(saveID);
          saveInfo.text = "LoadedSave Completed Levels : " +_saveController.CompletedLevels();
          nameField.text = _saveController.currentSaveName();
          nameField.interactable = true;
@@ -38,7 +38,7 @@ public class SaveSlotDisplay : MonoBehaviour
    }
    public void ChangeSaveName(string name)
    {
-      _saveController.LoadGame(saveID);
+      SaveController.LoadGame(saveID);
       _saveController.ChangeSaveName(name);
    }
    public void DeleteSave()

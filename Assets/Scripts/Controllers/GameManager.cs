@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
         }
         SoundManager.Initialize();
         saveController = new SaveController();
-        saveController.InitializeSaveController(12,0,0,0);
+        saveController.InitializeSaveController(12,0,0,6);
     }
 
     public void SetSaveController(SaveController inSaveController)

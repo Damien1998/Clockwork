@@ -34,7 +34,7 @@ public class MainMenu : MonoBehaviour
         SaveController _saveController = new SaveController();
         if (_saveController.CheckForSaves(saveID))
         {
-            _saveController.LoadGame(saveID);
+            SaveController.LoadGame(saveID);
         }
         GameManager.instance.SetSaveController(_saveController);
         StartLevel(3);
