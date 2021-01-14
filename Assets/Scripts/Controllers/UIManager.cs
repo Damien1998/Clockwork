@@ -44,6 +44,7 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         timerDisplay.gameObject.SetActive(false);
+        timerDisplay.value = 0;
         gameOverScreen.gameObject.SetActive(true);
     }
 }

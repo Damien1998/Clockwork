@@ -12,7 +12,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager instance;
 
     public GameObject dialogueBox,optionsBox;
-    public Text nameText ,dialogueText , optionText1, optionText2;
+    public Text nameText ,dialogueText,dialogueHistoryText , optionText1, optionText2;
     public Image portrait;
     public Button option1, option2,progressButton;
     public Scrollbar dialogueScrollBar;
@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
     public Sprite[] portraits;
     public string[] characters;
 
-    private bool options;
+    private bool options,_typing;
 
     // Start is called before the first frame update
     void Awake()
@@ -142,9 +142,11 @@ public class DialogueManager : MonoBehaviour
         {
             string[] words = dialogue[currentLine].Split(' ');
             string firstWord = words[0];
+            Debug.Log(firstWord);
+
             switch (firstWord)
             {
-                case "--quest_start ":
+                case "--quest_start":
                     GameManager.instance.StartQuest(dialogue[currentLine].Replace("--quest_start ", ""),null);
                     break;
                 case "--poi":
@@ -155,11 +157,8 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "--portrait":
                     portrait.gameObject.SetActive(true);
+                    nameText.gameObject.SetActive(true);
                     portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
-                    break;
-                case "--description":
-                    portrait.gameObject.SetActive(false);
-                    nameText.gameObject.SetActive(false);
                     break;
                 case "--options":
                     nameText.gameObject.SetActive(true);
@@ -170,6 +169,12 @@ public class DialogueManager : MonoBehaviour
                     UIManager.instance.LevelStart();
                     FindObjectOfType<CheckoutTable>().InitLevel();
                     break;
+                default:
+                    portrait.gameObject.SetActive(false);
+                    nameText.gameObject.SetActive(false);
+                    name = "";
+                    break;
+
             }
             currentLine++;
         }
@@ -227,7 +232,6 @@ public class DialogueManager : MonoBehaviour
         if (currentLine < dialogue.Length)
         {
             StopAllCoroutines();
-            dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,dialogueText.rectTransform.sizeDelta.y +30);
             StartCoroutine(TypeSentence(dialogue[currentLine]));
             dialogueScrollBar.value = 0;
             currentLine++;
@@ -236,15 +240,17 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeSentence(string sentence)
     {
         StringBuilder myText = new StringBuilder();
+        var delay = .025f;
         if (dialogueText.text.Length!=0)
         {
-            myText.Append(dialogueText.text+"\n");
+            myText.Append(dialogueHistoryText.text+"\n");
         }
-        dialogueText.text = myText.ToString() + name;
+        dialogueHistoryText.text =  myText + name + sentence;
+        dialogueText.text = name;
         foreach (var letter in sentence.ToCharArray())
         {
-            dialogueText.text += letter; 
-            yield return new WaitForSeconds(.025f);
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(delay);
         }
     }
 }

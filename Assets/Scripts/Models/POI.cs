@@ -10,7 +10,7 @@ public class POI : MonoBehaviour
 
     private void Start()
     {
-        //DialogueManager.instance.StartDialogue("Test");
+  //      DialogueManager.instance.StartDialogue("Test");
     }
 
     public void StartDialogue()
