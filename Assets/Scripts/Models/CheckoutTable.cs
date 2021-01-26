@@ -68,7 +68,7 @@ public class CheckoutTable : Workbench
             }
             else
             {
-                
+                UIManager.instance.ShowLevelEnd();
                 endOfLevelDialogue.StartDialogue();
 
                 Time.timeScale = 0f;

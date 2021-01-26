@@ -7,8 +7,13 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
     public GameObject QuickSettingButton;
     [SerializeField] private int Points; 
-    [SerializeField]private GameObject gameOverScreen;
-    [SerializeField]private Slider timerDisplay;
+    [SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private Slider timerDisplay;
+    [SerializeField] private GameObject levelEndScren;
+    [SerializeField] private Text levelEndText;
+
+    private IEnumerator timer;
+
     void Start()
     {
         if (instance != null)
@@ -19,6 +24,14 @@ public class UIManager : MonoBehaviour
         {
             instance = this;
         }
+    }
+
+    public void ShowLevelEnd()
+    {
+        StopCoroutine(timer);
+        levelEndText.text = "Your Time: " + timerDisplay.value.ToString();
+        levelEndScren.SetActive(true);
+        timerDisplay.gameObject.SetActive(false);
     }
 
     public void AddPoints(int sumOfPoints)
@@ -33,7 +46,8 @@ public class UIManager : MonoBehaviour
             timerDisplay.value = 0;
             timerDisplay.maxValue = GameManager.instance.currentLevelParams.time;
             timerDisplay.gameObject.SetActive(true);
-            StartCoroutine(StartLevelTimer());
+            timer = StartLevelTimer();
+            StartCoroutine(timer);
         }
     }
     private IEnumerator StartLevelTimer()
