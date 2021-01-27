@@ -11,6 +11,8 @@ public class CheckoutTable : Workbench
     [SerializeField] private LevelParams workbenchLevelParams;
 
     [SerializeField] private POI endOfLevelDialogue;
+
+    private List<Watch> levelWatches = new List<Watch>();
     //public GameObject WatchTemplate;
 
     void Start()

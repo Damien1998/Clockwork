@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
         //At the end checks if player is not holding a button anymore and picksup  highlighted item
         if(nearbyItems != null && Input.GetButtonUp("Pickup" + playerNumber))
         {
-            if (itemToPickUpID < nearbyItems.Length)
+            if (itemToPickUpID < nearbyItems.Length && !nearbyItems[itemToPickUpID].GetComponent<Watch>().isPlacedOnWorkbench)
             {
                 PickUpItem(nearbyItems[itemToPickUpID].gameObject);
             }
