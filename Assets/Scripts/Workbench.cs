@@ -41,6 +41,7 @@ public class Workbench : MonoBehaviour
             {
                 //TODO - actual places for items
                 itemToPlace.transform.position = slotPositions[i].position;
+                itemToPlace.isPlacedOnWorkbench = true;
                 itemSlots[i] = itemToPlace;
                 //itemToPlace.gameObject.SetActive(false);
                 
@@ -71,6 +72,7 @@ public class Workbench : MonoBehaviour
             if(itemSlots[i] != null)
             {
                 itemSlots[i].transform.position = dropLocation.position;
+                itemSlots[i].isPlacedOnWorkbench = false;
                 itemSlots[i].gameObject.SetActive(true);
                 itemSlots[i] = null;
             }

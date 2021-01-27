@@ -73,7 +73,7 @@ public class WorkbenchBasic : Workbench
         {
             SortItems();
 
-            for (int i = 0; i < GameManager.instance.RecipesList.Count; i++)
+            for (int i = 0; i < GameManager.instance.currentLevelParams.listOfRecipes.Count; i++)
             {
                 var recipeFilled = true;               
 

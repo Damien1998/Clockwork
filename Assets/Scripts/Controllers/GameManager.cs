@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     public ItemStateDisplay itemStates;
     public List<Recipe> RecipesList = new List<Recipe>();
+    public List<Recipe> RandomWatchRecipesList = new List<Recipe>();
     public Item questItem;
     [SerializeField]private int _levelID;
     [SerializeField]private bool _sideQuest;
@@ -29,6 +30,7 @@ public class GameManager : MonoBehaviour
     public LevelParams currentLevelParams;
     public SoundAudioClip[] soundAudioClipArray;
     public AudioMixerGroup SFX;
+
     public int levelID 
     { 
         get => _levelID;

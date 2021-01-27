@@ -29,6 +29,7 @@ public class Watch : MonoBehaviour
     private bool selected;
     private ItemStateDisplay _currentItemDisplay = GameManager.instance.itemStates;
 
+    public bool isPlacedOnWorkbench;
 
     public bool isSelected
     {
