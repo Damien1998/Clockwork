@@ -9,5 +9,9 @@ public class Recipe : ScriptableObject
     //Recipe result item
     public Item result;
 
-    //Required part IDs
+    public void SetParameters(Item newResult, List<Item> newComponents)
+    {
+        result = newResult;
+        Items = newComponents;
+    }
 }

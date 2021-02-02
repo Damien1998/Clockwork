@@ -19,6 +19,13 @@ public class GameManager : MonoBehaviour
     [SerializeField]private bool _sideQuest;
     private SaveController saveController;
     private int points;
+
+    //For the random watch generator. After I rework this to use the new sprites the code will have to be changed slightly.
+    [SerializeField] private Item[] watchBases, casingBases, decorBases, beltBases, boxBases, glassBases, mechComponentBases;
+    [SerializeField] private Item mechanismBase;
+
+    public List<Item> randomWatches = new List<Item>();
+
     /*
     //PS
     //<summary>
@@ -64,6 +71,209 @@ public class GameManager : MonoBehaviour
         SoundManager.Initialize();
         saveController = new SaveController();
         saveController.InitializeSaveController(12,0,0,6);
+    }
+
+    //TODO making it cleaner
+    public void CreateRandomWatches()
+    {
+        randomWatches = new List<Item>();
+        RandomWatchRecipesList = new List<Recipe>();
+        for(int i = 0; i < currentLevelParams.watchAmount; i++)
+        {
+            List<Item> newWatchBasicItems = new List<Item>();
+            Item newWatch = ScriptableObject.CreateInstance<Item>();
+            newWatch.SetParameters(watchBases[Random.Range(0, watchBases.Length)]);
+            newWatch.components = new List<Item>();
+            newWatch.state = ItemState.ComplexBroken;
+            newWatch.trueState = ItemState.ComplexBroken;
+
+            Item newWatchCasing = null;
+            Item newWatchMechanism = null;
+            Item newWatchDecor = null;
+
+            if(currentLevelParams.eitherOfMechOrCasing)
+            {
+                newWatchMechanism = ScriptableObject.CreateInstance<Item>();
+                newWatchMechanism.SetParameters(mechanismBase);
+                newWatchMechanism.components = new List<Item>();
+
+                newWatchCasing = ScriptableObject.CreateInstance<Item>();
+                newWatchCasing.SetParameters(casingBases[Random.Range(0, casingBases.Length)]);
+                newWatchCasing.components = new List<Item>();
+
+                if (Random.Range(0, 2) == 0)
+                {
+                    newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(glassBases[Random.Range(0, glassBases.Length - 1)]);
+
+                    newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);                  
+
+                    newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(boxBases[Random.Range(0, boxBases.Length - 1)]);
+                    
+                    newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+
+                    newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(beltBases[Random.Range(0, beltBases.Length - 1)]);
+
+                    newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+
+                    newWatchCasing.state = ItemState.ComplexBroken;
+                    newWatchCasing.trueState = ItemState.ComplexBroken;
+
+                    RandomWatchRecipesList.Add(ScriptableObject.CreateInstance<Recipe>());
+                    RandomWatchRecipesList[RandomWatchRecipesList.Count - 1].SetParameters(newWatchCasing, newWatchCasing.components);
+
+                    newWatchBasicItems.Add(newWatchMechanism);
+                }
+                else
+                {
+                    for (int j = 0; j < Random.Range(currentLevelParams.mechMinParts, currentLevelParams.mechMaxParts); j++)
+                    {
+                        newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
+                        newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(mechComponentBases[Random.Range(0, mechComponentBases.Length)]);
+                        
+                        newWatchMechanism.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+                    }
+                    newWatchBasicItems.Add(newWatchCasing);
+                    
+                    newWatchMechanism.state = ItemState.ComplexBroken;
+                    newWatchMechanism.trueState = ItemState.ComplexBroken;
+                }               
+            }
+            else if (currentLevelParams.casingComponents || currentLevelParams.mechanismComponents)
+            {
+                newWatchCasing = ScriptableObject.CreateInstance<Item>();
+                newWatchCasing.SetParameters(casingBases[Random.Range(0, casingBases.Length)]);
+                newWatchCasing.components = new List<Item>();
+
+                if (currentLevelParams.casingComponents)
+                {
+                    newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(glassBases[Random.Range(0, glassBases.Length - 1)]);
+
+                    newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+
+                    newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(boxBases[Random.Range(0, boxBases.Length - 1)]);
+
+                    newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+
+                    newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(beltBases[Random.Range(0, beltBases.Length - 1)]);
+
+                    newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+
+                    RandomWatchRecipesList.Add(ScriptableObject.CreateInstance<Recipe>());
+                    RandomWatchRecipesList[RandomWatchRecipesList.Count - 1].SetParameters(newWatchCasing, newWatchCasing.components);
+
+                    newWatchCasing.state = ItemState.ComplexBroken;
+                    newWatchCasing.trueState = ItemState.ComplexBroken;
+                }     
+                else
+                {
+                    newWatchBasicItems.Add(newWatchCasing);
+                }
+
+                newWatchMechanism = ScriptableObject.CreateInstance<Item>();
+                newWatchMechanism.SetParameters(mechanismBase);
+                newWatchMechanism.components = new List<Item>();
+
+                if (currentLevelParams.mechanismComponents)
+                {
+                    var rAmount = Random.Range(currentLevelParams.mechMinParts, currentLevelParams.mechMaxParts);
+                    for (int j = 0; j < rAmount; j++)
+                    {
+                        newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
+                        newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(mechComponentBases[Random.Range(0, mechComponentBases.Length)]);
+                        
+                        newWatchMechanism.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+                    }
+                    newWatchMechanism.state = ItemState.ComplexBroken;
+                    newWatchMechanism.trueState = ItemState.ComplexBroken;
+                }  
+                else
+                {
+                    newWatchBasicItems.Add(newWatchMechanism);
+                }
+            }            
+            else
+            {
+                newWatchCasing = ScriptableObject.CreateInstance<Item>();
+                newWatchCasing.SetParameters(casingBases[Random.Range(0, casingBases.Length)]);
+                
+                newWatchCasing.components = new List<Item>();
+                newWatchMechanism = ScriptableObject.CreateInstance<Item>();
+                newWatchMechanism.SetParameters(mechanismBase);
+                newWatchMechanism.components = new List<Item>();                
+
+                newWatchBasicItems.Add(newWatchMechanism);
+                newWatchBasicItems.Add(newWatchCasing);
+            }
+
+            newWatch.components.Add(newWatchCasing);
+            newWatch.components.Add(newWatchMechanism);
+
+            if (Random.Range(0, 100) < currentLevelParams.decorPercentChance)
+            {
+                newWatchDecor = ScriptableObject.CreateInstance<Item>();
+                newWatchDecor.SetParameters(decorBases[Random.Range(0, decorBases.Length)]);
+                
+                newWatch.components.Add(newWatchDecor);
+                //basicPartAmount++;
+            }
+
+            randomWatches.Add(newWatch);
+            RandomWatchRecipesList.Add(ScriptableObject.CreateInstance<Recipe>());
+            RandomWatchRecipesList[RandomWatchRecipesList.Count - 1].SetParameters(newWatch, newWatch.components);
+
+            //Setting the component states
+
+            var brokenComponentAmount = (Random.Range(currentLevelParams.brokenPartMinPercentage, currentLevelParams.brokenPartMaxPercentage) / 100) * newWatchBasicItems.Count;
+            var safeguard = 100;
+
+            while(brokenComponentAmount > 0 && safeguard > 0)
+            {
+                var temp = Random.Range(0, newWatchBasicItems.Count);
+                if(newWatchBasicItems[temp].trueState != ItemState.Unfixable && newWatchBasicItems[temp].trueState != ItemState.Broken)
+                {
+                    if (currentLevelParams.brokenState && currentLevelParams.unfixableState)
+                    {
+                        if (Random.Range(0, 2) == 0)
+                        {
+                            newWatchBasicItems[temp].trueState = ItemState.Unfixable;
+                        }
+                        else
+                        {
+                            newWatchBasicItems[temp].trueState = ItemState.Broken;
+                        }
+
+                        newWatchBasicItems[temp].state = newWatchBasicItems[temp].trueState;
+                    }
+                    else if (currentLevelParams.brokenState)
+                    {
+                        newWatchBasicItems[temp].trueState = ItemState.Broken;
+                        newWatchBasicItems[temp].state = newWatchBasicItems[temp].trueState;
+                    }
+                    else if (currentLevelParams.unfixableState)
+                    {
+                        newWatchBasicItems[temp].trueState = ItemState.Unfixable;
+                        newWatchBasicItems[temp].state = newWatchBasicItems[temp].trueState;
+                    }
+
+                    brokenComponentAmount--;
+                }
+                safeguard--;   
+            }
+
+            for(int j = 0; j < newWatchBasicItems.Count; j++)
+            {
+                if (Random.Range(0, 100) < currentLevelParams.unknownStatePercentChance)
+                {
+                    newWatchBasicItems[j].state = ItemState.UnknownState;
+                }
+            }
+        }
     }
 
     public void SetSaveController(SaveController inSaveController)
