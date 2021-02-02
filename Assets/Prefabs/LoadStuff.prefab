@@ -899,6 +899,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f6d5cb5f2f9dbb4fbb6ca72082173e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonSound: 
 --- !u!1 &1713691391433990473
 GameObject:
   m_ObjectHideFlags: 0
@@ -2786,9 +2787,30 @@ MonoBehaviour:
   currentLevelParams: {fileID: 11400000, guid: c3467338c5debdc4b896580ae1dfa117, type: 2}
   soundAudioClipArray:
   - sound: 0
-    audioClip: {fileID: 8300000, guid: 3b3233f755994c143be8a848509eb0e1, type: 3}
+    audioClip:
+    - {fileID: 8300000, guid: 3b3233f755994c143be8a848509eb0e1, type: 3}
   - sound: 1
-    audioClip: {fileID: 8300000, guid: 492cbcf67a85f16458d47e68fa76edcd, type: 3}
+    audioClip:
+    - {fileID: 8300000, guid: 492cbcf67a85f16458d47e68fa76edcd, type: 3}
+    - {fileID: 8300000, guid: 67c12476d13cbc54483f2848b887a269, type: 3}
+    - {fileID: 8300000, guid: 7c319a531a6816943a40f2b79c3be833, type: 3}
+    - {fileID: 8300000, guid: 4780df9e9ce88c846a7b6287351d4cb4, type: 3}
+    - {fileID: 8300000, guid: 822d294e3c032654a81c5258eede0c4b, type: 3}
+  - sound: 2
+    audioClip:
+    - {fileID: 8300000, guid: 89b3b9e42a715e54c890bff935ea523c, type: 3}
+  - sound: 3
+    audioClip:
+    - {fileID: 8300000, guid: 3abb719ef0551ff40ad2f3f9ef700d0f, type: 3}
+  - sound: 10
+    audioClip:
+    - {fileID: 8300000, guid: 7c319a531a6816943a40f2b79c3be833, type: 3}
+  - sound: 4
+    audioClip:
+    - {fileID: 8300000, guid: 3abb719ef0551ff40ad2f3f9ef700d0f, type: 3}
+  - sound: 5
+    audioClip:
+    - {fileID: 8300000, guid: 45b94a2c1a2275a4da49139fd13f4b11, type: 3}
   SFX: {fileID: 24300002, guid: 100acb05f1500cb4f81e36206cafce2a, type: 2}
 --- !u!1 &4908478027163953460
 GameObject:
