@@ -51,7 +51,9 @@ public class CheckoutTable : Workbench
 
     public void InitLevel()
     {
-        ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
+        //ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
+        GameManager.instance.CreateRandomWatches();
+        ThrowRandomWatch();
         StartCoroutine(CheckForQuests());
     }
 
@@ -66,7 +68,8 @@ public class CheckoutTable : Workbench
             Destroy(itemToPlace.gameObject);
             if(workbenchLevelParams.listOfWatches.Count >  watchIndex)
             {
-                ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
+                //ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
+                ThrowRandomWatch();
             }
             else
             {
@@ -119,6 +122,15 @@ public class CheckoutTable : Workbench
         newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
     }
 
+    private void ThrowRandomWatch()
+    {
+        var newWatch = Instantiate(WatchTemplate, transform.position, Quaternion.identity);
+        var newItem = ScriptableObject.CreateInstance<Item>();
+        newItem.SetParameters(GameManager.instance.randomWatches[watchIndex]);
+        newWatch.GetComponent<Watch>().WatchItem = newItem;
+        newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
+    }
+
     //Placing items in done on the side of the player
     /**
     private void OnTriggerEnter2D(Collider2D collision)
@@ -137,7 +149,7 @@ public class CheckoutTable : Workbench
      */
     private bool CheckWatch(Watch currentWatch)
     {
-        if (currentWatch.WatchItem.State ==  ItemState.Repaired)
+        if (currentWatch.WatchItem.State ==  ItemState.Repaired && currentWatch.WatchItem.itemImage == GameManager.instance.randomWatches[watchIndex].itemImage)
         {
             return true;
         }

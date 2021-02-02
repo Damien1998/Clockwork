@@ -73,21 +73,21 @@ public class WorkbenchBasic : Workbench
         {
             SortItems();
 
-            for (int i = 0; i < GameManager.instance.currentLevelParams.listOfRecipes.Count; i++)
+            for (int i = 0; i < GameManager.instance.RandomWatchRecipesList.Count; i++)
             {
                 var recipeFilled = true;               
 
                 for (int j = 0; j < itemSlots.Length; j++)
                 {
                     Debug.Log(itemSlots[j]);
-                    Debug.Log(GameManager.instance.currentLevelParams.listOfRecipes[i].Items.Count + "       " + j);
+                    Debug.Log(GameManager.instance.RandomWatchRecipesList[i].Items.Count + "       " + j);
                     if ((itemSlots[j] != null /**&& GameManager.instance.RecipesList[i].Items.Count > j**/)
-                        || (itemSlots[j] == null && GameManager.instance.currentLevelParams.listOfRecipes[i].Items.Count > j)
+                        || (itemSlots[j] == null && GameManager.instance.RandomWatchRecipesList[i].Items.Count > j)
                         || (itemSlots[j] != null && itemSlots[j].WatchItem.State != ItemState.Repaired))
                     {
-                        if(itemSlots[j] != null && GameManager.instance.currentLevelParams.listOfRecipes[i].Items.Count > j)
+                        if(itemSlots[j] != null && GameManager.instance.RandomWatchRecipesList[i].Items.Count > j)
                         {
-                            if (itemSlots[j].WatchItem.itemID != GameManager.instance.currentLevelParams.listOfRecipes[i].Items[j].itemID || itemSlots[j].WatchItem.State != ItemState.Repaired)
+                            if (itemSlots[j].WatchItem.itemID != GameManager.instance.RandomWatchRecipesList[i].Items[j].itemID || itemSlots[j].WatchItem.State != ItemState.Repaired)
                             {
                                 recipeFilled = false;
                             }
@@ -106,7 +106,8 @@ public class WorkbenchBasic : Workbench
                     EmptySlot(1);
                     EmptySlot(2);
                     //itemSlots[0] = Instantiate(GameManager.instance.basicRecipes[i].resultWatch, transform.position, Quaternion.identity);     
-                    itemSlots[0] = GenerateItem(GameManager.instance.currentLevelParams.listOfRecipes[i].result);
+                    itemSlots[0] = GenerateItem(GameManager.instance.RandomWatchRecipesList[i].result);
+                    itemSlots[0].WatchItem.trueState = ItemState.Repaired;
                     itemSlots[0].WatchItem.State = itemSlots[0].WatchItem.trueState;
                     break;
                 }
