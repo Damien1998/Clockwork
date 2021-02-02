@@ -258,6 +258,7 @@ public class Player : MonoBehaviour
 
     private void PickUpItem(GameObject pickedupItem)
     {
+        SoundManager.PlaySound(SoundManager.Sound.ItemPickUp);
         if (pickedupItem.TryGetComponent(out Rigidbody2D itemRigidbody))
         {
             itemRigidbody.velocity = Vector2.zero;
@@ -271,6 +272,7 @@ public class Player : MonoBehaviour
 
     private void DropItem()
     {
+        SoundManager.PlaySound(SoundManager.Sound.ItemDrop);
         if (HeldWatch.TryGetComponent(out Rigidbody2D itemRigidbody))
         {
             itemRigidbody.velocity = Vector2.zero;
@@ -283,6 +285,7 @@ public class Player : MonoBehaviour
 
     private void PlaceItemInWorkbench()
     {
+        SoundManager.PlaySound(SoundManager.Sound.WorkBenchPut);
         if (HeldWatch.TryGetComponent(out Rigidbody2D itemRigidbody))
         {
             itemRigidbody.velocity = Vector2.zero;

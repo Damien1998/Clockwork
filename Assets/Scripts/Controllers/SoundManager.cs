@@ -7,7 +7,16 @@ public static class SoundManager
     public enum Sound
     {
         ButtonClick,
-        PlayerMove
+        PlayerMove,
+        ItemPickUp,
+        ItemDrop,
+        WorkBenchPut,
+        WorkBenchBasic,
+        WorkBenchAdvanced,
+        WorkBenchResearch,
+        WorkBenchPostal,
+        ItemEject,
+        Jump
     }
 
     private static Dictionary<Sound, float> soundTimerDictionary;
@@ -43,7 +52,26 @@ public static class SoundManager
                 if (soundTimerDictionary.ContainsKey(sound))
                 {
                     float lastTimePlayed = soundTimerDictionary[sound];
-                    float playerMoveTimerMax = .15f;
+                    float playerMoveTimerMax = .4f;
+                    if (lastTimePlayed + playerMoveTimerMax < Time.time)
+                    {
+                        soundTimerDictionary[sound] = Time.time;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            case Sound.Jump:
+                if (soundTimerDictionary.ContainsKey(sound))
+                {
+                    float lastTimePlayed = soundTimerDictionary[sound];
+                    float playerMoveTimerMax = .5f;
                     if (lastTimePlayed + playerMoveTimerMax < Time.time)
                     {
                         soundTimerDictionary[sound] = Time.time;
@@ -66,7 +94,7 @@ public static class SoundManager
         {
             if (soundAudioClip.sound == sound)
             {
-                return soundAudioClip.audioClip;
+                return soundAudioClip.audioClip[Random.Range(0,soundAudioClip.audioClip.Length)];
             }
         }
         return null;

@@ -2,11 +2,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 //Refactoring is done! You may enter safely
 public class MainMenu : MonoBehaviour
 {
+    [SerializeField]private string buttonSound;
+
+    private void Update()
+    {
+        PlayButtonSound(buttonSound);
+    }
     public void PlayGame ()
     {
         Time.timeScale = 1f;
@@ -42,6 +49,12 @@ public class MainMenu : MonoBehaviour
 
     public void PlayButtonSound(string sound)
     {
-        SoundManager.PlaySound((SoundManager.Sound)Enum.Parse(typeof(SoundManager.Sound),sound));
+        if (EventSystem.current.currentSelectedGameObject != null)
+        {
+            SoundManager.PlaySound((SoundManager.Sound)Enum.Parse(typeof(SoundManager.Sound),sound));
+            EventSystem.current.SetSelectedGameObject(null);
+        }
     }
+
+   
 }
