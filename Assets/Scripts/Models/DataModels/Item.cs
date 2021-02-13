@@ -13,7 +13,7 @@ public class Item : ScriptableObject
 
     public ItemState trueState;
     public int itemID;
-    public Sprite itemImage;
+    public List<Sprite> itemImages;
     public List<Item> components = new List<Item>();
     public List<ItemState> componentsStates = new List<ItemState>();
 
@@ -41,7 +41,14 @@ public class Item : ScriptableObject
         this.state = templateitem.state;
         this.components = templateitem.components;
         this.itemID = templateitem.itemID;
-        this.itemImage = templateitem.itemImage;
+        //this.itemImages = templateitem.itemImages;
+
+        itemImages = new List<Sprite>();
+        for(int i = 0; i < templateitem.itemImages.Count; i++)
+        {
+            itemImages.Add(templateitem.itemImages[i]);
+        }
+
         this.trueState = templateitem.trueState;
     }
     public void RegisterItemCallback(Action<Item> callback)
