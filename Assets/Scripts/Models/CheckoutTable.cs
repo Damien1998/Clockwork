@@ -149,7 +149,7 @@ public class CheckoutTable : Workbench
      */
     private bool CheckWatch(Watch currentWatch)
     {
-        if (currentWatch.WatchItem.State ==  ItemState.Repaired && currentWatch.WatchItem.itemImage == GameManager.instance.randomWatches[watchIndex].itemImage)
+        if (currentWatch.WatchItem.State ==  ItemState.Repaired && currentWatch.WatchItem.itemID == GameManager.instance.randomWatches[watchIndex].itemID)
         {
             return true;
         }

@@ -24,7 +24,7 @@ public class Watch : MonoBehaviour
             OnItemChange(myItem);
         }
     }
-    public SpriteRenderer itemRenderer;
+    public List<SpriteRenderer> itemRenderer;
     public SpriteRenderer stateRenderer;
     private bool selected;
     private ItemStateDisplay _currentItemDisplay = GameManager.instance.itemStates;
@@ -43,7 +43,19 @@ public class Watch : MonoBehaviour
 
     private void OnItemChange(Item changedItem)
     {
-        itemRenderer.sprite = changedItem.itemImage;
+        for(int i = 0; i < itemRenderer.Count; i++)
+        {
+            if(changedItem.itemImages[i] != null)
+            {
+                itemRenderer[i].gameObject.SetActive(true);
+                itemRenderer[i].sprite = changedItem.itemImages[i];
+            }
+            else
+            {
+                itemRenderer[i].gameObject.SetActive(false);
+            }
+        }
+        //itemRenderer.sprite = changedItem.itemImages;
         for (int i = 0; i < myItem.componentsStates.Count; i++)
         {
             myItem.components[i].State = myItem.componentsStates[i];
@@ -79,14 +91,20 @@ public class Watch : MonoBehaviour
     }
 
     private void OnSelectChange()
-    {
+    {        
         if (isSelected == true)
         {
-            itemRenderer.material = _currentItemDisplay.selected;
+            foreach(SpriteRenderer renderer in itemRenderer)
+            {
+                renderer.material = _currentItemDisplay.selected;
+            }            
         }
         else
         {
-            itemRenderer.material = _currentItemDisplay.notSelected;
+            foreach (SpriteRenderer renderer in itemRenderer)
+            {
+                renderer.material = _currentItemDisplay.notSelected;
+            }
         }
     }
 }

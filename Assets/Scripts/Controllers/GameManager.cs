@@ -21,8 +21,8 @@ public class GameManager : MonoBehaviour
     private int points;
 
     //For the random watch generator. After I rework this to use the new sprites the code will have to be changed slightly.
-    [SerializeField] private Item[] watchBases, casingBases, decorBases, beltBases, boxBases, glassBases, mechComponentBases;
-    [SerializeField] private Item mechanismBase;
+    [SerializeField] private Item[] watchBases, decorBases, beltBases, boxBases, glassBases, mechComponentBases;
+    [SerializeField] private Item mechanismBase, casingBase;
 
     public List<Item> randomWatches = new List<Item>();
 
@@ -82,7 +82,21 @@ public class GameManager : MonoBehaviour
         {
             List<Item> newWatchBasicItems = new List<Item>();
             Item newWatch = ScriptableObject.CreateInstance<Item>();
-            newWatch.SetParameters(watchBases[Random.Range(0, watchBases.Length)]);
+
+            int watchTypeModifier = 0;
+
+            var weights = currentLevelParams.pocketWatchWeight + currentLevelParams.wristWatchWeight;
+            if (Random.Range(0, weights) < currentLevelParams.pocketWatchWeight)
+            {
+                newWatch.SetParameters(watchBases[0]);
+            }
+            else
+            {
+                newWatch.SetParameters(watchBases[1]);
+                watchTypeModifier = 3;
+            }
+            Debug.LogWarning(watchTypeModifier);
+            
             newWatch.components = new List<Item>();
             newWatch.state = ItemState.ComplexBroken;
             newWatch.trueState = ItemState.ComplexBroken;
@@ -98,25 +112,31 @@ public class GameManager : MonoBehaviour
                 newWatchMechanism.components = new List<Item>();
 
                 newWatchCasing = ScriptableObject.CreateInstance<Item>();
-                newWatchCasing.SetParameters(casingBases[Random.Range(0, casingBases.Length)]);
+                newWatchCasing.SetParameters(casingBase);
                 newWatchCasing.components = new List<Item>();
 
                 if (Random.Range(0, 2) == 0)
                 {
                     newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
-                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(glassBases[Random.Range(0, glassBases.Length - 1)]);
+                    var randomNumber = Random.Range(0, 3) + watchTypeModifier;
 
-                    newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);                  
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(glassBases[randomNumber]);
+                    newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+                    newWatchCasing.itemImages[0] = glassBases[randomNumber].itemImages[0];
 
                     newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
-                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(boxBases[Random.Range(0, boxBases.Length - 1)]);
-                    
+                    randomNumber = Random.Range(0, 3) + watchTypeModifier;
+
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(boxBases[randomNumber]);                    
                     newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+                    newWatchCasing.itemImages[2] = boxBases[randomNumber].itemImages[2];
 
                     newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
-                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(beltBases[Random.Range(0, beltBases.Length - 1)]);
+                    randomNumber = Random.Range(0, 3) + watchTypeModifier;
 
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(beltBases[randomNumber]);
                     newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+                    newWatchCasing.itemImages[3] = beltBases[randomNumber].itemImages[3];
 
                     newWatchCasing.state = ItemState.ComplexBroken;
                     newWatchCasing.trueState = ItemState.ComplexBroken;
@@ -128,6 +148,10 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
+                    newWatchCasing.itemImages[0] = glassBases[Random.Range(0, 3) + watchTypeModifier].itemImages[0];
+                    newWatchCasing.itemImages[2] = boxBases[Random.Range(0, 3) + watchTypeModifier].itemImages[2];
+                    newWatchCasing.itemImages[3] = beltBases[Random.Range(0, 3) + watchTypeModifier].itemImages[3];
+
                     for (int j = 0; j < Random.Range(currentLevelParams.mechMinParts, currentLevelParams.mechMaxParts); j++)
                     {
                         newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
@@ -144,25 +168,31 @@ public class GameManager : MonoBehaviour
             else if (currentLevelParams.casingComponents || currentLevelParams.mechanismComponents)
             {
                 newWatchCasing = ScriptableObject.CreateInstance<Item>();
-                newWatchCasing.SetParameters(casingBases[Random.Range(0, casingBases.Length)]);
+                newWatchCasing.SetParameters(casingBase);
                 newWatchCasing.components = new List<Item>();
 
                 if (currentLevelParams.casingComponents)
                 {
                     newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
-                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(glassBases[Random.Range(0, glassBases.Length - 1)]);
+                    var randomNumber = Random.Range(0, 3) + watchTypeModifier;
 
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(glassBases[randomNumber]);
                     newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+                    newWatchCasing.itemImages[0] = glassBases[randomNumber].itemImages[0];
 
                     newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
-                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(boxBases[Random.Range(0, boxBases.Length - 1)]);
+                    randomNumber = Random.Range(0, 3) + watchTypeModifier;
 
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(boxBases[randomNumber]);
                     newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+                    newWatchCasing.itemImages[2] = boxBases[randomNumber].itemImages[2];
 
                     newWatchBasicItems.Add(ScriptableObject.CreateInstance<Item>());
-                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(beltBases[Random.Range(0, beltBases.Length - 1)]);
+                    randomNumber = Random.Range(0, 3) + watchTypeModifier;
 
+                    newWatchBasicItems[newWatchBasicItems.Count - 1].SetParameters(beltBases[randomNumber]);
                     newWatchCasing.components.Add(newWatchBasicItems[newWatchBasicItems.Count - 1]);
+                    newWatchCasing.itemImages[3] = beltBases[randomNumber].itemImages[3];
 
                     RandomWatchRecipesList.Add(ScriptableObject.CreateInstance<Recipe>());
                     RandomWatchRecipesList[RandomWatchRecipesList.Count - 1].SetParameters(newWatchCasing, newWatchCasing.components);
@@ -173,6 +203,9 @@ public class GameManager : MonoBehaviour
                 else
                 {
                     newWatchBasicItems.Add(newWatchCasing);
+                    newWatchCasing.itemImages[0] = glassBases[Random.Range(0, 3) + watchTypeModifier].itemImages[0];
+                    newWatchCasing.itemImages[2] = boxBases[Random.Range(0, 3) + watchTypeModifier].itemImages[2];
+                    newWatchCasing.itemImages[3] = beltBases[Random.Range(0, 3) + watchTypeModifier].itemImages[3];
                 }
 
                 newWatchMechanism = ScriptableObject.CreateInstance<Item>();
@@ -200,7 +233,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 newWatchCasing = ScriptableObject.CreateInstance<Item>();
-                newWatchCasing.SetParameters(casingBases[Random.Range(0, casingBases.Length)]);
+                newWatchCasing.SetParameters(casingBase);
                 
                 newWatchCasing.components = new List<Item>();
                 newWatchMechanism = ScriptableObject.CreateInstance<Item>();
@@ -213,6 +246,10 @@ public class GameManager : MonoBehaviour
 
             newWatch.components.Add(newWatchCasing);
             newWatch.components.Add(newWatchMechanism);
+
+            newWatch.itemImages[0] = newWatchCasing.itemImages[0];
+            newWatch.itemImages[2] = newWatchCasing.itemImages[2];
+            newWatch.itemImages[3] = newWatchCasing.itemImages[3];
 
             if (Random.Range(0, 100) < currentLevelParams.decorPercentChance)
             {

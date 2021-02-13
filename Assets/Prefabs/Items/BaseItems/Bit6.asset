@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d192423e1dca95b42b54e70fffb8d9cf, type: 3}
   m_Name: Bit6
   m_EditorClassIdentifier: 
+  state: 0
   trueState: 2
   itemID: 31
-  itemImage: {fileID: 21300000, guid: a9fed4a75d70c0040858578ab5c7a47e, type: 3}
+  itemImages:
+  - {fileID: 21300000, guid: a9fed4a75d70c0040858578ab5c7a47e, type: 3}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   components: []
   componentsStates: 
