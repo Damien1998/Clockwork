@@ -45,10 +45,17 @@ public class Watch : MonoBehaviour
     {
         for(int i = 0; i < itemRenderer.Count; i++)
         {
-            if(changedItem.itemImages[i] != null)
+            if(changedItem.itemImages.Count > i)
             {
-                itemRenderer[i].gameObject.SetActive(true);
-                itemRenderer[i].sprite = changedItem.itemImages[i];
+                if (changedItem.itemImages[i] != null)
+                {
+                    itemRenderer[i].gameObject.SetActive(true);
+                    itemRenderer[i].sprite = changedItem.itemImages[i];
+                }
+                else
+                {
+                    itemRenderer[i].gameObject.SetActive(false);
+                }
             }
             else
             {

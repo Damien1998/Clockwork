@@ -59,14 +59,18 @@ public class CheckoutTable : Workbench
 
     public override void PlaceItem(Watch itemToPlace)
     {
-        
+        if(CheckQuestWatch(itemToPlace))
+        {
+            Destroy(itemToPlace.gameObject);
+            //Idk how to end quests :/
+        }
         if(CheckWatch(itemToPlace) == true)
         {
             //I'm not sure whether we really need that there:
             //base.PlaceItem(itemToPlace);
             watchIndex++;
             Destroy(itemToPlace.gameObject);
-            if(workbenchLevelParams.listOfWatches.Count >  watchIndex)
+            if(workbenchLevelParams.watchAmount >  watchIndex)
             {
                 //ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
                 ThrowRandomWatch();
@@ -98,10 +102,11 @@ public class CheckoutTable : Workbench
     //Checking for quests is done after a sort delay so that wathches don't go funky on converor belts
     IEnumerator CheckForQuests()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         if (GameManager.instance.sideQuestActive)
         {
-            ThrowNewWatch(GameManager.instance.questItem);
+            GameManager.instance.AddQuestRecipes();
+            ThrowNewWatch(GameManager.instance.currentLevelParams.questItem);
         }
     }
 
@@ -150,6 +155,18 @@ public class CheckoutTable : Workbench
     private bool CheckWatch(Watch currentWatch)
     {
         if (currentWatch.WatchItem.State ==  ItemState.Repaired && currentWatch.WatchItem.itemID == GameManager.instance.randomWatches[watchIndex].itemID)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    private bool CheckQuestWatch(Watch currentWatch)
+    {
+        if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch.WatchItem.itemID == GameManager.instance.questItem.itemID)
         {
             return true;
         }

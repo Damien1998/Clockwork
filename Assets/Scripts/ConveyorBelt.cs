@@ -18,7 +18,6 @@ public class ConveyorBelt : MonoBehaviour
     {       
         if (collision.TryGetComponent(out Rigidbody2D rigidbody))
         {
-            Debug.Log(collision.name);
             rigidbody.velocity = direction.normalized * speed;
             if(direction.x == 0)
             {
