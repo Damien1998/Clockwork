@@ -13,17 +13,11 @@ MonoBehaviour:
   m_Name: Level 10
   m_EditorClassIdentifier: 
   time: 600
-  listOfWatches:
-  - {fileID: 11400000, guid: d7f5ffa68b7845a4d9beb330963d2321, type: 2}
-  - {fileID: 11400000, guid: fb6f8acecb9957449acc6a79f6d9c2fb, type: 2}
-  - {fileID: 11400000, guid: d43944d025afd7141a8f463b1ca465de, type: 2}
-  listOfRecipes:
-  - {fileID: 11400000, guid: 9274dd1b2e8bc8941b6116be3bf5fa67, type: 2}
-  - {fileID: 11400000, guid: 1542ff6e018f72846b0a1821e778286e, type: 2}
-  - {fileID: 11400000, guid: 464838deb0025d449a0df2566568694e, type: 2}
-  - {fileID: 11400000, guid: fab026def138e104188155cd9197e0e4, type: 2}
-  - {fileID: 11400000, guid: 83f5ca38a97ea9a42976c7ed4345dbd4, type: 2}
-  - {fileID: 11400000, guid: 4bda26ceb02b93740b9d0ae10b4cfaf5, type: 2}
+  questItem: {fileID: 11400000, guid: 9c9a09527d6f31f4b9b99cb488e88ef9, type: 2}
+  questRecipes:
+  - {fileID: 11400000, guid: d40bf63b0ff4eaf49b8e3f9a2c93a916, type: 2}
+  - {fileID: 11400000, guid: 509dc12fa745b7848ab852ea5e7f0e0e, type: 2}
+  - {fileID: 11400000, guid: 4f4a41f67c2629544bad2323dd60dd52, type: 2}
   watchAmount: 3
   pocketWatchWeight: 2
   wristWatchWeight: 3

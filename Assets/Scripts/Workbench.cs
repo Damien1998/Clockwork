@@ -90,7 +90,7 @@ public class Workbench : MonoBehaviour
 
     protected void EmptySlot(int slot)
     {
-        Debug.Log("Emptying slot: " + slot);
+        //Debug.Log("Emptying slot: " + slot);
         if(itemSlots[slot] != null)
         {
             Destroy(itemSlots[slot].gameObject);

@@ -53,19 +53,21 @@ public class WorkbenchExamine : Workbench
             {
                 Debug.Log(itemToPlace.WatchItem.State);
                 //I need to figure out a better way to check if an item is a watch
-                if (itemToPlace.WatchItem.State == ItemState.UnknownState
-                    || itemToPlace.WatchItem.itemID < 5)
+                if (itemToPlace.WatchItem.State == ItemState.UnknownState)
                 {
                     invalidItemInside = false;
-                    if(itemToPlace.WatchItem.components.Count == 0)
-                    {
-                        itemToPlace.WatchItem.State = itemToPlace.WatchItem.trueState;
-                        Debug.Log(itemToPlace.WatchItem.State);
-                    }
-                    else if(itemToPlace.WatchItem.itemID < 5)
-                    {
-                        GenerateComponentList();
-                    }
+                    itemToPlace.WatchItem.State = itemToPlace.WatchItem.trueState;
+                    Debug.Log(itemToPlace.WatchItem.State);                   
+                }
+                else
+                {
+                    invalidItemInside = true;
+                }
+
+                if (itemToPlace.WatchItem.components.Count > 0)
+                {
+                    invalidItemInside = false;
+                    GenerateComponentList();
                 }
                 else
                 {
