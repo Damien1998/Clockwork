@@ -25,7 +25,7 @@ public class WorkbenchPrecise : Workbench
     {
         base.PlaceItem(itemToPlace);
 
-        if (itemToPlace.WatchItem.itemID == 10)
+        if (IsAMechanism(itemToPlace.WatchItem))
         {
             mechanismComponents = itemToPlace.WatchItem.components;
         }
@@ -52,12 +52,21 @@ public class WorkbenchPrecise : Workbench
 
     }
 
+    protected bool IsAMechanism(Item itemToCheck)
+    {
+        if (itemToCheck.itemID == 10 || itemToCheck.itemID == 55)
+        {
+            return true;
+        }
+        else return false;
+    }
+
     protected override void DropItems()
     {
         //Here the items are combined, broken down, or repaired
 
         //If there is only one item, it is either a mechanism or needs repair
-        if (itemSlots[1] == null)
+        if (itemSlots[1] == null && itemSlots[0].WatchItem.state != ItemState.UnknownState)
         {
             if (itemSlots[0] != null)
             {
@@ -65,7 +74,7 @@ public class WorkbenchPrecise : Workbench
                 {
                     itemSlots[0].WatchItem.State = ItemState.Repaired;
                 }
-                else if(itemSlots[0].WatchItem.State != ItemState.EmptyState && itemSlots[0].WatchItem.itemID == 10)
+                else if(itemSlots[0].WatchItem.State != ItemState.EmptyState && IsAMechanism(itemSlots[0].WatchItem))
                 {
                     itemSlots[0].WatchItem.State = ItemState.EmptyState;
                     for(int i = 0; i < itemSlots[0].WatchItem.components.Count; i++)
@@ -81,8 +90,12 @@ public class WorkbenchPrecise : Workbench
             SortItems();
             mechanismComponents = mechanismComponents.OrderBy(item => item.itemID).ToList();
 
-            if(itemSlots[0].WatchItem.itemID == 10 && itemSlots[0].WatchItem.State == ItemState.EmptyState)
+            Debug.Log(itemSlots[0].WatchItem.itemID);
+            Debug.Log(itemSlots[0].WatchItem.state);
+
+            if (IsAMechanism(itemSlots[0].WatchItem) && itemSlots[0].WatchItem.State == ItemState.EmptyState)
             {
+                Debug.Log("Hlep");
                 var recipeFilled = true;
 
                 for (int i = 0; i < mechanismComponents.Count; i++)

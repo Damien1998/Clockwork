@@ -7,10 +7,13 @@ using UnityEngine.Serialization;
 public class LevelParams : ScriptableObject
 {
     public int time;
-    
+
     //Old way of defining level watches
-    public List<Item> listOfWatches = new List<Item>();
-    public List<Recipe> listOfRecipes = new List<Recipe>();
+    //public List<Item> listOfWatches = new List<Item>();
+    //public List<Recipe> listOfRecipes = new List<Recipe>();
+
+    public Item questItem;
+    public List<Recipe> questRecipes;
 
     //New way of defining level watches
     public int watchAmount;

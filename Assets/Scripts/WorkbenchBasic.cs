@@ -48,7 +48,7 @@ public class WorkbenchBasic : Workbench
 
         //If there is only one item, it is broken down
         //This doesn't accept mechanisms
-        if (itemSlots[1] == null)
+        if (itemSlots[1] == null && itemSlots[0].WatchItem.state != ItemState.UnknownState)
         {
             if(itemSlots[0] != null && itemSlots[0].WatchItem.itemID != 10)
             {
