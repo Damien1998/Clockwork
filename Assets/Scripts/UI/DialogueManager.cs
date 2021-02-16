@@ -219,6 +219,11 @@ public class DialogueManager : MonoBehaviour
                 CheckIfCommand();
                 break;
             }
+            else if (dialogue[currentLine].StartsWith("--level_start"))
+            {
+                CheckIfCommand();
+                break;
+            }
             currentLine++;
         }
 
