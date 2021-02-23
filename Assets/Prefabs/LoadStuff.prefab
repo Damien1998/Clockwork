@@ -4043,15 +4043,12 @@ MonoBehaviour:
   - sound: 3
     audioClip:
     - {fileID: 8300000, guid: 3abb719ef0551ff40ad2f3f9ef700d0f, type: 3}
-  - sound: 10
-    audioClip:
-    - {fileID: 8300000, guid: 7c319a531a6816943a40f2b79c3be833, type: 3}
   - sound: 4
     audioClip:
-    - {fileID: 8300000, guid: 3abb719ef0551ff40ad2f3f9ef700d0f, type: 3}
+    - {fileID: 8300000, guid: 7c319a531a6816943a40f2b79c3be833, type: 3}
   - sound: 5
     audioClip:
-    - {fileID: 8300000, guid: 45b94a2c1a2275a4da49139fd13f4b11, type: 3}
+    - {fileID: 8300000, guid: 3abb719ef0551ff40ad2f3f9ef700d0f, type: 3}
   SFX: {fileID: 24300002, guid: 100acb05f1500cb4f81e36206cafce2a, type: 2}
 --- !u!1 &4908478027163953460
 GameObject:
@@ -5094,7 +5091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -5125,7 +5122,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5089550196471026256}
   m_Direction: 0
   m_MinValue: -40
-  m_MaxValue: 20
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -5134,7 +5131,7 @@ MonoBehaviour:
       - m_Target: {fileID: 5089550196841737802}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
         m_MethodName: SetMusicVolume
-        m_Mode: 4
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -7939,7 +7936,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: 
+        m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
         m_MethodName: SetFullScreen
         m_Mode: 0
         m_Arguments:
@@ -8720,7 +8717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -8751,7 +8748,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5089550197761500824}
   m_Direction: 0
   m_MinValue: -40
-  m_MaxValue: 20
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -8759,7 +8756,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 5089550196841737802}
         m_TargetAssemblyTypeName: SettingsMenu, Assembly-CSharp
-        m_MethodName: SetVolume
+        m_MethodName: SetMusicVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
