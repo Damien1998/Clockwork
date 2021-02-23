@@ -8,6 +8,8 @@ public class WorkbenchExamine : Workbench
 {
     private bool invalidItemInside;
 
+    [SerializeField] private ParticleSystem checkMark, crossMark;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,11 +26,19 @@ public class WorkbenchExamine : Workbench
     {
         if (itemSlots[0] != null)
         {
+            if (!workParticles.isEmitting)
+            {
+                Debug.Log("Workbench start");
+                workParticles.Play();
+            }
             Work();
         }
 
         if (workTimer <= 0)
         {
+            workParticles.Stop();
+            endParticles.Play();
+            checkMark.Play();
             timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
@@ -38,6 +48,8 @@ public class WorkbenchExamine : Workbench
         //There will be different particle fx for dropping valid and invalid items
         if (invalidItemInside && workTimer <= (workTimerBase / 10))
         {
+            workParticles.Stop();
+            crossMark.Play();
             timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
@@ -69,11 +81,12 @@ public class WorkbenchExamine : Workbench
                     invalidItemInside = false;
                     GenerateComponentList();
                 }
-                else
+                /**
+                else if(itemToPlace.WatchItem.State != ItemState.UnknownState)
                 {
                     invalidItemInside = true;
                 }
-
+                **/
                 itemSlots[i] = itemToPlace;
                 itemToPlace.gameObject.SetActive(false);
                 break;

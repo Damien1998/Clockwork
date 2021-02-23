@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     private Vector2 movementInput, lastDirection;
 
     [SerializeField]
-    private ParticleSystem itemDropParticles;
+    private ParticleSystem itemDropParticles, footstepParticles;
 
     //Components
     private Animator animator;
@@ -175,6 +175,38 @@ public class Player : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical" + playerNumber);
         movementInput = new Vector2(moveX, moveY).normalized;
 
+        if(movementInput != Vector2.zero)
+        {
+            animator.SetBool("walking", true);
+            animator.SetFloat("moveX", movementInput.x);
+            animator.SetFloat("moveY", movementInput.y);
+
+            PlayFootstepFX();
+
+            if (Input.GetButtonDown("Dash") && !isDashing)
+            {
+                Vector2 xInput = new Vector2(moveX, 0);
+                Vector2 yInput = new Vector2(0, moveY);
+
+                Debug.Log("Dash");
+
+                if (xInput.magnitude >= yInput.magnitude)
+                {
+                    dashDirection = xInput.normalized;
+                }
+                else
+                {
+                    dashDirection = yInput.normalized;
+                }
+                StartCoroutine(Dash());
+            }
+        }
+        else
+        {
+            footstepParticles.Stop();
+            animator.SetBool("walking", false);
+        }
+        /**
         if (movementInput != Vector2.zero && Input.GetButtonDown("Dash") && !isDashing)
         {
 
@@ -192,7 +224,7 @@ public class Player : MonoBehaviour
                 dashDirection = yInput.normalized;
             }
             StartCoroutine(Dash());
-        }
+        }**/
     }
 
     private void FixedUpdate()
@@ -239,7 +271,7 @@ public class Player : MonoBehaviour
             rigidBody.velocity = Vector2.zero;
         }
 
-        /*
+        
         if(Input.GetButton("Dash"))
         {
             dashReleased = false;
@@ -248,7 +280,16 @@ public class Player : MonoBehaviour
         {
             dashReleased = true;
         }
-        */
+        
+    }
+
+    public void PlayFootstepFX()
+    {
+        if(!footstepParticles.isEmitting)
+        {
+            footstepParticles.Play();
+        }
+        
     }
 
     //This coroutine flags the dash bool as false after the specified duration
