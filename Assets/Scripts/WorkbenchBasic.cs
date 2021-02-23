@@ -26,15 +26,22 @@ public class WorkbenchBasic : Workbench
     {
         if (isOperated && itemSlots[0] != null)
         {
+            if (!workParticles.isEmitting)
+            {
+                workParticles.Play();
+            }
             Work();
         }
         else
         {
+            workParticles.Stop();
+            timerDisplay.gameObject.SetActive(false);
             workTimer = workTimerBase;
         }
 
         if (workTimer <= 0)
         {
+            workParticles.Stop();
             timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
@@ -63,6 +70,7 @@ public class WorkbenchBasic : Workbench
                 }
                 if(currentItem.WatchItem.components.Count > 0)
                 {
+                    endParticles.Play();
                     Destroy(currentItem.gameObject);
                 }                
             }           
@@ -102,6 +110,7 @@ public class WorkbenchBasic : Workbench
 
                 if (recipeFilled)
                 {
+                    endParticles.Play();
                     EmptySlot(0);
                     EmptySlot(1);
                     EmptySlot(2);

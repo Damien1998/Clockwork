@@ -25,6 +25,9 @@ public class Workbench : MonoBehaviour
 
     public GameObject WatchTemplate;
 
+    [SerializeField]
+    protected ParticleSystem workParticles, endParticles;
+
     //This is only used in the basic and precise workbenches
     //But it has to be here so that other scripts can easily access it
     //Set this to true if the player is pushing the action button near a workbench
