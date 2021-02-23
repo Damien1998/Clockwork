@@ -36,15 +36,22 @@ public class WorkbenchPrecise : Workbench
     {
         if (isOperated && itemSlots[0] != null)
         {
+            if(!workParticles.isEmitting)
+            {
+                workParticles.Play();
+            }
             Work();
         }
         else
         {
+            workParticles.Stop();
             workTimer = workTimerBase;
+            timerDisplay.gameObject.SetActive(false);
         }
 
         if (workTimer <= 0)
         {
+            workParticles.Stop();
             timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
@@ -72,10 +79,12 @@ public class WorkbenchPrecise : Workbench
             {
                 if(itemSlots[0].WatchItem.State == ItemState.Broken && itemSlots[0].WatchItem.components.Count == 0)
                 {
+                    endParticles.Play();
                     itemSlots[0].WatchItem.State = ItemState.Repaired;
                 }
                 else if(itemSlots[0].WatchItem.State != ItemState.EmptyState && IsAMechanism(itemSlots[0].WatchItem))
                 {
+                    endParticles.Play();
                     itemSlots[0].WatchItem.State = ItemState.EmptyState;
                     for(int i = 0; i < itemSlots[0].WatchItem.components.Count; i++)
                     {
@@ -111,6 +120,7 @@ public class WorkbenchPrecise : Workbench
 
                 if(recipeFilled)
                 {
+                    endParticles.Play();
                     itemSlots[0].WatchItem.State = ItemState.Repaired;
 
                     for (int i = 0; i < mechanismComponents.Count; i++)

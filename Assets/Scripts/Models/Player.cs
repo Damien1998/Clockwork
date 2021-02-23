@@ -51,6 +51,9 @@ public class Player : MonoBehaviour
 
     private Vector2 movementInput, lastDirection;
 
+    [SerializeField]
+    private ParticleSystem itemDropParticles;
+
     //Components
     private Animator animator;
     private Rigidbody2D rigidBody;
@@ -279,8 +282,12 @@ public class Player : MonoBehaviour
             HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
         }
         HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
+        itemDropParticles.transform.position = HeldWatch.transform.position;
+        itemDropParticles.Play();
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
+
+        
     }
 
     private void PlaceItemInWorkbench()
@@ -293,8 +300,12 @@ public class Player : MonoBehaviour
         }
         HeldWatch.GetComponent<Watch>().isSelected = false;
         nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
+        itemDropParticles.transform.position = HeldWatch.transform.position;
+        itemDropParticles.Play();
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
+
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
