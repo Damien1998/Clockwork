@@ -21,6 +21,7 @@ public class SceneController : MonoBehaviour
     public void LoadMenu()
     {
         SceneManager.LoadScene("Menu");
+        UIManager.instance.StopAllUIPrograms();
     }
 
 }

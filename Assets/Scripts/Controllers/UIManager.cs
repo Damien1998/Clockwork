@@ -50,6 +50,13 @@ public class UIManager : MonoBehaviour
             StartCoroutine(timer);
         }
     }
+
+    public void StopAllUIPrograms()
+    {
+        StopAllCoroutines();
+        timerDisplay.gameObject.SetActive(false);
+        timerDisplay.value = 0;
+    }
     private IEnumerator StartLevelTimer()
     {
         while(timerDisplay.value<timerDisplay.maxValue)

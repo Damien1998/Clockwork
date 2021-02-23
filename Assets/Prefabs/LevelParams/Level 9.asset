@@ -10,25 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64b5489919ff9494992175c3ebf859d2, type: 3}
-  m_Name: Level 2
+  m_Name: Level 9
   m_EditorClassIdentifier: 
   time: 190
   questItem: {fileID: 0}
   questRecipes: []
-  watchAmount: 2
+  watchAmount: 3
   pocketWatchWeight: 2
   wristWatchWeight: 3
   timedLevel: 1
-  decorPercentChance: 0
-  brokenState: 0
+  decorPercentChance: 60
+  brokenState: 1
   unfixableState: 1
-  brokenPartMinPercentage: 50
-  brokenPartMaxPercentage: 50
-  unknownStatePercentChance: 0
-  tierTwoUnknownState: 0
-  researchAllowed: 0
+  brokenPartMinPercentage: 33
+  brokenPartMaxPercentage: 66
+  unknownStatePercentChance: 25
+  tierTwoUnknownState: 1
+  researchAllowed: 1
   casingComponents: 0
   mechanismComponents: 0
-  eitherOfMechOrCasing: 0
-  mechMinParts: 0
-  mechMaxParts: 0
+  eitherOfMechOrCasing: 1
+  mechMinParts: 1
+  mechMaxParts: 2
