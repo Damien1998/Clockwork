@@ -70,9 +70,26 @@ public class Workbench : MonoBehaviour
     //Dropping items
     protected virtual void DropItems()
     {
+        //StartCoroutine(WaitAndDrop(0.1f));
+        
         for(int i = 0; i< numberOfSlots; i++)
         {
             if(itemSlots[i] != null)
+            {
+                itemSlots[i].transform.position = dropLocation.position;
+                itemSlots[i].isPlacedOnWorkbench = false;
+                itemSlots[i].gameObject.SetActive(true);
+                itemSlots[i] = null;
+            }
+        }
+    }
+
+    protected IEnumerator WaitAndDrop(float timeToWait)
+    {
+        yield return new WaitForSeconds(timeToWait);
+        for (int i = 0; i < numberOfSlots; i++)
+        {
+            if (itemSlots[i] != null)
             {
                 itemSlots[i].transform.position = dropLocation.position;
                 itemSlots[i].isPlacedOnWorkbench = false;
