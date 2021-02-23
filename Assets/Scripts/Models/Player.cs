@@ -15,7 +15,6 @@ public class Player : MonoBehaviour
         //Movement speed modifier
     public float moveSpeed, dashSpeed;
 
-
     //Private properties
         //Currently held item
     private GameObject HeldWatch;
