@@ -103,7 +103,6 @@ public class GameManager : MonoBehaviour
                 newWatch.SetParameters(watchBases[1]);
                 watchTypeModifier = 3;
             }
-            Debug.LogWarning(watchTypeModifier);
             
             newWatch.components = new List<Item>();
             newWatch.state = ItemState.ComplexBroken;
@@ -274,11 +273,18 @@ public class GameManager : MonoBehaviour
 
             //Setting the component states
 
-            var brokenComponentAmount = (Random.Range(currentLevelParams.brokenPartMinPercentage, currentLevelParams.brokenPartMaxPercentage) / 100) * newWatchBasicItems.Count;
+            //Debug.Log(newWatchBasicItems.Count);
+
+            float brokenComponentPercentage = (Random.Range(currentLevelParams.brokenPartMinPercentage, currentLevelParams.brokenPartMaxPercentage));
+            Debug.Log(brokenComponentPercentage);
+            var brokenComponentAmount = Mathf.RoundToInt((brokenComponentPercentage/100) * newWatchBasicItems.Count);
             var safeguard = 100;
+
+            Debug.Log(brokenComponentAmount);
 
             while(brokenComponentAmount > 0 && safeguard > 0)
             {
+                Debug.Log("WHAT");
                 var temp = Random.Range(0, newWatchBasicItems.Count);
                 if(newWatchBasicItems[temp].trueState != ItemState.Unfixable && newWatchBasicItems[temp].trueState != ItemState.Broken)
                 {
@@ -286,10 +292,12 @@ public class GameManager : MonoBehaviour
                     {
                         if (Random.Range(0, 2) == 0)
                         {
+                            Debug.LogWarning("Unfixable Part!");
                             newWatchBasicItems[temp].trueState = ItemState.Unfixable;
                         }
                         else
                         {
+                            Debug.LogWarning("EHHH");
                             newWatchBasicItems[temp].trueState = ItemState.Broken;
                         }
 
@@ -297,11 +305,13 @@ public class GameManager : MonoBehaviour
                     }
                     else if (currentLevelParams.brokenState)
                     {
+                        Debug.LogWarning("UUHH");
                         newWatchBasicItems[temp].trueState = ItemState.Broken;
                         newWatchBasicItems[temp].state = newWatchBasicItems[temp].trueState;
                     }
                     else if (currentLevelParams.unfixableState)
                     {
+                        Debug.LogWarning("Unfixable Part!");
                         newWatchBasicItems[temp].trueState = ItemState.Unfixable;
                         newWatchBasicItems[temp].state = newWatchBasicItems[temp].trueState;
                     }

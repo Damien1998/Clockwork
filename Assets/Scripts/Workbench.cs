@@ -25,6 +25,9 @@ public class Workbench : MonoBehaviour
 
     public GameObject WatchTemplate;
 
+    [SerializeField]
+    protected ParticleSystem workParticles, endParticles;
+
     //This is only used in the basic and precise workbenches
     //But it has to be here so that other scripts can easily access it
     //Set this to true if the player is pushing the action button near a workbench
@@ -67,9 +70,26 @@ public class Workbench : MonoBehaviour
     //Dropping items
     protected virtual void DropItems()
     {
+        //StartCoroutine(WaitAndDrop(0.1f));
+        
         for(int i = 0; i< numberOfSlots; i++)
         {
             if(itemSlots[i] != null)
+            {
+                itemSlots[i].transform.position = dropLocation.position;
+                itemSlots[i].isPlacedOnWorkbench = false;
+                itemSlots[i].gameObject.SetActive(true);
+                itemSlots[i] = null;
+            }
+        }
+    }
+
+    protected IEnumerator WaitAndDrop(float timeToWait)
+    {
+        yield return new WaitForSeconds(timeToWait);
+        for (int i = 0; i < numberOfSlots; i++)
+        {
+            if (itemSlots[i] != null)
             {
                 itemSlots[i].transform.position = dropLocation.position;
                 itemSlots[i].isPlacedOnWorkbench = false;

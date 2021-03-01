@@ -13,8 +13,22 @@ MonoBehaviour:
   m_Name: Level 2
   m_EditorClassIdentifier: 
   time: 190
-  listOfWatches:
-  - {fileID: 11400000, guid: 8e0c1d6dead7de5488e8c8990a225bad, type: 2}
-  - {fileID: 11400000, guid: 8e0c1d6dead7de5488e8c8990a225bad, type: 2}
-  - {fileID: 11400000, guid: 8e0c1d6dead7de5488e8c8990a225bad, type: 2}
-  - {fileID: 11400000, guid: 8e0c1d6dead7de5488e8c8990a225bad, type: 2}
+  questItem: {fileID: 0}
+  questRecipes: []
+  watchAmount: 2
+  pocketWatchWeight: 2
+  wristWatchWeight: 3
+  timedLevel: 1
+  decorPercentChance: 0
+  brokenState: 0
+  unfixableState: 1
+  brokenPartMinPercentage: 50
+  brokenPartMaxPercentage: 50
+  unknownStatePercentChance: 0
+  tierTwoUnknownState: 0
+  researchAllowed: 0
+  casingComponents: 0
+  mechanismComponents: 0
+  eitherOfMechOrCasing: 0
+  mechMinParts: 0
+  mechMaxParts: 0

@@ -142,7 +142,6 @@ public class DialogueManager : MonoBehaviour
         {
             string[] words = dialogue[currentLine].Split(' ');
             string firstWord = words[0];
-            Debug.Log(firstWord);
 
             switch (firstWord)
             {
@@ -167,7 +166,7 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "--level_start":
                     UIManager.instance.LevelStart();
-                    FindObjectOfType<CheckoutTable>().InitLevel();
+                    //FindObjectOfType<CheckoutTable>().InitLevel();
                     break;
                 default:
                     portrait.gameObject.SetActive(false);
@@ -215,6 +214,11 @@ public class DialogueManager : MonoBehaviour
         while (currentLine < dialogue.Length)
         {
             if (dialogue[currentLine].StartsWith("--options"))
+            {
+                CheckIfCommand();
+                break;
+            }
+            else if (dialogue[currentLine].StartsWith("--level_start"))
             {
                 CheckIfCommand();
                 break;

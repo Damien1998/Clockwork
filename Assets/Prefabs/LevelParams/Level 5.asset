@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64b5489919ff9494992175c3ebf859d2, type: 3}
+  m_Name: Level 5
+  m_EditorClassIdentifier: 
+  time: 190
+  questItem: {fileID: 0}
+  questRecipes: []
+  watchAmount: 5
+  pocketWatchWeight: 2
+  wristWatchWeight: 3
+  timedLevel: 1
+  decorPercentChance: 20
+  brokenState: 1
+  unfixableState: 1
+  brokenPartMinPercentage: 33
+  brokenPartMaxPercentage: 66
+  unknownStatePercentChance: 50
+  tierTwoUnknownState: 0
+  researchAllowed: 0
+  casingComponents: 0
+  mechanismComponents: 0
+  eitherOfMechOrCasing: 0
+  mechMinParts: 0
+  mechMaxParts: 0

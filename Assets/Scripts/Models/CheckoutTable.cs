@@ -61,6 +61,7 @@ public class CheckoutTable : Workbench
     {
         if(CheckQuestWatch(itemToPlace))
         {
+            itemToPlace.transform.position = transform.position;
             Destroy(itemToPlace.gameObject);
             //Idk how to end quests :/
         }
@@ -69,6 +70,7 @@ public class CheckoutTable : Workbench
             //I'm not sure whether we really need that there:
             //base.PlaceItem(itemToPlace);
             watchIndex++;
+            itemToPlace.transform.position = transform.position;
             Destroy(itemToPlace.gameObject);
             if(workbenchLevelParams.watchAmount >  watchIndex)
             {
@@ -166,14 +168,22 @@ public class CheckoutTable : Workbench
 
     private bool CheckQuestWatch(Watch currentWatch)
     {
-        if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch.WatchItem.itemID == GameManager.instance.questItem.itemID)
+        if(GameManager.instance.sideQuestActive)
         {
-            return true;
+            if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch.WatchItem.itemID == GameManager.instance.questItem.itemID)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
         else
         {
             return false;
         }
+        
     }
 }
 // I'll just leave it here if we need it in the future
