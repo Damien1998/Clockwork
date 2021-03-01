@@ -12,6 +12,7 @@ public class Watch : MonoBehaviour
     private Item myItem;
     //A true state that should be only used when item leaves the unknown state
     public ItemState TrueState;
+    public bool isRecipe = false;
     public Item WatchItem
     {
         get => myItem;
@@ -69,7 +70,7 @@ public class Watch : MonoBehaviour
         }
     }
     //<summary>
-    //Watch Item callback that can adjusted if need for the sake of unique items
+    //Watch Item callback that can adjusted if needed for the sake of unique items
     //It operates the state images
     //</summary>
     private void OnItemStateChange(Item item)

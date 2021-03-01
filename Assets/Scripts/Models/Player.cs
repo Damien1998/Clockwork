@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
         //Movement speed modifier
     public float moveSpeed, dashSpeed;
 
+    public static bool CanInteract = false;
     //Private properties
         //Currently held item
     private GameObject HeldWatch;
@@ -30,14 +31,14 @@ public class Player : MonoBehaviour
     
 
     private int itemToPickUpID = 0;
-    //private Activator itemToPickUp;
 
     public bool lockMovement;
 
     //We wanted to handle interaction from the side of the player 
     //having a bool for every type of interactable object in the workshop feels clunky
     //Especially if some more of them will be there
-    //Idk what to do
+    //Idk what to do 
+    // +1
     public bool isByWorkbench;
     public bool isByLevelStart;
     public bool isByWarpHole;
@@ -67,8 +68,14 @@ public class Player : MonoBehaviour
     void Start()
     {
         //Initialising - fetching needed components
+        CanInteract = true;
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
+    }
+
+    public static void SetPlayer(bool on)
+    {
+        CanInteract = on;
     }
     private Collider2D[] nearbyItems = null;
     void PickUp()
@@ -83,7 +90,10 @@ public class Player : MonoBehaviour
             Array.Reverse(nearbyItems);
             if (nearbyItems.Length > 0)
             {
-                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
+                if (nearbyItems[itemToPickUpID].TryGetComponent(out Watch watch))
+                {
+                    nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
+                }
             }
         }
         //After the first action if player is performing secondary action ie right click it highlights the item in sorted list
@@ -105,10 +115,20 @@ public class Player : MonoBehaviour
         //At the end checks if player is not holding a button anymore and picksup  highlighted item
         if(nearbyItems != null && Input.GetButtonUp("Pickup" + playerNumber))
         {
-            if (itemToPickUpID < nearbyItems.Length && !nearbyItems[itemToPickUpID].GetComponent<Watch>().isPlacedOnWorkbench)
+            if (itemToPickUpID < nearbyItems.Length  )
             {
-                PickUpItem(nearbyItems[itemToPickUpID].gameObject);
+                if (!nearbyItems[itemToPickUpID].GetComponent<Watch>().isPlacedOnWorkbench &&
+                    !nearbyItems[itemToPickUpID].GetComponent<Watch>().isRecipe)
+                {
+                    PickUpItem(nearbyItems[itemToPickUpID].gameObject);
+                }
+                else if(nearbyItems[itemToPickUpID].GetComponent<Watch>().isRecipe)
+                {
+                    RecipeListView.currentMainWatch = nearbyItems[itemToPickUpID].GetComponent<Watch>();
+                    RecipeListView.LoadRecipeView();
+                }
             }
+            
             itemToPickUpID = 0;
             nearbyItems = null;
             lockMovement = false;
@@ -117,55 +137,62 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (HeldWatch != null)
+        if (CanInteract)
         {
-            HeldWatch.transform.position = transform.position + ItemPosition.localPosition;
-        }
-        if (HeldWatch == null)
-        {
-            PickUp();
-        }
-        else if(Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch != null)
-        {
-            if (isByWorkbench)
+            if (HeldWatch != null)
             {
-                PlaceItemInWorkbench();
+                HeldWatch.transform.position = transform.position + ItemPosition.localPosition;
             }
-            else
+
+            if (HeldWatch == null)
             {
-                DropItem();
+                PickUp();
             }
-        }
-        if(isByLevelStart && Input.GetButtonDown("Action" + playerNumber))
-        {
-            nearbyLevelStart.StartLevel();
-            nearbyLevelStart = null;
-            isByLevelStart = false;
-        }
-
-        if(isByWorkbench && Input.GetButton("Action" + playerNumber))
-        {
-            nearbyWorkbench.isOperated = true;
-        }
-        else if(isByWorkbench)
-        {
-            nearbyWorkbench.isOperated = false;
-        }
-
-        if (isByWarpHole && Input.GetButtonDown("Action" + playerNumber) && !lockMovement && !isByWorkbench)
-        {
-            if(HeldWatch != null)
+            else if (Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch != null)
             {
-                DropItem();
+                if (isByWorkbench)
+                {
+                    PlaceItemInWorkbench();
+                }
+                else
+                {
+                    DropItem();
+                }
             }
-            
-            nearbyWarpHole.Teleport(this);
-            nearbyWarpHole = null;
-            isByWarpHole = false;
+
+            if (isByLevelStart && Input.GetButtonDown("Action" + playerNumber))
+            {
+                nearbyLevelStart.StartLevel();
+                nearbyLevelStart = null;
+                isByLevelStart = false;
+            }
+
+            if (isByWorkbench && Input.GetButton("Action" + playerNumber))
+            {
+                nearbyWorkbench.isOperated = true;
+            }
+            else if (isByWorkbench)
+            {
+                nearbyWorkbench.isOperated = false;
+            }
+
+            if (isByWarpHole && Input.GetButtonDown("Action" + playerNumber) && !lockMovement && !isByWorkbench)
+            {
+                if (HeldWatch != null)
+                {
+                    DropItem();
+                }
+
+                nearbyWarpHole.Teleport(this);
+                nearbyWarpHole = null;
+                isByWarpHole = false;
+            }
+            Dashing();
         }
+    }
 
-
-
+    private void Dashing()
+    {
         //Dash - only in 4 directions, quick burst of speed
         //This only handles dash input, velocity is managed in fixedupdate
         //For some reason this has to be here
@@ -174,7 +201,7 @@ public class Player : MonoBehaviour
         float moveY = Input.GetAxisRaw("Vertical" + playerNumber);
         movementInput = new Vector2(moveX, moveY).normalized;
 
-        if(movementInput != Vector2.zero)
+        if (movementInput != Vector2.zero)
         {
             animator.SetBool("walking", true);
             animator.SetFloat("moveX", movementInput.x);
@@ -197,6 +224,7 @@ public class Player : MonoBehaviour
                 {
                     dashDirection = yInput.normalized;
                 }
+
                 StartCoroutine(Dash());
             }
         }
@@ -205,81 +233,63 @@ public class Player : MonoBehaviour
             footstepParticles.Stop();
             animator.SetBool("walking", false);
         }
-        /**
-        if (movementInput != Vector2.zero && Input.GetButtonDown("Dash") && !isDashing)
-        {
-
-            Vector2 xInput = new Vector2(moveX, 0);
-            Vector2 yInput = new Vector2(0, moveY);
-
-            Debug.Log("Dash");
-
-            if (xInput.magnitude >= yInput.magnitude)
-            {
-                dashDirection = xInput.normalized;
-            }
-            else
-            {
-                dashDirection = yInput.normalized;
-            }
-            StartCoroutine(Dash());
-        }**/
     }
-
     private void FixedUpdate()
     {
         //Player movement      
-        float moveX = Input.GetAxisRaw("Horizontal" + playerNumber);
-        float moveY = Input.GetAxisRaw("Vertical" + playerNumber);
-        movementInput = new Vector2(moveX, moveY).normalized;      
-
-        if(!lockMovement)
+        if (CanInteract)
         {
-            Vector2 xInput = new Vector2(moveX, 0);
-            Vector2 yInput = new Vector2(0, moveY);
+            float moveX = Input.GetAxisRaw("Horizontal" + playerNumber);
+            float moveY = Input.GetAxisRaw("Vertical" + playerNumber);
+            movementInput = new Vector2(moveX, moveY).normalized;
 
-            if (movementInput != Vector2.zero)
+            if (!lockMovement)
             {
-                if (xInput.magnitude >= yInput.magnitude)
+                Vector2 xInput = new Vector2(moveX, 0);
+                Vector2 yInput = new Vector2(0, moveY);
+
+                if (movementInput != Vector2.zero)
                 {
-                    lastDirection = xInput;
+                    if (xInput.magnitude >= yInput.magnitude)
+                    {
+                        lastDirection = xInput;
+                    }
+                    else
+                    {
+                        lastDirection = yInput;
+                    }
+
+                    SoundManager.PlaySound(SoundManager.Sound.PlayerMove);
+                }
+
+                //Managing player speed
+                if (movementInput != Vector2.zero && !isDashing)
+                {
+                    rigidBody.velocity = movementInput.normalized * moveSpeed;
+                }
+                else if (isDashing)
+                {
+                    rigidBody.velocity = movementInput.normalized * moveSpeed;
                 }
                 else
                 {
-                    lastDirection = yInput;
+                    rigidBody.velocity = Vector2.zero;
                 }
-                SoundManager.PlaySound(SoundManager.Sound.PlayerMove);
-            }
-
-            //Managing player speed
-            if (movementInput != Vector2.zero && !isDashing)
-            {
-                rigidBody.velocity = movementInput.normalized * moveSpeed;
-            }
-            else if (isDashing)
-            {
-                rigidBody.velocity = movementInput.normalized * moveSpeed;
             }
             else
             {
                 rigidBody.velocity = Vector2.zero;
             }
-        }     
-        else
-        {
-            rigidBody.velocity = Vector2.zero;
-        }
 
-        
-        if(Input.GetButton("Dash"))
-        {
-            dashReleased = false;
+            if (Input.GetButton("Dash"))
+            {
+                dashReleased = false;
+            }
+            else
+            {
+                dashReleased = true;
+            }
         }
-        else
-        {
-            dashReleased = true;
-        }
-        
     }
 
     public void PlayFootstepFX()
