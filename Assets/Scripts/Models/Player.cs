@@ -126,6 +126,7 @@ public class Player : MonoBehaviour
                 {
                     RecipeListView.currentMainWatch = nearbyItems[itemToPickUpID].GetComponent<Watch>();
                     RecipeListView.LoadRecipeView();
+                    CanInteract = false;
                 }
             }
             

@@ -166,7 +166,7 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "--level_start":
                     UIManager.instance.LevelStart();
-                    //FindObjectOfType<CheckoutTable>().InitLevel();
+                    FindObjectOfType<CheckoutTable>().InitLevel();
                     break;
                 default:
                     portrait.gameObject.SetActive(false);
