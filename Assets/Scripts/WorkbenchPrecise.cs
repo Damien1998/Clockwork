@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class WorkbenchPrecise : Workbench
 {
     private List<Item> mechanismComponents;
+    [SerializeField] private ParticleSystem crossMark;
 
     // Start is called before the first frame update
     void Start()
@@ -70,6 +71,7 @@ public class WorkbenchPrecise : Workbench
 
     protected override void DropItems()
     {
+        bool isValid = true;
         //Here the items are combined, broken down, or repaired
 
         //If there is only one item, it is either a mechanism or needs repair
@@ -77,20 +79,28 @@ public class WorkbenchPrecise : Workbench
         {
             if (itemSlots[0] != null)
             {
-                if(itemSlots[0].WatchItem.State == ItemState.Broken && itemSlots[0].WatchItem.components.Count == 0)
+                if (itemSlots[0].WatchItem.State == ItemState.Broken && itemSlots[0].WatchItem.components.Count == 0)
                 {
-                    endParticles.Play();
+                    //endParticles.Play();
                     itemSlots[0].WatchItem.State = ItemState.Repaired;
                 }
-                else if(itemSlots[0].WatchItem.State != ItemState.EmptyState && IsAMechanism(itemSlots[0].WatchItem))
+                else if (itemSlots[0].WatchItem.State != ItemState.EmptyState && IsAMechanism(itemSlots[0].WatchItem))
                 {
-                    endParticles.Play();
+                    //endParticles.Play();
                     itemSlots[0].WatchItem.State = ItemState.EmptyState;
-                    for(int i = 0; i < itemSlots[0].WatchItem.components.Count; i++)
+                    for (int i = 0; i < itemSlots[0].WatchItem.components.Count; i++)
                     {
-                        itemSlots[i+1] = GenerateItem(itemSlots[0].WatchItem.components[i]);
+                        itemSlots[i + 1] = GenerateItem(itemSlots[0].WatchItem.components[i]);
                     }
                 }
+                else
+                {
+                    isValid = false;
+                }
+            }
+            else
+            {
+                isValid = false;
             }
         }
         //If there are more items, the workbench tries to combine them using the mechanism's component list
@@ -112,7 +122,7 @@ public class WorkbenchPrecise : Workbench
                     if((itemSlots[i+1] != null && mechanismComponents[i] != null && itemSlots[i+1].WatchItem.itemID != mechanismComponents[i].itemID)
                         || (itemSlots[i + 1] != null && itemSlots[i + 1].WatchItem.State != ItemState.Repaired)
                         || (itemSlots[i + 1] != null && mechanismComponents[i] == null)
-                        || (itemSlots[i + 1] != null && mechanismComponents[i] == null))
+                        || (itemSlots[i + 1] == null && mechanismComponents[i] != null))
                     {
                         recipeFilled = false;
                     }
@@ -120,7 +130,7 @@ public class WorkbenchPrecise : Workbench
 
                 if(recipeFilled)
                 {
-                    endParticles.Play();
+                   
                     itemSlots[0].WatchItem.State = ItemState.Repaired;
 
                     for (int i = 0; i < mechanismComponents.Count; i++)
@@ -128,7 +138,29 @@ public class WorkbenchPrecise : Workbench
                         EmptySlot(i + 1);
                     }
                 }
+                else
+                {
+                    Debug.Log("BAD");
+                    isValid = false;
+                }
             }
+            else
+            {
+                isValid = false;
+            }
+        }
+        else
+        {
+            isValid = false;
+        }
+
+        if (isValid)
+        {
+            endParticles.Play();
+        }
+        else
+        {
+            crossMark.Play();
         }
 
         base.DropItems();

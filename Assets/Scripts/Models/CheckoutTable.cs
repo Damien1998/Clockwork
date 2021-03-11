@@ -25,7 +25,8 @@ public class CheckoutTable : Workbench
         //It's more comfortable to have a quick and easy to use object that can specify what kind of watches will spawn in the order that is put in
         //This way we can make list of watches that will be used instantly
         //If you want to change the order which the watches spawn in go into "Assets/Prefabs/LevelParams/Level" directory
-        workbenchLevelParams = (LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + GameManager.instance.levelID +".asset", typeof(LevelParams));       
+        workbenchLevelParams = (LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + GameManager.instance.levelID +".asset", typeof(LevelParams));
+        
     }
     /*
      * PS
@@ -52,6 +53,8 @@ public class CheckoutTable : Workbench
     public void InitLevel()
     {
         //ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
+        Debug.LogWarning("Level Init");
+        GameManager.instance.levelID = GameManager.instance.levelID;
         GameManager.instance.CreateRandomWatches();
         ThrowRandomWatch();
         StartCoroutine(CheckForQuests());

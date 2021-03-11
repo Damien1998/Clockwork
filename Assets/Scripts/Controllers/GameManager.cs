@@ -84,6 +84,8 @@ public class GameManager : MonoBehaviour
     //TODO making it cleaner
     public void CreateRandomWatches()
     {
+        Debug.Log(currentLevelParams);
+
         randomWatches = new List<Item>();
         RandomWatchRecipesList = new List<Recipe>();
         for(int i = 0; i < currentLevelParams.watchAmount; i++)
@@ -241,7 +243,10 @@ public class GameManager : MonoBehaviour
             {
                 newWatchCasing = ScriptableObject.CreateInstance<Item>();
                 newWatchCasing.SetParameters(casingBase);
-                
+                newWatchCasing.itemImages[0] = glassBases[Random.Range(0, 3) + watchTypeModifier].itemImages[0];
+                newWatchCasing.itemImages[2] = boxBases[Random.Range(0, 3) + watchTypeModifier].itemImages[2];
+                newWatchCasing.itemImages[3] = beltBases[Random.Range(0, 3) + watchTypeModifier].itemImages[3];
+
                 newWatchCasing.components = new List<Item>();
                 newWatchMechanism = ScriptableObject.CreateInstance<Item>();
                 newWatchMechanism.SetParameters(mechanismBase);
@@ -311,7 +316,7 @@ public class GameManager : MonoBehaviour
                     }
                     else if (currentLevelParams.unfixableState)
                     {
-                        Debug.LogWarning("Unfixable Part!");
+                        Debug.LogWarning("Unfixable Part");
                         newWatchBasicItems[temp].trueState = ItemState.Unfixable;
                         newWatchBasicItems[temp].state = newWatchBasicItems[temp].trueState;
                     }

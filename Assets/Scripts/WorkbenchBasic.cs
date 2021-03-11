@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
 public class WorkbenchBasic : Workbench
-{   
+{
+    [SerializeField] private ParticleSystem crossMark;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,13 +53,14 @@ public class WorkbenchBasic : Workbench
 
     protected override void DropItems()
     {
+        bool isValid = true;
         //Here the items are combined or broken down according to recipes
 
         //If there is only one item, it is broken down
         //This doesn't accept mechanisms
         if (itemSlots[1] == null && itemSlots[0].WatchItem.state != ItemState.UnknownState)
         {
-            if(itemSlots[0] != null && itemSlots[0].WatchItem.itemID != 10)
+            if(itemSlots[0] != null && itemSlots[0].WatchItem.itemID != 10 && itemSlots[0].WatchItem.state == ItemState.ComplexBroken)
             {
                 var currentItem = itemSlots[0];
                 for (int i = 0; i < currentItem.WatchItem.components.Count; i++)
@@ -70,10 +73,18 @@ public class WorkbenchBasic : Workbench
                 }
                 if(currentItem.WatchItem.components.Count > 0)
                 {
-                    endParticles.Play();
+                    //endParticles.Play();
                     Destroy(currentItem.gameObject);
-                }                
-            }           
+                }
+                else
+                {
+                    isValid = false;
+                }
+            }
+            else
+            {
+                isValid = false;
+            }
         }
         //If there are more items, the workbench tries to combine them
         //Again, this does not accept mechanisms
@@ -107,10 +118,10 @@ public class WorkbenchBasic : Workbench
                         
                     }                  
                 }
-
-                if (recipeFilled)
+                
+                if (recipeFilled)              
                 {
-                    endParticles.Play();
+                    //endParticles.Play();
                     EmptySlot(0);
                     EmptySlot(1);
                     EmptySlot(2);
@@ -119,8 +130,22 @@ public class WorkbenchBasic : Workbench
                     itemSlots[0].WatchItem.trueState = ItemState.Repaired;
                     itemSlots[0].WatchItem.State = itemSlots[0].WatchItem.trueState;
                     break;
-                }
+                }               
             }
+
+            if(itemSlots[1] == null)
+            {
+                isValid = false;
+            }
+        }
+
+        if (isValid)
+        {
+            endParticles.Play();
+        }
+        else
+        {
+            crossMark.Play();
         }
 
         base.DropItems();

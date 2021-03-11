@@ -914,6 +914,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6768201623476361345, guid: 94c1aa5554f81fa438c61aafdd5f1628,
+        type: 3}
+      propertyPath: NoiseModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768201623476361345, guid: 94c1aa5554f81fa438c61aafdd5f1628,
+        type: 3}
+      propertyPath: NoiseModule.frequency
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768201623476361345, guid: 94c1aa5554f81fa438c61aafdd5f1628,
+        type: 3}
+      propertyPath: NoiseModule.strength.scalar
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768201623476361345, guid: 94c1aa5554f81fa438c61aafdd5f1628,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768201623476361345, guid: 94c1aa5554f81fa438c61aafdd5f1628,
+        type: 3}
+      propertyPath: NoiseModule.separateAxes
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768201623476361345, guid: 94c1aa5554f81fa438c61aafdd5f1628,
+        type: 3}
+      propertyPath: NoiseModule.strengthY.scalar
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768201623476361345, guid: 94c1aa5554f81fa438c61aafdd5f1628,
+        type: 3}
+      propertyPath: NoiseModule.strengthZ.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6768201623476361345, guid: 94c1aa5554f81fa438c61aafdd5f1628,
+        type: 3}
+      propertyPath: NoiseModule.scrollSpeed.scalar
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6768201623476361351, guid: 94c1aa5554f81fa438c61aafdd5f1628,
         type: 3}
       propertyPath: m_Name
