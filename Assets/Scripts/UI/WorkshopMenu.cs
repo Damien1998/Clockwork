@@ -33,14 +33,14 @@ public class WorkshopMenu : MonoBehaviour
         Time.timeScale = 1f;
         GameManager.instance.levelID = levelID;
         UIManager.instance.LevelStart();
-        SceneManager.LoadScene(sceneID);
+        SceneManager.LoadScene($"Level{sceneID}");
     }
 
     public void GoIntoWorkshop(int sceneID)
     {
         Time.timeScale = 1f;
         GameManager.instance.levelID = levelID;
-        SceneManager.LoadScene(sceneID);
+        SceneManager.LoadScene($"Level{sceneID}-Workshop");
     }
 
     // Update is called once per frame
