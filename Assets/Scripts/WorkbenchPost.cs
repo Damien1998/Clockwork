@@ -8,6 +8,8 @@ public class WorkbenchPost : Workbench
 {
     private bool invalidItemInside;
 
+    [SerializeField] private ParticleSystem checkMark, crossMark;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +32,7 @@ public class WorkbenchPost : Workbench
         if(workTimer <= 0)
         {
             endParticles.Play();
+            checkMark.Play();
             timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
@@ -40,6 +43,7 @@ public class WorkbenchPost : Workbench
         if(invalidItemInside && workTimer <= (workTimerBase / 10))
         {
             endParticles.Play();
+            crossMark.Play();
             timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;

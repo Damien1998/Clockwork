@@ -13,6 +13,8 @@ public class CheckoutTable : Workbench
     [SerializeField] private POI endOfLevelDialogue;
 
     private List<Watch> levelWatches = new List<Watch>();
+
+    [SerializeField] private Transform watchThrowPoint;
     //public GameObject WatchTemplate;
 
     void Start()
@@ -125,7 +127,13 @@ public class CheckoutTable : Workbench
     */
     private void ThrowNewWatch(Item itemParameters)
     {
-        var newWatch = Instantiate(WatchTemplate, transform.position, Quaternion.identity);
+        var pos = transform.position;
+        if (watchThrowPoint != null)
+        {
+            pos = watchThrowPoint.position;
+        }
+
+        var newWatch = Instantiate(WatchTemplate, pos, Quaternion.identity);
         var newItem = ScriptableObject.CreateInstance<Item>();
         newItem.SetParameters(itemParameters);
         newWatch.GetComponent<Watch>().WatchItem = newItem;
@@ -134,7 +142,13 @@ public class CheckoutTable : Workbench
 
     private void ThrowRandomWatch()
     {
-        var newWatch = Instantiate(WatchTemplate, transform.position, Quaternion.identity);
+        var pos = transform.position;
+        if(watchThrowPoint != null)
+        {
+            pos = watchThrowPoint.position;
+        }
+
+        var newWatch = Instantiate(WatchTemplate, pos, Quaternion.identity);
         var newItem = ScriptableObject.CreateInstance<Item>();
         newItem.SetParameters(GameManager.instance.randomWatches[watchIndex]);
         newWatch.GetComponent<Watch>().WatchItem = newItem;

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 //Refactoring is done! You may enter safely
 public class WorkbenchBasic : Workbench
 {
-    [SerializeField] private ParticleSystem crossMark;
+    [SerializeField] private ParticleSystem checkMark, crossMark;
 
     // Start is called before the first frame update
     void Start()
@@ -129,11 +129,14 @@ public class WorkbenchBasic : Workbench
                     itemSlots[0] = GenerateItem(GameManager.instance.RandomWatchRecipesList[i].result);
                     itemSlots[0].WatchItem.trueState = ItemState.Repaired;
                     itemSlots[0].WatchItem.State = itemSlots[0].WatchItem.trueState;
+
+                    checkMark.Play();
+
                     break;
                 }               
             }
 
-            if(itemSlots[1] == null)
+            if(itemSlots[1] != null)
             {
                 isValid = false;
             }

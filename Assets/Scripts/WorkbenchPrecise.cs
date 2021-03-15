@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class WorkbenchPrecise : Workbench
 {
     private List<Item> mechanismComponents;
-    [SerializeField] private ParticleSystem crossMark;
+    [SerializeField] private ParticleSystem checkMark, crossMark;
 
     // Start is called before the first frame update
     void Start()
@@ -82,6 +82,7 @@ public class WorkbenchPrecise : Workbench
                 if (itemSlots[0].WatchItem.State == ItemState.Broken && itemSlots[0].WatchItem.components.Count == 0)
                 {
                     //endParticles.Play();
+                    checkMark.Play();
                     itemSlots[0].WatchItem.State = ItemState.Repaired;
                 }
                 else if (itemSlots[0].WatchItem.State != ItemState.EmptyState && IsAMechanism(itemSlots[0].WatchItem))
@@ -130,7 +131,7 @@ public class WorkbenchPrecise : Workbench
 
                 if(recipeFilled)
                 {
-                   
+                    checkMark.Play();
                     itemSlots[0].WatchItem.State = ItemState.Repaired;
 
                     for (int i = 0; i < mechanismComponents.Count; i++)
@@ -157,6 +158,7 @@ public class WorkbenchPrecise : Workbench
         if (isValid)
         {
             endParticles.Play();
+            
         }
         else
         {
