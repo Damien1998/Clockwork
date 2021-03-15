@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,11 +16,13 @@ public class DialogueManager : MonoBehaviour
     public Text nameText ,dialogueText,dialogueHistoryText , optionText1, optionText2;
     public Image portrait;
     public Button option1, option2,progressButton;
-    public Scrollbar dialogueScrollBar;
+    public Scrollbar dialogueScrollBar,textDialogueScrollBar;
+    public Slider SkipBar;
 
     private string[] dialogue;
     private string name;
     private int currentLine;
+    private bool _isTyping = false;
 
     public AudioSource audioSource;
 
@@ -41,6 +44,18 @@ public class DialogueManager : MonoBehaviour
         }
         audioSource = GetComponent<AudioSource>();
     }
+
+    private void Update()
+    {
+        if (dialogueBox.activeInHierarchy)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                ProgressDialogue();
+            }
+            SkipBarProgress();
+        }
+    }
     public void ProgressDialogue()
     {
         if (!options)
@@ -53,11 +68,21 @@ public class DialogueManager : MonoBehaviour
             {
                 CheckIfCommand();
                 DisplayText();
-
             }
         }
     }
-    
+
+    public void ResetDialogue()
+    {
+        dialogueText.text = null;
+        StopAllCoroutines();
+        dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
+            
+        currentLine = 0;
+        CheckIfCommand();
+
+        DisplayText();
+    }
     void ExitDialogue()
     {
         dialogueText.text = null;
@@ -107,6 +132,26 @@ public class DialogueManager : MonoBehaviour
 
         DisplayText();
     }
+
+    private void SkipBarProgress()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (SkipBar.value<1)
+            {
+                SkipBar.value += .5f*Time.deltaTime;
+            }
+            else
+            {
+                Skip();
+            }
+        }
+        else
+        {
+            SkipBar.value = 0;
+        }
+    }
+    
 
     private int FindCharacterID(string characterName)
     {
@@ -238,7 +283,6 @@ public class DialogueManager : MonoBehaviour
             StopAllCoroutines();
             StartCoroutine(TypeSentence(dialogue[currentLine]));
             dialogueScrollBar.value = 0;
-            currentLine++;
         }
     }
     IEnumerator TypeSentence(string sentence)
@@ -249,12 +293,27 @@ public class DialogueManager : MonoBehaviour
         {
             myText.Append(dialogueHistoryText.text+"\n");
         }
-        dialogueHistoryText.text =  myText + name + sentence;
-        dialogueText.text = name;
-        foreach (var letter in sentence.ToCharArray())
+        if (_isTyping)
         {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(delay);
+            dialogueText.text = dialogueHistoryText.text;
+            textDialogueScrollBar.value = 0;
+            _isTyping = false;
+            currentLine++;
         }
+        else
+        {
+            dialogueHistoryText.text = myText + name + sentence;
+            _isTyping = true;
+            dialogueText.text = myText + name;
+            foreach (var letter in sentence.ToCharArray())
+            {
+                textDialogueScrollBar.value = 0;
+                dialogueText.text += letter;
+                yield return new WaitForSeconds(delay);
+            }
+            _isTyping = false;
+            currentLine++;
+        }
+
     }
 }
