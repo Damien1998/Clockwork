@@ -32,6 +32,16 @@ public class Watch : MonoBehaviour
 
     public bool isPlacedOnWorkbench;
 
+    public void ChangeSortingLayer(string newLayer)
+    {
+        foreach(SpriteRenderer renderer in itemRenderer)
+        {
+            renderer.sortingLayerName = newLayer;
+        }
+
+        stateRenderer.sortingLayerName = newLayer;
+    }
+
     public bool isSelected
     {
         get => selected;
