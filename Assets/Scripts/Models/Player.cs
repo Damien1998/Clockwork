@@ -142,7 +142,7 @@ public class Player : MonoBehaviour
         {
             if (HeldWatch != null)
             {
-                HeldWatch.transform.position = transform.position + ItemPosition.localPosition;
+                HeldWatch.transform.position = /*transform.position +*/ ItemPosition.position;
             }
 
             if (HeldWatch == null)
@@ -319,7 +319,8 @@ public class Player : MonoBehaviour
             pickedupItem.GetComponent<BoxCollider2D>().enabled = false;
         }
         HeldWatch = pickedupItem;
-        pickedupItem.transform.position = ItemPosition.localPosition;
+        pickedupItem.GetComponent<Watch>().ChangeSortingLayer("ItemsHeld");
+        pickedupItem.transform.position = ItemPosition.position;
         HeldWatch.GetComponent<Watch>().isSelected = false;
         animator.SetBool("carriesItem", true);
     }
@@ -332,6 +333,7 @@ public class Player : MonoBehaviour
             itemRigidbody.velocity = Vector2.zero;
             HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
         }
+        HeldWatch.GetComponent<Watch>().ChangeSortingLayer("Items");
         HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
         itemDropParticles.transform.position = HeldWatch.transform.position;
         itemDropParticles.Play();
@@ -349,6 +351,7 @@ public class Player : MonoBehaviour
             itemRigidbody.velocity = Vector2.zero;
             HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
         }
+        HeldWatch.GetComponent<Watch>().ChangeSortingLayer("Items");
         HeldWatch.GetComponent<Watch>().isSelected = false;
         nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
         itemDropParticles.transform.position = HeldWatch.transform.position;
