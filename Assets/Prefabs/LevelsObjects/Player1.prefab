@@ -47,6 +47,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -133,6 +134,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -222,9 +224,13 @@ MonoBehaviour:
   moveSpeed: 8
   dashSpeed: 28
   pickupRange: 1
+  lockMovement: 0
   isByWorkbench: 0
   isByLevelStart: 0
+  isByWarpHole: 0
   dashDuration: 0.08
+  itemDropParticles: {fileID: 0}
+  footstepParticles: {fileID: 0}
 --- !u!95 &2037045816
 Animator:
   serializedVersion: 3
@@ -290,6 +296,7 @@ SpriteRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
