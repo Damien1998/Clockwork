@@ -234,6 +234,12 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 5089550196045472748}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &1402643873 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5089550197157457391, guid: e5cbe9d1804311b4ba663e446bea231e,
+    type: 3}
+  m_PrefabInstance: {fileID: 5089550196045472748}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1937392531 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1847965907100001068, guid: 6b5653c152a91294f9ca8f3f384beffd,
@@ -476,6 +482,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5089550196362133096, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: BGM
+      value: 
+      objectReference: {fileID: 1402643873}
     - target: {fileID: 5089550196924142164, guid: e5cbe9d1804311b4ba663e446bea231e,
         type: 3}
       propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
