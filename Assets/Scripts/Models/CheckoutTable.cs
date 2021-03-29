@@ -57,6 +57,7 @@ public class CheckoutTable : Workbench
         //ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
         Debug.LogWarning("Level Init");
         GameManager.instance.levelID = GameManager.instance.levelID;
+        GameManager.instance.localQuestDone = false;
         GameManager.instance.CreateRandomWatches();
         ThrowRandomWatch();
         StartCoroutine(CheckForQuests());
@@ -68,6 +69,9 @@ public class CheckoutTable : Workbench
         {
             itemToPlace.transform.position = transform.position;
             Destroy(itemToPlace.gameObject);
+
+            GameManager.instance.localQuestDone = true;
+
             //Idk how to end quests :/
         }
         if(CheckWatch(itemToPlace) == true)
@@ -84,9 +88,9 @@ public class CheckoutTable : Workbench
             }
             else
             {
-                UIManager.instance.ShowLevelEnd();
+                //UIManager.instance.ShowLevelEnd();
                 endOfLevelDialogue.StartDialogue();
-
+                UIManager.instance.StopTimer();
                 Time.timeScale = 0f;
             }
         }

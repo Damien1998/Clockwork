@@ -191,6 +191,11 @@ public class DialogueManager : MonoBehaviour
                 case "--end":
                     ExitDialogue();
                     break;
+                case "--level_end":
+                    //ExitDialogue();
+                    Debug.Log("AAAAAAAA");
+                    UIManager.instance.ShowLevelEnd();
+                    break;
                 case "--portrait":
                     portrait.gameObject.SetActive(true);
                     portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
@@ -271,6 +276,11 @@ public class DialogueManager : MonoBehaviour
                 break;
             }
             else if (dialogue[currentLine].StartsWith("--level_start"))
+            {
+                CheckIfCommand();
+                break;
+            }
+            else if (dialogue[currentLine].StartsWith("--level_end"))
             {
                 CheckIfCommand();
                 break;
