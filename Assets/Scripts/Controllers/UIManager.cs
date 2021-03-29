@@ -7,10 +7,13 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
     public GameObject QuickSettingButton;
     [SerializeField] private int Points; 
-    [SerializeField] private GameObject gameOverScreen;
+    //[SerializeField] private GameObject gameOverScreen;
     [SerializeField] private Slider timerDisplay;
     [SerializeField] private GameObject levelEndScren;
+    [SerializeField] private GameObject levelFailureScren;
     [SerializeField] private Text levelEndText;
+    [SerializeField] private Text levelFailureText;
+    [SerializeField] private GameObject trophyDisplay;
 
     private IEnumerator timer;
 
@@ -26,11 +29,30 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void ShowLevelEnd()
+    public void StopTimer()
     {
         StopCoroutine(timer);
+    }
+
+    public void ShowLevelEnd()
+    {
+        //StopCoroutine(timer);
         levelEndText.text = "Your Time: " + timerDisplay.value.ToString();
         levelEndScren.SetActive(true);
+
+        trophyDisplay.SetActive(GameManager.instance.localQuestDone);
+
+        timerDisplay.gameObject.SetActive(false);
+    }
+
+    public void ShowLevelFailure()
+    {
+        //StopCoroutine(timer);
+        levelFailureText.text = "Your Time: " + timerDisplay.value.ToString();
+        levelFailureScren.SetActive(true);
+
+        //trophyDisplay.SetActive(GameManager.instance.localQuestDone);
+
         timerDisplay.gameObject.SetActive(false);
     }
 
@@ -38,6 +60,7 @@ public class UIManager : MonoBehaviour
     {
         Points += sumOfPoints;
     }
+
     public void LevelStart()
     {
         if (GameManager.instance.levelID != 4)
@@ -66,6 +89,7 @@ public class UIManager : MonoBehaviour
         }
         timerDisplay.gameObject.SetActive(false);
         timerDisplay.value = 0;
-        gameOverScreen.gameObject.SetActive(true);
+        ShowLevelFailure();
+        //gameOverScreen.gameObject.SetActive(true);
     }
 }

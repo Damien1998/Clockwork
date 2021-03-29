@@ -17,6 +17,9 @@ public class GameManager : MonoBehaviour
     public Item questItem;
     [SerializeField]private int _levelID;
     [SerializeField]private bool _sideQuest;
+
+    public bool localQuestDone;
+
     private SaveController saveController;
     private int points;
 
