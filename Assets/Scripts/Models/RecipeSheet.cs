@@ -26,16 +26,20 @@ public class RecipeSheet : MonoBehaviour
         {
             var GO = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[1].transform);
             GO.GetComponent<Image>().sprite = WatchItem.components[i].itemImages[0];
-            for (int j = 0; j < WatchItem.components[i].components.Count; j++)
+            if (WatchItem.components[i].components.Count > 0)
             {
-                var GO2 = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[2].transform);
-                GO2.GetComponent<Image>().sprite = WatchItem.components[i].components[j].itemImages[0];
-                for (int g = 0; g < WatchItem.components[j].components.Count; g++)
+                for (int j = 0; j < WatchItem.components[i].components.Count - 1; j++)
                 {
-                    var GO3 = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[3].transform);
-                    GO3.GetComponent<Image>().sprite = WatchItem.components[i].components[j].components[g].itemImages[0];
-                } 
-            } 
+                    var GO2 = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[2].transform);
+                    GO2.GetComponent<Image>().sprite = WatchItem.components[i].components[j].itemImages[0];
+                    // for (int g = 0; g < WatchItem.components[j].components.Count - 1; g++)
+                    // {
+                    //     var GO3 = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[3].transform);
+                    //     GO3.GetComponent<Image>().sprite =
+                    //         WatchItem.components[i].components[j].components[g].itemImages[0];
+                    // }
+                }
+            }
         }
     }
     public void CloseSheet()

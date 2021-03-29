@@ -13,7 +13,7 @@ public class DialogueManager : MonoBehaviour
     public static DialogueManager instance;
 
     public GameObject dialogueBox,optionsBox;
-    public Text nameText ,dialogueText,dialogueHistoryText , optionText1, optionText2;
+    public Text  dialogueText,dialogueHistoryText , optionText1, optionText2;
     public Image portrait;
     public Button option1, option2,progressButton;
     public Scrollbar dialogueScrollBar,textDialogueScrollBar;
@@ -132,27 +132,6 @@ public class DialogueManager : MonoBehaviour
 
         DisplayText();
     }
-
-    private void SkipBarProgress()
-    {
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            if (SkipBar.value<1)
-            {
-                SkipBar.value += .5f*Time.deltaTime;
-            }
-            else
-            {
-                Skip();
-            }
-        }
-        else
-        {
-            SkipBar.value = 0;
-        }
-    }
-    
-
     private int FindCharacterID(string characterName)
     {
         for(int i = 0; i < characters.Length; i++)
@@ -168,8 +147,21 @@ public class DialogueManager : MonoBehaviour
     private Sprite FindPortrait(string characterName)
     {
         var cName = characterName.Trim();
-        nameText.text = characterName;
         name = characterName + ": ";
+        int id = FindCharacterID(cName);
+        if(id != -1)
+        {
+            return portraits[id];
+        }
+        else
+        {
+            return null;
+        }
+    }
+    private Sprite FindPortrait(string characterName,string _nameToDisplay)
+    {
+        var cName = characterName.Trim();
+        name = _nameToDisplay + ": ";
         int id = FindCharacterID(cName);
         if(id != -1)
         {
@@ -206,11 +198,9 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "--portrait":
                     portrait.gameObject.SetActive(true);
-                    nameText.gameObject.SetActive(true);
                     portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
                     break;
                 case "--options":
-                    nameText.gameObject.SetActive(true);
                     portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--options", ""));
                     OpenOptions();
                     break;
@@ -220,7 +210,6 @@ public class DialogueManager : MonoBehaviour
                     break;
                 default:
                     portrait.gameObject.SetActive(false);
-                    nameText.gameObject.SetActive(false);
                     name = "";
                     break;
 
@@ -258,7 +247,25 @@ public class DialogueManager : MonoBehaviour
             option2.onClick.AddListener(() => SwitchLine(o2));
             currentLine += 4;
     }
-
+    private void SkipBarProgress()
+    {
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            if (SkipBar.value<.95f)
+            {
+                SkipBar.value += .5f*Time.deltaTime;
+            }
+            else
+            {
+                Skip();
+                SkipBar.value = 0;
+            }
+        }
+        else
+        {
+            SkipBar.value = 0;
+        }
+    }
     public void Skip()
     {
         while (currentLine < dialogue.Length)
@@ -280,7 +287,6 @@ public class DialogueManager : MonoBehaviour
             }
             currentLine++;
         }
-
         if (currentLine >= dialogue.Length)
         {
             ExitDialogue();
