@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     public LevelParams currentLevelParams;
     public SoundAudioClip[] soundAudioClipArray;
     public AudioMixerGroup SFX;
+    public AudioSource BGM;
 
     public int levelID 
     { 
@@ -333,9 +334,32 @@ public class GameManager : MonoBehaviour
                     newWatchBasicItems[j].state = ItemState.UnknownState;
                 }
             }
+
+            CheckItemComponents(newWatch);
         }
     }
 
+    void CheckItemComponents(Item _newWatch)
+    {
+        for(int i = 0; i < _newWatch.components.Count; i++)
+        {
+            ClearItemImages(_newWatch.components[i]);
+            if(_newWatch.components[i].components.Count>1)
+            {
+                CheckItemComponents(_newWatch.components[i]);
+            }
+        }
+    }
+    void ClearItemImages(Item _itemToClear)
+    {
+        for (int i = _itemToClear.itemImages.Count-1; i >= 0; i--)
+        {
+            if (_itemToClear.itemImages[i] == null)
+            {
+                _itemToClear.itemImages.Remove(_itemToClear.itemImages[i]);
+            }
+        }
+    }
     public void SetSaveController(SaveController inSaveController)
     {
         inSaveController = saveController;
