@@ -1471,7 +1471,7 @@ RectTransform:
   m_Children:
   - {fileID: 969169648036976697}
   m_Father: {fileID: 4877616390224476759}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -4315,7 +4315,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogueBox: {fileID: 2539042909732352599}
   optionsBox: {fileID: 2407467038165772317}
-  nameText: {fileID: 7796385497325327384}
   dialogueText: {fileID: 8795862717328115932}
   dialogueHistoryText: {fileID: 5741916798136514853}
   optionText1: {fileID: 6762856733805187137}
@@ -6739,7 +6738,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 822d294e3c032654a81c5258eede0c4b, type: 3}
   - sound: 2
     audioClip:
-    - {fileID: 8300000, guid: 89b3b9e42a715e54c890bff935ea523c, type: 3}
+    - {fileID: 8300000, guid: 1686a492233daea4799ae8049682d29c, type: 3}
   - sound: 3
     audioClip:
     - {fileID: 8300000, guid: 3abb719ef0551ff40ad2f3f9ef700d0f, type: 3}
@@ -6750,6 +6749,7 @@ MonoBehaviour:
     audioClip:
     - {fileID: 8300000, guid: 3abb719ef0551ff40ad2f3f9ef700d0f, type: 3}
   SFX: {fileID: 24300002, guid: 100acb05f1500cb4f81e36206cafce2a, type: 2}
+  BGM: {fileID: 5089550197157457391}
 --- !u!1 &4908478027163953460
 GameObject:
   m_ObjectHideFlags: 0
@@ -13430,7 +13430,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
