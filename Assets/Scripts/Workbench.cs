@@ -79,6 +79,7 @@ public class Workbench : MonoBehaviour
                 itemSlots[i].transform.position = dropLocation.position;
                 itemSlots[i].isPlacedOnWorkbench = false;
                 itemSlots[i].gameObject.SetActive(true);
+                itemSlots[i].ChangeSortingLayer("Items");
                 itemSlots[i] = null;
             }
         }
@@ -94,6 +95,7 @@ public class Workbench : MonoBehaviour
                 itemSlots[i].transform.position = dropLocation.position;
                 itemSlots[i].isPlacedOnWorkbench = false;
                 itemSlots[i].gameObject.SetActive(true);
+                itemSlots[i].ChangeSortingLayer("Items");
                 itemSlots[i] = null;
             }
         }
