@@ -192,9 +192,8 @@ public class DialogueManager : MonoBehaviour
                     ExitDialogue();
                     break;
                 case "--level_end":
-                    //ExitDialogue();
-                    Debug.Log("AAAAAAAA");
                     UIManager.instance.ShowLevelEnd();
+                    ExitDialogue();
                     break;
                 case "--portrait":
                     portrait.gameObject.SetActive(true);

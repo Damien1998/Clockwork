@@ -125,8 +125,9 @@ public class Player : MonoBehaviour
                 else if(nearbyItems[itemToPickUpID].GetComponent<Watch>().isRecipe)
                 {
                     RecipeListView.currentMainWatch = nearbyItems[itemToPickUpID].GetComponent<Watch>();
+                    RecipeListView.AddRecipeToList(RecipeListView.currentMainWatch);
                     RecipeListView.LoadRecipeView();
-                    CanInteract = false;
+                    Destroy(nearbyItems[itemToPickUpID].GetComponent<Watch>().gameObject);
                 }
             }
             

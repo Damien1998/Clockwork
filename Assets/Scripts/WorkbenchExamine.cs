@@ -69,18 +69,19 @@ public class WorkbenchExamine : Workbench
                 {
                     invalidItemInside = false;
                     itemToPlace.WatchItem.State = itemToPlace.WatchItem.trueState;
-                    Debug.Log(itemToPlace.WatchItem.State);                   
+                    Debug.Log(itemToPlace.WatchItem.State);
+                    
                 }
                 else
                 {
                     invalidItemInside = true;
                 }
-
                 if (itemToPlace.WatchItem.components.Count > 0)
                 {
                     invalidItemInside = false;
-                    GenerateComponentList();
+                    GenerateComponentList(itemToPlace);
                 }
+                
                 /**
                 else if(itemToPlace.WatchItem.State != ItemState.UnknownState)
                 {
@@ -94,9 +95,12 @@ public class WorkbenchExamine : Workbench
         }
     }
 
-    private void GenerateComponentList()
+    private void GenerateComponentList(Watch _watchItem)
     {
-        //Here the function will generate the list of watch components
+        GameObject Recipe = Instantiate(_watchItem.gameObject,transform.position,Quaternion.identity);
+        Recipe.GetComponent<Watch>().isRecipe = true;
+        Recipe.GetComponent<Watch>().WatchItem = _watchItem.WatchItem;
+        Recipe.name = "Recipe List";
     }
 
     //I'm leaving this in in case I need it later
