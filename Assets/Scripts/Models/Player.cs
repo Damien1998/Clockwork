@@ -271,7 +271,7 @@ public class Player : MonoBehaviour
                 }
                 else if (isDashing)
                 {
-                    rigidBody.velocity = movementInput.normalized * moveSpeed;
+                    rigidBody.velocity = dashDirection * dashSpeed;
                 }
                 else
                 {
@@ -352,7 +352,7 @@ public class Player : MonoBehaviour
             itemRigidbody.velocity = Vector2.zero;
             HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
         }
-        HeldWatch.GetComponent<Watch>().ChangeSortingLayer("Items");
+        HeldWatch.GetComponent<Watch>().ChangeSortingLayer("ItemsWorkbench");
         HeldWatch.GetComponent<Watch>().isSelected = false;
         nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
         itemDropParticles.transform.position = HeldWatch.transform.position;
