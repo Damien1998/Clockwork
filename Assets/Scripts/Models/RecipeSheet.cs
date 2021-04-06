@@ -2,19 +2,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class RecipeSheet : MonoBehaviour
 {
     public GameObject[] ComponentsLists;
-    public GameObject Image;
+    public GameObject Image,button,SideRecipes;
+
     private void Awake()
     {
-        DisplayRecipe();
+        DisplayKnownRecipes();
     }
 
+    public void ChooseSideRecipe()
+    {
+
+        for (int i = 0; i < SideRecipes.transform.childCount; i++)
+        {
+            if (SideRecipes.transform.GetChild(i).gameObject == EventSystem.current.currentSelectedGameObject)
+            {
+                Debug.Log(SideRecipes.transform.childCount);
+
+                RecipeListView.currentMainWatch = RecipeListView.recipeLists[i];
+                DisplayRecipe();
+                break;
+            }
+        }
+    }
+
+    public void CleanRecipe()
+    {
+        foreach (var componentsList in ComponentsLists)
+        {
+            for (int i = 0; i < componentsList.transform.childCount; i++)
+            {
+                Destroy(componentsList.transform.GetChild(i).gameObject);
+            }
+        }
+    }
     private void DisplayRecipe()
     {
+       // Debug.Log(RecipeListView.currentMainWatch.WatchItem.itemID); 
         var WatchItem = RecipeListView.currentMainWatch.WatchItem;
         for (int i = WatchItem.itemImages.Count-1; i > 0; i--)
         {
@@ -42,9 +71,27 @@ public class RecipeSheet : MonoBehaviour
             }
         }
     }
+    private void DisplayKnownRecipes()
+    {
+        if (RecipeListView.recipeLists.Count > 0)
+        {
+            for (int i = 0; i < RecipeListView.recipeLists.Count; i++)
+            {
+                if (i+1 > SideRecipes.transform.childCount)
+                {
+                    GameObject _quickRecipe = Instantiate(button, Vector3.zero, Quaternion.identity, SideRecipes.transform);
+                    _quickRecipe.GetComponent<Image>().sprite = RecipeListView.recipeLists[i].WatchItem.itemImages[0];
+                }
+                else
+                {
+                    SideRecipes.transform.GetChild(i).GetComponent<Image>().sprite =
+                        RecipeListView.recipeLists[i].WatchItem.itemImages[0];
+                }
+            }
+        }
+    }
     public void CloseSheet()
     {
         RecipeListView.UnloadRecipeView();
-        Player.CanInteract = true;
     }
 }

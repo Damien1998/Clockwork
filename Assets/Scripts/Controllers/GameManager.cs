@@ -48,7 +48,6 @@ public class GameManager : MonoBehaviour
         set
         {
             _levelID = value;
-            Debug.Log("VAR");
             currentLevelParams = (LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + _levelID + ".asset", typeof(LevelParams));
         } 
     }
