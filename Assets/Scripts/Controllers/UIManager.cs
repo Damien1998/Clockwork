@@ -40,7 +40,7 @@ public class UIManager : MonoBehaviour
         levelEndText.text = "Your Time: " + timerDisplay.value.ToString();
         levelEndScren.SetActive(true);
 
-        trophyDisplay.SetActive(GameManager.instance.localQuestDone);
+        //trophyDisplay.SetActive(GameManager.instance.localQuestDone);
 
         timerDisplay.gameObject.SetActive(false);
     }
