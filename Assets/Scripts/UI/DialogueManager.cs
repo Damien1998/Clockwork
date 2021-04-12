@@ -148,6 +148,7 @@ public class DialogueManager : MonoBehaviour
     {
         var cName = characterName.Trim();
         name = characterName + ": ";
+
         int id = FindCharacterID(cName);
         if(id != -1)
         {
@@ -179,7 +180,6 @@ public class DialogueManager : MonoBehaviour
         {
             string[] words = dialogue[currentLine].Split(' ');
             string firstWord = words[0];
-
             switch (firstWord)
             {
                 case "--quest_start":
@@ -197,7 +197,15 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "--portrait":
                     portrait.gameObject.SetActive(true);
-                    portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""),words[2]);
+                    if(words.Length >2)
+                    {
+                        portrait.sprite = FindPortrait(words[1], words[2]);
+                    }
+                    else
+                    {
+                        portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
+                    }
+
                     break;
                 case "--options":
                     portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--options", ""));
