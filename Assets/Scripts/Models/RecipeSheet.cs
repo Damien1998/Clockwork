@@ -30,7 +30,6 @@ public class RecipeSheet : MonoBehaviour
             }
         }
     }
-
     public void CleanRecipe()
     {
         foreach (var componentsList in ComponentsLists)
@@ -41,34 +40,47 @@ public class RecipeSheet : MonoBehaviour
             }
         }
     }
+    private bool CheckForComponents(Item _itemToCheck)
+    {
+        if (_itemToCheck.components.Count > 0)
+        {
+            return true;
+        }
+
+        return false;
+    }
     private void DisplayRecipe()
     {
-       // Debug.Log(RecipeListView.currentMainWatch.WatchItem.itemID); 
         var WatchItem = RecipeListView.currentMainWatch.WatchItem;
-        for (int i = WatchItem.itemImages.Count-1; i > 0; i--)
+        for (int i = WatchItem.itemImages.Count-1; i >= 0; i--)
         {
             var tmpGO = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[0].transform);
             tmpGO.GetComponent<Image>().sprite = WatchItem.itemImages[i];
             tmpGO.transform.position = ComponentsLists[0].transform.position;
         }
-        for (int i = 0; i < WatchItem.components.Count; i++)
+
+        DisplayComponents(WatchItem,1);
+    }
+
+    private void DisplayComponents(Item _item,int _componentListIndex)
+    {
+        if (CheckForComponents(_item))
         {
-            var GO = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[1].transform);
-            GO.GetComponent<Image>().sprite = WatchItem.components[i].itemImages[0];
-            if (WatchItem.components[i].components.Count > 0)
+            for (int i = 0; i < _item.components.Count; i++)
             {
-                for (int j = 0; j < WatchItem.components[i].components.Count - 1; j++)
-                {
-                    var GO2 = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[2].transform);
-                    GO2.GetComponent<Image>().sprite = WatchItem.components[i].components[j].itemImages[0];
-                    // for (int g = 0; g < WatchItem.components[j].components.Count - 1; g++)
-                    // {
-                    //     var GO3 = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[3].transform);
-                    //     GO3.GetComponent<Image>().sprite =
-                    //         WatchItem.components[i].components[j].components[g].itemImages[0];
-                    // }
-                }
-            }
+                var GO = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[_componentListIndex].transform);
+                Destroy(GO.GetComponent<Image>());
+                DisplayItem(_item.components[i], GO);
+                DisplayComponents(_item.components[i],_componentListIndex+1);
+            }   
+        }
+    }
+    private void DisplayItem(Item _item,GameObject _itemPosition)
+    {
+        for (int i = _item.itemImages.Count-1; i >= 0; i--)
+        {
+            var tmpGO = Instantiate(Image, Vector3.zero, Quaternion.identity, _itemPosition.transform);
+            tmpGO.GetComponent<Image>().sprite = _item.itemImages[i];
         }
     }
     private void DisplayKnownRecipes()
@@ -80,7 +92,7 @@ public class RecipeSheet : MonoBehaviour
                 if (i+1 > SideRecipes.transform.childCount)
                 {
                     GameObject _quickRecipe = Instantiate(button, Vector3.zero, Quaternion.identity, SideRecipes.transform);
-                    _quickRecipe.GetComponent<Image>().sprite = RecipeListView.recipeLists[i].WatchItem.itemImages[0];
+                    DisplayItem(RecipeListView.recipeLists[i].WatchItem, _quickRecipe);
                 }
                 else
                 {

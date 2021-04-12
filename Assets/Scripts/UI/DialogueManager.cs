@@ -197,7 +197,7 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "--portrait":
                     portrait.gameObject.SetActive(true);
-                    portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
+                    portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""),words[2]);
                     break;
                 case "--options":
                     portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--options", ""));
