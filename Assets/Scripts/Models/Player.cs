@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     private Vector2 movementInput, lastDirection;
 
     [SerializeField]
-    private ParticleSystem itemDropParticles, footstepParticles;
+    private ParticleSystem itemDropParticles, footstepParticles, dashParticles;
 
     //Components
     private Animator animator;
@@ -195,6 +195,7 @@ public class Player : MonoBehaviour
 
     private void Dashing()
     {
+        
         //Dash - only in 4 directions, quick burst of speed
         //This only handles dash input, velocity is managed in fixedupdate
         //For some reason this has to be here
@@ -213,19 +214,52 @@ public class Player : MonoBehaviour
 
             if (Input.GetButtonDown("Dash") && !isDashing)
             {
+                dashParticles.Play();
+
                 Vector2 xInput = new Vector2(moveX, 0);
                 Vector2 yInput = new Vector2(0, moveY);
 
                 Debug.Log("Dash");
+                
 
-                if (xInput.magnitude >= yInput.magnitude)
+                //Diagonal dash
+                if (xInput.magnitude > 0.3f && yInput.magnitude > 0.3f)
                 {
-                    dashDirection = xInput.normalized;
+                    if(xInput.x > 0)
+                    {
+                        if (yInput.y > 0)
+                        {
+                            dashDirection = new Vector2(1f, 1f).normalized;
+                        }
+                        else
+                        {
+                            dashDirection = new Vector2(1f, -1f).normalized;
+                        }
+                    }
+                    else
+                    {
+                        if (yInput.y > 0)
+                        {
+                            dashDirection = new Vector2(-1f, 1f).normalized;
+                        }
+                        else
+                        {
+                            dashDirection = new Vector2(-1f, -1f).normalized;
+                        }
+                    }
                 }
                 else
                 {
-                    dashDirection = yInput.normalized;
+                    if (xInput.magnitude >= yInput.magnitude)
+                    {
+                        dashDirection = xInput.normalized;
+                    }
+                    else
+                    {
+                        dashDirection = yInput.normalized;
+                    }
                 }
+                
 
                 StartCoroutine(Dash());
             }
@@ -285,6 +319,7 @@ public class Player : MonoBehaviour
 
             if (Input.GetButton("Dash"))
             {
+                
                 dashReleased = false;
             }
             else
