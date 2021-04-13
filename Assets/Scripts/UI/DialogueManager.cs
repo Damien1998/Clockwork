@@ -205,7 +205,6 @@ public class DialogueManager : MonoBehaviour
                     {
                         portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
                     }
-
                     break;
                 case "--options":
                     portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--options", ""));

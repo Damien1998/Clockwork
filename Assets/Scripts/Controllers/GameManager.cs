@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 using UnityEngine.Audio;
 
 
@@ -48,7 +47,9 @@ public class GameManager : MonoBehaviour
         set
         {
             _levelID = value;
-            currentLevelParams = (LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + _levelID + ".asset", typeof(LevelParams));
+
+            currentLevelParams = Resources.Load<LevelParams>("LevelParams/Level " + _levelID);
+            //(LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + _levelID + ".asset", typeof(LevelParams));
         } 
     }
     public bool sideQuestActive
