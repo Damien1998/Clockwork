@@ -9,7 +9,7 @@ public class SettingsMenu : MonoBehaviour
 {
     public AudioMixer musicMixer,sfxMixer;
     public Dropdown resolutionDropdown;
-    public Slider musicSlider;
+    //public Slider musicSlider;
 
     private Resolution[] resolutions;
     private void Start()
@@ -34,7 +34,7 @@ public class SettingsMenu : MonoBehaviour
         resolutionDropdown.RefreshShownValue();
     }
 
-    public void UpdateMusicSlider()
+    public void UpdateMusicSlider(Slider musicSlider)
     {
         var value = 0.0f;
         var result =  musicMixer.GetFloat("Volume",out value);
