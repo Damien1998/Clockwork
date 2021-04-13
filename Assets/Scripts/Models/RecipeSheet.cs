@@ -11,6 +11,7 @@ public class RecipeSheet : MonoBehaviour
     public GameObject Image,button,SideRecipes;
     public UILineRenderer line;
     public float scaler=360;
+    private bool displayingRecipe = false;
     private void Awake()
     {
         DisplayKnownRecipes();
@@ -22,15 +23,19 @@ public class RecipeSheet : MonoBehaviour
         {
             if (SideRecipes.transform.GetChild(i).gameObject == EventSystem.current.currentSelectedGameObject)
             {
-
-                RecipeListView.currentMainWatch = RecipeListView.recipeLists[i];
-                DisplayRecipe();
+                if (!displayingRecipe)
+                {
+                    displayingRecipe = true;
+                    RecipeListView.currentMainWatch = RecipeListView.recipeLists[i];
+                    DisplayRecipe();
+                }
                 break;
             }
         }
     }
     public void CleanRecipe()
     {
+        displayingRecipe = false;
         line.ResetLines();
         foreach (var componentsList in ComponentsLists)
         {
@@ -59,7 +64,7 @@ public class RecipeSheet : MonoBehaviour
             tmpGO.transform.position = ComponentsLists[0].transform.position;
         }
         DisplayComponents(ComponentsLists[0],WatchItem,1);
-        line._points.Add((ComponentsLists[0].GetComponent<RectTransform>().anchoredPosition+ new Vector2(180,0))/scaler);
+        line._points.Add((ComponentsLists[0].GetComponent<RectTransform>().anchoredPosition+ new Vector2(160,0))/scaler);
         StartCoroutine(Wait1s(WatchItem));
     }
 
@@ -138,7 +143,7 @@ public class RecipeSheet : MonoBehaviour
     IEnumerator Wait1s(Item _watchItem)
     {
         yield return new WaitForSeconds(1);
-        DrawLines(_watchItem,0,0,(ComponentsLists[0].GetComponent<RectTransform>().anchoredPosition+ new Vector2(180,0))/scaler);
+        DrawLines(_watchItem,0,0,(ComponentsLists[0].GetComponent<RectTransform>().anchoredPosition+ new Vector2(160,0))/scaler);
         line.gameObject.SetActive(false);
         yield return new WaitForSeconds(.01f);
         line.gameObject.SetActive(true);
