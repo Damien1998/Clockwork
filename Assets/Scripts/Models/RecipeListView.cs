@@ -10,7 +10,11 @@ public static class RecipeListView
 
     public static void LoadRecipeView()
     {
-        SceneManager.LoadSceneAsync("RecipeSheet",LoadSceneMode.Additive);
+        if (!SceneManager.GetSceneByName("RecipeSheet").isLoaded)
+        {
+            SceneManager.LoadSceneAsync("RecipeSheet", LoadSceneMode.Additive);
+        }
+
         //Player.SetPlayer(false);
     }
 

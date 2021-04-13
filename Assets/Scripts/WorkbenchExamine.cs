@@ -97,10 +97,9 @@ public class WorkbenchExamine : Workbench
 
     private void GenerateComponentList(Watch _watchItem)
     {
-        GameObject Recipe = Instantiate(_watchItem.gameObject,transform.position,Quaternion.identity);
-        Recipe.GetComponent<Watch>().isRecipe = true;
-        Recipe.GetComponent<Watch>().WatchItem = _watchItem.WatchItem;
-        Recipe.name = "Recipe List";
+        RecipeListView.currentMainWatch = _watchItem;
+        RecipeListView.AddRecipeToList(RecipeListView.currentMainWatch);
+        RecipeListView.LoadRecipeView();
     }
 
     //I'm leaving this in in case I need it later
