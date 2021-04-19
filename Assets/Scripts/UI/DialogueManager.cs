@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using UnityEditor;
 
@@ -25,6 +26,8 @@ public class DialogueManager : MonoBehaviour
     private bool _isTyping = false;
 
     public AudioSource audioSource;
+
+    [SerializeField] private ParticleSystem extraSnow;
 
     public Sprite[] portraits;
     public string[] characters;
@@ -214,6 +217,11 @@ public class DialogueManager : MonoBehaviour
                     UIManager.instance.LevelStart();
                     FindObjectOfType<CheckoutTable>().InitLevel();
                     break;
+                case "--Invoke":
+                    Type thisType = this.GetType();
+                    MethodInfo myMethod = thisType.GetMethod(words[1].Trim());
+                    myMethod.Invoke(this,null);
+                    break;
                 default:
                     portrait.gameObject.SetActive(false);
                     name = "";
@@ -336,6 +344,9 @@ public class DialogueManager : MonoBehaviour
             _isTyping = false;
             currentLine++;
         }
-
+    }
+    public void RainSnow()
+    {
+        Instantiate(extraSnow, new Vector3(-2, 6.3f, 0), Quaternion.Euler(75,90,-90));
     }
 }

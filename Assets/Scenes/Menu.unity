@@ -599,6 +599,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5089550196571527381, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 51.50006
+      objectReference: {fileID: 0}
     - target: {fileID: 5089550196571527382, guid: e5cbe9d1804311b4ba663e446bea231e,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
@@ -764,5 +769,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9213941394253840883, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: extraSnow
+      value: 
+      objectReference: {fileID: 1180836793003914693, guid: 8f7fcacda6ae44c4fb01f77430fa4cd3,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5cbe9d1804311b4ba663e446bea231e, type: 3}
