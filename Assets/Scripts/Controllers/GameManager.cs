@@ -92,6 +92,7 @@ public class GameManager : MonoBehaviour
 
         randomWatches = new List<Item>();
         RandomWatchRecipesList = new List<Recipe>();
+
         for(int i = 0; i < currentLevelParams.watchAmount; i++)
         {
             List<Item> newWatchBasicItems = new List<Item>();
@@ -99,7 +100,10 @@ public class GameManager : MonoBehaviour
 
             int watchTypeModifier = 0;
 
+            //For choosing the watch type
             var weights = currentLevelParams.pocketWatchWeight + currentLevelParams.wristWatchWeight;
+
+            //Selects the watch type
             if (Random.Range(0, weights) < currentLevelParams.pocketWatchWeight)
             {
                 newWatch.SetParameters(watchBases[0]);
@@ -282,11 +286,16 @@ public class GameManager : MonoBehaviour
 
             //Setting the component states
 
-            //Debug.Log(newWatchBasicItems.Count);
+            foreach(Item basicItem in newWatchBasicItems)
+            {
+                basicItem.trueState = ItemState.Repaired;
+                basicItem.state = ItemState.Repaired;              
+            }
 
             float brokenComponentPercentage = (Random.Range(currentLevelParams.brokenPartMinPercentage, currentLevelParams.brokenPartMaxPercentage));
             Debug.Log(brokenComponentPercentage);
             var brokenComponentAmount = Mathf.RoundToInt((brokenComponentPercentage/100) * newWatchBasicItems.Count);
+            Debug.LogWarning("BrokenComponents: " + brokenComponentAmount);
             var safeguard = 100;
 
             Debug.Log(brokenComponentAmount);
@@ -303,11 +312,13 @@ public class GameManager : MonoBehaviour
                         {
                             Debug.LogWarning("Unfixable Part!");
                             newWatchBasicItems[temp].trueState = ItemState.Unfixable;
+                            newWatchBasicItems[temp].state = newWatchBasicItems[temp].trueState;
                         }
                         else
                         {
                             Debug.LogWarning("EHHH");
                             newWatchBasicItems[temp].trueState = ItemState.Broken;
+                            newWatchBasicItems[temp].state = newWatchBasicItems[temp].trueState;
                         }
 
                         newWatchBasicItems[temp].state = newWatchBasicItems[temp].trueState;
