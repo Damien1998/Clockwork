@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -10,11 +8,12 @@ public class RecipeSheet : MonoBehaviour
     public GameObject[] ComponentsLists;
     public GameObject Image,button,SideRecipes;
     public UILineRenderer line;
-    public float scaler=360;
     private bool displayingRecipe = false;
+    private float scaler = 135;
     private void Awake()
     {
-        DisplayKnownRecipes();
+       DisplayRecipe();
+       
     }
     public void ChooseSideRecipe()
     {
@@ -61,10 +60,9 @@ public class RecipeSheet : MonoBehaviour
         {
             var tmpGO = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[0].transform);
             tmpGO.GetComponent<Image>().sprite = WatchItem.itemImages[i];
-            tmpGO.transform.position = ComponentsLists[0].transform.position;
+            tmpGO.GetComponent<RectTransform>().anchoredPosition = ComponentsLists[0].GetComponent<RectTransform>().anchoredPosition ;
         }
         DisplayComponents(ComponentsLists[0],WatchItem,1);
-        line._points.Add((ComponentsLists[0].GetComponent<RectTransform>().anchoredPosition+ new Vector2(160,0))/scaler);
         StartCoroutine(Wait1s(WatchItem));
     }
 
@@ -78,7 +76,9 @@ public class RecipeSheet : MonoBehaviour
                 Vector2 childPos =
                     ComponentsLists[_componentListIndex + 1].transform.GetChild(i).GetComponent<RectTransform>()
                         .anchoredPosition + parentPos;
-                line._points.Add(childPos/scaler);
+                AddLine(childPos+new Vector2(0, 10));//new Vector2 here is the offset which the lines should be at based on the item positions
+                                                     //: for example if we have 4 component lists and each of them is 40 height then we would have to divide 40/10 which gives us 10
+                                                     //in case of changing the ui once again change this to ComponentsLists[i].transform.parent.GetComponent<RectTransform>().rect.height/numberOfComponentLists
                 if (_componentListIndex == 0)
                 {
                     DrawLines(_watchItem.components[i],_componentListIndex + 1,i,_linePos);
@@ -87,15 +87,23 @@ public class RecipeSheet : MonoBehaviour
                 {
                     Vector2 myPos = ComponentsLists[_componentListIndex].transform.GetChild(componentIndex).GetComponent<RectTransform>()
                         .anchoredPosition + ComponentsLists[_componentListIndex].GetComponent<RectTransform>().anchoredPosition;
-                    DrawLines(_watchItem.components[i],_componentListIndex + 1,i,myPos/scaler);
+                    DrawLines(_watchItem.components[i],_componentListIndex + 1,i,myPos);
                 }
             }
-            line._points.Add(_linePos);
+        }
+        if (_componentListIndex > 1)
+        {
+            AddLine(_linePos + new Vector2(0, 10));
         }
         else
         {
-            line._points.Add(_linePos);
+            AddLine(_linePos);
         }
+    }
+
+    private void AddLine(Vector2 linePos)
+    {
+     line._points.Add(linePos/scaler);   
     }
     private void DisplayComponents(GameObject _itemImage,Item _item,int _componentListIndex)
     {
@@ -142,8 +150,13 @@ public class RecipeSheet : MonoBehaviour
 
     IEnumerator Wait1s(Item _watchItem)
     {
+        var recipeParentRect = ComponentsLists[0].transform.parent.GetComponent<RectTransform>().rect;
+        Vector2 firstPointPos =
+            ComponentsLists[0].transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition +
+            new Vector2(recipeParentRect.width / 2, 0);
+        AddLine(firstPointPos);
         yield return new WaitForSeconds(1);
-        DrawLines(_watchItem,0,0,(ComponentsLists[0].GetComponent<RectTransform>().anchoredPosition+ new Vector2(160,0))/scaler);
+        DrawLines(_watchItem,0,0,firstPointPos);
         line.gameObject.SetActive(false);
         yield return new WaitForSeconds(.01f);
         line.gameObject.SetActive(true);
