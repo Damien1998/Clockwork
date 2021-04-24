@@ -77,6 +77,7 @@ public class DialogueManager : MonoBehaviour
 
     public void ResetDialogue()
     {
+        dialogue = null;
         dialogueText.text = null;
         StopAllCoroutines();
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
@@ -88,8 +89,9 @@ public class DialogueManager : MonoBehaviour
     }
     void ExitDialogue()
     {
-        dialogueText.text = null;
-        StopAllCoroutines();
+       StopAllCoroutines();
+        dialogueText.text = "";
+        dialogue = null;
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
         dialogueBox.SetActive(false);
         Time.timeScale = 1;
@@ -126,7 +128,8 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void StartDialogue(TextAsset textFile)
-    {        
+    {
+        dialogue = null;
         dialogue = textFile.text.Split('\n');
         
         dialogueBox.SetActive(true);
@@ -179,6 +182,7 @@ public class DialogueManager : MonoBehaviour
 
     private void CheckIfCommand()
     {
+        Debug.Log(currentLine + " " + dialogue[currentLine]);
         while (currentLine < dialogue.Length && dialogue[currentLine].StartsWith("--"))
         {
             string[] words = dialogue[currentLine].Split(' ');
@@ -231,7 +235,7 @@ public class DialogueManager : MonoBehaviour
             currentLine++;
         }
     }
-    public void SwitchLine(int lineID)
+    void SwitchLine(int lineID)
     {
         dialogueText.gameObject.SetActive(true);
         optionsBox.SetActive(false);
@@ -259,7 +263,6 @@ public class DialogueManager : MonoBehaviour
             option1.onClick.AddListener(() => SwitchLine(o1));
             optionText2.text = "2: " + dialogue[currentLine + 3];
             option2.onClick.AddListener(() => SwitchLine(o2));
-            currentLine += 4;
     }
     private void SkipBarProgress()
     {
@@ -282,29 +285,32 @@ public class DialogueManager : MonoBehaviour
     }
     public void Skip()
     {
-        while (currentLine < dialogue.Length)
+        while (currentLine < dialogue.Length )
         {
-            if (dialogue[currentLine].StartsWith("--options"))
+            if (dialogue[currentLine].StartsWith("--"))
             {
-                CheckIfCommand();
-                break;
-            }
-            else if (dialogue[currentLine].StartsWith("--level_start"))
-            {
-                CheckIfCommand();
-                break;
-            }
-            else if (dialogue[currentLine].StartsWith("--level_end"))
-            {
-                CheckIfCommand();
-                break;
+                string[] words = dialogue[currentLine].Split(' ');
+                string firstWord = words[0];
+                switch (firstWord)
+                {
+                    case "--options":
+                        CheckIfCommand();
+                        goto Break_while;
+                    case "--level_start":
+                        CheckIfCommand();
+                        break;
+                    case "--level_end":
+                        CheckIfCommand();
+                        break;
+                    case "--end":
+                        Debug.Log("dos");
+                        ExitDialogue();
+                        goto Break_while;
+                }
             }
             currentLine++;
         }
-        if (currentLine >= dialogue.Length)
-        {
-            ExitDialogue();
-        }
+        Break_while: ;
     }
     private void DisplayText()
     {
