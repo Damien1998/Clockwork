@@ -89,7 +89,7 @@ public class DialogueManager : MonoBehaviour
     }
     void ExitDialogue()
     {
-       StopAllCoroutines();
+        StopAllCoroutines();
         dialogueText.text = "";
         dialogue = null;
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
@@ -182,7 +182,6 @@ public class DialogueManager : MonoBehaviour
 
     private void CheckIfCommand()
     {
-        Debug.Log(currentLine + " " + dialogue[currentLine]);
         while (currentLine < dialogue.Length && dialogue[currentLine].StartsWith("--"))
         {
             string[] words = dialogue[currentLine].Split(' ');
@@ -197,7 +196,7 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "--end":
                     ExitDialogue();
-                    break;
+                    goto While_Break;
                 case "--level_end":
                     UIManager.instance.ShowLevelEnd();
                     ExitDialogue();
@@ -220,7 +219,7 @@ public class DialogueManager : MonoBehaviour
                 case "--level_start":
                     UIManager.instance.LevelStart();
                     FindObjectOfType<CheckoutTable>().InitLevel();
-                    break;
+                    goto While_Break;
                 case "--Invoke":
                     Type thisType = this.GetType();
                     MethodInfo myMethod = thisType.GetMethod(words[1].Trim());
@@ -234,6 +233,7 @@ public class DialogueManager : MonoBehaviour
             }
             currentLine++;
         }
+        While_Break: ;
     }
     void SwitchLine(int lineID)
     {
@@ -301,14 +301,14 @@ public class DialogueManager : MonoBehaviour
                         break;
                     case "--level_end":
                         CheckIfCommand();
-                        break;
+                        goto Skip_Adding;
                     case "--end":
-                        Debug.Log("dos");
                         ExitDialogue();
                         goto Break_while;
                 }
             }
             currentLine++;
+            Skip_Adding: ;
         }
         Break_while: ;
     }
