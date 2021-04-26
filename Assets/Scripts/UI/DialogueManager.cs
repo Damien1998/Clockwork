@@ -165,10 +165,16 @@ public class DialogueManager : MonoBehaviour
             return null;
         }
     }
-    private Sprite FindPortrait(string characterName,string _nameToDisplay)
+    private Sprite FindPortrait(string characterName,string[] _nameToDisplay)
     {
         var cName = characterName.Trim();
-        name = _nameToDisplay + ": ";
+        StringBuilder _name = new StringBuilder();
+        foreach (var nameWord in _nameToDisplay)
+        {
+            _name.Append(nameWord);
+            _name.Append(" ");
+        }
+        name = _name.ToString() + ": ";
         int id = FindCharacterID(cName);
         if(id != -1)
         {
@@ -205,7 +211,12 @@ public class DialogueManager : MonoBehaviour
                     portrait.gameObject.SetActive(true);
                     if(words.Length >2)
                     {
-                        portrait.sprite = FindPortrait(words[1], words[2]);
+                        string[] nameToDisplay = new string[words.Length-2];
+                        for (int i = 2; i < words.Length; i++)
+                        {
+                            nameToDisplay[i - 2] = words[i];
+                        }
+                        portrait.sprite = FindPortrait(words[1], nameToDisplay);
                     }
                     else
                     {
@@ -295,20 +306,20 @@ public class DialogueManager : MonoBehaviour
                 {
                     case "--options":
                         CheckIfCommand();
-                        goto Break_while;
+                        goto SkipAdding;
                     case "--level_start":
                         CheckIfCommand();
                         break;
                     case "--level_end":
                         CheckIfCommand();
-                        goto Skip_Adding;
+                        break;
                     case "--end":
                         ExitDialogue();
                         goto Break_while;
                 }
             }
             currentLine++;
-            Skip_Adding: ;
+            SkipAdding: ;
         }
         Break_while: ;
     }
