@@ -1,5 +1,4 @@
-﻿--Invoke RainSnow
---description
+﻿--description
 Grudzień to dobry czas dla sklepikarzy - przedświąteczny czas zachęca tubylców do kupowania. W tym roku jednak do starych, znajomych twarzy dołączyła nieznana osobistość. Jego lokal zastawia różnoraka maszyneria, a ciężarówki dostawcze zachęcają potencjalnych klientów zagadkowymi słowami: ‘PÓŁNOCNY ŚNIEG NA KAŻDĄ OKAZJĘ!’
 --portrait Fox Lis
 Witam, witam, witam! Może mili państwo skuszą się na zakup śniegu?
@@ -25,14 +24,13 @@ No niestety, śnieg z samego Bieguna Północnego ma swoją cenę...
 Ale pan się zna, na pewno pan wie co to dobry produkt. Żaden śnieg nie chrzęści tak pod butami co mój!
 --portrait Fox_Scheming Lis
 To co, kupują państwo?
---options Fox Lis
-Kup śnieg
-33
+--options 30 33 Fox
 Nie kupuj śniegu
-36
---description
-Lis z radością przyjmuje banknoty i ukradkiem chowa je do kieszeni, jakby bał się, że zrezygnujecie z kupna. Znika wewnątrz lokalu, zostawiając was samych z olbrzymią maszyną do naśnieżania.
---end
+Kup śnieg
 --description
 Odchodzicie od sklepikarza i możecie odetchnąć z ulgą. Nie udało mu się wcisnąć wam śniegu. Tyle, ile leży na ziemi, zdecydowanie wystarczy.
+--end
+--Invoke RainSnow
+--description
+Lis z radością przyjmuje banknoty i ukradkiem chowa je do kieszeni, jakby bał się, że zrezygnujecie z kupna. Znika wewnątrz lokalu, zostawiając was samych z olbrzymią maszyną do naśnieżania.
 --end

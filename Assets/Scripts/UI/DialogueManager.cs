@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Text;
-using UnityEditor;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -23,16 +21,18 @@ public class DialogueManager : MonoBehaviour
     private string[] dialogue;
     private string name;
     private int currentLine;
-    private bool _isTyping = false;
+    [SerializeField] 
+    private float dialogueTextSpeed = .025f;
+    private bool _isTyping = false,_skipping = false;
 
     public AudioSource audioSource;
 
     [SerializeField] private ParticleSystem extraSnow;
-
+    
     public Sprite[] portraits;
     public string[] characters;
 
-    private bool options,_typing;
+    private bool options;
 
     // Start is called before the first frame update
     void Awake()
@@ -61,17 +61,15 @@ public class DialogueManager : MonoBehaviour
     }
     public void ProgressDialogue()
     {
-        if (!options)
+        if (currentLine >= dialogue.Length)
         {
-            if (currentLine >= dialogue.Length)
-            {
-                ExitDialogue();
-            }
-            else
-            {
-                CheckIfCommand();
-                DisplayText();
-            }
+            ExitDialogue();
+        }
+        else
+        {
+            CheckIfCommand();
+
+            DisplayText();
         }
     }
 
@@ -83,15 +81,12 @@ public class DialogueManager : MonoBehaviour
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
             
         currentLine = 0;
-        CheckIfCommand();
-
-        DisplayText();
+        
+        ProgressDialogue();
     }
     void ExitDialogue()
     {
-        StopAllCoroutines();
-        dialogueText.text = "";
-        dialogue = null;
+        _isTyping = false;
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
         dialogueBox.SetActive(false);
         Time.timeScale = 1;
@@ -116,8 +111,9 @@ public class DialogueManager : MonoBehaviour
             dialogueBox.SetActive(true);
             currentLine = 0;
             CheckIfCommand();
-
+            
             DisplayText();
+            
         }
         else
         {
@@ -129,14 +125,14 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(TextAsset textFile)
     {
+        StopAllCoroutines();
+        dialogueText.text = "";
         dialogue = null;
         dialogue = textFile.text.Split('\n');
         
         dialogueBox.SetActive(true);
         currentLine = 0;
-        CheckIfCommand();
-
-        DisplayText();
+        ProgressDialogue();
     }
     private int FindCharacterID(string characterName)
     {
@@ -149,12 +145,21 @@ public class DialogueManager : MonoBehaviour
         }
         return -1;
     }
+    
+    private string[] GetName(int _numberOfCommands)
+    {
+        string[] words = dialogue[currentLine].Split(' ');
+        string[] nameToDisplay = new string[words.Length-1];
+        for (int i = 0; i < words.Length - _numberOfCommands; i++)
+        {
+            nameToDisplay[i] = words[i + _numberOfCommands];
+        }
+        return nameToDisplay;
+    }
 
     private Sprite FindPortrait(string characterName)
     {
         var cName = characterName.Trim();
-        name = characterName + ": ";
-
         int id = FindCharacterID(cName);
         if(id != -1)
         {
@@ -163,7 +168,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             return null;
-        }
+        } 
     }
     private Sprite FindPortrait(string characterName,string[] _nameToDisplay)
     {
@@ -172,7 +177,10 @@ public class DialogueManager : MonoBehaviour
         foreach (var nameWord in _nameToDisplay)
         {
             _name.Append(nameWord);
-            _name.Append(" ");
+            if (nameWord != _nameToDisplay[_nameToDisplay.Length-1])
+            {
+                _name.Append(" ");
+            }
         }
         name = _name.ToString() + ": ";
         int id = FindCharacterID(cName);
@@ -192,88 +200,149 @@ public class DialogueManager : MonoBehaviour
         {
             string[] words = dialogue[currentLine].Split(' ');
             string firstWord = words[0];
+            Debug.Log(firstWord);
             switch (firstWord)
             {
+                case "--end":
+                    ExitDialogue();
+                    goto While_Break;
                 case "--quest_start":
                     GameManager.instance.StartQuest(dialogue[currentLine].Replace("--quest_start ", ""),null);
                     break;
                 case "--poi":
                     GameManager.instance.CompleteQuest(dialogue[currentLine].Replace("--poi ", ""));
                     break;
-                case "--end":
-                    ExitDialogue();
-                    goto While_Break;
                 case "--level_end":
                     UIManager.instance.ShowLevelEnd();
                     ExitDialogue();
                     break;
                 case "--portrait":
                     portrait.gameObject.SetActive(true);
-                    if(words.Length >2)
-                    {
-                        string[] nameToDisplay = new string[words.Length-2];
-                        for (int i = 2; i < words.Length; i++)
-                        {
-                            nameToDisplay[i - 2] = words[i];
-                        }
-                        portrait.sprite = FindPortrait(words[1], nameToDisplay);
-                    }
-                    else
-                    {
-                        portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--portrait ", ""));
-                    }
+                    portrait.sprite = FindPortrait(words[1],GetName(2));
                     break;
                 case "--options":
-                    portrait.sprite = FindPortrait(dialogue[currentLine].Replace("--options", ""));
-                    OpenOptions();
-                    break;
+                    textDialogueScrollBar.value = 0;
+                    _skipping = false;
+                    portrait.sprite = FindPortrait(words[3]);
+                    OpenOptions(words[1],words[2]);
+                    goto While_Break;
                 case "--level_start":
                     UIManager.instance.LevelStart();
                     FindObjectOfType<CheckoutTable>().InitLevel();
+                    ExitDialogue();
                     goto While_Break;
                 case "--Invoke":
                     Type thisType = this.GetType();
                     MethodInfo myMethod = thisType.GetMethod(words[1].Trim());
                     myMethod.Invoke(this,null);
                     break;
+                case "--description":
+                    portrait.gameObject.SetActive(false);
+                    name = "";
+                    break;
                 default:
                     portrait.gameObject.SetActive(false);
                     name = "";
                     break;
-
+            }
+            // Ok so this is the weirdest bug i have ever encountered for SOME REASON it only works on --end when it isn't on the last line
+            // it adds a weird symbol that i can't even copy or remove or trim so i am just gonna check it manually for now gonna have to ask others about it
+            if (firstWord.StartsWith("--end")) 
+            {
+                ExitDialogue();
+                goto While_Break;
             }
             currentLine++;
         }
         While_Break: ;
     }
+
     void SwitchLine(int lineID)
     {
-        dialogueText.gameObject.SetActive(true);
         optionsBox.SetActive(false);
         option1.onClick.RemoveAllListeners();
         option2.onClick.RemoveAllListeners();
         options = false;
-        currentLine = lineID;
+        
+        currentLine = lineID-1;
+        dialogueText.gameObject.SetActive(true);
         progressButton.gameObject.SetActive(true);
-        
-        DisplayText();
 
-        CheckIfCommand();
-        
+        ProgressDialogue();
     }
-    private void OpenOptions()
+    private void OpenOptions(string option1Line,string option2Line)
     {
             options = true;
             dialogueText.gameObject.SetActive(false);
             progressButton.gameObject.SetActive(false);
             optionsBox.SetActive(true);
             int o1 = 0, o2 = 0;
-            int.TryParse(dialogue[currentLine + 2].Replace("--", ""), out o1);
-            int.TryParse(dialogue[currentLine + 4].Replace("--", ""), out o2);
+            int.TryParse(option1Line, out o1);
+            int.TryParse(option2Line, out o2);
             optionText1.text = "1: " + dialogue[currentLine + 1];
+            optionText2.text = "2: " + dialogue[currentLine + 2];
             option1.onClick.AddListener(() => SwitchLine(o1));
-            optionText2.text = "2: " + dialogue[currentLine + 3];
             option2.onClick.AddListener(() => SwitchLine(o2));
+    }
+
+    private void Skip()
+    {
+        _skipping = true;
+        _isTyping = false;
+        while (currentLine < dialogue.Length  && _skipping)
+        {
+            CheckIfCommand();
+            CompileText();
+        }
+    }
+    private void DisplayText()
+    {
+
+        if (currentLine < dialogue.Length&&!dialogue[currentLine].StartsWith("--"))
+        {
+            StopAllCoroutines();
+            StartCoroutine(TypeSentence(dialogue[currentLine]));
+            textDialogueScrollBar.value = 0;
+        }
+    }
+    private void CompileText()
+    {
+        if (!dialogue[currentLine].StartsWith("--"))
+        {
+            StringBuilder myText = new StringBuilder();
+            myText.Append(dialogueHistoryText.text + "\n");
+            dialogueHistoryText.text = myText + name + dialogue[currentLine];
+            dialogueText.text = dialogueHistoryText.text;
+            textDialogueScrollBar.value = 0;
+        }
+        currentLine++;
+    }
+    IEnumerator TypeSentence(string sentence)
+    {
+        StringBuilder myText = new StringBuilder();
+        if (dialogueText.text.Length!=0)
+        {
+            myText.Append(dialogueHistoryText.text+"\n");
+        }
+        if (_isTyping)
+        {
+            dialogueText.text = dialogueHistoryText.text;
+            textDialogueScrollBar.value = 0;
+        }
+        else
+        {
+            _isTyping = true;
+            dialogueHistoryText.text = myText + name + sentence;
+            dialogueText.text = myText + name;
+            foreach (char letter in sentence.ToCharArray())
+            {
+                textDialogueScrollBar.value = 0;
+                dialogueText.text += letter;
+                yield return new WaitForSeconds(dialogueTextSpeed);
+            }
+        }
+        _isTyping = false;
+        currentLine++;
     }
     private void SkipBarProgress()
     {
@@ -289,81 +358,15 @@ public class DialogueManager : MonoBehaviour
                 SkipBar.value = 0;
             }
         }
-        else
+        else if (SkipBar.value != 0)
         {
             SkipBar.value = 0;
-        }
-    }
-    public void Skip()
-    {
-        while (currentLine < dialogue.Length )
-        {
-            if (dialogue[currentLine].StartsWith("--"))
-            {
-                string[] words = dialogue[currentLine].Split(' ');
-                string firstWord = words[0];
-                switch (firstWord)
-                {
-                    case "--options":
-                        CheckIfCommand();
-                        goto SkipAdding;
-                    case "--level_start":
-                        CheckIfCommand();
-                        break;
-                    case "--level_end":
-                        CheckIfCommand();
-                        break;
-                    case "--end":
-                        ExitDialogue();
-                        goto Break_while;
-                }
-            }
-            currentLine++;
-            SkipAdding: ;
-        }
-        Break_while: ;
-    }
-    private void DisplayText()
-    {
-        if (currentLine < dialogue.Length)
-        {
-            StopAllCoroutines();
-            StartCoroutine(TypeSentence(dialogue[currentLine]));
-            dialogueScrollBar.value = 0;
-        }
-    }
-    IEnumerator TypeSentence(string sentence)
-    {
-        StringBuilder myText = new StringBuilder();
-        var delay = .025f;
-        if (dialogueText.text.Length!=0)
-        {
-            myText.Append(dialogueHistoryText.text+"\n");
-        }
-        if (_isTyping)
-        {
-            dialogueText.text = dialogueHistoryText.text;
-            textDialogueScrollBar.value = 0;
-            _isTyping = false;
-            currentLine++;
-        }
-        else
-        {
-            dialogueHistoryText.text = myText + name + sentence;
-            _isTyping = true;
-            dialogueText.text = myText + name;
-            foreach (var letter in sentence.ToCharArray())
-            {
-                textDialogueScrollBar.value = 0;
-                dialogueText.text += letter;
-                yield return new WaitForSeconds(delay);
-            }
-            _isTyping = false;
-            currentLine++;
         }
     }
     public void RainSnow()
     {
         Instantiate(extraSnow, new Vector3(-2, 6.3f, 0), Quaternion.Euler(75,90,-90));
     }
+    
 }
+
