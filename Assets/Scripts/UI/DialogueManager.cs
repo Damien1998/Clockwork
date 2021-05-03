@@ -23,7 +23,7 @@ public class DialogueManager : MonoBehaviour
     private int currentLine;
     [SerializeField] 
     private float dialogueTextSpeed = .025f;
-    private bool _isTyping = false,_skipping = false;
+    private bool _isTyping = false, _skipping = false, options;
 
     public AudioSource audioSource;
 
@@ -31,10 +31,7 @@ public class DialogueManager : MonoBehaviour
     
     public Sprite[] portraits;
     public string[] characters;
-
-    private bool options;
-
-    // Start is called before the first frame update
+    
     void Awake()
     {
         if(instance != null)
@@ -59,24 +56,19 @@ public class DialogueManager : MonoBehaviour
             SkipBarProgress();
         }
     }
-    public void ProgressDialogue()
+    public void StartDialogue(TextAsset textFile)
     {
-        if (currentLine >= dialogue.Length)
-        {
-            ExitDialogue();
-        }
-        else
-        {
-            CheckIfCommand();
-
-            DisplayText();
-        }
+        StopAllCoroutines();
+        ClearText();
+        dialogue = textFile.text.Split('\n');
+        
+        dialogueBox.SetActive(true);
+        currentLine = 0;
+        ProgressDialogue();
     }
-
     public void ResetDialogue()
     {
-        dialogue = null;
-        dialogueText.text = null;
+        ClearText();
         StopAllCoroutines();
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
             
@@ -91,48 +83,25 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.SetActive(false);
         Time.timeScale = 1;
     }
-
-    public void AcceptQuest(Item WatchToMake)
+    public void ProgressDialogue()
     {
-        if (GameManager.instance.sideQuestActive == false)
+        if (currentLine >= dialogue.Length)
         {
-         GameManager.instance.StartQuest("Epic Quest",WatchToMake);
-        }
-    }
-    public void StartDialogue(string fileName)
-    {
-        if (File.Exists(Application.persistentDataPath + "/dialogue/" + fileName + ".txt"))
-        {
-            //BinaryFormatter formatter = new BinaryFormatter();
-            //FileStream file = File.Open(Application.persistentDataPath + "/dialogue/" + fileName + ".txt", FileMode.Open);
-            //dialogue = (string[])formatter.Deserialize(file);
-            //file.Close();
-            dialogue = System.IO.File.ReadAllLines(Application.persistentDataPath + "/dialogue/" + fileName + ".txt");
-            dialogueBox.SetActive(true);
-            currentLine = 0;
-            CheckIfCommand();
-            
-            DisplayText();
-            
+            ExitDialogue();
         }
         else
         {
-            Debug.Log("No save file!");
-        }
+            CheckIfCommand();
 
-        Time.timeScale = 0;
+            DisplayText();
+        }
     }
 
-    public void StartDialogue(TextAsset textFile)
+    private void ClearText()
     {
-        StopAllCoroutines();
-        dialogueText.text = "";
         dialogue = null;
-        dialogue = textFile.text.Split('\n');
-        
-        dialogueBox.SetActive(true);
-        currentLine = 0;
-        ProgressDialogue();
+        dialogueText.text = "";
+        dialogueHistoryText.text = "";
     }
     private int FindCharacterID(string characterName)
     {
@@ -145,7 +114,6 @@ public class DialogueManager : MonoBehaviour
         }
         return -1;
     }
-    
     private string[] GetName(int _numberOfCommands)
     {
         string[] words = dialogue[currentLine].Split(' ');
@@ -194,6 +162,27 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    private void Skip()
+    {
+        _skipping = true;
+        _isTyping = false;
+        while (currentLine < dialogue.Length  && _skipping)
+        {
+            CheckIfCommand();
+            CompileText();
+        }
+    }
+    //PS
+    //<summary>
+    //CheckIf Method Explained
+    //</summary>
+    //Currently this is the main way Dialogue Manager checks for commands inside the dialogue 
+    //it singles out first word that starts with -- and then accesses the correct method with switch 
+    //while loop is there in case of more then 2 methods running after each other in that case the CheckIfCommand will continue
+    //
+    //However it can conflict with other method such as TypeSentence Coroutine because both of them contain currentLine++
+    //Which manages which line the Dialogue should be at currently
+    //
     private void CheckIfCommand()
     {
         while (currentLine < dialogue.Length && dialogue[currentLine].StartsWith("--"))
@@ -264,7 +253,7 @@ public class DialogueManager : MonoBehaviour
         option2.onClick.RemoveAllListeners();
         options = false;
         
-        currentLine = lineID-1;
+        currentLine = lineID-1; // Since the Lines in Text editor and Arrays differ we subtract 1 to lineID 
         dialogueText.gameObject.SetActive(true);
         progressButton.gameObject.SetActive(true);
 
@@ -284,20 +273,8 @@ public class DialogueManager : MonoBehaviour
             option1.onClick.AddListener(() => SwitchLine(o1));
             option2.onClick.AddListener(() => SwitchLine(o2));
     }
-
-    private void Skip()
-    {
-        _skipping = true;
-        _isTyping = false;
-        while (currentLine < dialogue.Length  && _skipping)
-        {
-            CheckIfCommand();
-            CompileText();
-        }
-    }
     private void DisplayText()
     {
-
         if (currentLine < dialogue.Length&&!dialogue[currentLine].StartsWith("--"))
         {
             StopAllCoroutines();
@@ -320,10 +297,7 @@ public class DialogueManager : MonoBehaviour
     IEnumerator TypeSentence(string sentence)
     {
         StringBuilder myText = new StringBuilder();
-        if (dialogueText.text.Length!=0)
-        {
-            myText.Append(dialogueHistoryText.text+"\n");
-        }
+        myText.Append(dialogueHistoryText.text);
         if (_isTyping)
         {
             dialogueText.text = dialogueHistoryText.text;
@@ -332,7 +306,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             _isTyping = true;
-            dialogueHistoryText.text = myText + name + sentence;
+            dialogueHistoryText.text = myText + name + sentence +"\n";
             dialogueText.text = myText + name;
             foreach (char letter in sentence.ToCharArray())
             {
@@ -343,6 +317,7 @@ public class DialogueManager : MonoBehaviour
         }
         _isTyping = false;
         currentLine++;
+        Debug.Log(currentLine);
     }
     private void SkipBarProgress()
     {
@@ -363,6 +338,38 @@ public class DialogueManager : MonoBehaviour
             SkipBar.value = 0;
         }
     }
+    
+    public void AcceptQuest(Item WatchToMake)
+    {
+        if (GameManager.instance.sideQuestActive == false)
+        {
+            GameManager.instance.StartQuest("Epic Quest",WatchToMake);
+        }
+    }
+    public void StartDialogue(string fileName)
+    {
+        if (File.Exists(Application.persistentDataPath + "/dialogue/" + fileName + ".txt"))
+        {
+            //BinaryFormatter formatter = new BinaryFormatter();
+            //FileStream file = File.Open(Application.persistentDataPath + "/dialogue/" + fileName + ".txt", FileMode.Open);
+            //dialogue = (string[])formatter.Deserialize(file);
+            //file.Close();
+            dialogue = System.IO.File.ReadAllLines(Application.persistentDataPath + "/dialogue/" + fileName + ".txt");
+            dialogueBox.SetActive(true);
+            currentLine = 0;
+            CheckIfCommand();
+            
+            DisplayText();
+            
+        }
+        else
+        {
+            Debug.Log("No save file!");
+        }
+
+        Time.timeScale = 0;
+    }
+
     public void RainSnow()
     {
         Instantiate(extraSnow, new Vector3(-2, 6.3f, 0), Quaternion.Euler(75,90,-90));

@@ -18,24 +18,32 @@ namespace Editor
             DrawDefaultInspector();
             if(GUILayout.Button("Set State To Broken"))
             {
-                target.WatchItem.State = ItemState.Broken;
+                ChangeWatchState(ItemState.Broken);
                 Debug.Log("The State of Item is now " + target.WatchItem.State);
             }
             if(GUILayout.Button("Set State To Unfixable"))
             {
-                target.WatchItem.State = ItemState.Unfixable;
+                ChangeWatchState(ItemState.Unfixable);
                 Debug.Log("The State of Item is now " + target.WatchItem.State);
             }
             if(GUILayout.Button("Set State To Unknown"))
             {
-                target.WatchItem.State = ItemState.UnknownState;
+                ChangeWatchState(ItemState.UnknownState);
                 Debug.Log("The State of Item is now " + target.WatchItem.State);
             }
             if(GUILayout.Button("Set State To Repaired"))
             {
-                target.WatchItem.State = ItemState.Repaired;
+                ChangeWatchState(ItemState.Repaired);
                 Debug.Log("The State of Item is now " + target.WatchItem.State);
             }
+        }
+        private void ChangeWatchState(ItemState _itemState)
+        {
+            var itemState = _itemState;
+
+            target.WatchItem.State = itemState ;
+            target.WatchItem.trueState = itemState ;
+            target.TrueState = itemState;
         }
     }
 }

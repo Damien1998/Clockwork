@@ -107,7 +107,6 @@ public class Watch : MonoBehaviour
                 break;
         }
     }
-
     private void OnSelectChange()
     {        
         if (isSelected == true)

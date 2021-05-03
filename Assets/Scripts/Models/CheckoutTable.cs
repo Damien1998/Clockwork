@@ -11,8 +11,7 @@ public class CheckoutTable : Workbench
     [SerializeField] private LevelParams workbenchLevelParams;
 
     [SerializeField] private POI endOfLevelDialogue;
-
-    private List<Watch> levelWatches = new List<Watch>();
+    
 
     [SerializeField] private Transform watchThrowPoint;
     //public GameObject WatchTemplate;
@@ -26,9 +25,8 @@ public class CheckoutTable : Workbench
         //Since we will have more then 1 level expected at the moment of making this
         //It's more comfortable to have a quick and easy to use object that can specify what kind of watches will spawn in the order that is put in
         //This way we can make list of watches that will be used instantly
-        //If you want to change the order which the watches spawn in go into "Assets/Prefabs/LevelParams/Level" directory
+        //If you want to change the order which the watches spawn in go into "Resources/LevelParams/Level  directory
         workbenchLevelParams = Resources.Load<LevelParams>("LevelParams/Level " + GameManager.instance.levelID);
-        // (LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + GameManager.instance.levelID +".asset", typeof(LevelParams));
     }
     /*
      * PS
@@ -54,7 +52,6 @@ public class CheckoutTable : Workbench
 
     public void InitLevel()
     {
-        //ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
         Debug.LogWarning("Level Init");
         GameManager.instance.levelID = GameManager.instance.levelID;
         GameManager.instance.localQuestDone = false;
@@ -177,8 +174,10 @@ public class CheckoutTable : Workbench
      */
     private bool CheckWatch(Watch currentWatch)
     {
+        
         if (currentWatch.WatchItem.State ==  ItemState.Repaired && currentWatch.WatchItem.itemID == GameManager.instance.randomWatches[watchIndex].itemID)
         {
+            Debug.Log("VAR");
             return true;
         }
         else
