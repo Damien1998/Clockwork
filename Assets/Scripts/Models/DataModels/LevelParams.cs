@@ -26,4 +26,5 @@ public class LevelParams : ScriptableObject
     public bool tierTwoUnknownState, researchAllowed;
     public bool casingComponents, mechanismComponents, eitherOfMechOrCasing;
     public int mechMinParts, mechMaxParts;
+    public float watchDispensingTime;
 }
