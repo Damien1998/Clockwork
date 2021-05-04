@@ -12,8 +12,8 @@ public class CheckoutTable : Workbench
 
     [SerializeField] private TextAsset endOfLevelDialogue;
     
-
     [SerializeField] private Transform watchThrowPoint;
+    [SerializeField] private ParticleSystem deliveryFX, retrievedFX;
     private int watchesFixed;
     //public GameObject WatchTemplate;
 
@@ -74,6 +74,7 @@ public class CheckoutTable : Workbench
         }
         if(CheckWatch(itemToPlace) == true)
         {
+            retrievedFX.Play();
             //I'm not sure whether we really need that there:
             //base.PlaceItem(itemToPlace);
             //watchIndex++;
@@ -102,6 +103,7 @@ public class CheckoutTable : Workbench
     {
         while(watchIndex < workbenchLevelParams.watchAmount)
         {
+            deliveryFX.Play();
             ThrowRandomWatch();
             yield return new WaitForSeconds(workbenchLevelParams.watchDispensingTime);
             watchIndex++;
