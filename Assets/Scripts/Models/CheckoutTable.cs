@@ -14,6 +14,7 @@ public class CheckoutTable : Workbench
     
 
     [SerializeField] private Transform watchThrowPoint;
+    private int watchesFixed;
     //public GameObject WatchTemplate;
 
     void Start()
@@ -56,8 +57,9 @@ public class CheckoutTable : Workbench
         GameManager.instance.levelID = GameManager.instance.levelID;
         GameManager.instance.localQuestDone = false;
         GameManager.instance.CreateRandomWatches();
-        ThrowRandomWatch();
+        //ThrowRandomWatch();
         StartCoroutine(CheckForQuests());
+        StartCoroutine(DispenseWatches());
     }
 
     public override void PlaceItem(Watch itemToPlace)
@@ -75,21 +77,33 @@ public class CheckoutTable : Workbench
         {
             //I'm not sure whether we really need that there:
             //base.PlaceItem(itemToPlace);
-            watchIndex++;
+            //watchIndex++;
             itemToPlace.transform.position = transform.position;
             Destroy(itemToPlace.gameObject);
-            if(workbenchLevelParams.watchAmount >  watchIndex)
+            if(workbenchLevelParams.watchAmount <= watchesFixed)
             {
                 //ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
-                ThrowRandomWatch();
-            }
-            else
-            {
-                //UIManager.instance.ShowLevelEnd();
+                //ThrowRandomWatch();
+                Debug.Log("Last watch");
                 endOfLevelDialogue.StartDialogue();
                 UIManager.instance.StopTimer();
                 Time.timeScale = 0f;
             }
+            //else
+            //{
+            //    //UIManager.instance.ShowLevelEnd();
+                
+            //}
+        }
+    }
+
+    IEnumerator DispenseWatches()
+    {
+        while(watchIndex < workbenchLevelParams.watchAmount)
+        {
+            ThrowRandomWatch();
+            yield return new WaitForSeconds(workbenchLevelParams.watchDispensingTime);
+            watchIndex++;
         }
     }
 
@@ -174,16 +188,21 @@ public class CheckoutTable : Workbench
      */
     private bool CheckWatch(Watch currentWatch)
     {
+        if(currentWatch.WatchItem.State == ItemState.Repaired)
+        {
+            for (int i = 0; i < GameManager.instance.randomWatches.Count; i++)
+            {
+                if (currentWatch.WatchItem.itemID == GameManager.instance.randomWatches[i].itemID)
+                {
+                    Debug.Log("VAR");
+                    watchesFixed++;
+                    return true;
+                }
+            }
+        }
+
+        return false;
         
-        if (currentWatch.WatchItem.State ==  ItemState.Repaired && currentWatch.WatchItem.itemID == GameManager.instance.randomWatches[watchIndex].itemID)
-        {
-            Debug.Log("VAR");
-            return true;
-        }
-        else
-        {
-            return false;
-        }
     }
 
     private bool CheckQuestWatch(Watch currentWatch)
