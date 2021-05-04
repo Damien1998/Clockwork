@@ -128,7 +128,7 @@ public class CheckoutTable : Workbench
         yield return new WaitForSeconds(1f);
         if (GameManager.instance.sideQuestActive)
         {
-            GameManager.instance.AddQuestRecipes();
+            GameManager.instance.questItem = GameManager.instance.currentLevelParams.questItem;
             ThrowNewWatch(GameManager.instance.currentLevelParams.questItem);
         }
     }

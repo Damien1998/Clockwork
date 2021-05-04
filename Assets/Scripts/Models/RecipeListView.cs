@@ -10,19 +10,14 @@ public static class RecipeListView
 
     public static void LoadRecipeView()
     {
-        if (!SceneManager.GetSceneByName("RecipeSheet").isLoaded)
-        {
-            SceneManager.LoadSceneAsync("RecipeSheet", LoadSceneMode.Additive);
-        }
-
+        SceneManager.LoadSceneAsync("RecipeSheet", LoadSceneMode.Additive);
         //Player.SetPlayer(false);
     }
 
     public static void UnloadRecipeView()
     {
         SceneManager.UnloadSceneAsync("RecipeSheet");
-        currentMainWatch.isSelected = false;
-     //   Player.SetPlayer(true);
+        //   Player.SetPlayer(true);
     }
 
     public static void AddRecipeToList(Watch _watch)
@@ -35,11 +30,9 @@ public static class RecipeListView
                 {
                     break;
                 }
-                else
+                else if( i == recipeLists.Count-1)
                 {
                     recipeLists.Add(_watch);
-                    UnloadRecipeView();
-                    LoadRecipeView();
                 }
             }
         }
