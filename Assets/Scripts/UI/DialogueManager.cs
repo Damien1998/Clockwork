@@ -189,7 +189,6 @@ public class DialogueManager : MonoBehaviour
         {
             string[] words = dialogue[currentLine].Split(' ');
             string firstWord = words[0];
-            Debug.Log(firstWord);
             switch (firstWord)
             {
                 case "--end":
@@ -317,7 +316,6 @@ public class DialogueManager : MonoBehaviour
         }
         _isTyping = false;
         currentLine++;
-        Debug.Log(currentLine);
     }
     private void SkipBarProgress()
     {

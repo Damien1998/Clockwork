@@ -117,17 +117,9 @@ public class Player : MonoBehaviour
         {
             if (itemToPickUpID < nearbyItems.Length  )
             {
-                if (!nearbyItems[itemToPickUpID].GetComponent<Watch>().isPlacedOnWorkbench &&
-                    !nearbyItems[itemToPickUpID].GetComponent<Watch>().isRecipe)
+                if (!nearbyItems[itemToPickUpID].GetComponent<Watch>().isPlacedOnWorkbench)
                 {
                     PickUpItem(nearbyItems[itemToPickUpID].gameObject);
-                }
-                else if(nearbyItems[itemToPickUpID].GetComponent<Watch>().isRecipe)
-                {
-                    RecipeListView.currentMainWatch = nearbyItems[itemToPickUpID].GetComponent<Watch>();
-                    RecipeListView.AddRecipeToList(RecipeListView.currentMainWatch);
-                    RecipeListView.LoadRecipeView();
-                    Destroy(nearbyItems[itemToPickUpID].GetComponent<Watch>().gameObject);
                 }
             }
             
