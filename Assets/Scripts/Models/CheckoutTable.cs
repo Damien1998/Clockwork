@@ -180,13 +180,12 @@ public class CheckoutTable : Workbench
      */
     private bool CheckWatch(Watch currentWatch)
     {
-        if(currentWatch.WatchItem.State == ItemState.Repaired)
+        if(currentWatch.WatchItem.State == ItemState.Repaired&&currentWatch.isCompleteWatch)
         {
             for (int i = 0; i < GameManager.instance.randomWatches.Count; i++)
             {
                 if (currentWatch.WatchItem.itemID == GameManager.instance.randomWatches[i].itemID)
                 {
-                    Debug.Log("VAR");
                     watchesFixed++;
                     return true;
                 }
