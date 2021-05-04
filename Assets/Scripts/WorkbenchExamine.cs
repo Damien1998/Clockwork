@@ -88,6 +88,12 @@ public class WorkbenchExamine : Workbench
                     invalidItemInside = true;
                 }
                 **/
+                if(itemToPlace.isCompleteWatch)
+                {
+                    RecipeListView.currentMainWatch = itemToPlace;
+                    RecipeListView.AddRecipeToList(RecipeListView.currentMainWatch);
+                    RecipeListView.LoadRecipeView();
+                }
                 itemSlots[i] = itemToPlace;
                 itemToPlace.gameObject.SetActive(false);
                 break;

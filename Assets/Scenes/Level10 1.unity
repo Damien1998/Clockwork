@@ -4231,6 +4231,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -1.03
       objectReference: {fileID: 0}
+    - target: {fileID: 9213941394253840883, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: dialogueTextSpeed
+      value: 0.025
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5cbe9d1804311b4ba663e446bea231e, type: 3}
 --- !u!1 &1490590576
@@ -7046,6 +7051,11 @@ PrefabInstance:
       propertyPath: m_Size.x
       value: 1.1171266
       objectReference: {fileID: 0}
+    - target: {fileID: 6398816823808899267, guid: 5a8c13c37fb4fc04e840ca72c1990b59,
+        type: 3}
+      propertyPath: endOfLevelDialogue
+      value: 
+      objectReference: {fileID: 4900000, guid: 21581c468715ec84f9869f30523c34c3, type: 3}
     - target: {fileID: 6398816823808899268, guid: 5a8c13c37fb4fc04e840ca72c1990b59,
         type: 3}
       propertyPath: m_Name

@@ -10,7 +10,7 @@ public class CheckoutTable : Workbench
     private int watchIndex = 0;
     [SerializeField] private LevelParams workbenchLevelParams;
 
-    [SerializeField] private POI endOfLevelDialogue;
+    [SerializeField] private TextAsset endOfLevelDialogue;
     
 
     [SerializeField] private Transform watchThrowPoint;
@@ -52,7 +52,6 @@ public class CheckoutTable : Workbench
 
     public void InitLevel()
     {
-        Debug.LogWarning("Level Init");
         GameManager.instance.levelID = GameManager.instance.levelID;
         GameManager.instance.localQuestDone = false;
         GameManager.instance.CreateRandomWatches();
@@ -86,16 +85,15 @@ public class CheckoutTable : Workbench
             else
             {
                 //UIManager.instance.ShowLevelEnd();
-                endOfLevelDialogue.StartDialogue();
+                DialogueManager.instance.StartDialogue(endOfLevelDialogue);
                 UIManager.instance.StopTimer();
-                Time.timeScale = 0f;
             }
         }
     }
 
     protected override void DropItems()
     {
-        
+        Debug.Log("VAR234");
     }
     /**
     private void CheckForQuests()
@@ -138,6 +136,7 @@ public class CheckoutTable : Workbench
         var newItem = ScriptableObject.CreateInstance<Item>();
         newItem.SetParameters(itemParameters);
         newWatch.GetComponent<Watch>().WatchItem = newItem;
+        newWatch.GetComponent<Watch>().isCompleteWatch = true;
         newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
     }
 
@@ -153,19 +152,9 @@ public class CheckoutTable : Workbench
         var newItem = ScriptableObject.CreateInstance<Item>();
         newItem.SetParameters(GameManager.instance.randomWatches[watchIndex]);
         newWatch.GetComponent<Watch>().WatchItem = newItem;
+        newWatch.GetComponent<Watch>().isCompleteWatch = true;
         newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
     }
-
-    //Placing items in done on the side of the player
-    /**
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.TryGetComponent(out Watch watch)&&!watch.isSelected)
-        {
-            ReturningWatches(watch);
-        }
-    }
-    **/
     /*
      PS
      <summary>
@@ -175,7 +164,7 @@ public class CheckoutTable : Workbench
     private bool CheckWatch(Watch currentWatch)
     {
         
-        if (currentWatch.WatchItem.State ==  ItemState.Repaired && currentWatch.WatchItem.itemID == GameManager.instance.randomWatches[watchIndex].itemID)
+        if (currentWatch.WatchItem.State ==  ItemState.Repaired&&currentWatch.isCompleteWatch)
         {
             Debug.Log("VAR");
             return true;
@@ -206,32 +195,3 @@ public class CheckoutTable : Workbench
         
     }
 }
-// I'll just leave it here if we need it in the future
-// private void UseCheckoutTable(int playerID)
-// {
-//     if (!pickedUp && watch != null 
-//         && Input.GetButtonUp("Pickup" + interactingPlayer[playerID].playerNumber) 
-//         && !interactingPlayer[playerID].carriesItem 
-//         && interactingPlayer[playerID].freeToPickup)
-//     {
-//         interactingPlayer[playerID].PickupItem(watch.child.itemImage, watch.child.stateSprite.sprite, watch);           
-//         watchSlot.sprite = watch.child.itemImage;
-//         watch.SetChildState(false);
-//         pickedUp = true;
-//     }
-//
-//     //Return fixed watch
-//     if (pickedUp && watch != null 
-//         && Input.GetButtonUp("Pickup" + interactingPlayer[playerID].playerNumber) 
-//         && interactingPlayer[playerID].carriesItem)
-//     {
-//         Debug.Log("Oddawanko");
-//         if (interactingPlayer[playerID].droppedItemActivator.child.itemID == _watchID 
-//             && !interactingPlayer[playerID].droppedItemActivator.child.broken)
-//         {
-//             interactingPlayer[playerID].ClearItem();
-//             watchSlot.sprite = null;
-//             GameManager.instance.AddPoints(1);
-//         }
-//     }
-// }
