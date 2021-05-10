@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -6,31 +7,30 @@ using UnityEngine.UI;
 public class RecipeSheet : MonoBehaviour
 {
     public GameObject[] ComponentsLists;
-    public GameObject Image,button,SideRecipes;
+    public GameObject Image,RecipeTemplate,RecipesList;
     public UILineRenderer line;
     private bool displayingRecipe = false;
     private float scaler = 135;
+
     private void Awake()
     {
-       DisplayRecipe();
-       
+        DisplayAllRecipes();
     }
-    public void ChooseSideRecipe()
-    {
 
-        for (int i = 0; i < SideRecipes.transform.childCount; i++)
+    private void DisplayAllRecipes()
+    {
+        StartCoroutine(DisplayRecipes());
+    }
+    private void AddRecipe()
+    {
+        var tmpRecipe  = Instantiate(RecipeTemplate, RecipesList.transform);
+        line = tmpRecipe.transform.GetChild(1).GetComponent<UILineRenderer>();
+        ComponentsLists = new GameObject[tmpRecipe.transform.childCount - 2];
+        for (int i = 0; i < tmpRecipe.transform.childCount-2; i++)
         {
-            if (SideRecipes.transform.GetChild(i).gameObject == EventSystem.current.currentSelectedGameObject)
-            {
-                if (!displayingRecipe)
-                {
-                    displayingRecipe = true;
-                    RecipeListView.currentMainWatch = RecipeListView.recipeLists[i];
-                    DisplayRecipe();
-                }
-                break;
-            }
+            ComponentsLists[i] = tmpRecipe.transform.GetChild(i+2).gameObject;
         }
+        DisplayRecipe();
     }
     public void CleanRecipe()
     {
@@ -128,26 +128,16 @@ public class RecipeSheet : MonoBehaviour
             tmpGO.GetComponent<Image>().sprite = _item.itemImages[i];
         }
     }
-    private void DisplayKnownRecipes()
+
+    IEnumerator DisplayRecipes()
     {
-        if (RecipeListView.recipeLists.Count > 0)
+        foreach (var t in RecipeListView.recipeLists)
         {
-            for (int i = 0; i < RecipeListView.recipeLists.Count; i++)
-            {
-                if (i+1 > SideRecipes.transform.childCount)
-                {
-                    GameObject _quickRecipe = Instantiate(button, Vector3.zero, Quaternion.identity, SideRecipes.transform);
-                    DisplayItem(RecipeListView.recipeLists[i].WatchItem, _quickRecipe);
-                }
-                else
-                {
-                    SideRecipes.transform.GetChild(i).GetComponent<Image>().sprite =
-                        RecipeListView.recipeLists[i].WatchItem.itemImages[0];
-                }
-            }
+            RecipeListView.currentMainWatch = t;
+            AddRecipe();
+            yield return new WaitForSeconds(.05f);
         }
     }
-
     IEnumerator Wait1s(Item _watchItem)
     {
         var recipeParentRect = ComponentsLists[0].transform.parent.GetComponent<RectTransform>().rect;
@@ -155,7 +145,7 @@ public class RecipeSheet : MonoBehaviour
             ComponentsLists[0].transform.GetChild(0).GetComponent<RectTransform>().anchoredPosition +
             new Vector2(recipeParentRect.width / 2, 0);
         AddLine(firstPointPos);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(.01f);
         DrawLines(_watchItem,0,0,firstPointPos);
         line.gameObject.SetActive(false);
         yield return new WaitForSeconds(.01f);

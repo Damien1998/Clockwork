@@ -24,13 +24,8 @@ public class Player : MonoBehaviour
         //Direction of the dash
     private Vector2 dashDirection;
         //For repeating dashes etc
-    private bool dashReleased;
-
-    [SerializeField]
-    private float pickupRange;
-    
-
-    private int itemToPickUpID = 0;
+        private bool dashReleased;
+        
 
     public bool lockMovement;
 
@@ -45,6 +40,8 @@ public class Player : MonoBehaviour
     private Workbench nearbyWorkbench;
     private LevelStart nearbyLevelStart;
     private WarpHole nearbyWarpHole;
+
+    [SerializeField] private PickUpRange _pickUpScript;
 
     [SerializeField]
     private float dashDuration;
@@ -77,54 +74,16 @@ public class Player : MonoBehaviour
     {
         CanInteract = on;
     }
-    private Collider2D[] nearbyItems = null;
     void PickUp()
     {
-        //Reworked item pick up mechanic
-        //First checks for input and Locks movement then Searches for items in Range and sorts them accordingly to their position
-        if (Input.GetButtonDown("Pickup" + playerNumber))
+        if (Input.GetButtonDown("Action" + playerNumber))
         {
-            lockMovement = true;
-            nearbyItems = Physics2D.OverlapCircleAll(transform.position, pickupRange, LayerMask.GetMask("Item"));
-            nearbyItems = nearbyItems.OrderBy(item => item.transform.position.y).ToArray();
-            Array.Reverse(nearbyItems);
-            if (nearbyItems.Length > 0)
-            {
-                if (nearbyItems[itemToPickUpID].TryGetComponent(out Watch watch))
-                {
-                    nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
-                }
-            }
+            _pickUpScript.ChangePickedUpObject();
         }
-        //After the first action if player is performing secondary action ie right click it highlights the item in sorted list
-        if (nearbyItems != null && nearbyItems.Length > 0&&Input.GetButtonDown("Action" + playerNumber))
-        {         
-            if (itemToPickUpID < nearbyItems.Length - 1)
-            {
-                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
-                itemToPickUpID++;
-                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
-            }
-            else
-            {
-                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
-                itemToPickUpID = 0;
-                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
-            }
-        }
-        //At the end checks if player is not holding a button anymore and picksup  highlighted item
-        if(nearbyItems != null && Input.GetButtonUp("Pickup" + playerNumber))
+        if (Input.GetButtonDown("Pickup" + playerNumber) && _pickUpScript.GetPickedUpObject() != null)
         {
-            if (itemToPickUpID < nearbyItems.Length  )
-            {
-                if (!nearbyItems[itemToPickUpID].GetComponent<Watch>().isPlacedOnWorkbench)
-                {
-                    PickUpItem(nearbyItems[itemToPickUpID].gameObject);
-                }
-            }
-            
-            itemToPickUpID = 0;
-            nearbyItems = null;
+            _pickUpScript.GetPickedUpObject().GetComponent<Watch>().isSelected = false;
+            PickUpItem(_pickUpScript.GetPickedUpObject());
             lockMovement = false;
         }
     }

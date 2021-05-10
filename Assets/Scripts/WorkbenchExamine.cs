@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
@@ -70,7 +71,7 @@ public class WorkbenchExamine : Workbench
                     invalidItemInside = false;
                     itemToPlace.WatchItem.State = itemToPlace.WatchItem.trueState;
                     Debug.Log(itemToPlace.WatchItem.State);
-                    
+
                 }
                 else
                 {
@@ -79,21 +80,9 @@ public class WorkbenchExamine : Workbench
                 if (itemToPlace.WatchItem.components.Count > 0)
                 {
                     invalidItemInside = false;
-                    GenerateComponentList(itemToPlace);
                 }
                 
-                /**
-                else if(itemToPlace.WatchItem.State != ItemState.UnknownState)
-                {
-                    invalidItemInside = true;
-                }
-                **/
-                if(itemToPlace.isCompleteWatch)
-                {
-                    RecipeListView.currentMainWatch = itemToPlace;
-                    RecipeListView.AddRecipeToList(RecipeListView.currentMainWatch);
-                    RecipeListView.LoadRecipeView();
-                }
+                ShowComponentList(itemToPlace);
                 itemSlots[i] = itemToPlace;
                 itemToPlace.gameObject.SetActive(false);
                 break;
@@ -101,11 +90,28 @@ public class WorkbenchExamine : Workbench
         }
     }
 
-    private void GenerateComponentList(Watch _watchItem)
+    private void ShowComponentList(Watch _watchItem)
     {
-        RecipeListView.currentMainWatch = _watchItem;
-        RecipeListView.AddRecipeToList(RecipeListView.currentMainWatch);
-        RecipeListView.LoadRecipeView();
+        if (_watchItem.isCompleteWatch)
+        {
+            RecipeListView.currentMainWatch = _watchItem;
+            RecipeListView.AddRecipeToList(RecipeListView.currentMainWatch);
+            if (RecipeListView.recipeLists.Count > 1)
+            {
+                if (SceneManager.GetSceneByName("RecipeSheet").isLoaded)
+                {
+                    RecipeListView.UnloadRecipeView();
+                    RecipeListView.LoadRecipeView();
+                }
+            }
+            else
+            {
+                if (!SceneManager.GetSceneByName("RecipeSheet").isLoaded)
+                {
+                    RecipeListView.LoadRecipeView();
+                } 
+            }
+        }
     }
 
     //I'm leaving this in in case I need it later

@@ -76,14 +76,7 @@ public class GameManager : MonoBehaviour
         saveController = new SaveController();
         saveController.InitializeSaveController(12,0,0,6);
     }
-
-    public void AddQuestRecipes()
-    {
-        for(int i = 0; i < currentLevelParams.questRecipes.Count; i++)
-        {
-            RandomWatchRecipesList.Add(currentLevelParams.questRecipes[i]);
-        }
-    }
+    
 
     //TODO making it cleaner
     public void CreateRandomWatches()
