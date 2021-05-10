@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
     private Vector2 movementInput, lastDirection;
 
     [SerializeField]
-    private ParticleSystem itemDropParticles, footstepParticles, dashParticles;
+    private ParticleSystem itemDropParticles, footstepParticles, dashParticles, itemDropGroundParticles;
 
     //Components
     private Animator animator;
@@ -363,8 +363,8 @@ public class Player : MonoBehaviour
         }
         HeldWatch.GetComponent<Watch>().ChangeSortingLayer("Items");
         HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
-        itemDropParticles.transform.position = HeldWatch.transform.position;
-        itemDropParticles.Play();
+        itemDropGroundParticles.transform.position = HeldWatch.transform.position;
+        itemDropGroundParticles.Play();
         HeldWatch = null;
         animator.SetBool("carriesItem", false);
 
