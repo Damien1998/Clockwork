@@ -10,21 +10,19 @@ public class SaveSlotDisplay : MonoBehaviour
    public Text saveInfo;
    public InputField nameField;
    public Text achievments;
-   private SaveController _saveController;
 
    private void Awake()
    {
-      _saveController = new SaveController();
       DisplaySaves();
    }
 
    public void DisplaySaves()
    {
-      if (_saveController.CheckForSaves(saveID))
+      if (SaveController.CheckForSaves(saveID))
       {
          SaveController.LoadGame(saveID);
-         saveInfo.text = "LoadedSave Completed Levels : " +_saveController.CompletedLevels();
-         nameField.text = _saveController.currentSaveName();
+         saveInfo.text = "LoadedSave Completed Levels : " +SaveController.CompletedLevels();
+         nameField.text = SaveController.currentSaveName();
          nameField.interactable = true;
          achievments.text = "None , yet";
       }
@@ -39,17 +37,16 @@ public class SaveSlotDisplay : MonoBehaviour
    public void ChangeSaveName(string name)
    {
       SaveController.LoadGame(saveID);
-      _saveController.ChangeSaveName(name);
+      SaveController.ChangeSaveName(name);
    }
    public void DeleteSave()
    {
-      if (_saveController.CheckForSaves(saveID))
+      if (SaveController.CheckForSaves(saveID))
       {
          saveInfo.text = "Clear Save";
          nameField.text = "Name";
          achievments.text = "None";
-         _saveController.DeleteSave(saveID);
-         GameManager.instance.SetSaveController(_saveController);
+         SaveController.DeleteSave(saveID);
       }
    }
 }

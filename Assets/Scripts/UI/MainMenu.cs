@@ -38,12 +38,10 @@ public class MainMenu : MonoBehaviour
     }
     public void LoadSaves(int saveID)
     {
-        SaveController _saveController = new SaveController();
-        if (_saveController.CheckForSaves(saveID))
+        if (SaveController.CheckForSaves(saveID))
         {
             SaveController.LoadGame(saveID);
         }
-        GameManager.instance.SetSaveController(_saveController);
         StartGame(3);
     }
 

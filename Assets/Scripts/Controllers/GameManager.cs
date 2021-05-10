@@ -18,8 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]private bool _sideQuest;
 
     public bool localQuestDone;
-
-    private SaveController saveController;
+    
     private int points;
 
     //For the random watch generator. After I rework this to use the new sprites the code will have to be changed slightly.
@@ -58,7 +57,7 @@ public class GameManager : MonoBehaviour
         private set
         {
             _sideQuest = value;
-            questItem = value == false ? null : saveController.GetCurrentSideQuest().itemToMake;
+            questItem = value == false ? null : SaveController.GetCurrentSideQuest().itemToMake;
         }
     }
     private void Awake()
@@ -73,8 +72,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         SoundManager.Initialize();
-        saveController = new SaveController();
-        saveController.InitializeSaveController(12,0,0,6);
+        SaveController.InitializeSaveController(12,0,0,6);
     }
     
 
@@ -367,33 +365,29 @@ public class GameManager : MonoBehaviour
             }
         }
     }
-    public void SetSaveController(SaveController inSaveController)
-    {
-        inSaveController = saveController;
-    }
     public void CompleteLevel()
     {
         // if(levelTimer < levels[levelID].completionTime || levels[levelID].completionTime == 0)
         // {
         //     levels[levelID] = new SaveData.Level(levels[levelID].name, true, true, levelTimer, levels[levelID].completionTimeSideQuest);
         // }
-        saveController.UnlockLevel(levelID);
+        SaveController.UnlockLevel(levelID);
     }
     public void StartQuest(string questName,Item questItem)
     {
         if (sideQuestActive == false)
         {
-            saveController.AddPOI(questName,questItem);
+            SaveController.AddPOI(questName,questItem);
             sideQuestActive = true;
         }
     }
     public void CompleteQuest(string questName)
     {
-        saveController.CompletePOI(questName);
+        SaveController.CompletePOI(questName);
     }
     public void Save(int saveID)
     {
-        saveController.CreateSaveGame(saveID);
+        SaveController.CreateSaveGame(saveID);
     }
     // Update is called once per frame
     // void Update()
