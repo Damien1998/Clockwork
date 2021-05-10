@@ -9,7 +9,7 @@ jobs:
        id: getManualLicenseFile
        uses: game-ci/unity-request-activation-file@v2
        with:
-          unityVersion: Unity_v2020.1.2f1
+          unityVersion: 2020.1.2f1
     
      - name: Expose as artifact
        uses: actions/upload-artifact@v1
