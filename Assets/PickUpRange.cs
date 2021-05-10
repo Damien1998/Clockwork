@@ -28,14 +28,7 @@ public class PickUpRange : MonoBehaviour
     }
     public GameObject GetPickedUpObject()
     {
-        if (nearbyItems.Count > 0)
-        {
-            return nearbyItems[itemToPickUpID].gameObject;
-        }
-        else
-        {
-            return null;
-        }
+        return nearbyItems.Count > 0 ? nearbyItems[itemToPickUpID].gameObject : null;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -48,9 +41,9 @@ public class PickUpRange : MonoBehaviour
             }
             else
             {
-                for (int i = 0; i < nearbyItems.Count; i++)
+                foreach (var t in nearbyItems)
                 {
-                    nearbyItems[i].GetComponent<Watch>().isSelected = false;
+                    t.GetComponent<Watch>().isSelected = false;
                 }
                 
                 nearbyItems.OrderBy(item => item.transform.position.y);
