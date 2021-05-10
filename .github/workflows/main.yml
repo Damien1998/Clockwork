@@ -5,6 +5,7 @@ on: [push, pull_request]
 jobs:
   build:
     name: Build my project 
+    container: unityci/editor:ubuntu-2020.1.1f1-base-0.12.0
     runs-on: ubuntu-latest
     steps:
       # Checkout
