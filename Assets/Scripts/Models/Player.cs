@@ -82,9 +82,13 @@ public class Player : MonoBehaviour
         }
         if (Input.GetButtonDown("Pickup" + playerNumber) && _pickUpScript.GetPickedUpObject() != null)
         {
+            lockMovement = true;
+        }
+        if (Input.GetButtonUp("Pickup" + playerNumber) && _pickUpScript.GetPickedUpObject() != null)
+        {
+            lockMovement = false;
             _pickUpScript.GetPickedUpObject().GetComponent<Watch>().isSelected = false;
             PickUpItem(_pickUpScript.GetPickedUpObject());
-            lockMovement = false;
         }
     }
     // Update is called once per frame
@@ -101,7 +105,7 @@ public class Player : MonoBehaviour
             {
                 PickUp();
             }
-            else if (Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch != null)
+            else if (Input.GetButtonUp("Pickup" + playerNumber) && HeldWatch != null)
             {
                 if (isByWorkbench)
                 {
@@ -129,7 +133,7 @@ public class Player : MonoBehaviour
                 nearbyWorkbench.isOperated = false;
             }
 
-            if (isByWarpHole && Input.GetButtonDown("Action" + playerNumber) && !lockMovement && !isByWorkbench)
+            if (isByWarpHole && Input.GetButtonUp("Action" + playerNumber) && !lockMovement && !isByWorkbench)
             {
                 if (HeldWatch != null)
                 {
