@@ -5,7 +5,7 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-public class SaveController
+public static class SaveController
 { 
     private static string saveName;
     public static SaveData currentSave;
@@ -14,21 +14,21 @@ public class SaveController
    private static List<SaveData.Flag> pointsOfInterest;
    public static List<SaveData.Flag> trophies;
 
-   public int CompletedLevels()
+   public static int CompletedLevels()
    {
        return levels.Count;
    }
 
-   public string currentSaveName()
+   public static string currentSaveName()
    {
        return saveName;
    }
 
-   public void ChangeSaveName(string name)
+   public static void ChangeSaveName(string name)
    {
        currentSave.saveName = name;
    }
-    public bool CheckForSaves(int saveID)
+    public static bool CheckForSaves(int saveID)
     {
         if(File.Exists(Application.persistentDataPath + "/savefile"+saveID+".clk"))
         {
@@ -37,7 +37,7 @@ public class SaveController
         return false;
     }
     
-    public void InitializeSaveController(int numberOfLevels,int numberOfSideQuests,int numberOfPOI,int numberOfTrophies)
+    public static void InitializeSaveController(int numberOfLevels,int numberOfSideQuests,int numberOfPOI,int numberOfTrophies)
     { 
         levels = new List<SaveData.Level>();
        sideQuests = new List<SaveData.SideQuest>();
@@ -46,7 +46,7 @@ public class SaveController
        levels.Add(new SaveData.Level("Tutorial", false, true, 0f, 0f));
        trophies.Add(new SaveData.Flag("firstTrophy",true));
     }
-    public void CreateSaveGame(int saveID)
+    public static void CreateSaveGame(int saveID)
     {
         //Creates a new SaveData containing the current state of everything
         SaveData saveData = SaveState();
@@ -71,7 +71,7 @@ public class SaveController
             pointsOfInterest = saveData.pointsOfInterest;
     }
 
-    public void DeleteSave(int saveID)
+    public static void DeleteSave(int saveID)
     {
         if (CheckForSaves(saveID))
         {
@@ -79,7 +79,7 @@ public class SaveController
         }
     }
     //Saves everything needed from the game manager into a SaveData
-    private SaveData SaveState()
+    private static SaveData SaveState()
     {
         SaveData saveData = new SaveData();
         
@@ -90,16 +90,16 @@ public class SaveController
 
         return saveData;
     }
-    public SaveData.SideQuest GetCurrentSideQuest()
+    public static SaveData.SideQuest GetCurrentSideQuest()
     {
         return sideQuests[0];
     }
-    public void AddPOI(string questName,Item questItem)
+    public static void AddPOI(string questName,Item questItem)
     {
         sideQuests.Add(new SaveData.SideQuest(questName, false, true,questItem)); 
     }
 
-    public void UnlockLevel(int levelID)
+    public static void UnlockLevel(int levelID)
     {
         if(levelID < levels.Count)
         {
@@ -109,7 +109,7 @@ public class SaveController
             } 
         }
     }
-    public void CompletePOI(string pOIName)
+    public static void CompletePOI(string pOIName)
     {
         for(int i = 0; i < pointsOfInterest.Count; i++)
         {
@@ -119,7 +119,7 @@ public class SaveController
             }
         }
     }
-    public void CompleteQuest(string questName)
+    public static void CompleteQuest(string questName)
     {
         for (int i = 0; i < sideQuests.Count; i++)
         {
