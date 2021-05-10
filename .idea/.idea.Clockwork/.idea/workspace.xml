@@ -25,14 +25,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24ebf151-db49-47b0-a8c7-dede33a08e73" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level10 1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level10 1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/RecipeSheet.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/RecipeSheet.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeSheet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeSheet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Player.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Player.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,16 +38,17 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49F4E7E7-91CC-4FFF-ACD8-8F729E2B1E4C/2f/a40eed5d/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D1BEC468-8006-4709-A5E7-13AD543E6D96/f6/d785760b/AssetDatabase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../moon-reconnaissance/Assets/Scripts/Controllers/AIController.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SettingsMenu.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/Audio/PlayBGM.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/11BD515F-D2A0-4526-8509-D23726DE0F46/ee/508dbd68/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/PickUpRange.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://E:/Unity/2020.1.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Graphic.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../Negative-Run/Assets/_Scripts/Localization/LocalizationSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49F4E7E7-91CC-4FFF-ACD8-8F729E2B1E4C/95/3d2907da/Component.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49F4E7E7-91CC-4FFF-ACD8-8F729E2B1E4C/2f/a40eed5d/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../../moon-reconnaissance/Assets/Scripts/Controllers/AIController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SettingsMenu.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/11BD515F-D2A0-4526-8509-D23726DE0F46/ee/508dbd68/String.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/UILineRenderer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../../CodeTests/Assets/WhileTest.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
@@ -74,7 +70,6 @@
       <option value="$PROJECT_DIR$/../../CodeTests/Assets/WhileTest.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Workbench.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/Watch.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Models/Player.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SaveController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogueManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" />
@@ -82,6 +77,8 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/RecipeSheet.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/Player.cs" />
+      <option value="$PROJECT_DIR$/Assets/PickUpRange.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1iy3MpVIIBx8khPeKCDjG6VTij5" />
