@@ -6,7 +6,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
      - name: Request manual activation file
-       id: editor-ubuntu-2020.1.2f1-base-0.12.0
+       id: Unity_v2020.1.2f1
        uses: game-ci/unity-request-activation-file@v2
     
      - name: Expose as artifact
