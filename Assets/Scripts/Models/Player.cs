@@ -69,18 +69,13 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
     }
-
-    public static void SetPlayer(bool on)
-    {
-        CanInteract = on;
-    }
     void PickUp()
     {
         if (Input.GetButtonDown("Action" + playerNumber))
         {
             _pickUpScript.ChangePickedUpObject();
         }
-        if (Input.GetButtonDown("Pickup" + playerNumber) && _pickUpScript.GetPickedUpObject() != null)
+        if(Input.GetButtonDown("Pickup" + playerNumber) && _pickUpScript.GetPickedUpObject() != null)
         {
             lockMovement = true;
         }
@@ -116,7 +111,6 @@ public class Player : MonoBehaviour
                     DropItem();
                 }
             }
-
             if (isByLevelStart && Input.GetButtonDown("Action" + playerNumber))
             {
                 nearbyLevelStart.StartLevel();
@@ -351,6 +345,7 @@ public class Player : MonoBehaviour
         itemDropParticles.transform.position = HeldWatch.transform.position;
         itemDropParticles.Play();
         HeldWatch = null;
+        _pickUpScript.HighLightItems = true;
         animator.SetBool("carriesItem", false);
 
         
