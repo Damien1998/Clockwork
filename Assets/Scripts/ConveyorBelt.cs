@@ -16,24 +16,37 @@ public class ConveyorBelt : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {       
-        if (collision.TryGetComponent(out Rigidbody2D rigidbody) && collision.TryGetComponent(out Watch watch))
+        if (collision.TryGetComponent(out Rigidbody2D rigidbody) && (collision.TryGetComponent(out Watch watch) || collision.TryGetComponent(out Player player)))
         {
-            rigidbody.velocity = direction.normalized * speed;
+            rigidbody.velocity = Vector2.zero;
+            //rigidbody.velocity = direction.normalized * speed;
+            rigidbody.AddForce(direction.normalized * speed);
             //collision.gameObject.layer = LayerMask.NameToLayer("ItemNoCollision");
 
             if(watch != null)
             {
                 watch.ChangeSortingLayer("ItemsWorkbench");
+                player = null;
+                if (direction.x == 0)
+                {
+                    collision.transform.position = new Vector3(itemSnapPosition.position.x, collision.transform.position.y);
+                }
+                else if (direction.y == 0)
+                {
+                    collision.transform.position = new Vector3(collision.transform.position.x, itemSnapPosition.position.y);
+                }
+            }
+            else
+            {
+                player = collision.GetComponent<Player>();
             }
 
-            if (direction.x == 0)
+            if(player != null)
             {
-                collision.transform.position = new Vector3(itemSnapPosition.position.x, collision.transform.position.y);
+                player.isOnConveyor = true;
             }
-            else if (direction.y == 0)
-            {
-                collision.transform.position = new Vector3(collision.transform.position.x, itemSnapPosition.position.y);
-            }
+
+            
 
         }
         
@@ -41,18 +54,30 @@ public class ConveyorBelt : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.TryGetComponent(out Rigidbody2D rigidbody) && collision.TryGetComponent(out Watch watch))
+        if (collision.TryGetComponent(out Rigidbody2D rigidbody) && (collision.TryGetComponent(out Watch watch) || collision.TryGetComponent(out Player player)))
         {
-            if (direction.x == 0)
+            if(watch != null)
             {
-                collision.transform.position = new Vector3(itemSnapPosition.position.x, collision.transform.position.y);
+                if (direction.x == 0)
+                {
+                    collision.transform.position = new Vector3(itemSnapPosition.position.x, collision.transform.position.y);
+                }
+                else if (direction.y == 0)
+                {
+                    collision.transform.position = new Vector3(collision.transform.position.x, itemSnapPosition.position.y);
+                }
             }
-            else if (direction.y == 0)
-            {
-                collision.transform.position = new Vector3(collision.transform.position.x, itemSnapPosition.position.y);
-            }
+            
 
-            rigidbody.velocity = direction.normalized * speed;           
+            rigidbody.AddForce(direction.normalized * speed);           
         }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out Player player))
+        {
+            player.isOnConveyor = false;
+        }
+
     }
 }
