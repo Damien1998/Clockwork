@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -168,8 +169,8 @@ public class DialogueManager : MonoBehaviour
         _isTyping = false;
         while (currentLine < dialogue.Length  && _skipping)
         {
-            CheckIfCommand();
             CompileText();
+            CheckIfCommand();
         }
     }
     //PS
@@ -195,10 +196,10 @@ public class DialogueManager : MonoBehaviour
                     ExitDialogue();
                     goto While_Break;
                 case "--quest_start":
-                    GameManager.instance.StartQuest(dialogue[currentLine].Replace("--quest_start ", ""),null);
+                    GameManager.instance.StartQuest(words[1],String.Join(" ",GetName(1)));
                     break;
                 case "--poi":
-                    GameManager.instance.CompleteQuest(dialogue[currentLine].Replace("--poi ", ""));
+                    GameManager.instance.CompleteQuest(words[1]);
                     break;
                 case "--level_end":
                     UIManager.instance.ShowLevelEnd();
@@ -345,11 +346,11 @@ public class DialogueManager : MonoBehaviour
         }
     }
     
-    public void AcceptQuest(Item WatchToMake)
+    public void AcceptQuest(string _itemName)
     {
-        if (GameManager.instance.sideQuestActive == false)
+        if (SaveController._sideQuest == false)
         {
-            GameManager.instance.StartQuest("Epic Quest",WatchToMake);
+            GameManager.instance.StartQuest("Epic Quest",_itemName);
         }
     }
     public void StartDialogueByName(string fileName)
