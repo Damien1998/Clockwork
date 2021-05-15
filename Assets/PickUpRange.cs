@@ -8,17 +8,8 @@ public class PickUpRange : MonoBehaviour
 {
     private List<Collider2D> nearbyItems = new List<Collider2D>();
     private int itemToPickUpID = 0;
-    public bool HighLightItems = true;
 
 
-
-    public void ClearAllItems()
-    {
-        for (int i = 0; i < nearbyItems.Count; i++)
-        {
-            nearbyItems[i].GetComponent<Watch>().isSelected = false;
-        }
-    }
     public void ChangePickedUpObject()
     {
         if (nearbyItems.Count > 0)
@@ -41,7 +32,7 @@ public class PickUpRange : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.TryGetComponent(out Watch watch)&&HighLightItems)
+        if (other.gameObject.TryGetComponent(out Watch watch))
         {
             nearbyItems.Add(other);
             if (nearbyItems.Count < 2)

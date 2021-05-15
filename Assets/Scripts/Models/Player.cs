@@ -310,8 +310,6 @@ public class Player : MonoBehaviour
             pickedupItem.GetComponent<BoxCollider2D>().enabled = false;
         }
         HeldWatch = pickedupItem;
-        _pickUpScript.HighLightItems = false;
-        _pickUpScript.ClearAllItems();
         pickedupItem.GetComponent<Watch>().ChangeSortingLayer("ItemsHeld");
         pickedupItem.transform.position = ItemPosition.position;
         HeldWatch.GetComponent<Watch>().isSelected = false;
@@ -331,7 +329,6 @@ public class Player : MonoBehaviour
         itemDropGroundParticles.transform.position = HeldWatch.transform.position;
         itemDropGroundParticles.Play();
         HeldWatch = null;
-        _pickUpScript.HighLightItems = true;
         animator.SetBool("carriesItem", false);
 
         
