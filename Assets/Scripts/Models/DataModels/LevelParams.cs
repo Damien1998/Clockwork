@@ -13,6 +13,7 @@ public class LevelParams : ScriptableObject
     //public List<Recipe> listOfRecipes = new List<Recipe>();
 
     public Item questItem;
+    public List<Recipe> questRecipes;
 
     //New way of defining level watches
     public int watchAmount;
@@ -26,6 +27,7 @@ public class LevelParams : ScriptableObject
     public bool casingComponents, mechanismComponents, eitherOfMechOrCasing;
     public int mechMinParts, mechMaxParts;
     public float watchDispensingTime;
-    public Trophy levelTrophy;
-
+    public Sprite questItemImage;
+    public string questItemDescription;
+    
 }

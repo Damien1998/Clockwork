@@ -25,9 +25,9 @@ public class TrophyTable : MonoBehaviour
         {
           Destroy(_trophiesPanelDisplay.transform.GetChild(i).gameObject);
         }
-        foreach (var Quest in SaveController.currentSave.completedSideQuests)
+        foreach (var trophy in SaveController.trophies)
         {
-            if (Quest.completed)
+            if (trophy.completed)
             {
                 Instantiate(_trophyDisplay, new Vector3(0, 0, 0), Quaternion.identity, _trophiesPanelDisplay.transform);
                 amountOfTrophiesToDisplay++;

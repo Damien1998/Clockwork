@@ -2,7 +2,6 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static SaveController;
 
 public class UIManager : MonoBehaviour
 {
@@ -39,11 +38,12 @@ public class UIManager : MonoBehaviour
 
     private void ShowTrophyUI()
     {
-        var levelQuest = ReturnLevel(GameManager.instance.levelID).Value.levelSideQuest;
-        TrophyScreen.SetActive(levelQuest.completed);
-        _QuestItemName.text = levelQuest.questTrophy.trophyName;
-        ItemFlavourText.text = levelQuest.questTrophy.Description;
-        trophyDisplay.sprite = levelQuest.questTrophy.trophyImage;
+        TrophyScreen.SetActive(GameManager.instance.localQuestDone);
+        var _levelId = GameManager.instance.levelID;
+        Debug.Log(SaveController.sideQuests[_levelId-1]);
+        _QuestItemName.text = SaveController.sideQuests[_levelId-1].questItemName;
+        ItemFlavourText.text = Resources.Load<LevelParams>($"LevelParams/Level {_levelId}").questItemDescription;
+        trophyDisplay.sprite = Resources.Load<LevelParams>($"LevelParams/Level {_levelId}").questItemImage;
 
     }
 

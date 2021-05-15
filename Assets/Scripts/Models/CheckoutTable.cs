@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
-using static SaveController;
 
 //Refactoring is done! You may enter safely
 public class CheckoutTable : Workbench
@@ -55,6 +54,7 @@ public class CheckoutTable : Workbench
     public void InitLevel()
     {
         GameManager.instance.levelID = GameManager.instance.levelID;
+        GameManager.instance.localQuestDone = false;
         GameManager.instance.CreateRandomWatches();
         //ThrowRandomWatch();
         StartCoroutine(CheckForQuests());
@@ -67,8 +67,8 @@ public class CheckoutTable : Workbench
         {
             itemToPlace.transform.position = transform.position;
             Destroy(itemToPlace.gameObject);
-            
-            CompleteQuest(GameManager.instance.levelID);
+
+            GameManager.instance.localQuestDone = true;
 
             //Idk how to end quests :/
         }
@@ -87,10 +87,9 @@ public class CheckoutTable : Workbench
                 //ThrowRandomWatch();
                 Debug.Log("Last watch");
 
-                if (ReturnLevel(GameManager.instance.levelID).HasValue && ReturnLevel(GameManager.instance.levelID).Value.levelSideQuest.completed)
+                if (GameManager.instance.localQuestDone)
                 {
                     DialogueManager.instance.StartDialogue(questEndDialogue);
-                    hasQuest = false;
                 }
                 else
                 {
@@ -135,7 +134,7 @@ public class CheckoutTable : Workbench
     IEnumerator CheckForQuests()
     {
         yield return new WaitForSeconds(1f);
-        if (hasQuest)
+        if (SaveController._sideQuest)
         {
             ThrowNewWatch(GameManager.instance.currentLevelParams.questItem);
         }
@@ -206,9 +205,9 @@ public class CheckoutTable : Workbench
 
     private bool CheckQuestWatch(Watch currentWatch)
     {
-        if(hasQuest)
+        if(SaveController._sideQuest)
         {
-            if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch.WatchItem.itemID == workbenchLevelParams.questItem.itemID)
+            if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch.WatchItem.itemID == SaveController.GetQuestItem(GameManager.instance.levelID).itemID)
             {
                 return true;
             }
