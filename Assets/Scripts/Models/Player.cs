@@ -25,8 +25,7 @@ public class Player : MonoBehaviour
     private Vector2 dashDirection;
         //For repeating dashes etc
         private bool dashReleased;
-
-    public bool isOnConveyor;
+        
 
     public bool lockMovement;
 
@@ -220,7 +219,6 @@ public class Player : MonoBehaviour
             animator.SetBool("walking", false);
         }
     }
-
     private void FixedUpdate()
     {
         //Player movement      
@@ -252,29 +250,13 @@ public class Player : MonoBehaviour
                 //Managing player speed
                 if (movementInput != Vector2.zero && !isDashing)
                 {
-                    if (isOnConveyor)
-                    {
-                        rigidBody.AddForce(movementInput.normalized * moveSpeed*0.7f);
-                    }
-                    else
-                    {
-                        rigidBody.velocity = movementInput.normalized * moveSpeed;
-                    }
-
+                    rigidBody.velocity = movementInput.normalized * moveSpeed;
                 }
                 else if (isDashing)
                 {
-                    if (isOnConveyor)
-                    {
-                        rigidBody.AddForce(dashDirection * dashSpeed * 0.7f);
-                    }
-                    else
-                    {
-                        rigidBody.velocity = dashDirection * dashSpeed;
-                    }
-
+                    rigidBody.velocity = dashDirection * dashSpeed;
                 }
-                else if(!isOnConveyor)
+                else
                 {
                     rigidBody.velocity = Vector2.zero;
                 }
