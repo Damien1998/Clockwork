@@ -221,16 +221,8 @@ public class DialogueManager : MonoBehaviour
                     goto While_Break;
                 case "--Invoke":
                     Type thisType = this.GetType();
-                    if (words.Length > 2)
-                    {
-                        MethodInfo myMethod = thisType.GetMethod(words[1].Trim());
-                        myMethod.Invoke(this,new object[]{words[2]});
-                    }
-                    else
-                    {
-                        MethodInfo myMethod = thisType.GetMethod(words[1].Trim());
-                        myMethod.Invoke(this,null);    
-                    }
+                    MethodInfo myMethod = thisType.GetMethod(words[1].Trim());
+                    myMethod.Invoke(this,null);
                     break;
                 case "--description":
                     portrait.gameObject.SetActive(false);
@@ -352,26 +344,34 @@ public class DialogueManager : MonoBehaviour
             GameManager.instance.StartQuest("Epic Quest",WatchToMake);
         }
     }
-    public void StartDialogueByName(string fileName)
+    public void StartDialogue(string fileName)
     {
-
-        fileName = fileName.Remove(fileName.Length-1);
-        var data = Resources.Load<TextAsset>($"Dialogue/{fileName}");
-        if (data != null)
+        if (File.Exists(Application.persistentDataPath + "/dialogue/" + fileName + ".txt"))
         {
-            StartDialogue(data);
+            //BinaryFormatter formatter = new BinaryFormatter();
+            //FileStream file = File.Open(Application.persistentDataPath + "/dialogue/" + fileName + ".txt", FileMode.Open);
+            //dialogue = (string[])formatter.Deserialize(file);
+            //file.Close();
+            dialogue = System.IO.File.ReadAllLines(Application.persistentDataPath + "/dialogue/" + fileName + ".txt");
+            dialogueBox.SetActive(true);
+            currentLine = 0;
+            CheckIfCommand();
+            
+            DisplayText();
+            
         }
         else
         {
-            Debug.Log("No Dialogue file!");
+            Debug.Log("No save file!");
         }
+
+        Time.timeScale = 0;
     }
 
     public void RainSnow()
     {
         Instantiate(extraSnow, new Vector3(-2, 6.3f, 0), Quaternion.Euler(75,90,-90));
     }
-    
     
 }
 

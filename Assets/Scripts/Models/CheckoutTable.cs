@@ -10,7 +10,7 @@ public class CheckoutTable : Workbench
     private int watchIndex = 0;
     [SerializeField] private LevelParams workbenchLevelParams;
 
-    [SerializeField] private TextAsset endOfLevelDialogue,questEndDialogue;
+    [SerializeField] private TextAsset endOfLevelDialogue;
     
     [SerializeField] private Transform watchThrowPoint;
     [SerializeField] private ParticleSystem deliveryFX, retrievedFX;
@@ -87,14 +87,8 @@ public class CheckoutTable : Workbench
                 //ThrowRandomWatch();
                 Debug.Log("Last watch");
 
-                if (GameManager.instance.localQuestDone)
-                {
-                    DialogueManager.instance.StartDialogue(questEndDialogue);
-                }
-                else
-                {
-                    DialogueManager.instance.StartDialogue(endOfLevelDialogue);
-                }
+                DialogueManager.instance.StartDialogue(endOfLevelDialogue);
+
                 UIManager.instance.StopTimer();
             }
             //else
