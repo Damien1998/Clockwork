@@ -47,6 +47,7 @@ public class PickUpRange : MonoBehaviour
                 }
                 
                 nearbyItems.OrderBy(item => item.transform.position);
+                nearbyItems.Reverse();
                 itemToPickUpID = nearbyItems.IndexOf(other);
                 
                 nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
