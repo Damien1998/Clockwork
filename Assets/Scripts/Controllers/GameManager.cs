@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     public List<Recipe> RandomWatchRecipesList = new List<Recipe>();
     [SerializeField]private int _levelID;
 
-    public bool localQuestDone;
+    public bool hasQuest;
     
     private int points;
 
@@ -62,11 +62,9 @@ public class GameManager : MonoBehaviour
         SoundManager.Initialize();
         if (!SaveController._initialized)
         {
-            SaveController.InitializeSaveController(12, 12, 0, 12);
+            SaveController.InitializeSaveController();
         }
     }
-    
-
     //TODO making it cleaner
     public void CreateRandomWatches()
     {
@@ -358,52 +356,12 @@ public class GameManager : MonoBehaviour
     }
     public void CompleteLevel()
     {
-        // if(levelTimer < levels[levelID].completionTime || levels[levelID].completionTime == 0)
-        // {
-        //     levels[levelID] = new SaveData.Level(levels[levelID].name, true, true, levelTimer, levels[levelID].completionTimeSideQuest);
-        // }
         SaveController.UnlockLevel(levelID);
-    }
-    public void StartQuest(string questName,string questItemName)
-    {
-        if (SaveController._sideQuest == false)
-        {
-            var sideQuest = SaveController.sideQuests[levelID-1];
-            sideQuest.questItemName = questItemName;
-            SaveController.sideQuests[levelID-1] = sideQuest;
-            SaveController._sideQuest = true;
-        }
-    }
-    public void CompleteQuest(string questName)
-    {
-        SaveController.CompletePOI(questName);
     }
     public void Save(int saveID)
     {
         SaveController.CreateSaveGame(saveID);
     }
-    // Update is called once per frame
-    // void Update()
-    // {
-    //     levelTimer += Time.deltaTime;
-    //     float temp = levelTimer / levelTimerBase;
-    //     timerDisplay.value = temp;
-    //     if(points >= pointsToComplete && !levelCompletionCalled)
-    //     {
-    //         endDisplay.gameObject.SetActive(true);
-    //         UIManager.instance.pointDisplayEnd.text = "Czas: " + levelTimer;
-    //         CompleteLevel();
-    //         SaveGame();
-    //         levelCompletionCalled = true;
-    //         Time.timeScale = 0;
-    //     }
-    // }
-    
-    // public void AddPoints(int pointAmount)
-    // {
-    //     points += pointAmount;
-    //     UIManager.instance.pointDisplay.text = "Punkty: " + points;
-    // }
     [System.Serializable]
     public class SoundAudioClip
     {

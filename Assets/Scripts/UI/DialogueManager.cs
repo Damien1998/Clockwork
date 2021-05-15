@@ -196,10 +196,7 @@ public class DialogueManager : MonoBehaviour
                     ExitDialogue();
                     goto While_Break;
                 case "--quest_start":
-                    GameManager.instance.StartQuest(words[1],String.Join(" ",GetName(1)));
-                    break;
-                case "--poi":
-                    GameManager.instance.CompleteQuest(words[1]);
+                    SaveController.hasQuest = true;
                     break;
                 case "--level_end":
                     UIManager.instance.ShowLevelEnd();
@@ -346,13 +343,6 @@ public class DialogueManager : MonoBehaviour
         }
     }
     
-    public void AcceptQuest(string _itemName)
-    {
-        if (SaveController._sideQuest == false)
-        {
-            GameManager.instance.StartQuest("Epic Quest",_itemName);
-        }
-    }
     public void StartDialogueByName(string fileName)
     {
 

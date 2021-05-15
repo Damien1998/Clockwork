@@ -21,68 +21,30 @@ public class SaveData
     //At least until I find a better way to do it
     //*groan*
     //At the beginning of a game everything will be set to false, except for unlocking the tutorial level
-
-    //TODO: find and extension that will let us edit it all in a humanely possible way.
-    [System.Serializable]
-    public struct Flag
-    {
-        public string name;
-        public bool completed;
-
-        //Use for creating new flags
-        public Flag(string flagName)
-        {
-            name = flagName;
-            completed = false;
-        }
-
-        //Use for setting flags as complete
-        public Flag(string flagName, bool markComplete)
-        {
-            name = flagName;
-            completed = markComplete;
-        }
-    }
-
+    
     //We need to know if the player even found all the sidequests, so yay, another data type.
     [System.Serializable]
     public struct SideQuest
     {
         public string name;
-         public bool completed;
-        public bool found;
-        public string questItemName,itemDescription;
-        public Item questItem;
+        public bool completed;
+        public Trophy questTrophy;
+
 
         //Use for adding side quests
         public SideQuest(string questName)
         {
             name = questName;
             completed = false;
-            found = false;
-            questItemName = null;
-            questItem = null;
-            itemDescription = null;
+            questTrophy = null;
         }
 
         //Use for modifying data
-        public SideQuest(string questName,string itemName, bool questCompleted, bool questFound,Item _questItem)
+        public SideQuest(string questName,string itemName, bool questCompleted,Trophy _questTrophy)
         {
             name = questName;
             completed = questCompleted;
-            found = questFound;
-            questItemName = itemName;
-            questItem = _questItem;
-            itemDescription = null;
-        }
-        public SideQuest(string questName,string itemName, bool questCompleted, bool questFound,Item _questItem,string _description)
-        {
-            name = questName;
-            completed = questCompleted;
-            found = questFound;
-            questItemName = itemName;
-            questItem = _questItem;
-            itemDescription = _description;
+            questTrophy = _questTrophy;
         }
     }
 
@@ -92,30 +54,33 @@ public class SaveData
     [System.Serializable]
     public struct Level
     {
+        public int levelID;
         public string name;
         public bool completed;
-        public bool unlocked ;
+        public SideQuest levelSideQuest;
         public float completionTime;
         public float completionTimeSideQuest;
         
         //Use for adding new levels, except the tutorial
-        public Level(string levelName)
+        public Level(int _levelID)
         {
-            name = levelName;
+            levelID = _levelID;
+            name = "levelName";
             completed = false;
-            unlocked = false;
+            levelSideQuest = new SideQuest();
             completionTime = 0;
             completionTimeSideQuest = 0;
         }
 
         //Use for unlocking levels or completing them
-        public Level(string levelName, bool levelCompleted, bool levelUnlocked, float time, float sideQuestTime)
+        public Level(int _levelID,string levelName, bool levelCompleted, float time, float sideQuestTime)
         {
+            levelID = _levelID;
             name = levelName;
             completed = levelCompleted;
-            unlocked = levelUnlocked;
             completionTime = time;
             completionTimeSideQuest = sideQuestTime;
+            levelSideQuest = new SideQuest();
         }
     }
     
@@ -127,8 +92,6 @@ public class SaveData
     //You have to replace the object with a new one
     //See the game manager script for examples
     public List<Level> levels = new List<Level>();
-    public List<SideQuest> sideQuests = new List<SideQuest>();
-    public List<Flag> pointsOfInterest = new List<Flag>();
-    public List<Flag> trophies = new List<Flag>();
+    public List<SideQuest> completedSideQuests = new List<SideQuest>();
 }
 

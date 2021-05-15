@@ -8,15 +8,13 @@ using System.IO;
 public static class SaveController
 { 
     private static string saveName;
-    public static bool _sideQuest,_initialized = false;
+    public static bool _initialized = false,hasQuest;
     public static SaveData currentSave;
     
     private static List<SaveData.Level> levels;
-    public static List<SaveData.SideQuest> sideQuests;
-    private static List<SaveData.Flag> pointsOfInterest;
-    public static List<SaveData.Flag> trophies;
-    
-   public static int CompletedLevels()
+    public static List<SaveData.SideQuest> completedSideQuests;
+
+    public static int CompletedLevels()
    {
        return levels.Count;
    }
@@ -24,11 +22,6 @@ public static class SaveController
    public static string currentSaveName()
    {
        return saveName;
-   }
-
-   public static Item GetQuestItem(int levelId)
-   {
-       return sideQuests[levelId-1].questItem;
    }
    public static void ChangeSaveName(string name)
    {
@@ -43,24 +36,12 @@ public static class SaveController
         return false;
     }
     
-    public static void InitializeSaveController(int numberOfLevels,int numberOfSideQuests,int numberOfPOI,int numberOfTrophies)
-    {
-        levels = new List<SaveData.Level>(new SaveData.Level[numberOfLevels]);
-       sideQuests = new List<SaveData.SideQuest>(new SaveData.SideQuest[numberOfSideQuests]);
-       pointsOfInterest = new List<SaveData.Flag>(new SaveData.Flag[numberOfPOI]);
-       trophies = new List<SaveData.Flag>(new SaveData.Flag[numberOfTrophies]);
-       for (int i = 1; i < numberOfSideQuests+1; i++)
-       {
-           var questItem = Resources.Load<LevelParams>($"LevelParams/Level {i}").questItem;
-               if (questItem != null)
-               {
-                   var sideQuest = sideQuests[i-1];
-                   sideQuest.questItem = questItem;
-                   sideQuests[i-1] = sideQuest;
-               }
-       }
+    public static void InitializeSaveController()
+    { 
+        levels = new List<SaveData.Level>();
+        completedSideQuests = new List<SaveData.SideQuest>();
 
-       _initialized = true;
+        _initialized = true;
     }
     public static void CreateSaveGame(int saveID)
     {
@@ -82,9 +63,6 @@ public static class SaveController
             currentSave = saveData;
             saveName = saveData.saveName;
             levels = saveData.levels;
-            sideQuests = saveData.sideQuests;
-            trophies = saveData.trophies;
-            pointsOfInterest = saveData.pointsOfInterest;
     }
 
     public static void DeleteSave(int saveID)
@@ -100,50 +78,53 @@ public static class SaveController
         SaveData saveData = new SaveData();
         
         saveData.levels = levels;
-        saveData.sideQuests = sideQuests;
-        saveData.trophies = trophies;
-        saveData.pointsOfInterest = pointsOfInterest;
 
         return saveData;
     }
-    public static SaveData.SideQuest GetSideQuest(int sideQuestID)
+    public static SaveData.Level? ReturnLevel(int _levelID)
     {
-        return sideQuests[sideQuestID];
+        var levelListIndex = GetLevelListIndex(_levelID);
+        
+        return levels[levelListIndex];
     }
-    public static void AddPOI(string questName,string questItemName)
-    {
-        sideQuests.Add(new SaveData.SideQuest(questName, questItemName, false,true,null)); 
-    }
-
     public static void UnlockLevel(int levelID)
     {
-        if(levelID < levels.Count)
+        for (int i = 0; i < levels.Count; i++)
         {
-            if(!levels[levelID + 1].unlocked)
-            { 
-                levels[levelID + 1] = new SaveData.Level(levels[levelID + 1].name, false, true, 0f, 0f);
-            } 
-        }
-    }
-    public static void CompletePOI(string pOIName)
-    {
-        for(int i = 0; i < pointsOfInterest.Count; i++)
-        {
-            if(pointsOfInterest[i].name == pOIName)
+            if (levels[i].levelID == levelID)
             {
-                pointsOfInterest[i] = new SaveData.Flag(pOIName, true);
+                break;
             }
         }
+        var tmpLevel = new SaveData.Level();
+        tmpLevel.levelSideQuest.questTrophy = Resources.Load<LevelParams>($"LevelParams/Level {levelID}").levelTrophy;
+        tmpLevel.levelID = levelID;
+        levels.Add(tmpLevel);
+        
     }
-    //To do: Change To Int based Method where you check for current stage instead of quest name
-    public static void CompleteQuest(string questName)
+    public static void CompleteQuest(int levelID)
     {
-        for (int i = 0; i < sideQuests.Count; i++)
+        if (ReturnLevel(levelID).HasValue)
         {
-            if (sideQuests[i].name == questName)
+            var levelListIndex = GetLevelListIndex(levelID);
+            
+            var level = levels[levelListIndex];
+            level.levelSideQuest.completed = true;
+            levels[levelListIndex] = level;
+            
+            completedSideQuests.Add(ReturnLevel(levelID).Value.levelSideQuest);
+        }
+    }
+
+    static int GetLevelListIndex (int levelID)
+    {
+        for (int i = 0; i < levels.Count; i++)
+        {
+            if (levels[i].levelID == levelID)
             {
-                sideQuests[i] = new SaveData.SideQuest(questName, sideQuests[i].questItemName, true,true,null);
+                return i;
             }
         }
+        return 0;
     }
 }
