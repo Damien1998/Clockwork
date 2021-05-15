@@ -13,7 +13,9 @@ public class GameManager : MonoBehaviour
     public ItemStateDisplay itemStates;
     public List<Recipe> RecipesList = new List<Recipe>();
     public List<Recipe> RandomWatchRecipesList = new List<Recipe>();
+    public Item questItem;
     [SerializeField]private int _levelID;
+    [SerializeField]private bool _sideQuest;
 
     public bool localQuestDone;
     
@@ -46,7 +48,17 @@ public class GameManager : MonoBehaviour
             _levelID = value;
 
             currentLevelParams = Resources.Load<LevelParams>("LevelParams/Level " + _levelID);
+            //(LevelParams)AssetDatabase.LoadAssetAtPath("Assets/Prefabs/LevelParams/Level " + _levelID + ".asset", typeof(LevelParams));
         } 
+    }
+    public bool sideQuestActive
+    {
+        get => _sideQuest;
+        private set
+        {
+            _sideQuest = value;
+            questItem = value == false ? null : SaveController.GetCurrentSideQuest().itemToMake;
+        }
     }
     private void Awake()
     {
@@ -60,10 +72,7 @@ public class GameManager : MonoBehaviour
             instance = this;
         }
         SoundManager.Initialize();
-        if (!SaveController._initialized)
-        {
-            SaveController.InitializeSaveController(12, 12, 0, 12);
-        }
+        SaveController.InitializeSaveController(12,0,0,6);
     }
     
 
@@ -364,14 +373,12 @@ public class GameManager : MonoBehaviour
         // }
         SaveController.UnlockLevel(levelID);
     }
-    public void StartQuest(string questName,string questItemName)
+    public void StartQuest(string questName,Item questItem)
     {
-        if (SaveController._sideQuest == false)
+        if (sideQuestActive == false)
         {
-            var sideQuest = SaveController.sideQuests[levelID-1];
-            sideQuest.questItemName = questItemName;
-            SaveController.sideQuests[levelID-1] = sideQuest;
-            SaveController._sideQuest = true;
+            SaveController.AddPOI(questName,questItem);
+            sideQuestActive = true;
         }
     }
     public void CompleteQuest(string questName)

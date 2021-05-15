@@ -134,8 +134,9 @@ public class CheckoutTable : Workbench
     IEnumerator CheckForQuests()
     {
         yield return new WaitForSeconds(1f);
-        if (SaveController._sideQuest)
+        if (GameManager.instance.sideQuestActive)
         {
+            GameManager.instance.questItem = GameManager.instance.currentLevelParams.questItem;
             ThrowNewWatch(GameManager.instance.currentLevelParams.questItem);
         }
     }
@@ -205,9 +206,9 @@ public class CheckoutTable : Workbench
 
     private bool CheckQuestWatch(Watch currentWatch)
     {
-        if(SaveController._sideQuest)
+        if(GameManager.instance.sideQuestActive)
         {
-            if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch.WatchItem.itemID == SaveController.GetQuestItem(GameManager.instance.levelID).itemID)
+            if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch.WatchItem.itemID == GameManager.instance.questItem.itemID)
             {
                 return true;
             }

@@ -51,8 +51,7 @@ public class SaveData
         public string name;
          public bool completed;
         public bool found;
-        public string questItemName,itemDescription;
-        public Item questItem;
+        public Item itemToMake;
 
         //Use for adding side quests
         public SideQuest(string questName)
@@ -60,29 +59,16 @@ public class SaveData
             name = questName;
             completed = false;
             found = false;
-            questItemName = null;
-            questItem = null;
-            itemDescription = null;
+            itemToMake = null;
         }
 
         //Use for modifying data
-        public SideQuest(string questName,string itemName, bool questCompleted, bool questFound,Item _questItem)
+        public SideQuest(string questName, bool questCompleted, bool questFound, Item ItemToMake)
         {
             name = questName;
             completed = questCompleted;
             found = questFound;
-            questItemName = itemName;
-            questItem = _questItem;
-            itemDescription = null;
-        }
-        public SideQuest(string questName,string itemName, bool questCompleted, bool questFound,Item _questItem,string _description)
-        {
-            name = questName;
-            completed = questCompleted;
-            found = questFound;
-            questItemName = itemName;
-            questItem = _questItem;
-            itemDescription = _description;
+            itemToMake = ItemToMake;
         }
     }
 
@@ -118,7 +104,6 @@ public class SaveData
             completionTimeSideQuest = sideQuestTime;
         }
     }
-    
 
     //All the stuff to save. Basically, this is all the player progress.
     //THIS IS OF UTMOST IMPORTANCE
@@ -131,4 +116,3 @@ public class SaveData
     public List<Flag> pointsOfInterest = new List<Flag>();
     public List<Flag> trophies = new List<Flag>();
 }
-

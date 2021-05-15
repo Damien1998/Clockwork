@@ -27,7 +27,4 @@ public class LevelParams : ScriptableObject
     public bool casingComponents, mechanismComponents, eitherOfMechOrCasing;
     public int mechMinParts, mechMaxParts;
     public float watchDispensingTime;
-    public Sprite questItemImage;
-    public string questItemDescription;
-    
 }
