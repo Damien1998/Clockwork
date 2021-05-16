@@ -37,9 +37,22 @@ public class PickUpRange : MonoBehaviour
             var tmpList = nearbyItems.OrderBy(item => Vector3.Distance(item.gameObject.transform.position, transform.position)).ToList();
             if(CheckForChanges(tmpList,nearbyItems))
             {
-                nearbyItems = tmpList;
+                if (nearbyItems.Count > 2)
+                {
+                    nearbyItems = tmpList;
+                }
                 itemToPickUpID = 0;
+                
             } 
+        }
+    }
+
+    public void RefreshItems()
+    {
+        if (nearbyItems.Count > 0)
+        {
+            nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
+            nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
         }
     }
     public void ClearAllItems()

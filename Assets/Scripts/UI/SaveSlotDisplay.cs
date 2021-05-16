@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,11 +21,25 @@ public class SaveSlotDisplay : MonoBehaviour
    {
       if (SaveController.CheckForSaves(saveID))
       {
-         SaveController.LoadGame(saveID);
-         saveInfo.text = "LoadedSave Completed Levels : " +SaveController.CompletedLevels();
-         nameField.text = SaveController.currentSaveName();
+         var mySave = SaveController.GetSave(saveID);
+         Debug.Log(mySave.levels.Count);
+         if (mySave.levels.Count >0)
+         {
+            saveInfo.text = $"{mySave.levels[mySave.levels.Count].name}";
+         }
+         else
+         {
+            saveInfo.text = "None";
+         }
+         nameField.text = mySave.saveName;
          nameField.interactable = true;
-         achievments.text = "None , yet";
+         StringBuilder myTrophies = new StringBuilder();
+         for (int i = 0; i < mySave.completedSideQuests.Count; i++)
+         {
+            var myTrophy = Resources.Load<Trophy>($"Trophies/Trophy {mySave.completedSideQuests[i].TrophyID}");
+            myTrophies.Append($"{myTrophy.trophyName} ,");
+         }
+         achievments.text = myTrophies.ToString();
       }
       else
       {
@@ -38,6 +53,7 @@ public class SaveSlotDisplay : MonoBehaviour
    {
       SaveController.LoadGame(saveID);
       SaveController.ChangeSaveName(name);
+      SaveController.SaveGame();
    }
    public void DeleteSave()
    {

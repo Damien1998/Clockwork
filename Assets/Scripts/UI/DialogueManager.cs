@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Models;
 
 public class DialogueManager : MonoBehaviour
 {

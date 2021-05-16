@@ -345,7 +345,7 @@ public class Player : MonoBehaviour
         HeldWatch = null;
         _pickUpScript.HighLightItems = true;
         animator.SetBool("carriesItem", false);
-
+        _pickUpScript.RefreshItems();
         
     }
 

@@ -6,8 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
 public static class SaveController
-{ 
-    private static string saveName;
+{
     public static bool _initialized = false,hasQuest;
     public static SaveData currentSave;
     
@@ -18,12 +17,7 @@ public static class SaveController
    {
        return levels.Count;
    }
-
-   public static string currentSaveName()
-   {
-       return saveName;
-   }
-   public static void ChangeSaveName(string name)
+    public static void ChangeSaveName(string name)
    {
        currentSave.saveName = name;
    }
@@ -37,7 +31,8 @@ public static class SaveController
     }
     
     public static void InitializeSaveController()
-    { 
+    {
+        currentSave = new SaveData();
         levels = new List<SaveData.Level>();
         completedSideQuests = new List<SaveData.SideQuest>();
 
@@ -47,37 +42,64 @@ public static class SaveController
     {
         //Creates a new SaveData containing the current state of everything
         SaveData saveData = SaveState();
-        //Shoves it into a file
+            saveData.saveID = saveID;
+            //Shoves it into a file
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream file = File.Create(Application.persistentDataPath + "/savefile"+saveID+".clk");
+            FileStream file = File.Create($"{Application.persistentDataPath}/savefile{saveID}.clk");
             formatter.Serialize(file, saveData);
             file.Close();
+            currentSave = saveData;
+    }
+
+    public static void SaveGame()
+    {
+        SaveData saveData = SaveState();
+        //Shoves it into a file
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = File.Create($"{Application.persistentDataPath}/savefile{currentSave.saveID}.clk");
+        formatter.Serialize(file, saveData);
+        file.Close();
+        currentSave = saveData;
     }
     public static void LoadGame(int saveID)
     {
-        BinaryFormatter formatter = new BinaryFormatter();
+            BinaryFormatter formatter = new BinaryFormatter();
             FileStream file;
-            file = File.Open(Application.persistentDataPath + "/savefile"+saveID+".clk", FileMode.Open);
+            file = File.Open($"{Application.persistentDataPath}/savefile{saveID}.clk", FileMode.Open);
             SaveData saveData = (SaveData)formatter.Deserialize(file);
             file.Close();
             currentSave = saveData;
-            saveName = saveData.saveName;
             levels = saveData.levels;
+            completedSideQuests = saveData.completedSideQuests;
     }
 
+    public static SaveData GetSave(int saveID)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file;
+        file = File.Open($"{Application.persistentDataPath}/savefile{saveID}.clk", FileMode.Open);
+        SaveData saveData = (SaveData)formatter.Deserialize(file);
+        file.Close();
+        return saveData;
+    }
     public static void DeleteSave(int saveID)
     {
         if (CheckForSaves(saveID))
         {
             File.Delete(Application.persistentDataPath + "/savefile"+saveID+".clk");
+            currentSave = new SaveData();
         }
     }
     //Saves everything needed from the game manager into a SaveData
     private static SaveData SaveState()
     {
         SaveData saveData = new SaveData();
+
+        saveData.saveID = currentSave.saveID;
+        saveData.saveName = currentSave.saveName;
         
         saveData.levels = levels;
+        saveData.completedSideQuests = completedSideQuests;
 
         return saveData;
     }
@@ -97,7 +119,8 @@ public static class SaveController
             }
         }
         var tmpLevel = new SaveData.Level();
-        tmpLevel.levelSideQuest.questTrophy = Resources.Load<LevelParams>($"LevelParams/Level {levelID}").levelTrophy;
+        tmpLevel.levelSideQuest.TrophyID = levelID;
+        tmpLevel.name = Resources.Load<LevelParams>($"LevelParams/Level {GameManager.instance.levelID}").levelName;
         tmpLevel.levelID = levelID;
         levels.Add(tmpLevel);
         

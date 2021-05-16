@@ -41,9 +41,10 @@ public class UIManager : MonoBehaviour
     {
         var levelQuest = ReturnLevel(GameManager.instance.levelID).Value.levelSideQuest;
         TrophyScreen.SetActive(levelQuest.completed);
-        _QuestItemName.text = levelQuest.questTrophy.trophyName;
-        ItemFlavourText.text = levelQuest.questTrophy.Description;
-        trophyDisplay.sprite = levelQuest.questTrophy.trophyImage;
+        var myTrophy = Resources.Load<Trophy>($"Trophies/Trophy {levelQuest.TrophyID}");
+        _QuestItemName.text = myTrophy.trophyName;
+        ItemFlavourText.text = myTrophy.Description;
+        trophyDisplay.sprite = myTrophy.trophyImage;
 
     }
 

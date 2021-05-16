@@ -28,7 +28,7 @@ public class Watch : MonoBehaviour
     public List<SpriteRenderer> itemRenderer;
     public SpriteRenderer stateRenderer;
     private bool selected;
-    private ItemStateDisplay _currentItemDisplay = GameManager.instance.itemStates;
+    private readonly ItemStateDisplay _currentItemDisplay = GameManager.instance.itemStates;
 
     public bool isPlacedOnWorkbench;
 
@@ -56,7 +56,7 @@ public class Watch : MonoBehaviour
     {
         for(int i = 0; i < itemRenderer.Count; i++)
         {
-            if(changedItem.itemImages.Count > i)
+            if(changedItem.itemImages.Length > i)
             {
                 if (changedItem.itemImages[i] != null)
                 {

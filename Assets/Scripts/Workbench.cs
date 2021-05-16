@@ -15,7 +15,7 @@ public class Workbench : MonoBehaviour
     protected float workTimer;
 
     [SerializeField]
-    private Transform dropLocation;
+    public Transform dropLocation;
 
     [SerializeField]
     protected Slider timerDisplay;
@@ -104,7 +104,7 @@ public class Workbench : MonoBehaviour
     protected Watch GenerateItem(Item parameters)
     {
         var newItem = Instantiate(WatchTemplate, transform.position, Quaternion.identity);
-        var newItemData = ScriptableObject.CreateInstance<Item>();
+        var newItemData = new Item();
         newItemData.SetParameters(parameters);
         newItem.GetComponent<Watch>().WatchItem = newItemData;
         return newItem.GetComponent<Watch>();

@@ -7,7 +7,10 @@ using UnityEngine;
 [System.Serializable]
 public class SaveData
 {
+    
     public string saveName = "No Save";
+
+    public int saveID = 0;
     //A struct for saving everything the player interacts with within levels - trophies, POI, etc.
     /// <summary>
     /// It contains info on the name of the interaction (so that our little human brains don't get fried up when we have to figure out why does the POI nr 7556347865 not work) and its completion status.
@@ -28,7 +31,7 @@ public class SaveData
     {
         public string name;
         public bool completed;
-        public Trophy questTrophy;
+        public int TrophyID;
 
 
         //Use for adding side quests
@@ -36,15 +39,15 @@ public class SaveData
         {
             name = questName;
             completed = false;
-            questTrophy = null;
+            TrophyID = 0;
         }
 
         //Use for modifying data
-        public SideQuest(string questName,string itemName, bool questCompleted,Trophy _questTrophy)
+        public SideQuest(string questName,string itemName, bool questCompleted,int _trophyID)
         {
             name = questName;
             completed = questCompleted;
-            questTrophy = _questTrophy;
+            TrophyID = _trophyID;
         }
     }
 
@@ -60,6 +63,7 @@ public class SaveData
         public SideQuest levelSideQuest;
         public float completionTime;
         public float completionTimeSideQuest;
+        
         
         //Use for adding new levels, except the tutorial
         public Level(int _levelID)
@@ -83,7 +87,22 @@ public class SaveData
             levelSideQuest = new SideQuest();
         }
     }
-    
+    [System.Serializable]
+    public struct TrophyInfo
+    {
+        public Sprite trophyImage;
+        public string trophyName;
+        public string Description;
+        
+
+        public TrophyInfo(string _description,string _trophyName,Sprite _trophyImage)
+        {
+            trophyImage = _trophyImage;
+            Description = _description;
+            trophyName = _trophyName;
+        }
+        
+    }
 
     //All the stuff to save. Basically, this is all the player progress.
     //THIS IS OF UTMOST IMPORTANCE

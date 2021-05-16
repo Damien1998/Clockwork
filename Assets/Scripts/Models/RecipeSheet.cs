@@ -56,7 +56,7 @@ public class RecipeSheet : MonoBehaviour
     private void DisplayRecipe()
     {
         var WatchItem = RecipeListView.currentMainWatch.WatchItem;
-        for (int i = WatchItem.itemImages.Count-1; i >= 0; i--)
+        for (int i = WatchItem.itemImages.Length-1; i >= 0; i--)
         {
             var tmpGO = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[0].transform);
             tmpGO.GetComponent<Image>().sprite = WatchItem.itemImages[i];
@@ -122,7 +122,7 @@ public class RecipeSheet : MonoBehaviour
     }
     private void DisplayItem(Item _item,GameObject _itemPosition)
     {
-        for (int i = _item.itemImages.Count-1; i >= 0; i--)
+        for (int i = _item.itemImages.Length-1; i >= 0; i--)
         {
             var tmpGO = Instantiate(Image, Vector3.zero, Quaternion.identity, _itemPosition.transform);
             tmpGO.GetComponent<Image>().sprite = _item.itemImages[i];

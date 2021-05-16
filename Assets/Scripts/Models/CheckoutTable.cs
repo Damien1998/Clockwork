@@ -1,36 +1,39 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+using System.Linq;
 using UnityEngine;
 using static SaveController;
 
 //Refactoring is done! You may enter safely
-public class CheckoutTable : Workbench
+namespace Models
 {
-    private int watchIndex = 0;
-    [SerializeField] private LevelParams workbenchLevelParams;
-
-    [SerializeField] private TextAsset endOfLevelDialogue,questEndDialogue;
-    
-    [SerializeField] private Transform watchThrowPoint;
-    [SerializeField] private ParticleSystem deliveryFX, retrievedFX;
-    private int watchesFixed;
-    //public GameObject WatchTemplate;
-
-    void Start()
+    public class CheckoutTable : Workbench
     {
-        //PS
-        //<summary>
-        //About the WatchList ScriptableObject script
-        //</summary>
-        //Since we will have more then 1 level expected at the moment of making this
-        //It's more comfortable to have a quick and easy to use object that can specify what kind of watches will spawn in the order that is put in
-        //This way we can make list of watches that will be used instantly
-        //If you want to change the order which the watches spawn in go into "Resources/LevelParams/Level  directory
-        workbenchLevelParams = Resources.Load<LevelParams>("LevelParams/Level " + GameManager.instance.levelID);
-    }
-    /*
+        public List<Item> randomWatches = new List<Item>();
+
+        private int watchIndex = 0;
+        [SerializeField] private LevelParams workbenchLevelParams;
+
+        [SerializeField] private TextAsset endOfLevelDialogue,questEndDialogue;
+    
+        [SerializeField] private Transform watchThrowPoint;
+        [SerializeField] private ParticleSystem deliveryFX, retrievedFX;
+        private Watch questWatch;
+        private int watchesFixed;
+
+        void Start()
+        {
+            //PS
+            //<summary>
+            //About the WatchList ScriptableObject script
+            //</summary>
+            //Since we will have more then 1 level expected at the moment of making this
+            //It's more comfortable to have a quick and easy to use object that can specify what kind of watches will spawn in the order that is put in
+            //This way we can make list of watches that will be used instantly
+            //If you want to change the order which the watches spawn in go into "Resources/LevelParams directory
+            workbenchLevelParams = Resources.Load<LevelParams>($"LevelParams/Level {GameManager.instance.levelID}");
+        }
+        /*
      * PS
      * <summary>
      * Function Checks for CorrectWatch and Spawns new One if it's given the repaired correct one
@@ -38,110 +41,72 @@ public class CheckoutTable : Workbench
      * Currently because of no easy way to access the and store the item that player holds i used the currentWatch variable as a storage
      * Possibly in the future it would be more efficient and comfortable if we had one method to handle putting watches in the workbenches
      */
-     /**
-    private void ReturningWatches(Watch returnedWatch)
-    {
-        returnedWatch.transform.position = transform.position;
-        if (CheckWatch(returnedWatch) == true)
+
+        public void InitLevel()
         {
-                watchIndex++;
-                ThrowNewWatch(workbenchWatchList.listOfWatches[watchIndex]);
-                // GameManager.instance.AddPoints(1);      Since the game ends when the point is added as of now i'll just leave it commented 
+            GameManager.instance.levelID = GameManager.instance.levelID;
+            CreateRandomWatches();
+            StartCoroutine(CheckForQuests());
+            StartCoroutine(DispenseWatches());
         }
-        
-    }
-    **/
 
-    public void InitLevel()
-    {
-        GameManager.instance.levelID = GameManager.instance.levelID;
-        GameManager.instance.CreateRandomWatches();
-        //ThrowRandomWatch();
-        StartCoroutine(CheckForQuests());
-        StartCoroutine(DispenseWatches());
-    }
-
-    public override void PlaceItem(Watch itemToPlace)
-    {
-        if(CheckQuestWatch(itemToPlace))
+        public override void PlaceItem(Watch itemToPlace)
         {
-            itemToPlace.transform.position = transform.position;
-            Destroy(itemToPlace.gameObject);
-            
-            CompleteQuest(GameManager.instance.levelID);
-
-            //Idk how to end quests :/
-        }
-        if(CheckWatch(itemToPlace) == true)
-        {
-            retrievedFX.Play();
-            //I'm not sure whether we really need that there:
-            //base.PlaceItem(itemToPlace);
-            //watchIndex++;
-            itemToPlace.transform.position = transform.position;
-            Destroy(itemToPlace.gameObject);
-            if(workbenchLevelParams.watchAmount <= watchesFixed)
+            if(CheckQuestWatch(itemToPlace))
             {
-                //ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
-
-                //ThrowRandomWatch();
-                Debug.Log("Last watch");
-
-                if (ReturnLevel(GameManager.instance.levelID).HasValue && ReturnLevel(GameManager.instance.levelID).Value.levelSideQuest.completed)
-                {
-                    DialogueManager.instance.StartDialogue(questEndDialogue);
-                    hasQuest = false;
-                }
-                else
-                {
-                    DialogueManager.instance.StartDialogue(endOfLevelDialogue);
-                }
-                UIManager.instance.StopTimer();
+                itemToPlace.transform.position = transform.position;
+                Destroy(itemToPlace.gameObject);
+            
+                CompleteQuest(GameManager.instance.levelID);
             }
-            //else
-            //{
-            //    //UIManager.instance.ShowLevelEnd();
-                
-            //}
-        }
-    }
+            if(CheckWatch(itemToPlace) == true)
+            {
+                retrievedFX.Play();
+                //I'm not sure whether we really need that there:
+                itemToPlace.transform.position = transform.position;
+                Destroy(itemToPlace.gameObject);
+                if(workbenchLevelParams.watchAmount <= watchesFixed)
+                {
+                    //ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
 
-    IEnumerator DispenseWatches()
-    {
-        while(watchIndex < workbenchLevelParams.watchAmount)
+                    //ThrowRandomWatch();
+                    Debug.Log("Last watch");
+
+                    if (ReturnLevel(GameManager.instance.levelID).HasValue && ReturnLevel(GameManager.instance.levelID).Value.levelSideQuest.completed)
+                    {
+                        DialogueManager.instance.StartDialogue(questEndDialogue);
+                        hasQuest = false;
+                        SaveController.SaveGame();
+                    }
+                    else
+                    {
+                        DialogueManager.instance.StartDialogue(endOfLevelDialogue);
+                    }
+                    UIManager.instance.StopTimer();
+                }
+            }
+        }
+
+        IEnumerator DispenseWatches()
         {
-            deliveryFX.Play();
-            ThrowRandomWatch();
-            yield return new WaitForSeconds(workbenchLevelParams.watchDispensingTime);
-            watchIndex++;
+            while(watchIndex < workbenchLevelParams.watchAmount)
+            {
+                deliveryFX.Play();
+                ThrowRandomWatch();
+                yield return new WaitForSeconds(workbenchLevelParams.watchDispensingTime);
+                watchIndex++;
+            }
         }
-    }
-
-    protected override void DropItems()
-    {
-        Debug.Log("VAR234");
-    }
-    /**
-    private void CheckForQuests()
-    {
-        if (GameManager.instance.sideQuestActive)
+        IEnumerator CheckForQuests()
         {
-            ThrowNewWatch(GameManager.instance.questItem);  
+            yield return new WaitForSeconds(1f);
+            if (hasQuest)
+            {
+                ThrowQuestWatch(GameManager.instance.currentLevelParams.questWatch);
+            }
         }
-    }
-    **/
 
-    //Checking for quests is done after a sort delay so that wathches don't go funky on converor belts
-    IEnumerator CheckForQuests()
-    {
-        yield return new WaitForSeconds(1f);
-        if (hasQuest)
-        {
-            ThrowNewWatch(GameManager.instance.currentLevelParams.questItem);
-        }
-    }
-
-    /*
+        /*
     PS
     <summary>
     This is a simple method to make new watch if there is none at the moment of creating 
@@ -149,78 +114,340 @@ public class CheckoutTable : Workbench
     Sadly as of now it does not pool the watch due to the nature of watch components and fact that the watch object constantly changes in scene
     But it can be noted that this might be changed to pooling later on in the production
     */
-    private void ThrowNewWatch(Item itemParameters)
-    {
-        var pos = transform.position;
-        if (watchThrowPoint != null)
+        private void ThrowQuestWatch(QuestWatch _questWatch)
         {
-            pos = watchThrowPoint.position;
+            var pos = transform.position;
+            if (watchThrowPoint != null)
+            {
+                pos = watchThrowPoint.position;
+            }
+            var newWatch = Instantiate(WatchTemplate, pos, Quaternion.identity);
+            var watchItem = new Item();
+            LoadQuestWatch(_questWatch,watchItem);
+            newWatch.GetComponent<Watch>().WatchItem = new Item();
+            newWatch.GetComponent<Watch>().WatchItem.SetParameters(watchItem);
+            newWatch.GetComponent<Watch>().isCompleteWatch = true;
+            newWatch.GetComponent<Watch>().WatchItem.trueState = _questWatch.myState;
+            newWatch.GetComponent<Watch>().WatchItem.State = ItemState.UnknownState;
+            newWatch.GetComponent<Watch>().itemRenderer[0].sprite = _questWatch.QuestWatchSprites[0];
+            newWatch.GetComponent<Watch>().itemRenderer[0].gameObject.SetActive(true);
+            questWatch = newWatch.GetComponent<Watch>();
         }
 
-        var newWatch = Instantiate(WatchTemplate, pos, Quaternion.identity);
-        var newItem = ScriptableObject.CreateInstance<Item>();
-        newItem.SetParameters(itemParameters);
-        newWatch.GetComponent<Watch>().WatchItem = newItem;
-        newWatch.GetComponent<Watch>().isCompleteWatch = true;
-        newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
-    }
-
-    private void ThrowRandomWatch()
-    {
-        var pos = transform.position;
-        if(watchThrowPoint != null)
+        private void LoadQuestWatch(QuestWatch _questWatch,Item myItem)
         {
-            pos = watchThrowPoint.position;
+            myItem.itemImages = new Sprite[_questWatch.QuestWatchSprites.Length];
+            for (int i = 0; i < _questWatch.QuestWatchSprites.Length; i++)
+            {
+                myItem.itemImages[i] = _questWatch.QuestWatchSprites[i];
+            }
+            myItem.components = new List<Item>();
+            for (int i = 0; i <  _questWatch.Parts.Length; i++)
+            {
+             myItem.components.Add(new Item());
+             myItem.components[i].parentItem = myItem;
+             LoadQuestWatch(_questWatch.Parts[i],myItem.components[i]);
+            }
+            myItem.State = _questWatch.myState;
         }
+        private void ThrowRandomWatch()
+        {
+            var pos = transform.position;
+            if(watchThrowPoint != null)
+            {
+                pos = watchThrowPoint.position;
+            }
 
-        var newWatch = Instantiate(WatchTemplate, pos, Quaternion.identity);
-        var newItem = ScriptableObject.CreateInstance<Item>();
-        newItem.SetParameters(GameManager.instance.randomWatches[watchIndex]);
-        newWatch.GetComponent<Watch>().WatchItem = newItem;
-        newWatch.GetComponent<Watch>().isCompleteWatch = true;
-        newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
-    }
-    /*
+            var newWatch = Instantiate(WatchTemplate, pos, Quaternion.identity);
+            var newItem = new Item();
+            newItem.SetParameters(randomWatches[watchIndex]);
+            newWatch.GetComponent<Watch>().WatchItem = newItem;
+            newWatch.GetComponent<Watch>().isCompleteWatch = true;
+            newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
+        }
+        /*
      PS
      <summary>
      The bool checks if the Item we placed matches the requirements of the CheckoutTable
      </summary>
      */
-    private bool CheckWatch(Watch currentWatch)
-    {
-        if(currentWatch.WatchItem.State == ItemState.Repaired&&currentWatch.isCompleteWatch)
+        private bool CheckWatch(Watch currentWatch)
         {
-            for (int i = 0; i < GameManager.instance.randomWatches.Count; i++)
+            if(currentWatch.WatchItem.State == ItemState.Repaired&&currentWatch.isCompleteWatch&&currentWatch != questWatch)
             {
-                if (currentWatch.WatchItem.itemID == GameManager.instance.randomWatches[i].itemID)
+                for (int i = 0; i < randomWatches.Count; i++)
                 {
-                    watchesFixed++;
-                    return true;
+                    if (currentWatch.WatchItem.itemID == randomWatches[i].itemID)
+                    {
+                        watchesFixed++;
+                        return true;
+                    }
                 }
             }
+
+            return false;
+        
         }
 
-        return false;
-        
-    }
-
-    private bool CheckQuestWatch(Watch currentWatch)
-    {
-        if(hasQuest)
+        private bool CheckQuestWatch(Watch currentWatch)
         {
-            if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch.WatchItem.itemID == workbenchLevelParams.questItem.itemID)
+            if(hasQuest)
             {
+                if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch == questWatch)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
                 return true;
             }
             else
             {
                 return false;
             }
-        }
-        else
-        {
-            return false;
-        }
         
+        }
+        private void MakeQuickParts(Sprite[] bases,Item parentItem,int itemSlots)
+        {
+            var newItem = new Item();
+            var randomNumber = Random.Range(0, bases.Length);
+        
+            newItem.parentItem = parentItem;
+            parentItem.components.Add(newItem);
+            newItem.itemImages[0] = bases[randomNumber];
+            parentItem.itemImages[itemSlots] = bases[randomNumber];
+        }
+
+        void GenerateCasing(WatchSprites casingSprites,Item newWatchCasing)
+        {
+            MakeQuickParts(casingSprites.Glass,newWatchCasing,0);
+
+            MakeQuickParts(casingSprites.Box ,newWatchCasing,1);
+                    
+            MakeQuickParts(casingSprites.Belt ,newWatchCasing,2);
+        }
+        void GenerateMechanism(WatchSprites watchSprites,Item mechanism)
+        {
+            for (int j = 0; j < Random.Range(workbenchLevelParams.mechMinParts, workbenchLevelParams.mechMaxParts); j++)
+            {
+                var newItem = new Item
+                {
+                    itemImages = {[0] = watchSprites.Mechanical[Random.Range(0, watchSprites.Mechanical.Length-1)]}
+                };
+                newItem.parentItem = mechanism;
+                mechanism.components.Add(newItem);
+            }
+        }
+        void SimpleCasingWatch(WatchSprites watchSprites,Item item)
+        {
+            item.itemImages[0] = watchSprites.Glass[Random.Range(0, watchSprites.Glass.Length)];
+            item.itemImages[1] = watchSprites.Box[Random.Range(0, watchSprites.Box.Length)];
+            item.itemImages[2] = watchSprites.Belt[Random.Range(0,  watchSprites.Belt.Length)];
+        }
+        //TODO making it cleaner
+        private void CreateRandomWatches()
+        {
+            var watchTypes = GameManager.instance.watchTypes;
+            var currentLevelParams = workbenchLevelParams;
+
+            for(int i = 0; i < currentLevelParams.watchAmount; i++)
+            {
+
+                Item newWatch = new Item {itemImages = new Sprite[4]};
+
+                //For choosing the watch type
+                var weights = currentLevelParams.pocketWatchWeight + currentLevelParams.wristWatchWeight;
+
+                WatchType watchType;
+                WatchSprites watchSprites; 
+
+                //Selects the watch type
+                if (Random.Range(0, weights) < currentLevelParams.pocketWatchWeight)
+                {
+                    watchType = WatchType.HandWatch;
+                    watchSprites = watchTypes[(int) watchType];
+                    newWatch.itemImages[0] = watchSprites.Housing[0];
+                }
+                else
+                {
+                    watchType = WatchType.PocketWatch;
+                    watchSprites = watchTypes[(int)watchType];
+                    newWatch.itemImages[0] = watchSprites.Housing[0];
+                }
+            
+                newWatch.components = new List<Item>();
+                newWatch.State = ItemState.ComplexBroken;
+                newWatch.trueState = ItemState.ComplexBroken;
+
+                Item newWatchCasing = new Item {itemImages = new Sprite[3]};
+                Item newWatchMechanism = new Item();
+
+                if(currentLevelParams.eitherOfMechOrCasing)
+                {
+
+                    if (Random.Range(0, 2) == 0)
+                    {
+                        GenerateCasing(watchSprites,newWatchCasing);
+
+                        newWatchCasing.State = ItemState.ComplexBroken;
+                        newWatchCasing.trueState = ItemState.ComplexBroken;
+                    
+                    }
+                    else
+                    {
+                        SimpleCasingWatch(watchSprites, newWatchCasing);
+
+                        GenerateMechanism(watchSprites,newWatchMechanism);
+
+                        newWatchMechanism.State = ItemState.ComplexBroken;
+                        newWatchMechanism.trueState = ItemState.ComplexBroken;
+                    }               
+                }
+                else if (currentLevelParams.casingComponents || currentLevelParams.mechanismComponents)
+                {
+
+                    if (currentLevelParams.casingComponents)
+                    {
+                        GenerateCasing(watchSprites,newWatchCasing);
+
+                        newWatchCasing.State = ItemState.ComplexBroken;
+                        newWatchCasing.trueState = ItemState.ComplexBroken;
+                    }     
+                    else
+                    {
+                        SimpleCasingWatch(watchSprites, newWatchCasing);
+                    }
+
+                    newWatchMechanism.components = new List<Item>();
+
+                    if (currentLevelParams.mechanismComponents)
+                    {
+                        var rAmount = Random.Range(currentLevelParams.mechMinParts, currentLevelParams.mechMaxParts);
+                        for (int j = 0; j < rAmount; j++)
+                        {
+                            var newItem = new Item();
+                            newItem.itemImages[0] =  watchSprites.Mechanical[Random.Range(0, watchSprites.Mechanical.Length)];
+                            newItem.parentItem = newWatchMechanism;
+
+                            newWatchMechanism.components.Add(newItem);
+                        }
+                        newWatchMechanism.State = ItemState.ComplexBroken;
+                        newWatchMechanism.trueState = ItemState.ComplexBroken;
+                    }
+                }            
+                else
+                {
+                    SimpleCasingWatch(watchSprites, newWatchCasing);
+                
+                    newWatchCasing.components = new List<Item>();
+
+                    newWatchMechanism.components = new List<Item>();
+                }
+                newWatchMechanism.itemImages[0] = watchSprites.Mechanical[watchSprites.Mechanical.Length-1];
+                newWatchCasing.parentItem = newWatch;
+                newWatchMechanism.parentItem = newWatch;
+
+                newWatch.components.Add(newWatchCasing);
+                newWatch.components.Add(newWatchMechanism);
+
+                newWatch.itemImages[0] = newWatchCasing.itemImages[0];
+                newWatch.itemImages[1] = watchSprites.Face[Random.Range(0, watchSprites.Face.Length)];
+                newWatch.itemImages[2] = newWatchCasing.itemImages[1];
+                newWatch.itemImages[3] = newWatchCasing.itemImages[2];
+
+                if (Random.Range(0, 100) < currentLevelParams.decorPercentChance)
+                {
+                    var newWatchDecor = new Item
+                    {
+                        itemImages = {[0] = watchSprites.Decoration[Random.Range(0, watchSprites.Decoration.Length)]},
+                        parentItem = newWatch
+                    };
+
+                    newWatch.components.Add(newWatchDecor);
+                }
+
+                //Setting the component states
+                List<Item> newWatchBasicItems = GetBasicItems(newWatch);
+            
+                foreach(Item basicItem in newWatchBasicItems)
+                {
+                    basicItem.trueState = ItemState.Repaired;
+                    basicItem.State = ItemState.Repaired;              
+                }
+
+                float brokenComponentPercentage = (Random.Range(currentLevelParams.brokenPartMinPercentage, currentLevelParams.brokenPartMaxPercentage));
+                Debug.Log(brokenComponentPercentage);
+                var brokenComponentAmount = Mathf.RoundToInt((brokenComponentPercentage/100) * newWatchBasicItems.Count);
+                Debug.LogWarning("BrokenComponents: " + brokenComponentAmount);
+                var safeguard = 100;
+
+                Debug.Log(brokenComponentAmount);
+
+                while(brokenComponentAmount > 0 && safeguard > 0)
+                {
+                    Debug.Log("WHAT");
+                    var temp = Random.Range(0, newWatchBasicItems.Count);
+                    if(newWatchBasicItems[temp].trueState != ItemState.Unfixable && newWatchBasicItems[temp].trueState != ItemState.Broken)
+                    {
+                        if (currentLevelParams.brokenState && currentLevelParams.unfixableState)
+                        {
+                            if (Random.Range(0, 2) == 0)
+                            {
+                                Debug.LogWarning("Unfixable Part!");
+                                newWatchBasicItems[temp].trueState = ItemState.Unfixable;
+                                newWatchBasicItems[temp].State = newWatchBasicItems[temp].trueState;
+                            }
+                            else
+                            {
+                                Debug.LogWarning("EHHH");
+                                newWatchBasicItems[temp].trueState = ItemState.Broken;
+                                newWatchBasicItems[temp].State = newWatchBasicItems[temp].trueState;
+                            }
+
+                            newWatchBasicItems[temp].State = newWatchBasicItems[temp].trueState;
+                        }
+                        else if (currentLevelParams.brokenState)
+                        {
+                            Debug.LogWarning("UUHH");
+                            newWatchBasicItems[temp].trueState = ItemState.Broken;
+                            newWatchBasicItems[temp].State = newWatchBasicItems[temp].trueState;
+                        }
+                        else if (currentLevelParams.unfixableState)
+                        {
+                            Debug.LogWarning("Unfixable Part");
+                            newWatchBasicItems[temp].trueState = ItemState.Unfixable;
+                            newWatchBasicItems[temp].State = newWatchBasicItems[temp].trueState;
+                        }
+
+                        brokenComponentAmount--;
+                    }
+                    safeguard--;   
+                }
+
+                for(int j = 0; j < newWatchBasicItems.Count; j++)
+                {
+                    if (Random.Range(0, 100) < currentLevelParams.unknownStatePercentChance)
+                    {
+                        newWatchBasicItems[j].State = ItemState.UnknownState;
+                    }
+                }
+                randomWatches.Add(newWatch);
+            }
+        }
+        List<Item> GetBasicItems(Item myItem)
+        {
+            var myList = new List<Item>();
+            if (myItem.components.Count > 0)
+            {
+                for (int i = 0; i < myItem.components.Count; i++)
+                {
+                    var tmpList = GetBasicItems(myItem.components[i]);
+                    myList.AddRange(tmpList);
+                }    
+            }
+            return myList;
+        }
     }
 }

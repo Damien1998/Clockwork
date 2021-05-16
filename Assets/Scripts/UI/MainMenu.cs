@@ -23,6 +23,7 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         UIManager.instance.QuickSettingButton.SetActive(true);
+        SaveController.CreateSaveGame(0);
         SaveController.UnlockLevel(levelID);
         SceneManager.LoadScene($"Level{levelID}-City");
     }
@@ -43,7 +44,7 @@ public class MainMenu : MonoBehaviour
         {
             SaveController.LoadGame(saveID);
         }
-        StartGame(3);
+        StartGame(10);
     }
 
     public void PlayButtonSound(string sound)
