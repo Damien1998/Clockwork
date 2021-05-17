@@ -25,12 +25,13 @@ public class SaveSlotDisplay : MonoBehaviour
          Debug.Log(mySave.levels.Count);
          if (mySave.levels.Count >0)
          {
-            saveInfo.text = $"{mySave.levels[mySave.levels.Count].name}";
+            saveInfo.text = $"Poziom: {mySave.levels[mySave.levels.Count-1].name}";
          }
          else
          {
             saveInfo.text = "None";
          }
+         Debug.Log(mySave.levels.Count);
          nameField.text = mySave.saveName;
          nameField.interactable = true;
          StringBuilder myTrophies = new StringBuilder();

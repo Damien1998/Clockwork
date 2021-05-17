@@ -323,7 +323,7 @@ public class Player : MonoBehaviour
         }
         HeldWatch = pickedupItem;
         _pickUpScript.HighLightItems = false;
-        _pickUpScript.ClearAllItems();
+        _pickUpScript.ResetID();
         pickedupItem.GetComponent<Watch>().ChangeSortingLayer("ItemsHeld");
         pickedupItem.transform.position = ItemPosition.position;
         HeldWatch.GetComponent<Watch>().isSelected = false;

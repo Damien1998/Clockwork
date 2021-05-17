@@ -76,12 +76,12 @@ namespace Models
                     {
                         DialogueManager.instance.StartDialogue(questEndDialogue);
                         hasQuest = false;
-                        SaveController.SaveGame();
                     }
                     else
                     {
                         DialogueManager.instance.StartDialogue(endOfLevelDialogue);
                     }
+                    SaveGame();
                     UIManager.instance.StopTimer();
                 }
             }
