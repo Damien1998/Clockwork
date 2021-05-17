@@ -66,10 +66,14 @@ public class ConveyorBelt : MonoBehaviour
                 {
                     collision.transform.position = new Vector3(collision.transform.position.x, itemSnapPosition.position.y);
                 }
+                rigidbody.velocity = direction.normalized * speed;
             }
-            
+            else
+            {
+                rigidbody.AddForce(direction.normalized * speed);
+            }
 
-            rigidbody.AddForce(direction.normalized * speed);           
+                   
         }
     }
     private void OnTriggerExit2D(Collider2D collision)

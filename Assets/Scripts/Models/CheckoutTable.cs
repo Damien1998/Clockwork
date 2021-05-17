@@ -255,7 +255,7 @@ namespace Models
             for(int i = 0; i < currentLevelParams.watchAmount; i++)
             {
 
-                Item newWatch = new Item {itemImages = new Sprite[4]};
+                Item newWatch = new Item {itemImages = new Sprite[5]};
 
                 //For choosing the watch type
                 var weights = currentLevelParams.pocketWatchWeight + currentLevelParams.wristWatchWeight;
@@ -366,6 +366,13 @@ namespace Models
                     };
 
                     newWatch.components.Add(newWatchDecor);
+
+                    newWatch.itemImages[4] = newWatchDecor.itemImages[0];
+                    
+                }
+                else
+                {
+                    newWatch.itemImages[4] = null;
                 }
 
                 //Setting the component states
@@ -380,6 +387,7 @@ namespace Models
                 float brokenComponentPercentage = (Random.Range(currentLevelParams.brokenPartMinPercentage, currentLevelParams.brokenPartMaxPercentage));
                 Debug.Log(brokenComponentPercentage);
                 var brokenComponentAmount = Mathf.RoundToInt((brokenComponentPercentage/100) * newWatchBasicItems.Count);
+                Debug.LogWarning("BasicItems: " + newWatchBasicItems.Count);
                 Debug.LogWarning("BrokenComponents: " + brokenComponentAmount);
                 var safeguard = 100;
 
@@ -446,6 +454,10 @@ namespace Models
                     var tmpList = GetBasicItems(myItem.components[i]);
                     myList.AddRange(tmpList);
                 }    
+            }
+            else
+            {
+                myList.Add(myItem);
             }
             return myList;
         }
