@@ -268,13 +268,15 @@ namespace Models
                 {
                     watchType = WatchType.HandWatch;
                     watchSprites = watchTypes[(int) watchType];
-                    newWatch.itemImages[0] = watchSprites.Housing[0];
+                    //newWatch.itemImages[0] = watchSprites.Housing[0];
+                    newWatch.itemImages[1] = watchSprites.Housing[0];
                 }
                 else
                 {
                     watchType = WatchType.PocketWatch;
                     watchSprites = watchTypes[(int)watchType];
-                    newWatch.itemImages[0] = watchSprites.Housing[0];
+                    //newWatch.itemImages[0] = watchSprites.Housing[0];
+                    newWatch.itemImages[1] = watchSprites.Housing[0];
                 }
             
                 newWatch.components = new List<Item>();
@@ -352,27 +354,39 @@ namespace Models
                 newWatch.components.Add(newWatchCasing);
                 newWatch.components.Add(newWatchMechanism);
 
-                newWatch.itemImages[0] = newWatchCasing.itemImages[0];
-                newWatch.itemImages[1] = watchSprites.Face[Random.Range(0, watchSprites.Face.Length)];
-                newWatch.itemImages[2] = newWatchCasing.itemImages[1];
-                newWatch.itemImages[3] = newWatchCasing.itemImages[2];
+                //newWatch.itemImages[0] = newWatchCasing.itemImages[0];
+                //newWatch.itemImages[1] = watchSprites.Face[Random.Range(0, watchSprites.Face.Length)];
+                //newWatch.itemImages[2] = newWatchCasing.itemImages[1];
+                //newWatch.itemImages[3] = newWatchCasing.itemImages[2];
+                newWatch.itemImages[1] = newWatchCasing.itemImages[0];
+                newWatch.itemImages[2] = watchSprites.Face[Random.Range(0, watchSprites.Face.Length)];
+                newWatch.itemImages[3] = newWatchCasing.itemImages[1];
+                newWatch.itemImages[4] = newWatchCasing.itemImages[2];
 
                 if (Random.Range(0, 100) < currentLevelParams.decorPercentChance)
                 {
+                    var decorID = Random.Range(0, watchSprites.Decoration.Length - 1);
+
                     var newWatchDecor = new Item
                     {
-                        itemImages = {[0] = watchSprites.Decoration[Random.Range(0, watchSprites.Decoration.Length)]},
+                        itemImages = {[0] = watchSprites.Decoration[decorID]},
                         parentItem = newWatch
                     };
 
                     newWatch.components.Add(newWatchDecor);
 
-                    newWatch.itemImages[4] = newWatchDecor.itemImages[0];
-                    
+                    //newWatch.itemImages[4] = newWatchDecor.itemImages[0];
+                    newWatch.itemImages[0] = newWatchDecor.itemImages[0];
+                    if(decorID > 0)
+                    {
+                        newWatch.itemImages[0] = watchSprites.Decoration[2];
+                    }
+
                 }
                 else
                 {
-                    newWatch.itemImages[4] = null;
+                    //newWatch.itemImages[4] = null;
+                    newWatch.itemImages[0] = null;
                 }
 
                 //Setting the component states
