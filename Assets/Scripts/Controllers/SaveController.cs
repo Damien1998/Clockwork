@@ -42,9 +42,13 @@ public static class SaveController
     {
         //Creates a new SaveData containing the current state of everything
         SaveData saveData = SaveState();
-            saveData.saveID = saveID;
             //Shoves it into a file
             BinaryFormatter formatter = new BinaryFormatter();
+            while (File.Exists($"{Application.persistentDataPath}/savefile{saveID}.clk"))
+            {
+                saveID++;
+            }
+            saveData.saveID = saveID;
             FileStream file = File.Create($"{Application.persistentDataPath}/savefile{saveID}.clk");
             formatter.Serialize(file, saveData);
             file.Close();

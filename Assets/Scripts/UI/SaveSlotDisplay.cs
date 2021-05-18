@@ -7,62 +7,74 @@ using UnityEngine.UI;
 
 public class SaveSlotDisplay : MonoBehaviour
 {
+   public SaveSlotManager myManager;
    public int saveID;
-   public Text saveInfo;
+   public Text saveInfo,saveName;
    public InputField nameField;
-   public Text achievments;
-
-   private void Awake()
-   {
-      DisplaySaves();
-   }
-
+   public GameObject trophyImageTemplate,trophyImageList;
+   
    public void DisplaySaves()
    {
       if (SaveController.CheckForSaves(saveID))
       {
          var mySave = SaveController.GetSave(saveID);
-         Debug.Log(mySave.levels.Count);
          if (mySave.levels.Count >0)
          {
             saveInfo.text = $"Poziom: {mySave.levels[mySave.levels.Count-1].name}";
          }
          else
          {
-            saveInfo.text = "None";
+            saveInfo.text = "You didn't Complete Any Level Yet!";
          }
-         Debug.Log(mySave.levels.Count);
-         nameField.text = mySave.saveName;
-         nameField.interactable = true;
-         StringBuilder myTrophies = new StringBuilder();
+
+         if (mySave.saveName != "No Save")
+         {
+            saveName.text = mySave.saveName;
+         }
+         else
+         {
+            saveName.text = $"Save {mySave.saveID}";
+         }
+
+         for (int i = 0; i < trophyImageList.transform.childCount; i++)
+         {
+            Destroy(trophyImageList.transform.GetChild(i).gameObject);
+         }
+
          for (int i = 0; i < mySave.completedSideQuests.Count; i++)
          {
             var myTrophy = Resources.Load<Trophy>($"Trophies/Trophy {mySave.completedSideQuests[i].TrophyID}");
-            myTrophies.Append($"{myTrophy.trophyName} ,");
+            var trophyObject = Instantiate(trophyImageTemplate, trophyImageList.transform);
+            trophyObject.GetComponent<Image>().sprite = myTrophy.trophyImage;
          }
-         achievments.text = myTrophies.ToString();
       }
       else
       {
-         saveInfo.text = "Clear Save";
-         nameField.text = "Name";
-         nameField.interactable = false;
-         achievments.text = "None"; 
+         saveInfo.text = "New Save(You didn't Complete Any Level Yet!)";
+         saveName.text = "Name";
       }
+   }
+   private void UpdateNameText(string nameText)
+   {
+      saveName.text = nameText;
+   }
+
+   public void SelectThisSlot()
+   {
+      myManager.SelectSaveSlot(saveID);
    }
    public void ChangeSaveName(string name)
    {
-      SaveController.LoadGame(saveID);
       SaveController.ChangeSaveName(name);
       SaveController.SaveGame();
+      UpdateNameText(name);
    }
    public void DeleteSave()
    {
       if (SaveController.CheckForSaves(saveID))
       {
          saveInfo.text = "Clear Save";
-         nameField.text = "Name";
-         achievments.text = "None";
+         saveName.text = "No Save!";
          SaveController.DeleteSave(saveID);
       }
    }
