@@ -16220,8 +16220,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 183476005
-  m_SortingLayer: 3
+  m_SortingLayerID: -1689930819
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 619beaee4140bbf488590dfbf89affd8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -17103,10 +17103,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5089550197744641559}
     m_Modifications:
+    - target: {fileID: 3377802259801238935, guid: 9c6359bfbb59a8049b18f08a102aef38,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
+      objectReference: {fileID: 0}
     - target: {fileID: 8277678781079578905, guid: 9c6359bfbb59a8049b18f08a102aef38,
         type: 3}
       propertyPath: m_Name
       value: Dash
+      objectReference: {fileID: 0}
+    - target: {fileID: 8277678781079578906, guid: 9c6359bfbb59a8049b18f08a102aef38,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 8277678781079578908, guid: 9c6359bfbb59a8049b18f08a102aef38,
         type: 3}
@@ -17243,6 +17253,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Footstep (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6542074300719952695, guid: b873dd7712417ce4b801c9d3c59dbb8c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7620963812980605157, guid: b873dd7712417ce4b801c9d3c59dbb8c,
+        type: 3}
+      propertyPath: m_SortingOrder
+      value: -2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b873dd7712417ce4b801c9d3c59dbb8c, type: 3}
