@@ -67,9 +67,11 @@ public class WorkbenchBasic : Workbench
                 for (int i = 0; i < currentItem.WatchItem.components.Count; i++)
                 {
                     itemSlots[i] = GenerateItem(currentItem.WatchItem.components[i]);
+                    itemSlots[i].questWatch = currentItem.questWatch;
                     if(itemSlots[i].WatchItem.trueState == ItemState.Repaired && itemSlots[0].WatchItem.components.Count != 0)
                     {
                         itemSlots[i].WatchItem.State = itemSlots[i].WatchItem.trueState;
+                        
                     }
                 }
                 if(currentItem.WatchItem.components.Count > 0)
@@ -103,7 +105,11 @@ public class WorkbenchBasic : Workbench
                     newPart.WatchItem = watchToDrop;
                     newPart.WatchItem.trueState = ItemState.Repaired;
                     newPart.WatchItem.State = ItemState.Repaired;
-                    newPart.isCompleteWatch = true;
+                    newPart.questWatch = CheckForQuestWatch();
+                    if (newPart.WatchItem.parentItem == null)
+                    {
+                        newPart.isCompleteWatch = true;
+                    }
 
                     EmptySlot(0);
                     EmptySlot(1);
@@ -131,6 +137,26 @@ public class WorkbenchBasic : Workbench
         base.DropItems();
     }
 
+    bool CheckForQuestWatch()
+    {
+        var filledSlots = 0;
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (itemSlots[i] != null)
+            {
+                filledSlots++;
+            }
+        }
+        for (int i = 0; i < filledSlots; i++)
+        {
+            if (itemSlots[i].questWatch)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+   
     bool CheckForAllComponents(Watch[] slots)
     {
         var filledSlots = 0;
@@ -157,7 +183,7 @@ public class WorkbenchBasic : Workbench
             {
                 if (j != i)
                 {
-                    if (slots[j].WatchItem.parentItem == myParentItem&&slots[j].WatchItem.State == ItemState.Repaired)
+                    if (slots[j].WatchItem.parentItem == myParentItem&&slots[j].WatchItem.State == ItemState.Repaired&& slots[j].WatchItem != slots[i].WatchItem)
                     {
                         correctComponents++;
                     }

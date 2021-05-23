@@ -123,15 +123,18 @@ namespace Models
             }
             var newWatch = Instantiate(WatchTemplate, pos, Quaternion.identity);
             var watchItem = new Item();
+            var WatchComponent = newWatch.GetComponent<Watch>(); 
             LoadQuestWatch(_questWatch,watchItem);
-            newWatch.GetComponent<Watch>().WatchItem = new Item();
-            newWatch.GetComponent<Watch>().WatchItem.SetParameters(watchItem);
-            newWatch.GetComponent<Watch>().isCompleteWatch = true;
-            newWatch.GetComponent<Watch>().WatchItem.trueState = _questWatch.myState;
-            newWatch.GetComponent<Watch>().WatchItem.State = ItemState.UnknownState;
-            newWatch.GetComponent<Watch>().itemRenderer[0].sprite = _questWatch.QuestWatchSprites[0];
-            newWatch.GetComponent<Watch>().itemRenderer[0].gameObject.SetActive(true);
-            questWatch = newWatch.GetComponent<Watch>();
+            WatchComponent.WatchItem = new Item();
+            WatchComponent.WatchItem.SetParameters(watchItem);
+            WatchComponent.WatchItem.trueState = _questWatch.myState;
+            WatchComponent.WatchItem.State = ItemState.UnknownState;
+            
+            WatchComponent.isCompleteWatch = true;
+            WatchComponent.questWatch = true;
+            WatchComponent.itemRenderer[0].sprite = _questWatch.QuestWatchSprites[0];
+            WatchComponent.itemRenderer[0].gameObject.SetActive(true);
+            questWatch = WatchComponent;
         }
 
         private void LoadQuestWatch(QuestWatch _questWatch,Item myItem)
@@ -173,7 +176,7 @@ namespace Models
      */
         private bool CheckWatch(Watch currentWatch)
         {
-            if(currentWatch.WatchItem.State == ItemState.Repaired&&currentWatch.isCompleteWatch&&currentWatch != questWatch)
+            if(currentWatch.WatchItem.State == ItemState.Repaired&&currentWatch.isCompleteWatch&&!currentWatch.questWatch)
             {
                 for (int i = 0; i < randomWatches.Count; i++)
                 {
@@ -193,7 +196,7 @@ namespace Models
         {
             if(hasQuest)
             {
-                if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch == questWatch)
+                if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch.questWatch)
                 {
                     return true;
                 }
