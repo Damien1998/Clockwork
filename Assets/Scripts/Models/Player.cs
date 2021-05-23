@@ -325,7 +325,8 @@ public class Player : MonoBehaviour
         _pickUpScript.HighLightItems = false;
         _pickUpScript.ResetID();
         pickedupItem.GetComponent<Watch>().ChangeSortingLayer("ItemsHeld");
-        pickedupItem.transform.position = ItemPosition.position;
+        //pickedupItem.transform.position = ItemPosition.position;
+        StartCoroutine(LerpItemToPos(ItemPosition.position, 0.08f, 0));
         HeldWatch.GetComponent<Watch>().isSelected = false;
         animator.SetBool("carriesItem", true);
     }
@@ -339,10 +340,12 @@ public class Player : MonoBehaviour
             HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
         }
         HeldWatch.GetComponent<Watch>().ChangeSortingLayer("Items");
-        HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
-        itemDropGroundParticles.transform.position = HeldWatch.transform.position;
-        itemDropGroundParticles.Play();
-        HeldWatch = null;
+
+        //HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
+        //HeldWatch.GetComponent<Rigidbody2D>().AddForce((new Vector2(lastDirection.x, lastDirection.y) * 4), ForceMode2D.Impulse);
+        StartCoroutine(LerpItemToPos(transform.position + new Vector3(lastDirection.x, lastDirection.y), 0.08f, 1));
+        //StartCoroutine(ThrowItemToPos(new Vector3(lastDirection.x, lastDirection.y), 0.08f));
+
         _pickUpScript.HighLightItems = true;
         animator.SetBool("carriesItem", false);
         _pickUpScript.RefreshItems();
@@ -359,14 +362,93 @@ public class Player : MonoBehaviour
         }
         HeldWatch.GetComponent<Watch>().ChangeSortingLayer("ItemsWorkbench");
         HeldWatch.GetComponent<Watch>().isSelected = false;
-        nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
-        itemDropParticles.transform.position = HeldWatch.transform.position;
-        itemDropParticles.Play();
-        HeldWatch = null;
+
+        if(nearbyWorkbench.slotPositions.Length > 0)
+        {
+            StartCoroutine(LerpItemToPos(nearbyWorkbench.slotPositions[0].position, 0.08f, 2));
+        }
+        
+
         _pickUpScript.HighLightItems = true;
         animator.SetBool("carriesItem", false);
 
         
+    }
+
+    IEnumerator ThrowItemToPos(Vector2 targetPos, float duration)
+    {
+        Vector2 startPos = HeldWatch.transform.position;
+        float time = 0;
+        //if(!clearItem)
+        //{
+        //    lockMovement = true;
+        //}
+
+        //var dist = Vector2.Distance(startPos, targetPos);
+        //var dir = (targetPos - startPos).normalized;
+        var speed = 1 / duration;
+
+        //HeldWatch.GetComponent<Rigidbody2D>().AddForce(targetPos * speed, ForceMode2D.Impulse);
+        
+        while (time < duration)
+        {
+            HeldWatch.GetComponent<Rigidbody2D>().velocity = targetPos * speed;
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        //yield return new WaitForSeconds(duration);
+
+        //lockMovement = false;
+
+        //HeldWatch.transform.position = targetPos;
+        HeldWatch.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        //HeldWatch.GetComponent<Rigidbody2D>().AddForce(targetPos * -800f, ForceMode2D.Impulse);
+
+        itemDropGroundParticles.transform.position = HeldWatch.transform.position;
+        itemDropGroundParticles.Play();
+        HeldWatch = null;
+    }
+
+    IEnumerator LerpItemToPos(Vector2 targetPos, float duration, int interactionType)
+    {
+        float time = 0;
+        Vector2 startPos = HeldWatch.transform.position;
+
+        //if(!clearItem)
+        //{
+        //    lockMovement = true;
+        //}
+        
+
+        while (time < duration)
+        {
+            float t = time / duration;
+            t = t * t * (3f - 2f * t);
+
+            HeldWatch.transform.position = Vector2.Lerp(startPos, targetPos, t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        //lockMovement = false;
+
+        HeldWatch.transform.position = targetPos;
+
+        if(interactionType == 1)
+        {
+            itemDropGroundParticles.transform.position = HeldWatch.transform.position;
+            itemDropGroundParticles.Play();
+            HeldWatch = null;
+        }
+        else if(interactionType == 2)
+        {
+            nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
+            itemDropParticles.transform.position = HeldWatch.transform.position;
+            itemDropParticles.Play();
+            HeldWatch = null;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
