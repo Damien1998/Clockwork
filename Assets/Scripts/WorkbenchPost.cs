@@ -6,7 +6,7 @@ using UnityEngine.UI;
 //
 public class WorkbenchPost : Workbench
 {
-    private bool invalidItemInside;
+    private bool invalidItemInside, isEmpty;
 
     [SerializeField] private ParticleSystem checkMark, crossMark;
 
@@ -17,14 +17,14 @@ public class WorkbenchPost : Workbench
         //Use multiple if you want more at the same time
         numberOfSlots = 1;
         itemSlots = new Watch[1];
-
+        isEmpty = true;
         workTimer = workTimerBase;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(itemSlots[0] != null)
+        if(!isEmpty)
         {
             Work();
         }
@@ -36,6 +36,7 @@ public class WorkbenchPost : Workbench
             timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
+            isEmpty = true;
         }
 
         //I made a different check for this
@@ -47,6 +48,7 @@ public class WorkbenchPost : Workbench
             timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
+            isEmpty = true;
         }
     }
 
@@ -68,6 +70,7 @@ public class WorkbenchPost : Workbench
                     invalidItemInside = true;
                 }
 
+                isEmpty = false;
                 itemSlots[i] = itemToPlace;
                 itemToPlace.gameObject.SetActive(false);
                 break;

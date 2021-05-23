@@ -7,7 +7,7 @@ using UnityEngine.UI;
 //Refactoring is done! You may enter safely
 public class WorkbenchExamine : Workbench
 {
-    private bool invalidItemInside;
+    private bool invalidItemInside, isEmpty;
 
     [SerializeField] private ParticleSystem checkMark, crossMark;
 
@@ -18,14 +18,14 @@ public class WorkbenchExamine : Workbench
         //Use multiple if you want more at the same time
         numberOfSlots = 1;
         itemSlots = new Watch[1];
-
+        isEmpty = true;
         workTimer = workTimerBase;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (itemSlots[0] != null)
+        if (!isEmpty)
         {
             if (!workParticles.isEmitting)
             {
@@ -43,6 +43,7 @@ public class WorkbenchExamine : Workbench
             timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
+            isEmpty = true;
         }
 
         //I made a different check for this
@@ -54,6 +55,7 @@ public class WorkbenchExamine : Workbench
             timerDisplay.gameObject.SetActive(false);
             DropItems();
             workTimer = workTimerBase;
+            isEmpty = true;
         }
     }
 
@@ -81,7 +83,9 @@ public class WorkbenchExamine : Workbench
                 {
                     invalidItemInside = false;
                 }
-                
+
+                isEmpty = false;
+
                 ShowComponentList(itemToPlace);
                 itemSlots[i] = itemToPlace;
                 itemToPlace.gameObject.SetActive(false);

@@ -28,6 +28,9 @@ public class Workbench : MonoBehaviour
     [SerializeField]
     protected ParticleSystem workParticles, endParticles;
 
+    [SerializeField]
+    private GameObject collisionLock;
+
     //This is only used in the basic and precise workbenches
     //But it has to be here so that other scripts can easily access it
     //Set this to true if the player is pushing the action button near a workbench
@@ -46,11 +49,22 @@ public class Workbench : MonoBehaviour
                 itemToPlace.transform.position = slotPositions[i].position;
                 itemToPlace.isPlacedOnWorkbench = true;
                 itemSlots[i] = itemToPlace;
+                //if(collisionLock != null)
+                //{
+                //    StartCoroutine(LockItemCollision());
+                //}
                 //itemToPlace.gameObject.SetActive(false);
                 
                 break;
             }
         }
+    }
+
+    IEnumerator LockItemCollision()
+    {
+        collisionLock.SetActive(true);
+        yield return new WaitForSeconds(0.4f);
+        collisionLock.SetActive(false);
     }
 
     //Workbench functionality
@@ -76,11 +90,12 @@ public class Workbench : MonoBehaviour
         {
             if(itemSlots[i] != null)
             {
-                itemSlots[i].transform.position = dropLocation.position;
-                itemSlots[i].isPlacedOnWorkbench = false;
+                //itemSlots[i].transform.position = dropLocation.position;
+                //itemSlots[i].isPlacedOnWorkbench = false;
                 itemSlots[i].gameObject.SetActive(true);
-                itemSlots[i].ChangeSortingLayer("Items");
-                itemSlots[i] = null;
+                //itemSlots[i].ChangeSortingLayer("Items");
+                //itemSlots[i] = null;
+                StartCoroutine(LerpItemToPos(dropLocation.position, 0.2f, i));
             }
         }
     }
@@ -92,13 +107,43 @@ public class Workbench : MonoBehaviour
         {
             if (itemSlots[i] != null)
             {
-                itemSlots[i].transform.position = dropLocation.position;
-                itemSlots[i].isPlacedOnWorkbench = false;
+                //itemSlots[i].transform.position = dropLocation.position;
+                //itemSlots[i].isPlacedOnWorkbench = false;
                 itemSlots[i].gameObject.SetActive(true);
-                itemSlots[i].ChangeSortingLayer("Items");
-                itemSlots[i] = null;
+                //itemSlots[i].ChangeSortingLayer("Items");
+                //itemSlots[i] = null;
+                StartCoroutine(LerpItemToPos(dropLocation.position, 0.2f, i));
             }
         }
+    }
+
+    IEnumerator LerpItemToPos(Vector2 targetPos, float duration, int itemID)
+    {
+        float time = 0;
+        Vector2 startPos = slotPositions[0].position;
+
+        //if(!clearItem)
+        //{
+        //    lockMovement = true;
+        //}
+
+
+        while (time < duration)
+        {
+            float t = time / duration;
+            t = t * t * (3f - 2f * t);
+
+            itemSlots[itemID].transform.position = Vector2.Lerp(startPos, targetPos, t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        //lockMovement = false;
+
+        itemSlots[itemID].transform.position = targetPos;
+        itemSlots[itemID].ChangeSortingLayer("Items");
+        itemSlots[itemID].isPlacedOnWorkbench = false;
+        itemSlots[itemID] = null;
     }
 
     protected Watch GenerateItem(Item parameters)
