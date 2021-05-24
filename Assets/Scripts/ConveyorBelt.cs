@@ -18,13 +18,14 @@ public class ConveyorBelt : MonoBehaviour
     {       
         if (collision.TryGetComponent(out Rigidbody2D rigidbody) && (collision.TryGetComponent(out Watch watch) || collision.TryGetComponent(out Player player)))
         {
-            rigidbody.velocity = Vector2.zero;
+            
             //rigidbody.velocity = direction.normalized * speed;
-            rigidbody.AddForce(direction.normalized * speed);
+            
             //collision.gameObject.layer = LayerMask.NameToLayer("ItemNoCollision");
 
             if(watch != null)
             {
+                rigidbody.velocity = Vector2.zero;
                 watch.ChangeSortingLayer("ItemsWorkbench");
                 player = null;
                 if (direction.x == 0)
@@ -44,6 +45,8 @@ public class ConveyorBelt : MonoBehaviour
             if(player != null)
             {
                 player.isOnConveyor = true;
+                //rigidbody.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
+                player.additionalVelocity = direction.normalized * speed;
             }
 
             
@@ -70,7 +73,7 @@ public class ConveyorBelt : MonoBehaviour
             }
             else
             {
-                rigidbody.AddForce(direction.normalized * speed);
+                //rigidbody.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
             }
 
                    
@@ -81,6 +84,7 @@ public class ConveyorBelt : MonoBehaviour
         if (collision.TryGetComponent(out Player player))
         {
             player.isOnConveyor = false;
+            player.additionalVelocity = Vector2.zero;
         }
 
     }
