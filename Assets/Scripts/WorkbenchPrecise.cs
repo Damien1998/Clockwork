@@ -58,6 +58,7 @@ public class WorkbenchPrecise : Workbench
             workTimer = workTimerBase;
         }
 
+        KeepSlotsInPlace(true);
     }
 
     protected bool IsAMechanism(Item itemToCheck)

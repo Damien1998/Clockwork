@@ -60,6 +60,24 @@ public class Workbench : MonoBehaviour
         }
     }
 
+    protected void KeepSlotsInPlace(bool yAxis)
+    {
+        for(int i = 0; i < itemSlots.Length; i++)
+        {
+            if(itemSlots[i] != null)
+            {
+                if(yAxis)
+                {
+                    itemSlots[i].transform.position = new Vector2(itemSlots[i].transform.position.x, slotPositions[i].position.y);
+                }
+                else
+                {
+                    itemSlots[i].transform.position = new Vector2(slotPositions[i].position.x, itemSlots[i].transform.position.y);
+                }
+            }
+        }
+    }
+
     IEnumerator LockItemCollision()
     {
         collisionLock.SetActive(true);
