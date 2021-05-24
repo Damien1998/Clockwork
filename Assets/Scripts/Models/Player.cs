@@ -30,6 +30,8 @@ public class Player : MonoBehaviour
 
     public bool lockMovement;
 
+    public Vector2 additionalVelocity;
+
     //We wanted to handle interaction from the side of the player 
     //having a bool for every type of interactable object in the workshop feels clunky
     //Especially if some more of them will be there
@@ -252,31 +254,33 @@ public class Player : MonoBehaviour
                 //Managing player speed
                 if (movementInput != Vector2.zero && !isDashing)
                 {
-                    if (isOnConveyor)
-                    {
-                        rigidBody.AddForce(movementInput.normalized * moveSpeed*0.7f);
-                    }
-                    else
-                    {
-                        rigidBody.velocity = movementInput.normalized * moveSpeed;
-                    }
-
+                    //if (isOnConveyor)
+                    //{
+                    //    //rigidBody.AddForce(movementInput.normalized * moveSpeed*0.7f);
+                    //    rigidBody.velocity = movementInput.normalized * moveSpeed + additionalVelocity;
+                    //}
+                    //else
+                    //{
+                    //    rigidBody.velocity = movementInput.normalized * moveSpeed + additionalVelocity;
+                    //}
+                    rigidBody.velocity = movementInput.normalized * moveSpeed + additionalVelocity;
                 }
                 else if (isDashing)
                 {
-                    if (isOnConveyor)
-                    {
-                        rigidBody.AddForce(dashDirection * dashSpeed * 0.7f);
-                    }
-                    else
-                    {
-                        rigidBody.velocity = dashDirection * dashSpeed;
-                    }
-
+                    //if (isOnConveyor)
+                    //{
+                    //    //rigidBody.AddForce(dashDirection * dashSpeed * 0.7f);
+                    //    rigidBody.velocity = dashDirection * dashSpeed + additionalVelocity;
+                    //}
+                    //else
+                    //{
+                    //    rigidBody.velocity = dashDirection * dashSpeed + additionalVelocity;
+                    //}
+                    rigidBody.velocity = dashDirection * dashSpeed + additionalVelocity;
                 }
-                else if(!isOnConveyor)
+                else /*if(!isOnConveyor)*/
                 {
-                    rigidBody.velocity = Vector2.zero;
+                    rigidBody.velocity = Vector2.zero + additionalVelocity;
                 }
             }
             else
