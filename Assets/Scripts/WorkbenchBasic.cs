@@ -50,6 +50,7 @@ public class WorkbenchBasic : Workbench
             workTimer = workTimerBase;
         }
 
+        KeepSlotsInPlace(true);
     }
 
     protected override void DropItems()

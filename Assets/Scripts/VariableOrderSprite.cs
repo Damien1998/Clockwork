@@ -41,19 +41,19 @@ public class VariableOrderSprite : MonoBehaviour
                 if (Vector2.Distance(collision.transform.position, frontPoint.transform.position) < Vector2.Distance(collision.transform.position, backPoint.transform.position))
                 {
                     spriteRenderer.sortingOrder = baseSortingOrder - 2;
-                    collision.GetComponent<SpriteRenderer>().sortingLayerName = "PlayerFront";
+                    //collision.GetComponent<SpriteRenderer>().sortingLayerName = "PlayerFront";
                 }
                 else
                 {
                     spriteRenderer.sortingOrder = baseSortingOrder + 2;
-                    collision.GetComponent<SpriteRenderer>().sortingLayerName = "PlayerBack";
+                    //collision.GetComponent<SpriteRenderer>().sortingLayerName = "PlayerBack";
                 }
             }
             else
             {
                 if(Vector2.Distance(collision.transform.position, frontPoint.transform.position) < Vector2.Distance(collision.transform.position, backPoint.transform.position))
                 {
-                    collision.GetComponent<SpriteRenderer>().sortingLayerName = "PlayerFront";
+                    //collision.GetComponent<SpriteRenderer>().sortingLayerName = "PlayerFront";
                     for (int i = 0; i < multipleVariableSprites.Length; i++)
                     {
                         multipleVariableSprites[i].sortingOrder = baseSortingOrders[i] - 2;
@@ -61,7 +61,7 @@ public class VariableOrderSprite : MonoBehaviour
                 }
                 else
                 {
-                    collision.GetComponent<SpriteRenderer>().sortingLayerName = "PlayerBack";
+                    //collision.GetComponent<SpriteRenderer>().sortingLayerName = "PlayerBack";
                     for (int i = 0; i < multipleVariableSprites.Length; i++)
                     {
                         multipleVariableSprites[i].sortingOrder = baseSortingOrders[i] + 2;
@@ -75,7 +75,7 @@ public class VariableOrderSprite : MonoBehaviour
     {
         if(collision.CompareTag("Player"))
         {
-            collision.GetComponent<SpriteRenderer>().sortingLayerName = "Objects";
+            //collision.GetComponent<SpriteRenderer>().sortingLayerName = "Objects";
             if (!multipleSprites)
             {
                 spriteRenderer.sortingOrder = baseSortingOrder;               
