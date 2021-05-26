@@ -14,21 +14,23 @@ public class Platform : MonoBehaviour
     [SerializeField]
     private float speed;
 
-    private void Move()
+    private void Awake()
     {
-        
+        direction = new Vector2(1, 0);
+
     }
     private void OnTriggerEnter2D(Collider2D collision)
-    {       
+    {
         if (collision.TryGetComponent(out Rigidbody2D rigidbody) && (collision.TryGetComponent(out Watch watch) || collision.TryGetComponent(out Player player)))
         {
-            rigidbody.velocity = Vector2.zero;
+
             //rigidbody.velocity = direction.normalized * speed;
-            rigidbody.AddForce(direction.normalized * speed);
+
             //collision.gameObject.layer = LayerMask.NameToLayer("ItemNoCollision");
 
-            if(watch != null)
+            if (watch != null)
             {
+                rigidbody.velocity = Vector2.zero;
                 watch.ChangeSortingLayer("ItemsWorkbench");
                 player = null;
                 if (direction.x == 0)
@@ -45,22 +47,24 @@ public class Platform : MonoBehaviour
                 player = collision.GetComponent<Player>();
             }
 
-            if(player != null)
+            if (player != null)
             {
                 player.isOnConveyor = true;
+                //rigidbody.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
+                player.additionalVelocity = direction.normalized * speed;
             }
 
-            
+
 
         }
-        
+
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.TryGetComponent(out Rigidbody2D rigidbody) && (collision.TryGetComponent(out Watch watch) || collision.TryGetComponent(out Player player)))
         {
-            if(watch != null)
+            if (watch != null)
             {
                 if (direction.x == 0)
                 {
@@ -74,10 +78,10 @@ public class Platform : MonoBehaviour
             }
             else
             {
-                rigidbody.AddForce(direction.normalized * speed);
+                //rigidbody.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
             }
 
-                   
+
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -85,6 +89,7 @@ public class Platform : MonoBehaviour
         if (collision.TryGetComponent(out Player player))
         {
             player.isOnConveyor = false;
+            player.additionalVelocity = Vector2.zero;
         }
 
     }
