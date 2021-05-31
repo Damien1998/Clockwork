@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 335662118423761794}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.32175756, y: 0.041396137, z: -85.53911}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -44,24 +44,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemStates: {fileID: 11400000, guid: 0086019d084666c4abd34e03ea5e2535, type: 2}
-  RecipesList:
-  - {fileID: 11400000, guid: 464838deb0025d449a0df2566568694e, type: 2}
-  - {fileID: 11400000, guid: 9274dd1b2e8bc8941b6116be3bf5fa67, type: 2}
-  - {fileID: 11400000, guid: c1e9810a748dbe84f98f82c47bf60c5c, type: 2}
-  - {fileID: 11400000, guid: 1542ff6e018f72846b0a1821e778286e, type: 2}
-  - {fileID: 11400000, guid: e289f7bd4d67d6b45a13029dd26d9dc1, type: 2}
-  - {fileID: 11400000, guid: b0bd3ed8059aef243b7ed65279be3287, type: 2}
-  - {fileID: 11400000, guid: 5cd4bb7cb11a9d848ae58fffabf5a922, type: 2}
-  - {fileID: 11400000, guid: e04df337f91c6594495dad22a860ce4a, type: 2}
-  - {fileID: 11400000, guid: 4bda26ceb02b93740b9d0ae10b4cfaf5, type: 2}
-  - {fileID: 11400000, guid: d37adbba5c937f343a28ede39c30d41f, type: 2}
-  questItem: {fileID: 0}
   _levelID: 10
-  _sideQuest: 0
+  hasQuest: 0
+  watchTypes: []
   currentLevelParams: {fileID: 11400000, guid: c3467338c5debdc4b896580ae1dfa117, type: 2}
   soundAudioClipArray:
   - sound: 0
-    audioClip: {fileID: 8300000, guid: 3b3233f755994c143be8a848509eb0e1, type: 3}
+    audioClip:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   - sound: 1
-    audioClip: {fileID: 8300000, guid: 492cbcf67a85f16458d47e68fa76edcd, type: 3}
+    audioClip:
+    - {fileID: 0}
+    - {fileID: 0}
+    - {fileID: 0}
   SFX: {fileID: 24300002, guid: 100acb05f1500cb4f81e36206cafce2a, type: 2}
+  BGM: {fileID: 0}

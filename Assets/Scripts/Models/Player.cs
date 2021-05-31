@@ -248,7 +248,7 @@ public class Player : MonoBehaviour
                         lastDirection = yInput;
                     }
 
-                    SoundManager.PlaySound(SoundManager.Sound.PlayerMove);
+                    SoundManager.PlaySound(SoundManager.Sound.StepAnna1); //Do zmiany
                 }
 
                 //Managing player speed
@@ -358,7 +358,7 @@ public class Player : MonoBehaviour
 
     private void PlaceItemInWorkbench()
     {
-        SoundManager.PlaySound(SoundManager.Sound.WorkBenchPut);
+        SoundManager.PlaySound(SoundManager.Sound.ItemPlaced);
         if (HeldWatch.TryGetComponent(out Rigidbody2D itemRigidbody))
         {
             itemRigidbody.velocity = Vector2.zero;
