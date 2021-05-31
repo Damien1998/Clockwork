@@ -15,7 +15,7 @@ public static class SoundManager
         SceneSwapOut = 4,          // odpalane przy zmianie sceny innej niż menu
         SceneSwapIn = 5,
         SceneSwapToMenu = 6,
-        
+        //wolne mijsce
         DefaultClick = 8,       //Jeśli gracz kliknie, ale w nic konkretnego
         SliderInteraction = 9,
         Typing = 10,
@@ -23,16 +23,8 @@ public static class SoundManager
 
         //W warsztacie
             //> Koroki
-        StepAnna1 = 11,
-        StepAnna2 = 12,
-        StepAnna3 = 13,
-        StepAnna4 = 14,
-        StepAnna5 = 15,
-        StepEdward1 = 16,
-        StepEdward2 = 17,
-        StepEdward3 = 18,
-        StepEdward4 = 19,
-        StepEdward5 = 20,
+        StepAnna= 11,
+        StepEdward = 12,
 
             //> Workbenche
         WorkSimple = 31,    

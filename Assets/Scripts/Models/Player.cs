@@ -248,7 +248,7 @@ public class Player : MonoBehaviour
                         lastDirection = yInput;
                     }
 
-                    SoundManager.PlaySound(SoundManager.Sound.StepAnna1); //Do zmiany
+                    SoundManager.PlaySound(SoundManager.Sound.StepAnna); //Do zmiany
                 }
 
                 //Managing player speed
