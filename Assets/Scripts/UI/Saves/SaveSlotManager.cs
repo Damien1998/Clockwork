@@ -6,39 +6,43 @@ using UnityEngine;
 
 public class SaveSlotManager : MonoBehaviour
 {
-   [SerializeField] private SaveSlotDisplay currentSlot;
+   [SerializeField] private SaveSlotInteractive currentSlot;
    [SerializeField]private GameObject SaveSlotTemplate,SaveSlotList;
 
-   private void Awake()
+   private void OnEnable()
    {
       currentSlot.saveID = SaveController.currentSave.saveID;
-      currentSlot.DisplaySaves();
+      currentSlot.Manager = this;
+      currentSlot.DisplaySave();
       DisplaySaveSlots();
    }
 
-   public void ClearAllSlots()
+   private void ClearAllSlots()
    {
       for (int i = 0; i < SaveSlotList.transform.childCount; i++)
       {
          Destroy(SaveSlotList.transform.GetChild(i).gameObject);
       }
    }
-   private void DisplaySaveSlots()
+   public void DisplaySaveSlots()
    {
+      ClearAllSlots();
       DirectoryInfo fileDirectory = new DirectoryInfo(Application.persistentDataPath);
       for (int i = 0; i < DirCount(fileDirectory); i++)
       {
          var saveSlot = Instantiate(SaveSlotTemplate, SaveSlotList.transform);
-         saveSlot.GetComponent<SaveSlotDisplay>().saveID = (int) Char.GetNumericValue(GetSaveName(fileDirectory,i),8);
-         saveSlot.GetComponent<SaveSlotDisplay>().myManager = this;
-         saveSlot.GetComponent<SaveSlotDisplay>().DisplaySaves();
+         string saveName = GetSaveName(fileDirectory, i);
+         saveName = saveName.Remove(saveName.Length - 4, 4);
+         saveSlot.GetComponent<SaveSlotDisplay>().saveID = Int32.Parse(saveName.Remove(0,8));
+         saveSlot.GetComponent<SaveSlotDisplay>().Manager = this;
+         saveSlot.GetComponent<SaveSlotDisplay>().DisplaySave();
       }
    }
 
    public void SelectSaveSlot(int id)
    {
       currentSlot.saveID = id;
-      currentSlot.DisplaySaves();
+      currentSlot.DisplaySave();
    }
    static string GetSaveName(DirectoryInfo d,int fileIndex)
    {

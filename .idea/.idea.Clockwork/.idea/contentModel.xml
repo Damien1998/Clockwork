@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\piote\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\piote\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_Clockwork.830232741.00" t="ExcludeRecursive" />
-    <e p="D:\Work\Unity\Unity projects\ClockworkOriginal\Clockwork" t="IncludeRecursive">
+    <e p="C:\Users\piote\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_Clockwork.382075793.00" t="ExcludeRecursive" />
+    <e p="D:\Work\Unity\Unity projects\Clockwork" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
@@ -66,14 +66,18 @@
             <e p="WatchComponent.cs" t="Include" />
           </e>
           <e p="PersistentObject.cs" t="Include" />
+          <e p="Platform.cs" t="Include" />
           <e p="SaveData.cs" t="Include" />
           <e p="UI" t="Include">
             <e p="DialogueManager.cs" t="Include" />
             <e p="LevelEndMenu.cs" t="Include" />
             <e p="LevelSelect.cs" t="Include" />
             <e p="MainMenu.cs" t="Include" />
-            <e p="SaveSlotDisplay.cs" t="Include" />
-            <e p="SaveSlotManager.cs" t="Include" />
+            <e p="Saves" t="Include">
+              <e p="SaveSlotDisplay.cs" t="Include" />
+              <e p="SaveSlotInteractive.cs" t="Include" />
+              <e p="SaveSlotManager.cs" t="Include" />
+            </e>
             <e p="SettingsMenu.cs" t="Include" />
             <e p="WorkshopMenu.cs" t="Include" />
           </e>

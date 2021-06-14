@@ -7,17 +7,21 @@ using UnityEngine.UI;
 
 public class SaveSlotDisplay : MonoBehaviour
 {
-   public SaveSlotManager myManager;
+   private SaveSlotManager myManager;
    public int saveID;
    public Text saveInfo,saveName;
-   public InputField nameField;
    public GameObject trophyImageTemplate,trophyImageList;
-   
-   public void DisplaySaves()
+
+   public SaveSlotManager Manager { get  => myManager;
+      set =>  myManager = value;
+   }
+
+   public void DisplaySave()
    {
       if (SaveController.CheckForSaves(saveID))
       {
          var mySave = SaveController.GetSave(saveID);
+         // Checking Completed Levels
          if (mySave.levels.Count >0)
          {
             saveInfo.text = $"Poziom: {mySave.levels[mySave.levels.Count-1].name}";
@@ -27,14 +31,7 @@ public class SaveSlotDisplay : MonoBehaviour
             saveInfo.text = "You didn't Complete Any Level Yet!";
          }
 
-         if (mySave.saveName != "No Save")
-         {
-            saveName.text = mySave.saveName;
-         }
-         else
-         {
-            saveName.text = $"Save {mySave.saveID}";
-         }
+         saveName.text = $"{mySave.saveName}";
 
          for (int i = 0; i < trophyImageList.transform.childCount; i++)
          {
@@ -50,7 +47,7 @@ public class SaveSlotDisplay : MonoBehaviour
       }
       else
       {
-         saveInfo.text = "New Save(You didn't Complete Any Level Yet!)";
+         saveInfo.text = "New Save";
          saveName.text = "Name";
       }
    }
@@ -69,13 +66,5 @@ public class SaveSlotDisplay : MonoBehaviour
       SaveController.SaveGame();
       UpdateNameText(name);
    }
-   public void DeleteSave()
-   {
-      if (SaveController.CheckForSaves(saveID))
-      {
-         saveInfo.text = "Clear Save";
-         saveName.text = "No Save!";
-         SaveController.DeleteSave(saveID);
-      }
-   }
+   
 }
