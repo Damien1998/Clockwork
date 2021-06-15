@@ -43,6 +43,7 @@ public class SaveSlotManager : MonoBehaviour
    {
       currentSlot.saveID = id;
       currentSlot.DisplaySave();
+      SaveController.LoadGame(id);
    }
    static string GetSaveName(DirectoryInfo d,int fileIndex)
    {

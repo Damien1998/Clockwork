@@ -51,20 +51,10 @@ public class SaveSlotDisplay : MonoBehaviour
          saveName.text = "Name";
       }
    }
-   private void UpdateNameText(string nameText)
-   {
-      saveName.text = nameText;
-   }
-
    public void SelectThisSlot()
    {
       myManager.SelectSaveSlot(saveID);
    }
-   public void ChangeSaveName(string name)
-   {
-      SaveController.ChangeSaveName(name);
-      SaveController.SaveGame();
-      UpdateNameText(name);
-   }
+   
    
 }

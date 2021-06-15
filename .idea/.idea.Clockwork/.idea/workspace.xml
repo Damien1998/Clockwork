@@ -25,16 +25,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24ebf151-db49-47b0-a8c7-dede33a08e73" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Graphics/Animations/FX/WorkbenchFX.spriteatlas" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Graphics/Animations/FX/WorkbenchFX.spriteatlas" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/CurrentSavetSlotDisplay.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/CurrentSavetSlotDisplay.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/LoadStuff.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/LoadStuff.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Menu.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Menu.prefab" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SaveSlotDisplay.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SaveSlotDisplay.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SaveSlotManager.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/SaveSlotManager.cs.meta" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotDisplay.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotInteractive.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotInteractive.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +88,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/Trophy.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/TrophyTable.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogueManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/SaveData.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/UIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/RecipeSheet.cs" />
@@ -112,9 +109,10 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/WorkbenchBasic.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SaveSlotManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotInteractive.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotDisplay.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotInteractive.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1iy3MpVIIBx8khPeKCDjG6VTij5" />
@@ -234,6 +232,7 @@
       <workItem from="1621359358963" duration="6833000" />
       <workItem from="1621729709787" duration="1487000" />
       <workItem from="1623669640655" duration="6082000" />
+      <workItem from="1623777301819" duration="1926000" />
     </task>
     <servers />
   </component>
