@@ -6746,7 +6746,9 @@ MonoBehaviour:
   itemStates: {fileID: 11400000, guid: 0086019d084666c4abd34e03ea5e2535, type: 2}
   _levelID: 10
   hasQuest: 0
-  watchTypes: []
+  watchTypes:
+  - {fileID: 11400000, guid: ae99b82d779a43b429c8a01ac5c05313, type: 2}
+  - {fileID: 11400000, guid: dfd86488c1c341f47afdb728f390f956, type: 2}
   currentLevelParams: {fileID: 11400000, guid: c3467338c5debdc4b896580ae1dfa117, type: 2}
   soundAudioClipArray:
   - sound: 1
