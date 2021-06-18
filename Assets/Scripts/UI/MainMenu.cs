@@ -19,11 +19,14 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Level10");
     }
-    public void StartGame(int sceneID)
+    public void StartGame(int levelID)
     {
         Time.timeScale = 1f;
         UIManager.instance.QuickSettingButton.SetActive(true);
-        SceneManager.LoadScene($"Level{sceneID}-City");
+        
+        SaveController.CreateSaveGame(0);
+        SaveController.UnlockLevel(levelID);
+        SceneManager.LoadScene($"Level{levelID}-City");
     }
 
     public void SetGameManagerLevel(int levelID)
@@ -38,13 +41,11 @@ public class MainMenu : MonoBehaviour
     }
     public void LoadSaves(int saveID)
     {
-        SaveController _saveController = new SaveController();
-        if (_saveController.CheckForSaves(saveID))
+        if (SaveController.CheckForSaves(saveID))
         {
             SaveController.LoadGame(saveID);
         }
-        GameManager.instance.SetSaveController(_saveController);
-        StartGame(3);
+        StartGame(10);
     }
 
     public void PlayButtonSound(string sound)

@@ -2,27 +2,31 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="C:\Users\piote\AppData\Local\JetBrains\Rider2020.3\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\piote\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_Clockwork.830232741.00" t="ExcludeRecursive" />
-    <e p="D:\Work\Unity\Unity projects\ClockworkOriginal\Clockwork" t="IncludeRecursive">
+    <e p="C:\Users\piote\AppData\Local\JetBrains\Rider2020.3\resharper-host\Local\Transient\Rider\v203\SolutionCaches\_Clockwork.382075793.00" t="ExcludeRecursive" />
+    <e p="D:\Work\Unity\Unity projects\Clockwork" t="IncludeRecursive">
       <e p="Assembly-CSharp-Editor.csproj" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Art" t="Include">
+        <e p="Editor" t="Include">
+          <e p="WatchEditor.cs" t="Include" />
+        </e>
+        <e p="Graphics" t="Include">
           <e p="Shaders" t="Include">
             <e p="Selected.shader" t="Include" />
           </e>
         </e>
-        <e p="Dialogue" t="Include">
-          <e p="lvl10_ambush.txt" t="Include" />
-          <e p="lvl10_end.txt" t="Include" />
-          <e p="lvl10_quest_philosopher.txt" t="Include" />
-          <e p="lvl10_snow_importer.txt" t="Include" />
-          <e p="lvl10_start.txt" t="Include" />
-          <e p="lvl10_workshop.txt" t="Include" />
-          <e p="test.txt" t="Include" />
-        </e>
-        <e p="Editor" t="Include">
-          <e p="WatchEditor.cs" t="Include" />
+        <e p="PickUpRange.cs" t="Include" />
+        <e p="Resources" t="Include">
+          <e p="Dialogue" t="Include">
+            <e p="lvl10_ambush.txt" t="Include" />
+            <e p="lvl10_end.txt" t="Include" />
+            <e p="lvl10_quest_end.txt" t="Include" />
+            <e p="lvl10_quest_philosopher.txt" t="Include" />
+            <e p="lvl10_snow_importer.txt" t="Include" />
+            <e p="lvl10_start.txt" t="Include" />
+            <e p="lvl10_workshop.txt" t="Include" />
+            <e p="test.txt" t="Include" />
+          </e>
         </e>
         <e p="Scripts" t="Include">
           <e p="CameraAnchor.cs" t="Include" />
@@ -45,7 +49,10 @@
               <e p="Item.cs" t="Include" />
               <e p="ItemStateDisplay.cs" t="Include" />
               <e p="LevelParams.cs" t="Include" />
+              <e p="QuestWatch.cs" t="Include" />
               <e p="Recipe.cs" t="Include" />
+              <e p="Trophy.cs" t="Include" />
+              <e p="WatchSprites.cs" t="Include" />
             </e>
             <e p="Player.cs" t="Include" />
             <e p="POI.cs" t="Include" />
@@ -54,17 +61,23 @@
             <e p="StartOfLevelDialogue.cs" t="Include" />
             <e p="TrophyTable.cs" t="Include" />
             <e p="UILineRenderer.cs" t="Include" />
+            <e p="UnlockLevel.cs" t="Include" />
             <e p="Watch.cs" t="Include" />
             <e p="WatchComponent.cs" t="Include" />
           </e>
           <e p="PersistentObject.cs" t="Include" />
+          <e p="Platform.cs" t="Include" />
           <e p="SaveData.cs" t="Include" />
           <e p="UI" t="Include">
             <e p="DialogueManager.cs" t="Include" />
             <e p="LevelEndMenu.cs" t="Include" />
             <e p="LevelSelect.cs" t="Include" />
             <e p="MainMenu.cs" t="Include" />
-            <e p="SaveSlotDisplay.cs" t="Include" />
+            <e p="Saves" t="Include">
+              <e p="SaveSlotDisplay.cs" t="Include" />
+              <e p="SaveSlotInteractive.cs" t="Include" />
+              <e p="SaveSlotManager.cs" t="Include" />
+            </e>
             <e p="SettingsMenu.cs" t="Include" />
             <e p="WorkshopMenu.cs" t="Include" />
           </e>

@@ -5,30 +5,23 @@ using UnityEngine;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 
-public class SaveController
-{ 
-    private static string saveName;
+public static class SaveController
+{
+    public static bool _initialized = false,hasQuest;
     public static SaveData currentSave;
+    
     private static List<SaveData.Level> levels;
-   private static List<SaveData.SideQuest> sideQuests;
-   private static List<SaveData.Flag> pointsOfInterest;
-   public static List<SaveData.Flag> trophies;
+    public static List<SaveData.SideQuest> completedSideQuests;
 
-   public int CompletedLevels()
+    public static int CompletedLevels()
    {
        return levels.Count;
    }
-
-   public string currentSaveName()
-   {
-       return saveName;
-   }
-
-   public void ChangeSaveName(string name)
+    public static void ChangeSaveName(string name)
    {
        currentSave.saveName = name;
    }
-    public bool CheckForSaves(int saveID)
+    public static bool CheckForSaves(int saveID)
     {
         if(File.Exists(Application.persistentDataPath + "/savefile"+saveID+".clk"))
         {
@@ -37,96 +30,128 @@ public class SaveController
         return false;
     }
     
-    public void InitializeSaveController(int numberOfLevels,int numberOfSideQuests,int numberOfPOI,int numberOfTrophies)
-    { 
+    public static void InitializeSaveController()
+    {
+        currentSave = new SaveData();
         levels = new List<SaveData.Level>();
-       sideQuests = new List<SaveData.SideQuest>();
-       pointsOfInterest = new List<SaveData.Flag>();
-       trophies = new List<SaveData.Flag>();
-       levels.Add(new SaveData.Level("Tutorial", false, true, 0f, 0f));
-       trophies.Add(new SaveData.Flag("firstTrophy",true));
+        completedSideQuests = new List<SaveData.SideQuest>();
+
+        _initialized = true;
     }
-    public void CreateSaveGame(int saveID)
+    public static void CreateSaveGame(int saveID)
     {
         //Creates a new SaveData containing the current state of everything
         SaveData saveData = SaveState();
-        //Shoves it into a file
+            //Shoves it into a file
             BinaryFormatter formatter = new BinaryFormatter();
-            FileStream file = File.Create(Application.persistentDataPath + "/savefile"+saveID+".clk");
+            while (File.Exists($"{Application.persistentDataPath}/savefile{saveID}.clk"))
+            {
+                saveID++;
+            }
+            saveData.saveID = saveID;
+            FileStream file = File.Create($"{Application.persistentDataPath}/savefile{saveID}.clk");
             formatter.Serialize(file, saveData);
             file.Close();
+            currentSave = saveData;
+    }
+
+    public static void SaveGame()
+    {
+        SaveData saveData = SaveState();
+        //Shoves it into a file
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file = File.Create($"{Application.persistentDataPath}/savefile{currentSave.saveID}.clk");
+        formatter.Serialize(file, saveData);
+        file.Close();
+        currentSave = saveData;
     }
     public static void LoadGame(int saveID)
     {
-        BinaryFormatter formatter = new BinaryFormatter();
+            BinaryFormatter formatter = new BinaryFormatter();
             FileStream file;
-            file = File.Open(Application.persistentDataPath + "/savefile"+saveID+".clk", FileMode.Open);
+            file = File.Open($"{Application.persistentDataPath}/savefile{saveID}.clk", FileMode.Open);
             SaveData saveData = (SaveData)formatter.Deserialize(file);
             file.Close();
             currentSave = saveData;
-            saveName = saveData.saveName;
             levels = saveData.levels;
-            sideQuests = saveData.sideQuests;
-            trophies = saveData.trophies;
-            pointsOfInterest = saveData.pointsOfInterest;
+            completedSideQuests = saveData.completedSideQuests;
     }
 
-    public void DeleteSave(int saveID)
+    public static SaveData GetSave(int saveID)
+    {
+        BinaryFormatter formatter = new BinaryFormatter();
+        FileStream file;
+        file = File.Open($"{Application.persistentDataPath}/savefile{saveID}.clk", FileMode.Open);
+        SaveData saveData = (SaveData)formatter.Deserialize(file);
+        file.Close();
+        return saveData;
+    }
+    public static void DeleteSave(int saveID)
     {
         if (CheckForSaves(saveID))
         {
             File.Delete(Application.persistentDataPath + "/savefile"+saveID+".clk");
+            currentSave = new SaveData();
         }
     }
     //Saves everything needed from the game manager into a SaveData
-    private SaveData SaveState()
+    private static SaveData SaveState()
     {
         SaveData saveData = new SaveData();
+
+        saveData.saveID = currentSave.saveID;
+        saveData.saveName = currentSave.saveName;
         
         saveData.levels = levels;
-        saveData.sideQuests = sideQuests;
-        saveData.trophies = trophies;
-        saveData.pointsOfInterest = pointsOfInterest;
+        saveData.completedSideQuests = completedSideQuests;
 
         return saveData;
     }
-    public SaveData.SideQuest GetCurrentSideQuest()
+    public static SaveData.Level? ReturnLevel(int _levelID)
     {
-        return sideQuests[0];
+        var levelListIndex = GetLevelListIndex(_levelID);
+        
+        return levels[levelListIndex];
     }
-    public void AddPOI(string questName,Item questItem)
+    public static void UnlockLevel(int levelID)
     {
-        sideQuests.Add(new SaveData.SideQuest(questName, false, true,questItem)); 
+        for (int i = 0; i < levels.Count; i++)
+        {
+            if (levels[i].levelID == levelID)
+            {
+                break;
+            }
+        }
+        var tmpLevel = new SaveData.Level();
+        tmpLevel.levelSideQuest.TrophyID = levelID;
+        tmpLevel.name = Resources.Load<LevelParams>($"LevelParams/Level {GameManager.instance.levelID}").levelName;
+        tmpLevel.levelID = levelID;
+        levels.Add(tmpLevel);
+        
+    }
+    public static void CompleteQuest(int levelID)
+    {
+        if (ReturnLevel(levelID).HasValue)
+        {
+            var levelListIndex = GetLevelListIndex(levelID);
+            
+            var level = levels[levelListIndex];
+            level.levelSideQuest.completed = true;
+            levels[levelListIndex] = level;
+            
+            completedSideQuests.Add(ReturnLevel(levelID).Value.levelSideQuest);
+        }
     }
 
-    public void UnlockLevel(int levelID)
+    static int GetLevelListIndex (int levelID)
     {
-        if(levelID < levels.Count)
+        for (int i = 0; i < levels.Count; i++)
         {
-            if(!levels[levelID + 1].unlocked)
-            { 
-                levels[levelID + 1] = new SaveData.Level(levels[levelID + 1].name, false, true, 0f, 0f);
-            } 
-        }
-    }
-    public void CompletePOI(string pOIName)
-    {
-        for(int i = 0; i < pointsOfInterest.Count; i++)
-        {
-            if(pointsOfInterest[i].name == pOIName)
+            if (levels[i].levelID == levelID)
             {
-                pointsOfInterest[i] = new SaveData.Flag(pOIName, true);
+                return i;
             }
         }
-    }
-    public void CompleteQuest(string questName)
-    {
-        for (int i = 0; i < sideQuests.Count; i++)
-        {
-            if (sideQuests[i].name == questName)
-            {
-                sideQuests[i] = new SaveData.SideQuest(questName, true, true,null);
-            }
-        }
+        return 0;
     }
 }

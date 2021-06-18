@@ -1,19 +1,22 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static SaveController;
 
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
     public GameObject QuickSettingButton;
-    [SerializeField] private int Points; 
-    //[SerializeField] private GameObject gameOverScreen;
+    [SerializeField] private int Points;
     [SerializeField] private Slider timerDisplay;
     [SerializeField] private GameObject levelEndScren;
     [SerializeField] private GameObject levelFailureScren;
+    [SerializeField] private GameObject TrophyScreen;
     [SerializeField] private Text levelEndText;
     [SerializeField] private Text levelFailureText;
-    [SerializeField] private GameObject trophyDisplay;
+    [SerializeField] private TextMeshProUGUI _QuestItemName, ItemFlavourText; 
+    [SerializeField] private Image trophyDisplay;
 
     private IEnumerator timer;
 
@@ -34,14 +37,24 @@ public class UIManager : MonoBehaviour
         StopCoroutine(timer);
     }
 
+    private void ShowTrophyUI()
+    {
+        var levelQuest = ReturnLevel(GameManager.instance.levelID).Value.levelSideQuest;
+        TrophyScreen.SetActive(levelQuest.completed);
+        var myTrophy = Resources.Load<Trophy>($"Trophies/Trophy {levelQuest.TrophyID}");
+        _QuestItemName.text = myTrophy.trophyName;
+        ItemFlavourText.text = myTrophy.Description;
+        trophyDisplay.sprite = myTrophy.trophyImage;
+
+    }
+
     public void ShowLevelEnd()
     {
-        //StopCoroutine(timer);
         levelEndText.text = "Your Time: " + timerDisplay.value.ToString();
         levelEndScren.SetActive(true);
 
-        //trophyDisplay.SetActive(GameManager.instance.localQuestDone);
-
+        ShowTrophyUI();
+        
         timerDisplay.gameObject.SetActive(false);
     }
 

@@ -24,15 +24,13 @@ public class Player : MonoBehaviour
         //Direction of the dash
     private Vector2 dashDirection;
         //For repeating dashes etc
-    private bool dashReleased;
+        private bool dashReleased;
 
-    [SerializeField]
-    private float pickupRange;
-    
-
-    private int itemToPickUpID = 0;
+    public bool isOnConveyor;
 
     public bool lockMovement;
+
+    public Vector2 additionalVelocity;
 
     //We wanted to handle interaction from the side of the player 
     //having a bool for every type of interactable object in the workshop feels clunky
@@ -46,13 +44,15 @@ public class Player : MonoBehaviour
     private LevelStart nearbyLevelStart;
     private WarpHole nearbyWarpHole;
 
+    [SerializeField] private PickUpRange _pickUpScript;
+
     [SerializeField]
     private float dashDuration;
 
     private Vector2 movementInput, lastDirection;
 
     [SerializeField]
-    private ParticleSystem itemDropParticles, footstepParticles, dashParticles;
+    private ParticleSystem itemDropParticles, footstepParticles, dashParticles, itemDropGroundParticles;
 
     //Components
     private Animator animator;
@@ -72,60 +72,21 @@ public class Player : MonoBehaviour
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
     }
-
-    public static void SetPlayer(bool on)
-    {
-        CanInteract = on;
-    }
-    private Collider2D[] nearbyItems = null;
     void PickUp()
     {
-        //Reworked item pick up mechanic
-        //First checks for input and Locks movement then Searches for items in Range and sorts them accordingly to their position
-        if (Input.GetButtonDown("Pickup" + playerNumber))
+        if (Input.GetButtonDown("Action" + playerNumber))
+        {
+            _pickUpScript.ChangePickedUpObject();
+        }
+        if(Input.GetButtonDown("Pickup" + playerNumber) && _pickUpScript.GetPickedUpObject() != null)
         {
             lockMovement = true;
-            nearbyItems = Physics2D.OverlapCircleAll(transform.position, pickupRange, LayerMask.GetMask("Item"));
-            nearbyItems = nearbyItems.OrderBy(item => item.transform.position.y).ToArray();
-            Array.Reverse(nearbyItems);
-            if (nearbyItems.Length > 0)
-            {
-                if (nearbyItems[itemToPickUpID].TryGetComponent(out Watch watch))
-                {
-                    nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
-                }
-            }
         }
-        //After the first action if player is performing secondary action ie right click it highlights the item in sorted list
-        if (nearbyItems != null && nearbyItems.Length > 0&&Input.GetButtonDown("Action" + playerNumber))
-        {         
-            if (itemToPickUpID < nearbyItems.Length - 1)
-            {
-                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
-                itemToPickUpID++;
-                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
-            }
-            else
-            {
-                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = false;
-                itemToPickUpID = 0;
-                nearbyItems[itemToPickUpID].GetComponent<Watch>().isSelected = true;
-            }
-        }
-        //At the end checks if player is not holding a button anymore and picksup  highlighted item
-        if(nearbyItems != null && Input.GetButtonUp("Pickup" + playerNumber))
+        if (Input.GetButtonUp("Pickup" + playerNumber) && _pickUpScript.GetPickedUpObject() != null)
         {
-            if (itemToPickUpID < nearbyItems.Length  )
-            {
-                if (!nearbyItems[itemToPickUpID].GetComponent<Watch>().isPlacedOnWorkbench)
-                {
-                    PickUpItem(nearbyItems[itemToPickUpID].gameObject);
-                }
-            }
-            
-            itemToPickUpID = 0;
-            nearbyItems = null;
             lockMovement = false;
+            _pickUpScript.GetPickedUpObject().GetComponent<Watch>().isSelected = false;
+            PickUpItem(_pickUpScript.GetPickedUpObject());
         }
     }
     // Update is called once per frame
@@ -142,7 +103,7 @@ public class Player : MonoBehaviour
             {
                 PickUp();
             }
-            else if (Input.GetButtonDown("Pickup" + playerNumber) && HeldWatch != null)
+            else if (Input.GetButtonUp("Pickup" + playerNumber) && HeldWatch != null)
             {
                 if (isByWorkbench)
                 {
@@ -153,7 +114,6 @@ public class Player : MonoBehaviour
                     DropItem();
                 }
             }
-
             if (isByLevelStart && Input.GetButtonDown("Action" + playerNumber))
             {
                 nearbyLevelStart.StartLevel();
@@ -170,7 +130,7 @@ public class Player : MonoBehaviour
                 nearbyWorkbench.isOperated = false;
             }
 
-            if (isByWarpHole && Input.GetButtonDown("Action" + playerNumber) && !lockMovement && !isByWorkbench)
+            if (isByWarpHole && Input.GetButtonUp("Action" + playerNumber) && !lockMovement && !isByWorkbench)
             {
                 if (HeldWatch != null)
                 {
@@ -262,6 +222,7 @@ public class Player : MonoBehaviour
             animator.SetBool("walking", false);
         }
     }
+
     private void FixedUpdate()
     {
         //Player movement      
@@ -287,21 +248,39 @@ public class Player : MonoBehaviour
                         lastDirection = yInput;
                     }
 
-                    SoundManager.PlaySound(SoundManager.Sound.PlayerMove);
+                    SoundManager.PlaySound(SoundManager.Sound.StepAnna); //Do zmiany
                 }
 
                 //Managing player speed
                 if (movementInput != Vector2.zero && !isDashing)
                 {
-                    rigidBody.velocity = movementInput.normalized * moveSpeed;
+                    //if (isOnConveyor)
+                    //{
+                    //    //rigidBody.AddForce(movementInput.normalized * moveSpeed*0.7f);
+                    //    rigidBody.velocity = movementInput.normalized * moveSpeed + additionalVelocity;
+                    //}
+                    //else
+                    //{
+                    //    rigidBody.velocity = movementInput.normalized * moveSpeed + additionalVelocity;
+                    //}
+                    rigidBody.velocity = movementInput.normalized * moveSpeed + additionalVelocity;
                 }
                 else if (isDashing)
                 {
-                    rigidBody.velocity = dashDirection * dashSpeed;
+                    //if (isOnConveyor)
+                    //{
+                    //    //rigidBody.AddForce(dashDirection * dashSpeed * 0.7f);
+                    //    rigidBody.velocity = dashDirection * dashSpeed + additionalVelocity;
+                    //}
+                    //else
+                    //{
+                    //    rigidBody.velocity = dashDirection * dashSpeed + additionalVelocity;
+                    //}
+                    rigidBody.velocity = dashDirection * dashSpeed + additionalVelocity;
                 }
-                else
+                else /*if(!isOnConveyor)*/
                 {
-                    rigidBody.velocity = Vector2.zero;
+                    rigidBody.velocity = Vector2.zero + additionalVelocity;
                 }
             }
             else
@@ -347,8 +326,11 @@ public class Player : MonoBehaviour
             pickedupItem.GetComponent<BoxCollider2D>().enabled = false;
         }
         HeldWatch = pickedupItem;
+        _pickUpScript.HighLightItems = false;
+        _pickUpScript.ResetID();
         pickedupItem.GetComponent<Watch>().ChangeSortingLayer("ItemsHeld");
-        pickedupItem.transform.position = ItemPosition.position;
+        //pickedupItem.transform.position = ItemPosition.position;
+        StartCoroutine(LerpItemToPos(ItemPosition.position, 0.08f, 0));
         HeldWatch.GetComponent<Watch>().isSelected = false;
         animator.SetBool("carriesItem", true);
     }
@@ -362,18 +344,21 @@ public class Player : MonoBehaviour
             HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
         }
         HeldWatch.GetComponent<Watch>().ChangeSortingLayer("Items");
-        HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
-        itemDropParticles.transform.position = HeldWatch.transform.position;
-        itemDropParticles.Play();
-        HeldWatch = null;
-        animator.SetBool("carriesItem", false);
 
+        //HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
+        //HeldWatch.GetComponent<Rigidbody2D>().AddForce((new Vector2(lastDirection.x, lastDirection.y) * 4), ForceMode2D.Impulse);
+        StartCoroutine(LerpItemToPos(transform.position + new Vector3(lastDirection.x, lastDirection.y), 0.08f, 1));
+        //StartCoroutine(ThrowItemToPos(new Vector3(lastDirection.x, lastDirection.y), 0.08f));
+
+        _pickUpScript.HighLightItems = true;
+        animator.SetBool("carriesItem", false);
+        _pickUpScript.RefreshItems();
         
     }
 
     private void PlaceItemInWorkbench()
     {
-        SoundManager.PlaySound(SoundManager.Sound.WorkBenchPut);
+        SoundManager.PlaySound(SoundManager.Sound.ItemPlaced);
         if (HeldWatch.TryGetComponent(out Rigidbody2D itemRigidbody))
         {
             itemRigidbody.velocity = Vector2.zero;
@@ -381,13 +366,93 @@ public class Player : MonoBehaviour
         }
         HeldWatch.GetComponent<Watch>().ChangeSortingLayer("ItemsWorkbench");
         HeldWatch.GetComponent<Watch>().isSelected = false;
-        nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
-        itemDropParticles.transform.position = HeldWatch.transform.position;
-        itemDropParticles.Play();
-        HeldWatch = null;
+
+        if(nearbyWorkbench.slotPositions.Length > 0)
+        {
+            StartCoroutine(LerpItemToPos(nearbyWorkbench.slotPositions[0].position, 0.08f, 2));
+        }
+        
+
+        _pickUpScript.HighLightItems = true;
         animator.SetBool("carriesItem", false);
 
         
+    }
+
+    IEnumerator ThrowItemToPos(Vector2 targetPos, float duration)
+    {
+        Vector2 startPos = HeldWatch.transform.position;
+        float time = 0;
+        //if(!clearItem)
+        //{
+        //    lockMovement = true;
+        //}
+
+        //var dist = Vector2.Distance(startPos, targetPos);
+        //var dir = (targetPos - startPos).normalized;
+        var speed = 1 / duration;
+
+        //HeldWatch.GetComponent<Rigidbody2D>().AddForce(targetPos * speed, ForceMode2D.Impulse);
+        
+        while (time < duration)
+        {
+            HeldWatch.GetComponent<Rigidbody2D>().velocity = targetPos * speed;
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        //yield return new WaitForSeconds(duration);
+
+        //lockMovement = false;
+
+        //HeldWatch.transform.position = targetPos;
+        HeldWatch.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        //HeldWatch.GetComponent<Rigidbody2D>().AddForce(targetPos * -800f, ForceMode2D.Impulse);
+
+        itemDropGroundParticles.transform.position = HeldWatch.transform.position;
+        itemDropGroundParticles.Play();
+        HeldWatch = null;
+    }
+
+    IEnumerator LerpItemToPos(Vector2 targetPos, float duration, int interactionType)
+    {
+        float time = 0;
+        Vector2 startPos = HeldWatch.transform.position;
+
+        //if(!clearItem)
+        //{
+        //    lockMovement = true;
+        //}
+        
+
+        while (time < duration)
+        {
+            float t = time / duration;
+            t = t * t * (3f - 2f * t);
+
+            HeldWatch.transform.position = Vector2.Lerp(startPos, targetPos, t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        //lockMovement = false;
+
+        HeldWatch.transform.position = targetPos;
+
+        if(interactionType == 1)
+        {
+            itemDropGroundParticles.transform.position = HeldWatch.transform.position;
+            itemDropGroundParticles.Play();
+            HeldWatch = null;
+        }
+        else if(interactionType == 2)
+        {
+            nearbyWorkbench.PlaceItem(HeldWatch.GetComponent<Watch>());
+            itemDropParticles.transform.position = HeldWatch.transform.position;
+            itemDropParticles.Play();
+            HeldWatch = null;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)

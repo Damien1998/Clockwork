@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14e5cb096de840741b7dfedb0941d505, type: 3}
+  m_Name: HandWatch
+  m_EditorClassIdentifier: 
+  myType: 0
+  Belt:
+  - {fileID: 21300000, guid: 842cbed4c5c99df488623f4d15e2c7eb, type: 3}
+  - {fileID: 21300000, guid: adcc6e4b3db348a49acd444058e76860, type: 3}
+  - {fileID: 21300000, guid: f0191e8c199ccf34e987dde9420aa710, type: 3}
+  Box:
+  - {fileID: 21300000, guid: 9454067416404e147bc2c7debbd0f48a, type: 3}
+  - {fileID: 21300000, guid: 36a3d2173529810449ff7d753cc6a93f, type: 3}
+  - {fileID: 21300000, guid: 88b0ed4535e1b0f43af243b025cebc3b, type: 3}
+  Decoration:
+  - {fileID: 21300000, guid: acbcea66df4e4e040bd9ef72e0e70cf5, type: 3}
+  - {fileID: 21300000, guid: 81fd23203f9800b44a670d3e8c52452a, type: 3}
+  - {fileID: 21300000, guid: f1ce0b4d4feae514c9dc4941f59f877e, type: 3}
+  Glass:
+  - {fileID: 21300000, guid: b759ad9d3a833024c974957850b01282, type: 3}
+  - {fileID: 21300000, guid: fb87247378e7c264cb9f39244dacd857, type: 3}
+  - {fileID: 21300000, guid: 0a54234354c84fc4f896424ba2e6964d, type: 3}
+  Mechanical:
+  - {fileID: 21300000, guid: 488436150abd8614cae81afc858dc9da, type: 3}
+  - {fileID: 21300000, guid: 846d5aeebf7695a4c9a339fd18f06b23, type: 3}
+  - {fileID: 21300000, guid: 02f5a3a2c064a2240bab9dfd14eeee1a, type: 3}
+  - {fileID: 21300000, guid: b0248d9e52e1c2f449f898d8e78bb389, type: 3}
+  - {fileID: 21300000, guid: c560fea6db38c9440ba1df6f249f311a, type: 3}
+  - {fileID: 21300000, guid: 63e0672b55d091d45be10bfb0d129e15, type: 3}
+  - {fileID: 21300000, guid: 574c278eb8e4f374da68fe66c8838fc7, type: 3}
+  - {fileID: 21300000, guid: debef85bf7faf104ea2b23faf31b29a8, type: 3}
+  - {fileID: 21300000, guid: 57dfc6eefb4670c4bb7bdc3727e0a42e, type: 3}
+  Housing:
+  - {fileID: 21300000, guid: 9d2165d70ea49e440bf5522b8e7dc60f, type: 3}
+  - {fileID: 21300000, guid: 6cabccb4aff75d5429469148a79c79a1, type: 3}
+  - {fileID: 21300000, guid: 0af19277a1020c54988dfd0be287860c, type: 3}
+  Face:
+  - {fileID: 21300000, guid: 71b8464413428714ea23f0590c66fb74, type: 3}

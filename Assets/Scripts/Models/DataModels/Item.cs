@@ -6,15 +6,16 @@ using UnityEngine.Serialization;
 public enum ItemState { Broken,Unfixable,Repaired,UnknownState,ComplexBroken,EmptyState};
 
 [CreateAssetMenu(fileName = "New Item",menuName = "Item")]
-public class Item : ScriptableObject
+public class Item 
 {
-    public ItemState state;
+    private ItemState state;
     private Action<Item> itemStateChangeCb;
 
     public ItemState trueState;
     public int itemID;
-    public List<Sprite> itemImages;
+    public Sprite[] itemImages = new Sprite[1];
     public List<Item> components = new List<Item>();
+    public Item parentItem;
     public List<ItemState> componentsStates = new List<ItemState>();
 
     //<summary>
@@ -41,12 +42,12 @@ public class Item : ScriptableObject
         this.state = templateitem.state;
         this.components = templateitem.components;
         this.itemID = templateitem.itemID;
-        //this.itemImages = templateitem.itemImages;
+        this.parentItem = templateitem.parentItem;
 
-        itemImages = new List<Sprite>();
-        for(int i = 0; i < templateitem.itemImages.Count; i++)
+        itemImages = new Sprite[templateitem.itemImages.Length];
+        for(int i = 0; i < templateitem.itemImages.Length; i++)
         {
-            itemImages.Add(templateitem.itemImages[i]);
+            itemImages[i] = templateitem.itemImages[i];
         }
 
         this.trueState = templateitem.trueState;

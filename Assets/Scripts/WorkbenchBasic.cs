@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class WorkbenchBasic : Workbench
 {
     [SerializeField] private ParticleSystem checkMark, crossMark;
+    private Item watchToDrop;
 
     // Start is called before the first frame update
     void Start()
@@ -49,6 +50,7 @@ public class WorkbenchBasic : Workbench
             workTimer = workTimerBase;
         }
 
+        KeepSlotsInPlace(true);
     }
 
     protected override void DropItems()
@@ -58,17 +60,19 @@ public class WorkbenchBasic : Workbench
 
         //If there is only one item, it is broken down
         //This doesn't accept mechanisms
-        if (itemSlots[1] == null && itemSlots[0].WatchItem.state != ItemState.UnknownState)
+        if (itemSlots[1] == null && itemSlots[0].WatchItem.State != ItemState.UnknownState)
         {
-            if(itemSlots[0] != null && itemSlots[0].WatchItem.itemID != 10 && itemSlots[0].WatchItem.state == ItemState.ComplexBroken)
+            if(itemSlots[0] != null && itemSlots[0].WatchItem.itemID != 10 && itemSlots[0].WatchItem.State == ItemState.ComplexBroken)
             {
                 var currentItem = itemSlots[0];
                 for (int i = 0; i < currentItem.WatchItem.components.Count; i++)
                 {
                     itemSlots[i] = GenerateItem(currentItem.WatchItem.components[i]);
+                    itemSlots[i].questWatch = currentItem.questWatch;
                     if(itemSlots[i].WatchItem.trueState == ItemState.Repaired && itemSlots[0].WatchItem.components.Count != 0)
                     {
                         itemSlots[i].WatchItem.State = itemSlots[i].WatchItem.trueState;
+                        
                     }
                 }
                 if(currentItem.WatchItem.components.Count > 0)
@@ -91,52 +95,32 @@ public class WorkbenchBasic : Workbench
         else
         {
             SortItems();
+            
+                var recipeFilled = CheckForAllComponents(itemSlots);               
 
-            for (int i = 0; i < GameManager.instance.RandomWatchRecipesList.Count; i++)
-            {
-                var recipeFilled = true;               
-
-                for (int j = 0; j < itemSlots.Length; j++)
-                {
-                    Debug.Log(itemSlots[j]);
-                    Debug.Log(GameManager.instance.RandomWatchRecipesList[i].Items.Count + "       " + j);
-                    if ((itemSlots[j] != null /**&& GameManager.instance.RecipesList[i].Items.Count > j**/)
-                        || (itemSlots[j] == null && GameManager.instance.RandomWatchRecipesList[i].Items.Count > j)
-                        || (itemSlots[j] != null && itemSlots[j].WatchItem.State != ItemState.Repaired))
-                    {
-                        if(itemSlots[j] != null && GameManager.instance.RandomWatchRecipesList[i].Items.Count > j)
-                        {
-                            if (itemSlots[j].WatchItem.itemID != GameManager.instance.RandomWatchRecipesList[i].Items[j].itemID || itemSlots[j].WatchItem.State != ItemState.Repaired)
-                            {
-                                recipeFilled = false;
-                            }
-                        }
-                        else
-                        {
-                            recipeFilled = false;
-                        }
-                        
-                    }                  
-                }
-                
                 if (recipeFilled)              
                 {
                     //endParticles.Play();
+                    Watch newWatch = WatchTemplate.GetComponent<Watch>();
+                    Watch newPart = Instantiate(newWatch, dropLocation.position, Quaternion.identity);
+                    newPart.WatchItem = watchToDrop;
+                    newPart.WatchItem.trueState = ItemState.Repaired;
+                    newPart.WatchItem.State = ItemState.Repaired;
+                    newPart.questWatch = CheckForQuestWatch();
+                    if (newPart.WatchItem.parentItem == null)
+                    {
+                        newPart.isCompleteWatch = true;
+                    }
+
                     EmptySlot(0);
                     EmptySlot(1);
                     EmptySlot(2);
-                    //itemSlots[0] = Instantiate(GameManager.instance.basicRecipes[i].resultWatch, transform.position, Quaternion.identity);     
-                    itemSlots[0] = GenerateItem(GameManager.instance.RandomWatchRecipesList[i].result);
-                    itemSlots[0].WatchItem.trueState = ItemState.Repaired;
-                    itemSlots[0].WatchItem.State = itemSlots[0].WatchItem.trueState;
+                    
 
                     checkMark.Play();
-
-                    break;
-                }               
-            }
-
-            if(itemSlots[1] != null)
+                
+                }
+                if(itemSlots[1] != null)
             {
                 isValid = false;
             }
@@ -152,5 +136,69 @@ public class WorkbenchBasic : Workbench
         }
 
         base.DropItems();
+    }
+
+    bool CheckForQuestWatch()
+    {
+        var filledSlots = 0;
+        for (int i = 0; i < itemSlots.Length; i++)
+        {
+            if (itemSlots[i] != null)
+            {
+                filledSlots++;
+            }
+        }
+        for (int i = 0; i < filledSlots; i++)
+        {
+            if (itemSlots[i].questWatch)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+   
+    bool CheckForAllComponents(Watch[] slots)
+    {
+        var filledSlots = 0;
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i] != null)
+            {
+                filledSlots++;
+            }
+        }
+        for (int i = 0; i < filledSlots; i++)
+        {
+            var correctComponents = 0;
+            var myParentItem = slots[i].WatchItem.parentItem;
+            if (slots[i].WatchItem.State == ItemState.Repaired)
+            {
+                correctComponents++;
+            }
+            else
+            {
+                goto SkipLoop;
+            }
+            for (int j = 0; j < filledSlots; j++)
+            {
+                if (j != i)
+                {
+                    if (slots[j].WatchItem.parentItem == myParentItem&&slots[j].WatchItem.State == ItemState.Repaired&& slots[j].WatchItem != slots[i].WatchItem)
+                    {
+                        correctComponents++;
+                    }
+                }
+            }
+            
+            if (correctComponents >= myParentItem.components.Count)
+            {
+                watchToDrop = new Item();
+                watchToDrop = myParentItem;
+                return true;
+            }
+            SkipLoop: ;
+        }
+        return false;
     }
 }

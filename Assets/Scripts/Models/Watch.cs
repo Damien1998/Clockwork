@@ -12,7 +12,7 @@ public class Watch : MonoBehaviour
     private Item myItem;
     //A true state that should be only used when item leaves the unknown state
     public ItemState TrueState;
-    public bool isCompleteWatch = false;
+    public bool isCompleteWatch = false,questWatch = false;
     public Item WatchItem
     {
         get => myItem;
@@ -28,7 +28,7 @@ public class Watch : MonoBehaviour
     public List<SpriteRenderer> itemRenderer;
     public SpriteRenderer stateRenderer;
     private bool selected;
-    private ItemStateDisplay _currentItemDisplay = GameManager.instance.itemStates;
+    private readonly ItemStateDisplay _currentItemDisplay = GameManager.instance.itemStates;
 
     public bool isPlacedOnWorkbench;
 
@@ -56,7 +56,7 @@ public class Watch : MonoBehaviour
     {
         for(int i = 0; i < itemRenderer.Count; i++)
         {
-            if(changedItem.itemImages.Count > i)
+            if(changedItem.itemImages.Length > i)
             {
                 if (changedItem.itemImages[i] != null)
                 {

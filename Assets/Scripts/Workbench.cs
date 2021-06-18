@@ -15,7 +15,7 @@ public class Workbench : MonoBehaviour
     protected float workTimer;
 
     [SerializeField]
-    private Transform dropLocation;
+    public Transform dropLocation;
 
     [SerializeField]
     protected Slider timerDisplay;
@@ -27,6 +27,9 @@ public class Workbench : MonoBehaviour
 
     [SerializeField]
     protected ParticleSystem workParticles, endParticles;
+
+    [SerializeField]
+    private GameObject collisionLock;
 
     //This is only used in the basic and precise workbenches
     //But it has to be here so that other scripts can easily access it
@@ -46,11 +49,40 @@ public class Workbench : MonoBehaviour
                 itemToPlace.transform.position = slotPositions[i].position;
                 itemToPlace.isPlacedOnWorkbench = true;
                 itemSlots[i] = itemToPlace;
+                //if(collisionLock != null)
+                //{
+                //    StartCoroutine(LockItemCollision());
+                //}
                 //itemToPlace.gameObject.SetActive(false);
                 
                 break;
             }
         }
+    }
+
+    protected void KeepSlotsInPlace(bool yAxis)
+    {
+        for(int i = 0; i < itemSlots.Length; i++)
+        {
+            if(itemSlots[i] != null)
+            {
+                if(yAxis)
+                {
+                    itemSlots[i].transform.position = new Vector2(itemSlots[i].transform.position.x, slotPositions[i].position.y);
+                }
+                else
+                {
+                    itemSlots[i].transform.position = new Vector2(slotPositions[i].position.x, itemSlots[i].transform.position.y);
+                }
+            }
+        }
+    }
+
+    IEnumerator LockItemCollision()
+    {
+        collisionLock.SetActive(true);
+        yield return new WaitForSeconds(0.4f);
+        collisionLock.SetActive(false);
     }
 
     //Workbench functionality
@@ -76,11 +108,12 @@ public class Workbench : MonoBehaviour
         {
             if(itemSlots[i] != null)
             {
-                itemSlots[i].transform.position = dropLocation.position;
-                itemSlots[i].isPlacedOnWorkbench = false;
+                //itemSlots[i].transform.position = dropLocation.position;
+                //itemSlots[i].isPlacedOnWorkbench = false;
                 itemSlots[i].gameObject.SetActive(true);
-                itemSlots[i].ChangeSortingLayer("Items");
-                itemSlots[i] = null;
+                //itemSlots[i].ChangeSortingLayer("Items");
+                //itemSlots[i] = null;
+                StartCoroutine(LerpItemToPos(dropLocation.position, 0.2f, i));
             }
         }
     }
@@ -92,19 +125,49 @@ public class Workbench : MonoBehaviour
         {
             if (itemSlots[i] != null)
             {
-                itemSlots[i].transform.position = dropLocation.position;
-                itemSlots[i].isPlacedOnWorkbench = false;
+                //itemSlots[i].transform.position = dropLocation.position;
+                //itemSlots[i].isPlacedOnWorkbench = false;
                 itemSlots[i].gameObject.SetActive(true);
-                itemSlots[i].ChangeSortingLayer("Items");
-                itemSlots[i] = null;
+                //itemSlots[i].ChangeSortingLayer("Items");
+                //itemSlots[i] = null;
+                StartCoroutine(LerpItemToPos(dropLocation.position, 0.2f, i));
             }
         }
+    }
+
+    IEnumerator LerpItemToPos(Vector2 targetPos, float duration, int itemID)
+    {
+        float time = 0;
+        Vector2 startPos = slotPositions[0].position;
+
+        //if(!clearItem)
+        //{
+        //    lockMovement = true;
+        //}
+
+
+        while (time < duration)
+        {
+            float t = time / duration;
+            t = t * t * (3f - 2f * t);
+
+            itemSlots[itemID].transform.position = Vector2.Lerp(startPos, targetPos, t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        //lockMovement = false;
+
+        itemSlots[itemID].transform.position = targetPos;
+        itemSlots[itemID].ChangeSortingLayer("Items");
+        itemSlots[itemID].isPlacedOnWorkbench = false;
+        itemSlots[itemID] = null;
     }
 
     protected Watch GenerateItem(Item parameters)
     {
         var newItem = Instantiate(WatchTemplate, transform.position, Quaternion.identity);
-        var newItemData = ScriptableObject.CreateInstance<Item>();
+        var newItemData = new Item();
         newItemData.SetParameters(parameters);
         newItem.GetComponent<Watch>().WatchItem = newItemData;
         return newItem.GetComponent<Watch>();

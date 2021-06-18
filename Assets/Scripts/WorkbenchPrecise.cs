@@ -58,6 +58,7 @@ public class WorkbenchPrecise : Workbench
             workTimer = workTimerBase;
         }
 
+        KeepSlotsInPlace(true);
     }
 
     protected bool IsAMechanism(Item itemToCheck)
@@ -75,7 +76,7 @@ public class WorkbenchPrecise : Workbench
         //Here the items are combined, broken down, or repaired
 
         //If there is only one item, it is either a mechanism or needs repair
-        if (itemSlots[1] == null && itemSlots[0].WatchItem.state != ItemState.UnknownState)
+        if (itemSlots[1] == null && itemSlots[0].WatchItem.State != ItemState.UnknownState)
         {
             if (itemSlots[0] != null)
             {
@@ -111,7 +112,7 @@ public class WorkbenchPrecise : Workbench
             mechanismComponents = mechanismComponents.OrderBy(item => item.itemID).ToList();
 
             Debug.Log(itemSlots[0].WatchItem.itemID);
-            Debug.Log(itemSlots[0].WatchItem.state);
+            Debug.Log(itemSlots[0].WatchItem.State);
 
             if (IsAMechanism(itemSlots[0].WatchItem) && itemSlots[0].WatchItem.State == ItemState.EmptyState)
             {

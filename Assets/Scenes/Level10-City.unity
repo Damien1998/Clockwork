@@ -9987,7 +9987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &704426009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10046,7 +10046,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -10070,7 +10070,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704426008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -2.27, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -12171,42 +12171,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9213941394253840883, guid: e5cbe9d1804311b4ba663e446bea231e,
-        type: 3}
-      propertyPath: portraits.Array.data[8]
-      value: 
-      objectReference: {fileID: 21300000, guid: 7f4531a6dbeb6da48ad760c4b369b0e7,
-        type: 3}
-    - target: {fileID: 9213941394253840883, guid: e5cbe9d1804311b4ba663e446bea231e,
-        type: 3}
-      propertyPath: portraits.Array.data[7]
-      value: 
-      objectReference: {fileID: 21300000, guid: 496f3909ddbc3e24387383722c108a17,
-        type: 3}
-    - target: {fileID: 9213941394253840883, guid: e5cbe9d1804311b4ba663e446bea231e,
-        type: 3}
-      propertyPath: portraits.Array.data[6]
-      value: 
-      objectReference: {fileID: 21300000, guid: 13dedc8ef0396db459385f6d00e45f3c,
-        type: 3}
-    - target: {fileID: 9213941394253840883, guid: e5cbe9d1804311b4ba663e446bea231e,
-        type: 3}
-      propertyPath: portraits.Array.data[5]
-      value: 
-      objectReference: {fileID: 21300000, guid: 9dc78e080706fae4d8f0ece9231164b8,
-        type: 3}
-    - target: {fileID: 9213941394253840883, guid: e5cbe9d1804311b4ba663e446bea231e,
-        type: 3}
-      propertyPath: portraits.Array.data[4]
-      value: 
-      objectReference: {fileID: 21300000, guid: de2030edc2434484bb4d5cbf554830ad,
-        type: 3}
-    - target: {fileID: 9213941394253840883, guid: e5cbe9d1804311b4ba663e446bea231e,
-        type: 3}
-      propertyPath: extraSnow
-      value: 
-      objectReference: {fileID: 1180836793003914693, guid: 8f7fcacda6ae44c4fb01f77430fa4cd3,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e5cbe9d1804311b4ba663e446bea231e, type: 3}
 --- !u!1 &939151236 stripped
@@ -34918,7 +34882,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: ec57b8fc3fbda0e4988cc28c50da6e4e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ca61e852386e8004cb5584262173adbe, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

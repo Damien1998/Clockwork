@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
+using Models;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -168,8 +170,8 @@ public class DialogueManager : MonoBehaviour
         _isTyping = false;
         while (currentLine < dialogue.Length  && _skipping)
         {
-            CheckIfCommand();
             CompileText();
+            CheckIfCommand();
         }
     }
     //PS
@@ -195,10 +197,7 @@ public class DialogueManager : MonoBehaviour
                     ExitDialogue();
                     goto While_Break;
                 case "--quest_start":
-                    GameManager.instance.StartQuest(dialogue[currentLine].Replace("--quest_start ", ""),null);
-                    break;
-                case "--poi":
-                    GameManager.instance.CompleteQuest(dialogue[currentLine].Replace("--poi ", ""));
+                    SaveController.hasQuest = true;
                     break;
                 case "--level_end":
                     UIManager.instance.ShowLevelEnd();
@@ -221,8 +220,16 @@ public class DialogueManager : MonoBehaviour
                     goto While_Break;
                 case "--Invoke":
                     Type thisType = this.GetType();
-                    MethodInfo myMethod = thisType.GetMethod(words[1].Trim());
-                    myMethod.Invoke(this,null);
+                    if (words.Length > 2)
+                    {
+                        MethodInfo myMethod = thisType.GetMethod(words[1].Trim());
+                        myMethod.Invoke(this,new object[]{words[2]});
+                    }
+                    else
+                    {
+                        MethodInfo myMethod = thisType.GetMethod(words[1].Trim());
+                        myMethod.Invoke(this,null);    
+                    }
                     break;
                 case "--description":
                     portrait.gameObject.SetActive(false);
@@ -337,41 +344,26 @@ public class DialogueManager : MonoBehaviour
         }
     }
     
-    public void AcceptQuest(Item WatchToMake)
+    public void StartDialogueByName(string fileName)
     {
-        if (GameManager.instance.sideQuestActive == false)
+
+        fileName = fileName.Remove(fileName.Length-1);
+        var data = Resources.Load<TextAsset>($"Dialogue/{fileName}");
+        if (data != null)
         {
-            GameManager.instance.StartQuest("Epic Quest",WatchToMake);
-        }
-    }
-    public void StartDialogue(string fileName)
-    {
-        if (File.Exists(Application.persistentDataPath + "/dialogue/" + fileName + ".txt"))
-        {
-            //BinaryFormatter formatter = new BinaryFormatter();
-            //FileStream file = File.Open(Application.persistentDataPath + "/dialogue/" + fileName + ".txt", FileMode.Open);
-            //dialogue = (string[])formatter.Deserialize(file);
-            //file.Close();
-            dialogue = System.IO.File.ReadAllLines(Application.persistentDataPath + "/dialogue/" + fileName + ".txt");
-            dialogueBox.SetActive(true);
-            currentLine = 0;
-            CheckIfCommand();
-            
-            DisplayText();
-            
+            StartDialogue(data);
         }
         else
         {
-            Debug.Log("No save file!");
+            Debug.Log("No Dialogue file!");
         }
-
-        Time.timeScale = 0;
     }
 
     public void RainSnow()
     {
         Instantiate(extraSnow, new Vector3(-2, 6.3f, 0), Quaternion.Euler(75,90,-90));
     }
+    
     
 }
 

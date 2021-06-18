@@ -26,13 +26,13 @@
   <component name="ChangeListManager">
     <list default="true" id="24ebf151-db49-47b0-a8c7-dede33a08e73" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level10 1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level10 1.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scenes/RecipeSheet.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/RecipeSheet.unity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeSheet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeSheet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/LoadStuff.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/LoadStuff.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Prefabs/UI/Menu.prefab" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Prefabs/UI/Menu.prefab" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotDisplay.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotDisplay.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotInteractive.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotInteractive.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotManager.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,29 +42,37 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49F4E7E7-91CC-4FFF-ACD8-8F729E2B1E4C/2f/a40eed5d/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D1BEC468-8006-4709-A5E7-13AD543E6D96/f6/d785760b/AssetDatabase.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../moon-reconnaissance/Assets/Scripts/Controllers/AIController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotInteractive.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/UI/SettingsMenu.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/Audio/PlayBGM.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/11BD515F-D2A0-4526-8509-D23726DE0F46/ee/508dbd68/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/D1BEC468-8006-4709-A5E7-13AD543E6D96/f6/d785760b/AssetDatabase.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://E:/Unity/2020.1.2f1/Editor/Data/Resources/PackageManager/BuiltInPackages/com.unity.ugui/Runtime/UI/Core/Graphic.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../Negative-Run/Assets/_Scripts/Localization/LocalizationSystem.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49F4E7E7-91CC-4FFF-ACD8-8F729E2B1E4C/95/3d2907da/Component.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/49F4E7E7-91CC-4FFF-ACD8-8F729E2B1E4C/2f/a40eed5d/MonoBehaviour.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/UnlockLevel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/UILineRenderer.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/../../CodeTests/Assets/WhileTest.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/PickUpRange.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/11BD515F-D2A0-4526-8509-D23726DE0F46/ee/508dbd68/String.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/DataModels/QuestWatch.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/DataModels/WatchSprites.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/Audio/PlayBGM.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SoundManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SceneController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/WorkshopMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/Audio/PlayBGM.cs" />
       <option value="$PROJECT_DIR$/Assets/Dialogue/lvl10_end.txt" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/UIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/UILineRenderer.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SettingsMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Test.cs" />
@@ -72,16 +80,39 @@
       <option value="$PROJECT_DIR$/Assets/Dialogue/lvl10_start.txt" />
       <option value="$PROJECT_DIR$/Assets/Editor/WatchEditor.cs" />
       <option value="$PROJECT_DIR$/../../CodeTests/Assets/WhileTest.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Workbench.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Models/Watch.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Models/Player.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SaveController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogueManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" />
+      <option value="$PROJECT_DIR$/Assets/Dialogue/lvl10_workshop.txt" />
+      <option value="$PROJECT_DIR$/Assets/Dialogue/lvl10_quest_end.txt" />
+      <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_quest_end.txt" />
+      <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_quest_philosopher.txt" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/Trophy.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/TrophyTable.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogueManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/SaveData.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/UIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/RecipeSheet.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/ComponentSprites.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/WatchSprites.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Workbench.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/Item.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/WorkbenchPrecise.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/LevelParams.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/Player.cs" />
+      <option value="$PROJECT_DIR$/Assets/PickUpRange.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/UnlockLevel.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SaveController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SaveSlotDisplay.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/QuestWatch.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/Watch.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/WorkbenchBasic.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/SaveSlotManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotDisplay.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotInteractive.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1iy3MpVIIBx8khPeKCDjG6VTij5" />
@@ -101,6 +132,7 @@
     <property name="node.js.path.for.package.tslint" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="nodejs_package_manager_path" value="npm" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -190,6 +222,17 @@
       <workItem from="1619884459055" duration="47000" />
       <workItem from="1620044145591" duration="23561000" />
       <workItem from="1620129506255" duration="7386000" />
+      <workItem from="1620736818054" duration="9991000" />
+      <workItem from="1620877851820" duration="9196000" />
+      <workItem from="1621059144206" duration="21605000" />
+      <workItem from="1621091088772" duration="31593000" />
+      <workItem from="1621156642380" duration="18328000" />
+      <workItem from="1621214062854" duration="3298000" />
+      <workItem from="1621275720659" duration="11509000" />
+      <workItem from="1621359358963" duration="6833000" />
+      <workItem from="1621729709787" duration="1487000" />
+      <workItem from="1623669640655" duration="6082000" />
+      <workItem from="1623777301819" duration="1926000" />
     </task>
     <servers />
   </component>

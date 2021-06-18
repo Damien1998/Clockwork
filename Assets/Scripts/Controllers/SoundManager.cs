@@ -6,17 +6,48 @@ public static class SoundManager
 {
     public enum Sound
     {
-        ButtonClick,
-        PlayerMove,
-        ItemPickUp,
-        ItemDrop,
-        WorkBenchPut,
-        WorkBenchBasic,
-        WorkBenchAdvanced,
-        WorkBenchResearch,
-        WorkBenchPostal,
-        ItemEject,
-        Jump
+        NONE = 0,
+
+        //UI
+        ButtonClick = 1,
+        PoiInteraction = 2,     // przy wejściu w interakcję z PoI lub QuestGiverem
+        WorkshopInteraction = 3,
+        SceneSwapOut = 4,          // odpalane przy zmianie sceny innej niż menu
+        SceneSwapIn = 5,
+        SceneSwapToMenu = 6,
+        //wolne mijsce
+        DefaultClick = 8,       //Jeśli gracz kliknie, ale w nic konkretnego
+        SliderInteraction = 9,
+        Typing = 10,
+
+
+        //W warsztacie
+            //> Koroki
+        StepAnna= 11,
+        StepEdward = 12,
+
+            //> Workbenche
+        WorkSimple = 31,    
+        WorkAdvanced = 32,  
+        WorkPostal = 33,    
+        WorkResearch = 34,  
+        WorkItemEject = 35,     //Wypluwanie itemu z workbencha
+
+            //> Itemy
+        ItemPickUp = 41,
+        ItemDrop = 42,          //Item upuszcony
+        ItemPlaced = 43,        //Item położony na stole
+        ClockCompleted = 44,    //Przy oddaniu naprawionego zegarka
+
+            //> Other
+        Dash = 51,
+        WinPopup = 52,
+        LosePopup = 53,
+
+
+        //Dialogi
+        NextDialog = 61,         // przy odpaleniu kolejnej lini dialogowej
+
     }
 
     private static Dictionary<Sound, float> soundTimerDictionary;
@@ -26,7 +57,7 @@ public static class SoundManager
     public static void Initialize()
     {
         soundTimerDictionary = new Dictionary<Sound, float>();
-        soundTimerDictionary[Sound.PlayerMove] = 0f;
+        soundTimerDictionary[Sound.NONE] = 0f;
     }
     public static void PlaySound(Sound sound)
     {
@@ -48,44 +79,44 @@ public static class SoundManager
         {
             default:
                 return true;
-            case Sound.PlayerMove:
-                if (soundTimerDictionary.ContainsKey(sound))
-                {
-                    float lastTimePlayed = soundTimerDictionary[sound];
-                    float playerMoveTimerMax = .4f;
-                    if (lastTimePlayed + playerMoveTimerMax < Time.time)
-                    {
-                        soundTimerDictionary[sound] = Time.time;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return true;
-                }
-            case Sound.Jump:
-                if (soundTimerDictionary.ContainsKey(sound))
-                {
-                    float lastTimePlayed = soundTimerDictionary[sound];
-                    float playerMoveTimerMax = .5f;
-                    if (lastTimePlayed + playerMoveTimerMax < Time.time)
-                    {
-                        soundTimerDictionary[sound] = Time.time;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    return true;
-                }
+            //case Sound.PlayerMove:
+            //    if (soundTimerDictionary.ContainsKey(sound))
+            //    {
+            //        float lastTimePlayed = soundTimerDictionary[sound];
+            //        float playerMoveTimerMax = .4f;
+            //        if (lastTimePlayed + playerMoveTimerMax < Time.time)
+            //        {
+            //            soundTimerDictionary[sound] = Time.time;
+            //            return true;
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        return true;
+            //    }
+            //case Sound.Jump:
+            //    if (soundTimerDictionary.ContainsKey(sound))
+            //    {
+            //        float lastTimePlayed = soundTimerDictionary[sound];
+            //        float playerMoveTimerMax = .5f;
+            //        if (lastTimePlayed + playerMoveTimerMax < Time.time)
+            //        {
+            //            soundTimerDictionary[sound] = Time.time;
+            //            return true;
+            //        }
+            //        else
+            //        {
+            //            return false;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        return true;
+            //    }
         }
     }
     private static AudioClip GetAudioClip(Sound sound)
