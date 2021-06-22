@@ -33,6 +33,7 @@ public class SaveSlotManager : MonoBehaviour
          var saveSlot = Instantiate(SaveSlotTemplate, SaveSlotList.transform);
          string saveName = GetSaveName(fileDirectory, i);
          saveName = saveName.Remove(saveName.Length - 4, 4);
+         Debug.Log(saveName);
          saveSlot.GetComponent<SaveSlotDisplay>().saveID = Int32.Parse(saveName.Remove(0,8));
          saveSlot.GetComponent<SaveSlotDisplay>().Manager = this;
          saveSlot.GetComponent<SaveSlotDisplay>().DisplaySave();

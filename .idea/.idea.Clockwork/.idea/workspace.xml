@@ -25,7 +25,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24ebf151-db49-47b0-a8c7-dede33a08e73" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/indexLayout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/contentModel.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level10-Workshop.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level10-Workshop.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/TrophyTable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/TrophyTable.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/TextMesh Pro/Resources/Fonts &amp; Materials/LiberationSans SDF - Fallback.asset" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,6 +58,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/UnlockLevel.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/UILineRenderer.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/TrophyTableDisplay.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/PickUpRange.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/DecompilerCache/decompiler/11BD515F-D2A0-4526-8509-D23726DE0F46/ee/508dbd68/String.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Models/DataModels/QuestWatch.cs" root0="FORCE_HIGHLIGHTING" />
@@ -79,7 +85,6 @@
       <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_quest_end.txt" />
       <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_quest_philosopher.txt" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/Trophy.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Models/TrophyTable.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogueManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/SaveData.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/UIManager.cs" />
@@ -104,8 +109,10 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SaveSlotManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotDisplay.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotInteractive.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/TrophyTableDisplay.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/TrophyTable.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1iy3MpVIIBx8khPeKCDjG6VTij5" />
@@ -226,7 +233,9 @@
       <workItem from="1621729709787" duration="1487000" />
       <workItem from="1623669640655" duration="6082000" />
       <workItem from="1623777301819" duration="1926000" />
-      <workItem from="1624018980147" duration="299000" />
+      <workItem from="1624018980147" duration="891000" />
+      <workItem from="1624302445798" duration="2428000" />
+      <workItem from="1624370560633" duration="3707000" />
     </task>
     <servers />
   </component>
