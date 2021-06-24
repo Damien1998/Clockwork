@@ -18,6 +18,9 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _QuestItemName, ItemFlavourText; 
     [SerializeField] private Image trophyDisplay;
 
+    [SerializeField] private LevelTimer levelTimer;
+    private int timerValue, maxTimerValue;
+
     private IEnumerator timer;
 
     void Start()
@@ -82,6 +85,11 @@ public class UIManager : MonoBehaviour
             timerDisplay.value = 0;
             timerDisplay.maxValue = GameManager.instance.currentLevelParams.time;
             timerDisplay.gameObject.SetActive(true);
+
+            levelTimer = FindObjectOfType<LevelTimer>();
+            timerValue = 0;
+            maxTimerValue = GameManager.instance.currentLevelParams.time;
+
             timer = StartLevelTimer();
             StartCoroutine(timer);
         }
@@ -95,8 +103,11 @@ public class UIManager : MonoBehaviour
     }
     private IEnumerator StartLevelTimer()
     {
-        while(timerDisplay.value<timerDisplay.maxValue)
+        //while(timerDisplay.value<timerDisplay.maxValue)
+        while(timerValue < maxTimerValue)
         {
+            timerValue++;
+            levelTimer.SetValue((float) timerValue / (float) maxTimerValue);
             timerDisplay.value++;
             yield return new WaitForSeconds(1);
         }

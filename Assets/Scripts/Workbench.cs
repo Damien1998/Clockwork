@@ -18,7 +18,7 @@ public class Workbench : MonoBehaviour
     public Transform dropLocation;
 
     [SerializeField]
-    protected Slider timerDisplay;
+    protected ProgressWheel timerDisplay;
 
     [SerializeField]
     public Transform[] slotPositions;
@@ -94,7 +94,7 @@ public class Workbench : MonoBehaviour
             timerDisplay.gameObject.SetActive(true);
         }
         var value = (workTimerBase - workTimer) / workTimerBase;
-        timerDisplay.value = value;
+        timerDisplay.SetValue(value);
 
         workTimer -= Time.deltaTime;
     }
