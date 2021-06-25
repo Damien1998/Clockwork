@@ -77,6 +77,18 @@ public class UIManager : MonoBehaviour
         Points += sumOfPoints;
     }
 
+    public void PauseGame(bool pause)
+    {
+        if(pause)
+        {
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            Time.timeScale = 1f;
+        }
+    }
+
     public void LevelStart()
     {
         if (GameManager.instance.levelID != 4)
