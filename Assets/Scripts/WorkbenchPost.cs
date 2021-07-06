@@ -31,6 +31,7 @@ public class WorkbenchPost : Workbench
         
         if(workTimer <= 0)
         {
+            SoundManager.PlaySound(SoundManager.Sound.WorkPostal);
             endParticles.Play();
             checkMark.Play();
             timerDisplay.gameObject.SetActive(false);

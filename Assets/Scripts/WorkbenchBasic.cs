@@ -32,6 +32,7 @@ public class WorkbenchBasic : Workbench
             if (!workParticles.isEmitting)
             {
                 workParticles.Play();
+                SoundManager.PlaySound(SoundManager.Sound.WorkSimple);
             }
             Work();
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -59,6 +60,15 @@ public class GameManager : MonoBehaviour
             SaveController.InitializeSaveController();
         }
     }
+
+    private void Update()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            SoundManager.PlaySound(SoundManager.Sound.DefaultClick);
+        }
+    }
+
     public void CompleteLevel()
     {
         SaveController.UnlockLevel(levelID);

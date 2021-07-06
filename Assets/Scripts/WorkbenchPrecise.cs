@@ -40,6 +40,7 @@ public class WorkbenchPrecise : Workbench
             if(!workParticles.isEmitting)
             {
                 workParticles.Play();
+                SoundManager.PlaySound(SoundManager.Sound.WorkAdvanced);
             }
             Work();
         }

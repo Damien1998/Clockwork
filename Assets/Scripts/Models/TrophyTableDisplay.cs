@@ -20,6 +20,5 @@ public class TrophyTableDisplay : MonoBehaviour
    public void PickTrophy()
    {
       myTrophyTable.DisplayTrophy(TrophyID);
-      Debug.Log("VAR9");
    }
 }

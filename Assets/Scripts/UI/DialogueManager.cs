@@ -63,7 +63,7 @@ public class DialogueManager : MonoBehaviour
         StopAllCoroutines();
         ClearText();
         dialogue = textFile.text.Split('\n');
-        
+        SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
         dialogueBox.SetActive(true);
         currentLine = 0;
         ProgressDialogue();
@@ -316,6 +316,7 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text = myText + name;
             foreach (char letter in sentence.ToCharArray())
             {
+                SoundManager.PlaySound(SoundManager.Sound.Typing);
                 textDialogueScrollBar.value = 0;
                 dialogueText.text += letter;
                 yield return new WaitForSeconds(dialogueTextSpeed);

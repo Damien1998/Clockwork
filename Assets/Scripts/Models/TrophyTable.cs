@@ -41,7 +41,6 @@ public class TrophyTable : MonoBehaviour
 
     public void DisplayTrophy(int TrophyID)
     {
-        Debug.Log("VAR234");
         var myTrophy = Resources.Load<Trophy>($"Trophies/Trophy {TrophyID}");
         TrophyImage.sprite = myTrophy.trophyImage;
         trophyDescription.text = myTrophy.Description;

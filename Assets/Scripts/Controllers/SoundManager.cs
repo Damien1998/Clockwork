@@ -79,44 +79,44 @@ public static class SoundManager
         {
             default:
                 return true;
-            //case Sound.PlayerMove:
-            //    if (soundTimerDictionary.ContainsKey(sound))
-            //    {
-            //        float lastTimePlayed = soundTimerDictionary[sound];
-            //        float playerMoveTimerMax = .4f;
-            //        if (lastTimePlayed + playerMoveTimerMax < Time.time)
-            //        {
-            //            soundTimerDictionary[sound] = Time.time;
-            //            return true;
-            //        }
-            //        else
-            //        {
-            //            return false;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        return true;
-            //    }
-            //case Sound.Jump:
-            //    if (soundTimerDictionary.ContainsKey(sound))
-            //    {
-            //        float lastTimePlayed = soundTimerDictionary[sound];
-            //        float playerMoveTimerMax = .5f;
-            //        if (lastTimePlayed + playerMoveTimerMax < Time.time)
-            //        {
-            //            soundTimerDictionary[sound] = Time.time;
-            //            return true;
-            //        }
-            //        else
-            //        {
-            //            return false;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        return true;
-            //    }
+            case Sound.StepAnna:
+                if (soundTimerDictionary.ContainsKey(sound))
+                {
+                    float lastTimePlayed = soundTimerDictionary[sound];
+                    float playerMoveTimerMax = .4f;
+                    if (lastTimePlayed + playerMoveTimerMax < Time.time)
+                    {
+                        soundTimerDictionary[sound] = Time.time;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
+            case Sound.Dash:
+                if (soundTimerDictionary.ContainsKey(sound))
+                {
+                    float lastTimePlayed = soundTimerDictionary[sound];
+                    float playerMoveTimerMax = .5f;
+                    if (lastTimePlayed + playerMoveTimerMax < Time.time)
+                    {
+                        soundTimerDictionary[sound] = Time.time;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return true;
+                }
         }
     }
     private static AudioClip GetAudioClip(Sound sound)

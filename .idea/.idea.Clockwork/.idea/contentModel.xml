@@ -38,6 +38,7 @@
             <e p="UIManager.cs" t="Include" />
           </e>
           <e p="ConveyorBelt.cs" t="Include" />
+          <e p="LessAwfulScrollRect.cs" t="Include" />
           <e p="LevelStart.cs" t="Include" />
           <e p="ListButton.cs" t="Include" />
           <e p="Models" t="Include">
@@ -45,6 +46,7 @@
               <e p="PlayBGM.cs" t="Include" />
             </e>
             <e p="CheckoutTable.cs" t="Include" />
+            <e p="CurrentExit.cs" t="Include" />
             <e p="DataModels" t="Include">
               <e p="Item.cs" t="Include" />
               <e p="ItemStateDisplay.cs" t="Include" />
@@ -69,11 +71,14 @@
           <e p="PersistentObject.cs" t="Include" />
           <e p="Platform.cs" t="Include" />
           <e p="SaveData.cs" t="Include" />
+          <e p="ScrollbarHandleFix.cs" t="Include" />
           <e p="UI" t="Include">
             <e p="DialogueManager.cs" t="Include" />
             <e p="LevelEndMenu.cs" t="Include" />
             <e p="LevelSelect.cs" t="Include" />
+            <e p="LevelTimer.cs" t="Include" />
             <e p="MainMenu.cs" t="Include" />
+            <e p="ProgressWheel.cs" t="Include" />
             <e p="Saves" t="Include">
               <e p="SaveSlotDisplay.cs" t="Include" />
               <e p="SaveSlotInteractive.cs" t="Include" />

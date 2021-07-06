@@ -31,6 +31,7 @@ public class WorkbenchExamine : Workbench
             {
                 Debug.Log("Workbench start");
                 workParticles.Play();
+                SoundManager.PlaySound(SoundManager.Sound.WorkResearch);
             }
             Work();
         }
