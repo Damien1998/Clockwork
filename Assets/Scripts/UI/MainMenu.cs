@@ -23,10 +23,8 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         UIManager.instance.QuickSettingButton.SetActive(true);
-        
         SaveController.CreateSaveGame(0);
-        SaveController.UnlockLevel(levelID);
-        SceneManager.LoadScene($"Level{levelID}-City");
+        GameManager.instance.StartCityLevel(10);
     }
 
     public void SetGameManagerLevel(int levelID)
@@ -57,5 +55,5 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-   
+
 }

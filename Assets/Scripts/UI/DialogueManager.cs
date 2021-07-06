@@ -23,17 +23,17 @@ public class DialogueManager : MonoBehaviour
     private string[] dialogue;
     private string name;
     private int currentLine;
-    [SerializeField] 
+    [SerializeField]
     private float dialogueTextSpeed = .025f;
     private bool _isTyping = false, _skipping = false, options;
 
     public AudioSource audioSource;
 
     [SerializeField] private ParticleSystem extraSnow;
-    
+
     public Sprite[] portraits;
     public string[] characters;
-    
+
     void Awake()
     {
         if(instance != null)
@@ -68,14 +68,24 @@ public class DialogueManager : MonoBehaviour
         currentLine = 0;
         ProgressDialogue();
     }
+    public void StartDialogue(string textFile)
+    {
+        StopAllCoroutines();
+        ClearText();
+        dialogue = Resources.Load<TextAsset>("Dialogue/"+textFile).text.Split('\n');
+        SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
+        dialogueBox.SetActive(true);
+        currentLine = 0;
+        ProgressDialogue();
+    }
     public void ResetDialogue()
     {
         ClearText();
         StopAllCoroutines();
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
-            
+
         currentLine = 0;
-        
+
         ProgressDialogue();
     }
     void ExitDialogue()
@@ -138,7 +148,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             return null;
-        } 
+        }
     }
     private Sprite FindPortrait(string characterName,string[] _nameToDisplay)
     {
@@ -178,8 +188,8 @@ public class DialogueManager : MonoBehaviour
     //<summary>
     //CheckIf Method Explained
     //</summary>
-    //Currently this is the main way Dialogue Manager checks for commands inside the dialogue 
-    //it singles out first word that starts with -- and then accesses the correct method with switch 
+    //Currently this is the main way Dialogue Manager checks for commands inside the dialogue
+    //it singles out first word that starts with -- and then accesses the correct method with switch
     //while loop is there in case of more then 2 methods running after each other in that case the CheckIfCommand will continue
     //
     //However it can conflict with other method such as TypeSentence Coroutine because both of them contain currentLine++
@@ -228,7 +238,7 @@ public class DialogueManager : MonoBehaviour
                     else
                     {
                         MethodInfo myMethod = thisType.GetMethod(words[1].Trim());
-                        myMethod.Invoke(this,null);    
+                        myMethod.Invoke(this,null);
                     }
                     break;
                 case "--description":
@@ -242,7 +252,7 @@ public class DialogueManager : MonoBehaviour
             }
             // Ok so this is the weirdest bug i have ever encountered for SOME REASON it only works on --end when it isn't on the last line
             // it adds a weird symbol that i can't even copy or remove or trim so i am just gonna check it manually for now gonna have to ask others about it
-            if (firstWord.StartsWith("--end")) 
+            if (firstWord.StartsWith("--end"))
             {
                 ExitDialogue();
                 goto While_Break;
@@ -258,8 +268,8 @@ public class DialogueManager : MonoBehaviour
         option1.onClick.RemoveAllListeners();
         option2.onClick.RemoveAllListeners();
         options = false;
-        
-        currentLine = lineID-1; // Since the Lines in Text editor and Arrays differ we subtract 1 to lineID 
+
+        currentLine = lineID-1; // Since the Lines in Text editor and Arrays differ we subtract 1 to lineID
         dialogueText.gameObject.SetActive(true);
         progressButton.gameObject.SetActive(true);
 
@@ -344,7 +354,7 @@ public class DialogueManager : MonoBehaviour
             SkipBar.value = 0;
         }
     }
-    
+
     public void StartDialogueByName(string fileName)
     {
 
@@ -364,7 +374,7 @@ public class DialogueManager : MonoBehaviour
     {
         Instantiate(extraSnow, new Vector3(-2, 6.3f, 0), Quaternion.Euler(75,90,-90));
     }
-    
-    
+
+
 }
 
