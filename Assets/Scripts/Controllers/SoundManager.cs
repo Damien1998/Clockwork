@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class SoundManager 
+public static class SoundManager
 {
     public enum Sound
     {
@@ -27,10 +27,10 @@ public static class SoundManager
         StepEdward = 12,
 
             //> Workbenche
-        WorkSimple = 31,    
-        WorkAdvanced = 32,  
-        WorkPostal = 33,    
-        WorkResearch = 34,  
+        WorkSimple = 31,
+        WorkAdvanced = 32,
+        WorkPostal = 33,
+        WorkResearch = 34,
         WorkItemEject = 35,     //Wypluwanie itemu z workbencha
 
             //> Itemy
@@ -58,6 +58,8 @@ public static class SoundManager
     {
         soundTimerDictionary = new Dictionary<Sound, float>();
         soundTimerDictionary[Sound.NONE] = 0f;
+        soundTimerDictionary[Sound.StepAnna] = 0f;
+        soundTimerDictionary[Sound.Dash] = 0f;
     }
     public static void PlaySound(Sound sound)
     {
@@ -77,8 +79,6 @@ public static class SoundManager
     {
         switch (sound)
         {
-            default:
-                return true;
             case Sound.StepAnna:
                 if (soundTimerDictionary.ContainsKey(sound))
                 {
@@ -117,6 +117,8 @@ public static class SoundManager
                 {
                     return true;
                 }
+            default:
+                return true;
         }
     }
     private static AudioClip GetAudioClip(Sound sound)

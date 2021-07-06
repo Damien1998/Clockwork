@@ -32,10 +32,10 @@ public class Player : MonoBehaviour
 
     public Vector2 additionalVelocity;
 
-    //We wanted to handle interaction from the side of the player 
+    //We wanted to handle interaction from the side of the player
     //having a bool for every type of interactable object in the workshop feels clunky
     //Especially if some more of them will be there
-    //Idk what to do 
+    //Idk what to do
     // +1
     public bool isByWorkbench;
     public bool isByLevelStart;
@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
 
     private void Dashing()
     {
-        
+
         //Dash - only in 4 directions, quick burst of speed
         //This only handles dash input, velocity is managed in fixedupdate
         //For some reason this has to be here
@@ -172,7 +172,7 @@ public class Player : MonoBehaviour
                 Vector2 yInput = new Vector2(0, moveY);
 
                 Debug.Log("Dash");
-                
+
 
                 //Diagonal dash
                 if (xInput.magnitude > 0.3f && yInput.magnitude > 0.3f)
@@ -211,7 +211,7 @@ public class Player : MonoBehaviour
                         dashDirection = yInput.normalized;
                     }
                 }
-                
+
 
                 StartCoroutine(Dash());
             }
@@ -225,7 +225,7 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //Player movement      
+        //Player movement
         if (CanInteract)
         {
             float moveX = Input.GetAxisRaw("Horizontal" + playerNumber);
@@ -248,7 +248,7 @@ public class Player : MonoBehaviour
                         lastDirection = yInput;
                     }
 
-                    SoundManager.PlaySound(SoundManager.Sound.StepAnna); //Do zmiany
+                    SoundManager.PlaySound(SoundManager.Sound.StepAnna);
                 }
 
                 //Managing player speed
@@ -290,7 +290,7 @@ public class Player : MonoBehaviour
 
             if (Input.GetButton("Dash"))
             {
-                
+
                 dashReleased = false;
             }
             else
@@ -306,7 +306,7 @@ public class Player : MonoBehaviour
         {
             footstepParticles.Play();
         }
-        
+
     }
 
     //This coroutine flags the dash bool as false after the specified duration
@@ -353,7 +353,7 @@ public class Player : MonoBehaviour
         _pickUpScript.HighLightItems = true;
         animator.SetBool("carriesItem", false);
         _pickUpScript.RefreshItems();
-        
+
     }
 
     private void PlaceItemInWorkbench()
@@ -371,12 +371,12 @@ public class Player : MonoBehaviour
         {
             StartCoroutine(LerpItemToPos(nearbyWorkbench.slotPositions[0].position, 0.08f, 2));
         }
-        
+
 
         _pickUpScript.HighLightItems = true;
         animator.SetBool("carriesItem", false);
 
-        
+
     }
 
     IEnumerator ThrowItemToPos(Vector2 targetPos, float duration)
@@ -393,7 +393,7 @@ public class Player : MonoBehaviour
         var speed = 1 / duration;
 
         //HeldWatch.GetComponent<Rigidbody2D>().AddForce(targetPos * speed, ForceMode2D.Impulse);
-        
+
         while (time < duration)
         {
             HeldWatch.GetComponent<Rigidbody2D>().velocity = targetPos * speed;
@@ -424,7 +424,7 @@ public class Player : MonoBehaviour
         //{
         //    lockMovement = true;
         //}
-        
+
 
         while (time < duration)
         {
@@ -482,7 +482,7 @@ public class Player : MonoBehaviour
             {
                 nearbyWorkbench.isOperated = false;
             }
-            
+
             nearbyWorkbench = null;
             isByWorkbench = false;
         }
