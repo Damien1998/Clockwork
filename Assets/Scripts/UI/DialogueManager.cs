@@ -103,6 +103,8 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
+            SoundManager.PlaySound(SoundManager.Sound.NextDialog);
+
             CheckIfCommand();
 
             DisplayText();

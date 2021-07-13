@@ -15,7 +15,7 @@ namespace Models
         [SerializeField] private LevelParams workbenchLevelParams;
 
         [SerializeField] private TextAsset endOfLevelDialogue,questEndDialogue;
-    
+
         [SerializeField] private Transform watchThrowPoint;
         [SerializeField] private ParticleSystem deliveryFX, retrievedFX;
         private Watch questWatch;
@@ -56,7 +56,7 @@ namespace Models
             {
                 itemToPlace.transform.position = transform.position;
                 Destroy(itemToPlace.gameObject);
-            
+
                 CompleteQuest(GameManager.instance.levelID);
             }
             if(CheckWatch(itemToPlace) == true)
@@ -74,6 +74,7 @@ namespace Models
 
                     if (ReturnLevel(GameManager.instance.levelID).HasValue && ReturnLevel(GameManager.instance.levelID).Value.levelSideQuest.completed)
                     {
+                        SoundManager.PlaySound(SoundManager.Sound.WinPopup);
                         DialogueManager.instance.StartDialogue(questEndDialogue);
                         hasQuest = false;
                     }
@@ -109,8 +110,8 @@ namespace Models
         /*
     PS
     <summary>
-    This is a simple method to make new watch if there is none at the moment of creating 
-    </summary> 
+    This is a simple method to make new watch if there is none at the moment of creating
+    </summary>
     Sadly as of now it does not pool the watch due to the nature of watch components and fact that the watch object constantly changes in scene
     But it can be noted that this might be changed to pooling later on in the production
     */
@@ -123,13 +124,13 @@ namespace Models
             }
             var newWatch = Instantiate(WatchTemplate, pos, Quaternion.identity);
             var watchItem = new Item();
-            var WatchComponent = newWatch.GetComponent<Watch>(); 
+            var WatchComponent = newWatch.GetComponent<Watch>();
             LoadQuestWatch(_questWatch,watchItem);
             WatchComponent.WatchItem = new Item();
             WatchComponent.WatchItem.SetParameters(watchItem);
             WatchComponent.WatchItem.trueState = _questWatch.myState;
             WatchComponent.WatchItem.State = ItemState.UnknownState;
-            
+
             WatchComponent.isCompleteWatch = true;
             WatchComponent.questWatch = true;
             WatchComponent.itemRenderer[0].sprite = _questWatch.QuestWatchSprites[0];
@@ -189,7 +190,7 @@ namespace Models
             }
 
             return false;
-        
+
         }
 
         private bool CheckQuestWatch(Watch currentWatch)
@@ -210,13 +211,13 @@ namespace Models
             {
                 return false;
             }
-        
+
         }
         private void MakeQuickParts(Sprite[] bases,Item parentItem,int itemSlots)
         {
             var newItem = new Item();
             var randomNumber = Random.Range(0, bases.Length);
-        
+
             newItem.parentItem = parentItem;
             parentItem.components.Add(newItem);
             newItem.itemImages[0] = bases[randomNumber];
@@ -228,7 +229,7 @@ namespace Models
             MakeQuickParts(casingSprites.Glass,newWatchCasing,0);
 
             MakeQuickParts(casingSprites.Box ,newWatchCasing,1);
-                    
+
             MakeQuickParts(casingSprites.Belt ,newWatchCasing,2);
         }
         void GenerateMechanism(WatchSprites watchSprites,Item mechanism)
@@ -264,7 +265,7 @@ namespace Models
                 var weights = currentLevelParams.pocketWatchWeight + currentLevelParams.wristWatchWeight;
 
                 WatchType watchType;
-                WatchSprites watchSprites; 
+                WatchSprites watchSprites;
 
                 //Selects the watch type
                 if (Random.Range(0, weights) < currentLevelParams.pocketWatchWeight)
@@ -281,7 +282,7 @@ namespace Models
                     //newWatch.itemImages[0] = watchSprites.Housing[0];
                     newWatch.itemImages[1] = watchSprites.Housing[0];
                 }
-            
+
                 newWatch.components = new List<Item>();
                 newWatch.State = ItemState.ComplexBroken;
                 newWatch.trueState = ItemState.ComplexBroken;
@@ -298,7 +299,7 @@ namespace Models
 
                         newWatchCasing.State = ItemState.ComplexBroken;
                         newWatchCasing.trueState = ItemState.ComplexBroken;
-                    
+
                     }
                     else
                     {
@@ -308,7 +309,7 @@ namespace Models
 
                         newWatchMechanism.State = ItemState.ComplexBroken;
                         newWatchMechanism.trueState = ItemState.ComplexBroken;
-                    }               
+                    }
                 }
                 else if (currentLevelParams.casingComponents || currentLevelParams.mechanismComponents)
                 {
@@ -319,7 +320,7 @@ namespace Models
 
                         newWatchCasing.State = ItemState.ComplexBroken;
                         newWatchCasing.trueState = ItemState.ComplexBroken;
-                    }     
+                    }
                     else
                     {
                         SimpleCasingWatch(watchSprites, newWatchCasing);
@@ -341,11 +342,11 @@ namespace Models
                         newWatchMechanism.State = ItemState.ComplexBroken;
                         newWatchMechanism.trueState = ItemState.ComplexBroken;
                     }
-                }            
+                }
                 else
                 {
                     SimpleCasingWatch(watchSprites, newWatchCasing);
-                
+
                     newWatchCasing.components = new List<Item>();
 
                     newWatchMechanism.components = new List<Item>();
@@ -394,11 +395,11 @@ namespace Models
 
                 //Setting the component states
                 List<Item> newWatchBasicItems = GetBasicItems(newWatch);
-            
+
                 foreach(Item basicItem in newWatchBasicItems)
                 {
                     basicItem.trueState = ItemState.Repaired;
-                    basicItem.State = ItemState.Repaired;              
+                    basicItem.State = ItemState.Repaired;
                 }
 
                 float brokenComponentPercentage = (Random.Range(currentLevelParams.brokenPartMinPercentage, currentLevelParams.brokenPartMaxPercentage));
@@ -448,7 +449,7 @@ namespace Models
 
                         brokenComponentAmount--;
                     }
-                    safeguard--;   
+                    safeguard--;
                 }
 
                 for(int j = 0; j < newWatchBasicItems.Count; j++)
@@ -470,7 +471,7 @@ namespace Models
                 {
                     var tmpList = GetBasicItems(myItem.components[i]);
                     myList.AddRange(tmpList);
-                }    
+                }
             }
             else
             {

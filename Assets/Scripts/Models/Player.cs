@@ -166,6 +166,7 @@ public class Player : MonoBehaviour
 
             if (Input.GetButtonDown("Dash") && !isDashing)
             {
+                SoundManager.PlaySound(SoundManager.Sound.Dash);
                 dashParticles.Play();
 
                 Vector2 xInput = new Vector2(moveX, 0);

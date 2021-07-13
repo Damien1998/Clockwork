@@ -54,7 +54,7 @@ public class Workbench : MonoBehaviour
                 //    StartCoroutine(LockItemCollision());
                 //}
                 //itemToPlace.gameObject.SetActive(false);
-                
+
                 break;
             }
         }
@@ -103,7 +103,7 @@ public class Workbench : MonoBehaviour
     protected virtual void DropItems()
     {
         //StartCoroutine(WaitAndDrop(0.1f));
-        
+        SoundManager.PlaySound(SoundManager.Sound.WorkItemEject);
         for(int i = 0; i< numberOfSlots; i++)
         {
             if(itemSlots[i] != null)
@@ -180,7 +180,7 @@ public class Workbench : MonoBehaviour
         {
             Destroy(itemSlots[slot].gameObject);
             itemSlots[slot] = null;
-        }       
+        }
     }
 
     //Sorts items in the workbench by their ID

@@ -73,7 +73,7 @@ public class WorkbenchBasic : Workbench
                     if(itemSlots[i].WatchItem.trueState == ItemState.Repaired && itemSlots[0].WatchItem.components.Count != 0)
                     {
                         itemSlots[i].WatchItem.State = itemSlots[i].WatchItem.trueState;
-                        
+
                     }
                 }
                 if(currentItem.WatchItem.components.Count > 0)
@@ -96,10 +96,10 @@ public class WorkbenchBasic : Workbench
         else
         {
             SortItems();
-            
-                var recipeFilled = CheckForAllComponents(itemSlots);               
 
-                if (recipeFilled)              
+                var recipeFilled = CheckForAllComponents(itemSlots);
+
+                if (recipeFilled)
                 {
                     //endParticles.Play();
                     Watch newWatch = WatchTemplate.GetComponent<Watch>();
@@ -116,10 +116,10 @@ public class WorkbenchBasic : Workbench
                     EmptySlot(0);
                     EmptySlot(1);
                     EmptySlot(2);
-                    
+
 
                     checkMark.Play();
-                
+
                 }
                 if(itemSlots[1] != null)
             {
@@ -158,7 +158,7 @@ public class WorkbenchBasic : Workbench
         }
         return false;
     }
-   
+
     bool CheckForAllComponents(Watch[] slots)
     {
         var filledSlots = 0;
@@ -191,11 +191,12 @@ public class WorkbenchBasic : Workbench
                     }
                 }
             }
-            
+
             if (correctComponents >= myParentItem.components.Count)
             {
                 watchToDrop = new Item();
                 watchToDrop = myParentItem;
+                SoundManager.PlaySound(SoundManager.Sound.ClockCompleted);
                 return true;
             }
             SkipLoop: ;
