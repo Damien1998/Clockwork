@@ -163,11 +163,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 002ce251203fe0d47a1f43ae80e17b7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myManager: {fileID: 0}
   saveID: 0
   saveInfo: {fileID: 2928243169453951804}
   saveName: {fileID: 5641496776191609413}
-  nameField: {fileID: 0}
   trophyImageTemplate: {fileID: 7257551098359629860, guid: 691de5307bb41984393ee2f92f6fa6b3,
     type: 3}
   trophyImageList: {fileID: 689669341308910748}
@@ -358,7 +356,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.2}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8008033699909308461
@@ -390,7 +388,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: ed8a456dbe6a179499cad6b1d3119987, type: 3}
     m_FontSize: 10
     m_FontStyle: 0
     m_BestFit: 0
@@ -757,7 +755,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 1.2}
   m_SizeDelta: {x: 120, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7000250550162860996
@@ -789,7 +787,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: ed8a456dbe6a179499cad6b1d3119987, type: 3}
     m_FontSize: 10
     m_FontStyle: 0
     m_BestFit: 0
