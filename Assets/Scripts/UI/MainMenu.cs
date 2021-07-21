@@ -23,7 +23,11 @@ public class MainMenu : MonoBehaviour
     {
         Time.timeScale = 1f;
         UIManager.instance.QuickSettingButton.SetActive(true);
-        SaveController.CreateSaveGame(0);
+        if (SaveController.currentSave == null)
+        {
+            SaveController.CreateSaveGame(0);
+        }
+
         GameManager.instance.StartCityLevel(10);
     }
 
