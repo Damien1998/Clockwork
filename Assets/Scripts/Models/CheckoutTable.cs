@@ -59,7 +59,7 @@ namespace Models
 
                 CompleteQuest(GameManager.instance.levelID);
             }
-            if(CheckWatch(itemToPlace) == true)
+            if(CheckWatch(itemToPlace))
             {
                 retrievedFX.Play();
                 //I'm not sure whether we really need that there:

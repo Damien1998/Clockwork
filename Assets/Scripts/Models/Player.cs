@@ -85,7 +85,6 @@ public class Player : MonoBehaviour
         if (Input.GetButtonUp("Pickup" + playerNumber) && _pickUpScript.GetPickedUpObject() != null)
         {
             lockMovement = false;
-            _pickUpScript.GetPickedUpObject().GetComponent<Watch>().isSelected = false;
             PickUpItem(_pickUpScript.GetPickedUpObject());
         }
     }
@@ -320,20 +319,25 @@ public class Player : MonoBehaviour
 
     private void PickUpItem(GameObject pickedupItem)
     {
-        SoundManager.PlaySound(SoundManager.Sound.ItemPickUp);
-        if (pickedupItem.TryGetComponent(out Rigidbody2D itemRigidbody))
+        _pickUpScript.GetPickedUpObject().GetComponent<Watch>().isSelected = false;
+        var heldWatch = pickedupItem.GetComponent<Watch>();
+        if (!heldWatch.isPlacedOnWorkbench)
         {
-            itemRigidbody.velocity = Vector2.zero;
-            pickedupItem.GetComponent<BoxCollider2D>().enabled = false;
+            SoundManager.PlaySound(SoundManager.Sound.ItemPickUp);
+            HeldWatch = pickedupItem;
+            if (pickedupItem.TryGetComponent(out Rigidbody2D itemRigidbody))
+            {
+                itemRigidbody.velocity = Vector2.zero;
+                pickedupItem.GetComponent<BoxCollider2D>().enabled = false;
+            }
+
+            _pickUpScript.HighLightItems = false;
+            _pickUpScript.ResetID();
+            heldWatch.ChangeSortingLayer("ItemsHeld");
+            StartCoroutine(LerpItemToPos(ItemPosition.position, 0.08f, 0));
+            heldWatch.isSelected = false;
+            animator.SetBool("carriesItem", true);
         }
-        HeldWatch = pickedupItem;
-        _pickUpScript.HighLightItems = false;
-        _pickUpScript.ResetID();
-        pickedupItem.GetComponent<Watch>().ChangeSortingLayer("ItemsHeld");
-        //pickedupItem.transform.position = ItemPosition.position;
-        StartCoroutine(LerpItemToPos(ItemPosition.position, 0.08f, 0));
-        HeldWatch.GetComponent<Watch>().isSelected = false;
-        animator.SetBool("carriesItem", true);
     }
 
     private void DropItem()
