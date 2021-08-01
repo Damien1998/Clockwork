@@ -31,6 +31,8 @@ public class Workbench : MonoBehaviour
     [SerializeField]
     private GameObject collisionLock;
 
+    public PlayerFacing[] requiredFacings;
+
     //This is only used in the basic and precise workbenches
     //But it has to be here so that other scripts can easily access it
     //Set this to true if the player is pushing the action button near a workbench

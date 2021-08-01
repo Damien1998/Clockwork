@@ -4,6 +4,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum PlayerFacing { DOWN, UP, LEFT, RIGHT}
+
 //Refactoring is done! You may enter safely
 public class Player : MonoBehaviour
 {
@@ -50,6 +52,7 @@ public class Player : MonoBehaviour
     private float dashDuration;
 
     private Vector2 movementInput, lastDirection;
+    private PlayerFacing facing;
 
     [SerializeField]
     private ParticleSystem itemDropParticles, footstepParticles, dashParticles, itemDropGroundParticles;
@@ -106,7 +109,14 @@ public class Player : MonoBehaviour
             {
                 if (isByWorkbench)
                 {
-                    PlaceItemInWorkbench();
+                    if(nearbyWorkbench.requiredFacings.Contains(facing))
+                    {
+                        PlaceItemInWorkbench();
+                    }
+                    else
+                    {
+                        DropItem();
+                    }
                 }
                 else
                 {
@@ -242,10 +252,26 @@ public class Player : MonoBehaviour
                     if (xInput.magnitude >= yInput.magnitude)
                     {
                         lastDirection = xInput;
+                        if(xInput.x > 0)
+                        {
+                            facing = PlayerFacing.RIGHT;
+                        }
+                        else
+                        {
+                            facing = PlayerFacing.LEFT;
+                        }
                     }
                     else
                     {
                         lastDirection = yInput;
+                        if (yInput.y > 0)
+                        {
+                            facing = PlayerFacing.UP;
+                        }
+                        else
+                        {
+                            facing = PlayerFacing.DOWN;
+                        }
                     }
 
                     SoundManager.PlaySound(SoundManager.Sound.StepAnna);
