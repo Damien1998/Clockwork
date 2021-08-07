@@ -56,7 +56,7 @@ namespace Models
             {
                 itemToPlace.transform.position = transform.position;
                 Destroy(itemToPlace.gameObject);
-                retrievedFX.Play();
+
                 CompleteQuest(GameManager.instance.levelID);
             }
             if(CheckWatch(itemToPlace))
@@ -83,7 +83,7 @@ namespace Models
                         DialogueManager.instance.StartDialogue(endOfLevelDialogue);
                     }
                     SaveGame();
-                    UIManager.instance.StopTimer();
+                    UIManager.instance.levelTimer.StopTimer();
                 }
             }
         }

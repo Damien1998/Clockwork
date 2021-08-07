@@ -43,6 +43,12 @@
           <e p="LessAwfulScrollRect.cs" t="Include" />
           <e p="LevelStart.cs" t="Include" />
           <e p="ListButton.cs" t="Include" />
+          <e p="Localization" t="Include">
+            <e p="CSVLoader.cs" t="Include" />
+            <e p="LocalizationSystem.cs" t="Include" />
+            <e p="LocalizedString.cs" t="Include" />
+            <e p="TextLocalizerUI.cs" t="Include" />
+          </e>
           <e p="Models" t="Include">
             <e p="Audio" t="Include">
               <e p="PlayBGM.cs" t="Include" />
@@ -129,6 +135,7 @@
       <e p="Clockwork.sln" t="IncludeFlat" />
       <e p="obj" t="ExcludeRecursive" />
       <e p="Packages" t="ExcludeRecursive" />
+      <e p="Project.Localization.csproj" t="IncludeRecursive" />
       <e p="Temp\bin" t="ExcludeRecursive" />
     </e>
   </component>
