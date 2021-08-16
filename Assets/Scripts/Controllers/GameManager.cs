@@ -55,18 +55,9 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-        SoundManager.Initialize();
         if (!SaveController._initialized)
         {
             SaveController.InitializeSaveController();
-        }
-    }
-
-    private void Update()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            SoundManager.PlaySound(SoundManager.Sound.DefaultClick);
         }
     }
 

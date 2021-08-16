@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Trophy",menuName = "Trophy")]
+[CreateAssetMenu(fileName = "New Trophy",menuName = "Clockwork/Trophy")]
 public class Trophy : ScriptableObject
 {
     public Sprite trophyImage;
