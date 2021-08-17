@@ -9,7 +9,7 @@ public static class SaveController
 {
     public static bool _initialized = false,hasQuest;
     public static SaveData currentSave;
-    
+
     private static List<SaveData.Level> levels;
     public static List<SaveData.SideQuest> completedSideQuests;
 
@@ -29,7 +29,7 @@ public static class SaveController
         }
         return false;
     }
-    
+
     public static void InitializeSaveController()
     {
         currentSave = new SaveData();
@@ -101,7 +101,7 @@ public static class SaveController
 
         saveData.saveID = currentSave.saveID;
         saveData.saveName = currentSave.saveName;
-        
+
         saveData.levels = levels;
         saveData.completedSideQuests = completedSideQuests;
 
@@ -110,7 +110,7 @@ public static class SaveController
     public static SaveData.Level? ReturnLevel(int _levelID)
     {
         var levelListIndex = GetLevelListIndex(_levelID);
-        
+
         return levels[levelListIndex];
     }
     public static void UnlockLevel(int levelID)
@@ -127,18 +127,19 @@ public static class SaveController
         tmpLevel.name = Resources.Load<LevelParams>($"LevelParams/Level {GameManager.instance.levelID}").levelName;
         tmpLevel.levelID = levelID;
         levels.Add(tmpLevel);
-        
+
     }
     public static void CompleteQuest(int levelID)
     {
+        AnalyticsController.SendAnalyticDictionary("CompletedQuest", "Level", GameManager.instance.levelID);
         if (ReturnLevel(levelID).HasValue)
         {
             var levelListIndex = GetLevelListIndex(levelID);
-            
+
             var level = levels[levelListIndex];
             level.levelSideQuest.completed = true;
             levels[levelListIndex] = level;
-            
+
             completedSideQuests.Add(ReturnLevel(levelID).Value.levelSideQuest);
         }
     }

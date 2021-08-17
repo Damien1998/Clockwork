@@ -74,12 +74,14 @@ namespace Models
 
                     if (ReturnLevel(GameManager.instance.levelID).HasValue && ReturnLevel(GameManager.instance.levelID).Value.levelSideQuest.completed)
                     {
+                        AnalyticsController.SendAnalyticDictionary("CompletedQuestWithLevel", "Level", GameManager.instance.levelID);
                         SoundManager.PlaySound(SoundManager.Sound.WinPopup);
                         DialogueManager.instance.StartDialogue(questEndDialogue);
                         hasQuest = false;
                     }
                     else
                     {
+                        AnalyticsController.SendAnalyticDictionary("CompletedLevel","Level",GameManager.instance.levelID);
                         DialogueManager.instance.StartDialogue(endOfLevelDialogue);
                     }
                     SaveGame();

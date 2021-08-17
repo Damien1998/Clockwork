@@ -209,6 +209,7 @@ public class DialogueManager : MonoBehaviour
                     ExitDialogue();
                     goto While_Break;
                 case "--quest_start":
+                    AnalyticsController.SendAnalyticDictionary("StartedQuest","Level",GameManager.instance.levelID);
                     SaveController.hasQuest = true;
                     break;
                 case "--level_end":
@@ -376,6 +377,12 @@ public class DialogueManager : MonoBehaviour
     {
         Instantiate(extraSnow, new Vector3(-2, 6.3f, 0), Quaternion.Euler(75,90,-90));
     }
+
+    public void SendAnalytics(string poiName)
+    {
+        AnalyticsController.SendAnalyticResult($"Clicked Poi {poiName}");
+    }
+
 
 
 }
