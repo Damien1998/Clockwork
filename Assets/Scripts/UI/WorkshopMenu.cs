@@ -30,6 +30,7 @@ public class WorkshopMenu : MonoBehaviour
 
     public void StartLevel(int sceneID)
     {
+        AnalyticsController.SendAnalyticDictionary("StartedWorkshopLevel","Level", GameManager.instance.levelID);
         Time.timeScale = 1f;
         GameManager.instance.levelID = levelID;
         UIManager.instance.LevelStart();
@@ -38,6 +39,7 @@ public class WorkshopMenu : MonoBehaviour
 
     public void GoIntoWorkshop(int sceneID)
     {
+        AnalyticsController.SendAnalyticResult("WentIntoWorkshop");
         Time.timeScale = 1f;
         GameManager.instance.levelID = levelID;
         SceneManager.LoadScene($"Level{sceneID}-Workshop");

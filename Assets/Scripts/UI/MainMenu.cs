@@ -21,6 +21,7 @@ public class MainMenu : MonoBehaviour
     }
     public void StartGame(int levelID)
     {
+        AnalyticsController.SendAnalyticResult($"StartedLevel {levelID}");
         Time.timeScale = 1f;
         UIManager.instance.QuickSettingButton.SetActive(true);
         if (SaveController.currentSave == null)

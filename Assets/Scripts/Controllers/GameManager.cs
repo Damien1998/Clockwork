@@ -63,6 +63,7 @@ public class GameManager : MonoBehaviour
 
     public void StartCityLevel(int mylevelID)
     {
+        AnalyticsController.SendAnalyticDictionary("LevelStart","Level", mylevelID);
         SaveController.UnlockLevel(mylevelID);
         SceneManager.LoadScene($"Level{mylevelID}-City");
         DialogueManager.instance.StartDialogue($"lvl{mylevelID}_start");
