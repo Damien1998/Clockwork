@@ -262,6 +262,7 @@ namespace Models
             {
 
                 Item newWatch = new Item {itemImages = new Sprite[5]};
+                newWatch.itemID = Random.Range(0, 99999);
 
                 //For choosing the watch type
                 var weights = currentLevelParams.pocketWatchWeight + currentLevelParams.wristWatchWeight;
@@ -291,6 +292,7 @@ namespace Models
 
                 Item newWatchCasing = new Item {itemImages = new Sprite[3]};
                 Item newWatchMechanism = new Item();
+                newWatchMechanism.itemID = Random.Range(99999, 199999);
 
                 if(currentLevelParams.eitherOfMechOrCasing)
                 {
@@ -360,10 +362,6 @@ namespace Models
                 newWatch.components.Add(newWatchCasing);
                 newWatch.components.Add(newWatchMechanism);
 
-                //newWatch.itemImages[0] = newWatchCasing.itemImages[0];
-                //newWatch.itemImages[1] = watchSprites.Face[Random.Range(0, watchSprites.Face.Length)];
-                //newWatch.itemImages[2] = newWatchCasing.itemImages[1];
-                //newWatch.itemImages[3] = newWatchCasing.itemImages[2];
                 newWatch.itemImages[1] = newWatchCasing.itemImages[0];
                 newWatch.itemImages[2] = watchSprites.Face[Random.Range(0, watchSprites.Face.Length)];
                 newWatch.itemImages[3] = newWatchCasing.itemImages[1];
@@ -381,7 +379,6 @@ namespace Models
 
                     newWatch.components.Add(newWatchDecor);
 
-                    //newWatch.itemImages[4] = newWatchDecor.itemImages[0];
                     newWatch.itemImages[0] = newWatchDecor.itemImages[0];
                     if(decorID > 0)
                     {
@@ -391,7 +388,6 @@ namespace Models
                 }
                 else
                 {
-                    //newWatch.itemImages[4] = null;
                     newWatch.itemImages[0] = null;
                 }
 

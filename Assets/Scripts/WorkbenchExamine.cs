@@ -97,24 +97,28 @@ public class WorkbenchExamine : Workbench
 
     private void ShowComponentList(Watch _watchItem)
     {
-        if (_watchItem.isCompleteWatch)
+        if (_watchItem.isCompleteWatch) // If is The Highest Watch In Hierarchy
         {
             RecipeListView.currentMainWatch = _watchItem;
             RecipeListView.AddRecipeToList(RecipeListView.currentMainWatch);
-            if (RecipeListView.recipeLists.Count > 1)
+        } // If it isn't then check if it is a component
+        else if(_watchItem.WatchItem.parentItem.parentItem == null && _watchItem.WatchItem.components.Count >= 2)
+        {
+            RecipeListView.recipeLists.Add(_watchItem);
+        }
+
+        if (RecipeListView.recipeLists.Count > 1)
+        {
+            if (SceneManager.GetSceneByName("RecipeSheet").isLoaded)
             {
-                if (SceneManager.GetSceneByName("RecipeSheet").isLoaded)
-                {
-                    RecipeListView.UnloadRecipeView();
-                    RecipeListView.LoadRecipeView();
-                }
+                RecipeListView.ReloadRecipeView();
             }
-            else
+        }
+        else
+        {
+            if (!SceneManager.GetSceneByName("RecipeSheet").isLoaded)
             {
-                if (!SceneManager.GetSceneByName("RecipeSheet").isLoaded)
-                {
-                    RecipeListView.LoadRecipeView();
-                } 
+                RecipeListView.LoadRecipeView();
             }
         }
     }
@@ -126,8 +130,8 @@ public class WorkbenchExamine : Workbench
     //     //TODO Examining a watch for a list of components;
     //     if (interactingPlayer[playerID] != null && timer <= -1)
     //     {
-    //         if (Input.GetButton("Pickup" + interactingPlayer[playerID].playerNumber) 
-    //             && interactingPlayer[playerID].carriesItem 
+    //         if (Input.GetButton("Pickup" + interactingPlayer[playerID].playerNumber)
+    //             && interactingPlayer[playerID].carriesItem
     //             && interactingPlayer[playerID].freeToPickup)
     //         {
     //             //Is the item valid for examination (i.e. is the item not a watch, list, casing or mechanism
@@ -144,7 +148,7 @@ public class WorkbenchExamine : Workbench
     //                 if (item.child.broken && Random.Range(0, 2) == 0)
     //                 {
     //                     item.child.unfixable = true;
-    //                 }                                     
+    //                 }
     //             }
     //
     //             if(interactingPlayer[playerID].droppedItemActivator != null && interactingPlayer[playerID].droppedItemActivator.child.GetComponent<Watch>() != null
@@ -158,7 +162,7 @@ public class WorkbenchExamine : Workbench
     //                 interactingPlayer[playerID].ClearItem();
     //             }
     //         }
-    //     }       
+    //     }
     // }
 
 }

@@ -113,6 +113,8 @@ public class WorkbenchBasic : Workbench
                         newPart.isCompleteWatch = true;
                     }
 
+                    RecipeListView.RemoveCheckForRecipes(newPart);
+
                     EmptySlot(0);
                     EmptySlot(1);
                     EmptySlot(2);

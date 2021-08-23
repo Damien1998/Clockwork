@@ -20,27 +20,34 @@ public static class RecipeListView
         //   Player.SetPlayer(true);
     }
 
+    public static void ReloadRecipeView()
+    {
+        SceneManager.UnloadSceneAsync("RecipeSheet");
+        SceneManager.LoadSceneAsync("RecipeSheet", LoadSceneMode.Additive);
+    }
+
     public static void AddRecipeToList(Watch _watch)
     {
-        if (recipeLists.Count > 0)
-        {
-            for (int i = 0; i < recipeLists.Count; i++)
-            {
-                if (recipeLists[i] == _watch)
-                {
-                    break;
-                }
-                else if( i == recipeLists.Count-1)
-                {
-                    recipeLists.Add(_watch);
-                }
-            }
-        }
-        else
+        if (_watch.WatchItem.parentItem == null)
         {
             recipeLists.Add(_watch);
         }
     }
+
+    public static void RemoveCheckForRecipes(Watch watch)
+    {
+        Debug.Log(watch.WatchItem.itemID);
+        for (int i = 0; i < recipeLists.Count; i++)
+        {
+            Debug.Log(recipeLists[i].WatchItem.itemID);
+            if (watch.WatchItem.itemID == recipeLists[i].WatchItem.itemID)
+            {
+                recipeLists.Remove(recipeLists[i]);
+                ReloadRecipeView();
+            }
+        }
+    }
+
     public static void ResetRecipesList()
     {
         recipeLists = new List<Watch>();

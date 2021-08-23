@@ -8,6 +8,7 @@ public class RecipeSheet : MonoBehaviour
 {
     public GameObject[] ComponentsLists;
     public GameObject Image,RecipeTemplate,RecipesList;
+    [SerializeField] private GameObject NormalObject;
     public UILineRenderer line;
     private bool displayingRecipe = false;
     private float scaler = 135;
@@ -23,19 +24,23 @@ public class RecipeSheet : MonoBehaviour
     }
     private void AddRecipe()
     {
-        var tmpRecipe  = Instantiate(RecipeTemplate, RecipesList.transform);
-        line = tmpRecipe.transform.GetChild(1).GetComponent<UILineRenderer>();
-        ComponentsLists = new GameObject[tmpRecipe.transform.childCount - 2];
-        for (int i = 0; i < tmpRecipe.transform.childCount-2; i++)
+        var tmpRecipe = Instantiate(RecipeTemplate, RecipesList.transform);
+        var WatchItem = RecipeListView.currentMainWatch.WatchItem;
+
+        DisplayItem(WatchItem, tmpRecipe.transform.GetChild(0));
+        for (int i = 0; i < WatchItem.components.Count; i++)
         {
-            ComponentsLists[i] = tmpRecipe.transform.GetChild(i+2).gameObject;
+            var tmpGO = Instantiate(NormalObject, Vector3.zero, Quaternion.identity, tmpRecipe.transform.GetChild(1));
+            DisplayItem(WatchItem.components[i], tmpGO.transform);
         }
-        DisplayRecipe();
+
+        //DisplayRecipe();
     }
+
+
     public void CleanRecipe()
     {
         displayingRecipe = false;
-        line.ResetLines();
         foreach (var componentsList in ComponentsLists)
         {
             for (int i = 0; i < componentsList.transform.childCount; i++)
@@ -53,7 +58,7 @@ public class RecipeSheet : MonoBehaviour
 
         return false;
     }
-    private void DisplayRecipe()
+    private void DisplayRecipeOLD()
     {
         var WatchItem = RecipeListView.currentMainWatch.WatchItem;
         for (int i = WatchItem.itemImages.Length-1; i >= 0; i--)
@@ -103,7 +108,7 @@ public class RecipeSheet : MonoBehaviour
 
     private void AddLine(Vector2 linePos)
     {
-     line._points.Add(linePos/scaler);   
+     line._points.Add(linePos/scaler);
     }
     private void DisplayComponents(GameObject _itemImage,Item _item,int _componentListIndex)
     {
@@ -114,18 +119,22 @@ public class RecipeSheet : MonoBehaviour
                 var GO = Instantiate(Image, Vector3.zero, Quaternion.identity, ComponentsLists[_componentListIndex].transform);
                 GO.name = $"Component {i}";
                 Destroy(GO.GetComponent<Image>());
-                DisplayItem(_item.components[i], GO);
+                DisplayItem(_item.components[i], GO.transform);
                 DisplayComponents(GO,_item.components[i],_componentListIndex+1);
             }
-           
         }
     }
-    private void DisplayItem(Item _item,GameObject _itemPosition)
+    private void DisplayItem(Item _item,Transform _itemPosition)
     {
         for (int i = _item.itemImages.Length-1; i >= 0; i--)
         {
-            var tmpGO = Instantiate(Image, Vector3.zero, Quaternion.identity, _itemPosition.transform);
-            tmpGO.GetComponent<Image>().sprite = _item.itemImages[i];
+            if (_item.itemImages[i] != null)
+            {
+                var tmpGO = Instantiate(Image, _itemPosition);
+                tmpGO.GetComponent<Image>().sprite = _item.itemImages[i];
+                tmpGO.GetComponent<RectTransform>().anchoredPosition = Vector3.zero;
+
+            }
         }
     }
 
@@ -151,7 +160,7 @@ public class RecipeSheet : MonoBehaviour
         yield return new WaitForSeconds(.01f);
         line.gameObject.SetActive(true);
     }
-    
+
     public void CloseSheet()
     {
         RecipeListView.UnloadRecipeView();
