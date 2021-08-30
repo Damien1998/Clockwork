@@ -27,10 +27,10 @@ public class RecipeSheet : MonoBehaviour
         var tmpRecipe = Instantiate(RecipeTemplate, RecipesList.transform);
         var WatchItem = RecipeListView.currentMainWatch.WatchItem;
 
-        DisplayItem(WatchItem, tmpRecipe.transform.GetChild(0));
+        DisplayItem(WatchItem, tmpRecipe.transform.GetChild(1));
         for (int i = 0; i < WatchItem.components.Count; i++)
         {
-            var tmpGO = Instantiate(NormalObject, Vector3.zero, Quaternion.identity, tmpRecipe.transform.GetChild(1));
+            var tmpGO = Instantiate(NormalObject, Vector3.zero, Quaternion.identity, tmpRecipe.transform.GetChild(2));
             DisplayItem(WatchItem.components[i], tmpGO.transform);
         }
 
