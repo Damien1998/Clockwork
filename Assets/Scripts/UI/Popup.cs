@@ -22,5 +22,14 @@ public class Popup : MonoBehaviour
     {
         buttonExplanation.SetActive(true);
         explanationText.text = text;
+        StartCoroutine(RebuildRectTransform((RectTransform)buttonExplanation.transform));
+    }
+
+    IEnumerator RebuildRectTransform(RectTransform rectTransform)
+    {
+        yield return null;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+        yield return null;
+        LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
     }
 }
