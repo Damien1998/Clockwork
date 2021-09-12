@@ -65,9 +65,17 @@ public class GameManager : MonoBehaviour
     {
         AnalyticsController.SendAnalyticDictionary("LevelStart","Level", mylevelID);
         SaveController.UnlockLevel(mylevelID);
-        SceneManager.LoadScene($"Level{mylevelID}-City");
+        SceneManager.LoadSceneAsync($"Level{mylevelID}-City");
+        StartCoroutine(WaitAndStartCityLevel(mylevelID));
+    }
+
+    IEnumerator WaitAndStartCityLevel(int mylevelID)
+    {
+        UIManager.instance.transitionScreen.SetTrigger("FadeIn");
+        yield return new WaitForSeconds(0.3f);
         DialogueManager.instance.StartDialogue($"lvl{mylevelID}_start");
     }
+
     public void CompleteLevel()
     {
         SaveController.UnlockLevel(levelID);
