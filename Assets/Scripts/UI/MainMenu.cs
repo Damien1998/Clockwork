@@ -19,6 +19,7 @@ public class MainMenu : MonoBehaviour
         Time.timeScale = 1f;
         SceneManager.LoadScene("Level10");
     }
+    
     public void StartGame(int levelID)
     {
         AnalyticsController.SendAnalyticResult($"StartedLevel {levelID}");
@@ -29,7 +30,15 @@ public class MainMenu : MonoBehaviour
             SaveController.CreateSaveGame(0);
         }
 
+        StartCoroutine(WaitAndStartGame());
+    }
+
+    IEnumerator WaitAndStartGame()
+    {
+        UIManager.instance.transitionScreen.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(0.7f);
         GameManager.instance.StartCityLevel(10);
+        
     }
 
     public void SetGameManagerLevel(int levelID)
@@ -59,6 +68,4 @@ public class MainMenu : MonoBehaviour
             EventSystem.current.SetSelectedGameObject(null);
         }
     }
-
-
 }

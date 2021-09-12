@@ -20,6 +20,9 @@ public class UIManager : MonoBehaviour
 
     public LevelTimer levelTimer;
 
+    public Animator transitionScreen;
+    public bool transitionFinished;
+
 
     void Start()
     {
@@ -31,6 +34,8 @@ public class UIManager : MonoBehaviour
         {
             instance = this;
         }
+
+        transitionScreen.SetTrigger("FadeIn");
     }
 
 
@@ -103,5 +108,4 @@ public class UIManager : MonoBehaviour
         timerDisplay.gameObject.SetActive(false);
         timerDisplay.value = 0;
     }
-
 }
