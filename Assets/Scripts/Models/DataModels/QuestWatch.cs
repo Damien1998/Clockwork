@@ -6,8 +6,9 @@ using UnityEngine;
 public class QuestWatch : ScriptableObject
 {
     private bool LastQuestWatch = false;
+    public ItemState trueState;
     public ItemState myState;
     public Sprite[] QuestWatchSprites;
     public QuestWatch[] Parts;
-    
+
 }

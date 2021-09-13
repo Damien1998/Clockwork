@@ -130,8 +130,8 @@ namespace Models
             LoadQuestWatch(_questWatch,watchItem);
             WatchComponent.WatchItem = new Item();
             WatchComponent.WatchItem.SetParameters(watchItem);
-            WatchComponent.WatchItem.trueState = _questWatch.myState;
-            WatchComponent.WatchItem.State = ItemState.UnknownState;
+            WatchComponent.WatchItem.trueState = _questWatch.trueState;
+            WatchComponent.WatchItem.State = _questWatch.myState;
 
             WatchComponent.isCompleteWatch = true;
             WatchComponent.questWatch = true;

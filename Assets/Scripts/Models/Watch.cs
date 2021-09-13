@@ -28,7 +28,7 @@ public class Watch : MonoBehaviour
     public List<SpriteRenderer> itemRenderer;
     public SpriteRenderer stateRenderer;
     private bool selected;
-    private readonly ItemStateDisplay _currentItemDisplay = GameManager.instance.itemStates;
+    private ItemStateDisplay _currentItemDisplay => GameManager.instance.itemStates;
 
     public bool isPlacedOnWorkbench;
 
@@ -108,13 +108,13 @@ public class Watch : MonoBehaviour
         }
     }
     private void OnSelectChange()
-    {        
+    {
         if (isSelected == true)
         {
             foreach(SpriteRenderer renderer in itemRenderer)
             {
                 renderer.material = _currentItemDisplay.selected;
-            }            
+            }
         }
         else
         {
