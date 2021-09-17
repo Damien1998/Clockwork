@@ -44,6 +44,7 @@ public static class SoundManager
         Dash = 51,
         WinPopup = 52,
         LosePopup = 53,
+        AlarmRing,
 
 
         //Dialogi
@@ -126,6 +127,7 @@ public static class SoundManager
     }
     private static AudioClip GetAudioClip(Sound sound)
     {
+        Debug.Log(SoundController.soundList.Count);
         foreach (SoundModel soundAudioClip in SoundController.soundList)
         {
             if (soundAudioClip.sound == sound)

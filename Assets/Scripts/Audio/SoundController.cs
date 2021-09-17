@@ -7,8 +7,12 @@ using UnityEngine;
 public class SoundController : MonoBehaviour
 {
     public static List<SoundModel> soundList;
+
+    private AudioSource audioSource => GetComponent<AudioSource>();
+
     private void Awake()
     {
+        Initialize();
         SoundManager.Initialize();
         DontDestroyOnLoad(gameObject);
     }
@@ -22,8 +26,9 @@ public class SoundController : MonoBehaviour
 
     public void ChangeBGM(AudioClip audioClip)
     {
-        GetComponent<AudioSource>().clip = audioClip;
-        GetComponent<AudioSource>().Play();
+        audioSource.Stop();
+        audioSource.clip = audioClip;
+        audioSource.Play();
     }
 
     public void SetSounds(List<SoundModel> soundModels)
@@ -35,5 +40,18 @@ public class SoundController : MonoBehaviour
         }
     }
 
+    private void Initialize()
+    {
+        var sounds = Resources.LoadAll("Sounds", typeof(SoundModel));
+
+        List<SoundModel> soundsList = new List<SoundModel>();
+
+        foreach (var sound in sounds)
+        {
+            soundsList.Add((SoundModel)sound);
+        }
+
+        SetSounds(soundsList);
+    }
 
 }
