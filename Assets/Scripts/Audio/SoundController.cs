@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class SoundController : MonoBehaviour
 {
-    [SerializeField] private List<SoundModel> soundList = new List<SoundModel>();
+    public static List<SoundModel> soundList;
     private void Awake()
     {
         SoundManager.Initialize();
@@ -18,6 +18,12 @@ public class SoundController : MonoBehaviour
         {
             SoundManager.PlaySound(SoundManager.Sound.DefaultClick);
         }
+    }
+
+    public void ChangeBGM(AudioClip audioClip)
+    {
+        GetComponent<AudioSource>().clip = audioClip;
+        GetComponent<AudioSource>().Play();
     }
 
     public void SetSounds(List<SoundModel> soundModels)

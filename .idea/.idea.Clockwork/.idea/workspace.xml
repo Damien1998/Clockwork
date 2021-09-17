@@ -25,9 +25,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24ebf151-db49-47b0-a8c7-dede33a08e73" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/indexLayout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/indexLayout.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Watch.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Watch.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sounds/Click.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Sounds/Click.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sounds/Dash.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Sounds/Dash.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level10-City.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level10-City.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level10-Workshop.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level10-Workshop.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Level10.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Level10.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/SoundController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/SoundController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/SoundManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/SoundManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/Audio/PlayBGM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/Audio/PlayBGM.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,7 +77,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Dialogue/lvl10_start.txt" />
       <option value="$PROJECT_DIR$/Assets/Editor/WatchEditor.cs" />
       <option value="$PROJECT_DIR$/../../CodeTests/Assets/WhileTest.cs" />
       <option value="$PROJECT_DIR$/Assets/Dialogue/lvl10_workshop.txt" />
@@ -83,7 +90,6 @@
       <option value="$PROJECT_DIR$/Assets/PickUpRange.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/UnlockLevel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SaveSlotDisplay.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/QuestWatch.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/SaveSlotManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotDisplay.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotInteractive.cs" />
@@ -100,12 +106,9 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/LevelTimer.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/Recipe.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/Trophy.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Audio/SoundController.cs" />
       <option value="$PROJECT_DIR$/Assets/Editor/SoundDataGenerator.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/SoundModel.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SoundManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/AnalyticsController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/UIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SaveController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/WorkshopMenu.cs" />
@@ -118,8 +121,13 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/WorkbenchBasic.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/Watch.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/QuestWatch.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SoundManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Audio/SoundController.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/Audio/PlayBGM.cs" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1iy3MpVIIBx8khPeKCDjG6VTij5" />
@@ -255,6 +263,9 @@
       <workItem from="1629734069425" duration="7388000" />
       <workItem from="1630340791251" duration="2624000" />
       <workItem from="1631549775597" duration="833000" />
+      <workItem from="1631558482135" duration="2031000" />
+      <workItem from="1631638281179" duration="521000" />
+      <workItem from="1631894398965" duration="1639000" />
     </task>
     <servers />
   </component>

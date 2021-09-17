@@ -8266,9 +8266,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e3309df0002d7049bc4c01c49b39235, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundList:
-  - {fileID: 11400000, guid: 6d87cfcd954e75f46b2acfcb595e6218, type: 2}
-  - {fileID: 11400000, guid: 7940f1cb2d390e048abc11405029bcba, type: 2}
+--- !u!82 &442878842 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 5720017305668034404, guid: e6c1535202ea47b4a98f1be21abc4e93,
+    type: 3}
+  m_PrefabInstance: {fileID: 442878839}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &462346958
 GameObject:
   m_ObjectHideFlags: 0
@@ -37212,6 +37215,16 @@ PrefabInstance:
       propertyPath: soundAudioClipArray.Array.data[25].audioClip.Array.data[0]
       value: 
       objectReference: {fileID: 8300000, guid: fa648ebbf6c4fd0448fce337127a638b, type: 3}
+    - target: {fileID: 5089550196362133096, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: BGM
+      value: 
+      objectReference: {fileID: 442878842}
+    - target: {fileID: 5089550196362133096, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: SoundController
+      value: 
+      objectReference: {fileID: 442878841}
     - target: {fileID: 5089550196571527381, guid: e5cbe9d1804311b4ba663e446bea231e,
         type: 3}
       propertyPath: m_AnchorMin.y

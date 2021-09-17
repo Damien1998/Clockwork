@@ -126,11 +126,11 @@ public static class SoundManager
     }
     private static AudioClip GetAudioClip(Sound sound)
     {
-        foreach (GameManager.SoundAudioClip soundAudioClip in GameManager.instance.soundAudioClipArray)
+        foreach (SoundModel soundAudioClip in SoundController.soundList)
         {
             if (soundAudioClip.sound == sound)
             {
-                return soundAudioClip.audioClip[Random.Range(0,soundAudioClip.audioClip.Length)];
+                return soundAudioClip.audioClip[Random.Range(0, soundAudioClip.audioClip.Length)];
             }
         }
         return null;
