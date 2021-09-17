@@ -68,6 +68,7 @@ public class UIManager : MonoBehaviour
         levelFailureScren.SetActive(true);
 
         //trophyDisplay.SetActive(GameManager.instance.localQuestDone);
+        SoundManager.PlaySound(SoundManager.Sound.AlarmRing);
         AnalyticsController.SendAnalyticDictionary("LostLevel", "Level", GameManager.instance.levelID);
 
         timerDisplay.gameObject.SetActive(false);

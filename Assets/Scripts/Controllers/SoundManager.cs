@@ -50,6 +50,19 @@ public static class SoundManager
         //Dialogi
         NextDialog = 61,         // przy odpaleniu kolejnej lini dialogowej
 
+
+        //SFX
+        SFXSnow,
+        SFXWood,
+        SFXChristmasTree,
+        SFXBrick,
+        SFXPavement,
+        SFXMetal,
+        SFXBuilding,
+        SFXWater,
+        SFXGrass
+
+
     }
 
     private static Dictionary<Sound, float> soundTimerDictionary;
@@ -127,7 +140,6 @@ public static class SoundManager
     }
     private static AudioClip GetAudioClip(Sound sound)
     {
-        Debug.Log(SoundController.soundList.Count);
         foreach (SoundModel soundAudioClip in SoundController.soundList)
         {
             if (soundAudioClip.sound == sound)

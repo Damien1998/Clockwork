@@ -20,7 +20,7 @@ public class SoundController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SoundManager.PlaySound(SoundManager.Sound.DefaultClick);
+            //SoundManager.PlaySound(SoundManager.Sound.DefaultClick);
         }
     }
 

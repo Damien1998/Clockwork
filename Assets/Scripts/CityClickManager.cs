@@ -33,7 +33,7 @@ public class CityClickManager : MonoBehaviour
                 Debug.Log("Click-Snow");
                 SpawnClickFX(defaultMaterial);
             }
-            
+
         }
     }
 
@@ -44,51 +44,61 @@ public class CityClickManager : MonoBehaviour
         {
             case CityMaterialType.NIGHT_SNOW:
                 ParticleSystem ps = Instantiate(clickParticles[0], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXSnow);
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
             case CityMaterialType.NIGHT_WOOD:
                 ps = Instantiate(clickParticles[1], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXWood);
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
             case CityMaterialType.XMAS_TREE:
                 ps = Instantiate(clickParticles[2], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXChristmasTree);
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
             case CityMaterialType.NIGHT_BRICKS:
                 ps = Instantiate(clickParticles[3], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXBrick);
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
             case CityMaterialType.NIGHT_WATER:
                 ps = Instantiate(clickParticles[4], mouseWorldPos, clickParticles[4].transform.rotation);
+                SoundManager.PlaySound(SoundManager.Sound.SFXWater);
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
             case CityMaterialType.NIGHT_STONE:
                 ps = Instantiate(clickParticles[5], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXPavement);
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
             case CityMaterialType.NIGHT_GRASS:
                 ps = Instantiate(clickParticles[6], mouseWorldPos, clickParticles[6].transform.rotation);
+                SoundManager.PlaySound(SoundManager.Sound.SFXGrass);
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
             case CityMaterialType.NIGHT_PLASTER:
                 ps = Instantiate(clickParticles[7], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXBuilding);
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
             case CityMaterialType.NIGHT_METAL:
                 ps = Instantiate(clickParticles[8], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXMetal);
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
             case CityMaterialType.POI:
                 ps = Instantiate(clickParticles[9], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
                 ps.Play();
                 Destroy(ps, 3f);
                 break;

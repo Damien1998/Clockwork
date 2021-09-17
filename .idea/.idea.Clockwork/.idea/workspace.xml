@@ -26,11 +26,14 @@
   <component name="ChangeListManager">
     <list default="true" id="24ebf151-db49-47b0-a8c7-dede33a08e73" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sounds/Dash.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Sounds/Dash.asset" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sounds/New Sound.asset" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sounds/New Sound.asset.meta" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sounds/Click.asset" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Sounds/Click.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sounds/UI/Fanfares.asset" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Sounds/UI/Fanfares.asset.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Audio/SoundController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Audio/SoundController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/CityClickManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/CityClickManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/SoundManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/SoundManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Controllers/UIManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Controllers/UIManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +75,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Editor/WatchEditor.cs" />
       <option value="$PROJECT_DIR$/../../CodeTests/Assets/WhileTest.cs" />
       <option value="$PROJECT_DIR$/Assets/Dialogue/lvl10_workshop.txt" />
       <option value="$PROJECT_DIR$/Assets/Dialogue/lvl10_quest_end.txt" />
@@ -104,7 +106,6 @@
       <option value="$PROJECT_DIR$/Assets/Editor/SoundDataGenerator.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/SoundModel.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/AnalyticsController.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/UIManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SaveController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/WorkshopMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogueManager.cs" />
@@ -118,10 +119,12 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/Watch.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/QuestWatch.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/GameManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/Audio/PlayBGM.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/UIManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SoundManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/CityClickManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Audio/SoundController.cs" />
     </changedPaths>
   </component>
@@ -260,7 +263,7 @@
       <workItem from="1631549775597" duration="833000" />
       <workItem from="1631558482135" duration="2031000" />
       <workItem from="1631638281179" duration="521000" />
-      <workItem from="1631894398965" duration="2904000" />
+      <workItem from="1631894398965" duration="4729000" />
     </task>
     <servers />
   </component>
