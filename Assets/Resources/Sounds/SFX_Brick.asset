@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edae97f3f7e0dcd4d80e15ba3a41ef85, type: 3}
+  m_Name: SFX_Brick
+  m_EditorClassIdentifier: 
+  sound: 65
+  audioClip:
+  - {fileID: 8300000, guid: 5460a49c74977354582d221ac4f79d1f, type: 3}
+  - {fileID: 8300000, guid: fa448de60f609c7468d01242659dc976, type: 3}
+  - {fileID: 8300000, guid: dda2afac151cd8040a9194744950a72e, type: 3}
+  - {fileID: 8300000, guid: 2b2362fe3ede00e47b7f08bc70433051, type: 3}

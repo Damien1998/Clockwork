@@ -6,9 +6,13 @@ using UnityEngine;
 
 public class SoundController : MonoBehaviour
 {
-    [SerializeField] private List<SoundModel> soundList = new List<SoundModel>();
+    public static List<SoundModel> soundList;
+
+    private AudioSource audioSource => GetComponent<AudioSource>();
+
     private void Awake()
     {
+        Initialize();
         SoundManager.Initialize();
         DontDestroyOnLoad(gameObject);
     }
@@ -16,8 +20,15 @@ public class SoundController : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            SoundManager.PlaySound(SoundManager.Sound.DefaultClick);
+            //SoundManager.PlaySound(SoundManager.Sound.DefaultClick);
         }
+    }
+
+    public void ChangeBGM(AudioClip audioClip)
+    {
+        audioSource.Stop();
+        audioSource.clip = audioClip;
+        audioSource.Play();
     }
 
     public void SetSounds(List<SoundModel> soundModels)
@@ -29,5 +40,18 @@ public class SoundController : MonoBehaviour
         }
     }
 
+    private void Initialize()
+    {
+        var sounds = Resources.LoadAll("Sounds", typeof(SoundModel));
+
+        List<SoundModel> soundsList = new List<SoundModel>();
+
+        foreach (var sound in sounds)
+        {
+            soundsList.Add((SoundModel)sound);
+        }
+
+        SetSounds(soundsList);
+    }
 
 }

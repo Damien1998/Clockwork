@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     public LevelParams currentLevelParams;
     public SoundAudioClip[] soundAudioClipArray;
     public AudioMixerGroup SFX;
-    public AudioSource BGM;
+    public SoundController SoundController;
 
     public int levelID
     {

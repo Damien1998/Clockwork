@@ -9,7 +9,6 @@ public class PlayBGM : MonoBehaviour
 
     private void Awake()
     {
-        GameManager.instance.BGM.clip = _BGM;
-        GameManager.instance.BGM.Play();
+        GameManager.instance.SoundController.ChangeBGM(_BGM);
     }
 }

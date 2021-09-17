@@ -54,6 +54,7 @@ namespace Models
         {
             if(CheckQuestWatch(itemToPlace))
             {
+                SoundManager.PlaySound(SoundManager.Sound.ClockCompleted);
                 itemToPlace.transform.position = transform.position;
                 Destroy(itemToPlace.gameObject);
                 retrievedFX.Play();
@@ -85,6 +86,7 @@ namespace Models
                         DialogueManager.instance.StartDialogue(endOfLevelDialogue);
                     }
                     SaveGame();
+                    SoundManager.PlaySound(SoundManager.Sound.WinPopup);
                     UIManager.instance.levelTimer.StopTimer();
                 }
             }
@@ -185,6 +187,7 @@ namespace Models
                 {
                     if (currentWatch.WatchItem.itemID == randomWatches[i].itemID)
                     {
+                        SoundManager.PlaySound(SoundManager.Sound.ClockCompleted);
                         watchesFixed++;
                         return true;
                     }
