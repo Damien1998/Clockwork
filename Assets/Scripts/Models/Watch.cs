@@ -9,10 +9,10 @@ using Random = UnityEngine.Random;
 //Refactoring is done! You may enter safely
 public class Watch : MonoBehaviour
 {
-    private Item myItem;
+    private Item myItem = new Item();
     //A true state that should be only used when item leaves the unknown state
     public ItemState TrueState;
-    public bool isCompleteWatch = false,questWatch = false;
+
     public Item WatchItem
     {
         get => myItem;
@@ -52,6 +52,11 @@ public class Watch : MonoBehaviour
         }
     }
 
+    public void SetItemType(ItemType type)
+    {
+        WatchItem.itemType = type;
+    }
+
     private void OnItemChange(Item changedItem)
     {
         for(int i = 0; i < itemRenderer.Count; i++)
@@ -73,6 +78,7 @@ public class Watch : MonoBehaviour
                 itemRenderer[i].gameObject.SetActive(false);
             }
         }
+
         //itemRenderer.sprite = changedItem.itemImages;
         for (int i = 0; i < myItem.componentsStates.Count; i++)
         {

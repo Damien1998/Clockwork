@@ -8,13 +8,14 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Models;
+using TMPro;
 
 public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager instance;
 
     public GameObject dialogueBox,optionsBox;
-    public Text  dialogueText,dialogueHistoryText , optionText1, optionText2;
+    public TextMeshProUGUI  dialogueText,dialogueHistoryText , optionText1, optionText2;
     public Image portrait;
     public Button option1, option2,progressButton;
     public Scrollbar dialogueScrollBar,textDialogueScrollBar;
@@ -26,8 +27,6 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]
     private float dialogueTextSpeed = .025f;
     private bool _isTyping = false, _skipping = false, options;
-
-    public AudioSource audioSource;
 
     [SerializeField] private ParticleSystem extraSnow;
 
@@ -44,7 +43,6 @@ public class DialogueManager : MonoBehaviour
         {
             instance = this;
         }
-        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -159,12 +157,11 @@ public class DialogueManager : MonoBehaviour
         foreach (var nameWord in _nameToDisplay)
         {
             _name.Append(nameWord);
-            if (nameWord != _nameToDisplay[_nameToDisplay.Length-1])
-            {
-                _name.Append(" ");
-            }
         }
-        name = _name.ToString() + ": ";
+        // Very Weird Symbol?
+        _name.Remove(_name.Length-1,1);
+        _name.Append(": ");
+        name = _name.ToString();
         int id = FindCharacterID(cName);
         if(id != -1)
         {

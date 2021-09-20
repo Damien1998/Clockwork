@@ -13,6 +13,7 @@ public class LevelParams : ScriptableObject
     public Trophy levelTrophy;
     public bool timedLevel;
 
+    public WatchSpawningTypes SpawningType;
 
     //New way of defining level watches
     public int watchAmount;
@@ -22,8 +23,9 @@ public class LevelParams : ScriptableObject
     public int brokenPartMinPercentage, brokenPartMaxPercentage;
     public int unknownStatePercentChance;
     public bool  researchAllowed;
-    public bool casingComponents, mechanismComponents, eitherOfMechOrCasing;
     public int mechMinParts, mechMaxParts;
     public float watchDispensingTime;
 
 }
+
+public enum WatchSpawningTypes {None, MechanismOrCasing, MechanismAndCasing, Mechanism, Casing}

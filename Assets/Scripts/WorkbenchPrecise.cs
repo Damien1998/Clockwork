@@ -7,6 +7,8 @@ using UnityEngine.UI;
 //Refactoring is done! You may enter safely
 public class WorkbenchPrecise : Workbench
 {
+    private Item watchToDrop;
+
     private List<Item> mechanismComponents;
     [SerializeField] private ParticleSystem checkMark, crossMark;
 
@@ -26,7 +28,7 @@ public class WorkbenchPrecise : Workbench
     {
         base.PlaceItem(itemToPlace);
 
-        if (IsAMechanism(itemToPlace.WatchItem))
+        if (itemToPlace.WatchItem.itemType == ItemType.FullMechanism)
         {
             mechanismComponents = itemToPlace.WatchItem.components;
         }
@@ -62,15 +64,6 @@ public class WorkbenchPrecise : Workbench
         KeepSlotsInPlace(true);
     }
 
-    protected bool IsAMechanism(Item itemToCheck)
-    {
-        if (itemToCheck.itemID == 10 || itemToCheck.itemID == 55)
-        {
-            return true;
-        }
-        else return false;
-    }
-
     protected override void DropItems()
     {
         bool isValid = true;
@@ -87,10 +80,11 @@ public class WorkbenchPrecise : Workbench
                     checkMark.Play();
                     itemSlots[0].WatchItem.State = ItemState.Repaired;
                 }
-                else if (itemSlots[0].WatchItem.State != ItemState.EmptyState && IsAMechanism(itemSlots[0].WatchItem))
+                else if (itemSlots[0].WatchItem.State != ItemState.EmptyState && itemSlots[0].WatchItem.itemType == ItemType.FullMechanism)
                 {
                     //endParticles.Play();
                     itemSlots[0].WatchItem.State = ItemState.EmptyState;
+                    itemSlots[0].WatchItem.itemType = ItemType.EmptyMechanism;
                     for (int i = 0; i < itemSlots[0].WatchItem.components.Count; i++)
                     {
                         itemSlots[i + 1] = GenerateItem(itemSlots[0].WatchItem.components[i]);
@@ -110,36 +104,27 @@ public class WorkbenchPrecise : Workbench
         else if(mechanismComponents != null)
         {
             SortItems();
-            mechanismComponents = mechanismComponents.OrderBy(item => item.itemID).ToList();
 
-            Debug.Log(itemSlots[0].WatchItem.itemID);
-            Debug.Log(itemSlots[0].WatchItem.State);
-
-            if (IsAMechanism(itemSlots[0].WatchItem) && itemSlots[0].WatchItem.State == ItemState.EmptyState)
+            if (itemSlots[0].WatchItem.itemType == ItemType.Mechanism && itemSlots[0].WatchItem.State == ItemState.Repaired)
             {
-                Debug.Log("Hlep");
-                var recipeFilled = true;
+                Debug.Log("Hlep");// there is no help, only salvation
 
-                for (int i = 0; i < mechanismComponents.Count; i++)
-                {
-                    if((itemSlots[i+1] != null && mechanismComponents[i] != null && itemSlots[i+1].WatchItem.itemID != mechanismComponents[i].itemID)
-                        || (itemSlots[i + 1] != null && itemSlots[i + 1].WatchItem.State != ItemState.Repaired)
-                        || (itemSlots[i + 1] != null && mechanismComponents[i] == null)
-                        || (itemSlots[i + 1] == null && mechanismComponents[i] != null))
-                    {
-                        recipeFilled = false;
-                    }
-                }
+                var recipeFilled = CheckForAllMechanismComponents(itemSlots);
 
                 if(recipeFilled)
                 {
-                    checkMark.Play();
-                    itemSlots[0].WatchItem.State = ItemState.Repaired;
+                    Watch newWatch = WatchTemplate.GetComponent<Watch>();
+                    Watch newPart = Instantiate(newWatch, dropLocation.position, Quaternion.identity);
+                    newPart.WatchItem = watchToDrop;
+                    newPart.WatchItem.SetAllStates(ItemState.Repaired);
 
-                    for (int i = 0; i < mechanismComponents.Count; i++)
-                    {
-                        EmptySlot(i + 1);
-                    }
+                    RecipeListView.RemoveCheckForRecipes(newPart);
+
+                    EmptySlot(0);
+                    EmptySlot(1);
+                    EmptySlot(2);
+
+                    checkMark.Play();
                 }
                 else
                 {
@@ -160,7 +145,7 @@ public class WorkbenchPrecise : Workbench
         if (isValid)
         {
             endParticles.Play();
-            
+
         }
         else
         {
@@ -168,5 +153,36 @@ public class WorkbenchPrecise : Workbench
         }
 
         base.DropItems();
+    }
+    bool CheckForAllMechanismComponents(Watch[] slots)
+    {
+        var filledSlots = slots.Count(watch => watch != null);
+
+        var correctComponents = 0;
+        var myParentItem = slots[0].WatchItem.parentItem;
+
+        for (int j = 0; j < filledSlots; j++)
+        {
+            if ((slots[j].WatchItem.parentItem == myParentItem && slots[j].WatchItem.State == ItemState.Repaired && slots[j].WatchItem.itemType == ItemType.Mechanism)
+                || slots[j].WatchItem.itemType == ItemType.EmptyMechanism )
+            {
+                correctComponents++;
+            }
+            else
+            {
+                correctComponents--;
+            }
+        }
+
+        if (correctComponents >= myParentItem.components.Count+1)
+        {
+            watchToDrop = new Item();
+            watchToDrop = myParentItem;
+            SoundManager.PlaySound(SoundManager.Sound.ClockCompleted);
+            return true;
+        }
+        SkipLoop: ;
+
+        return false;
     }
 }

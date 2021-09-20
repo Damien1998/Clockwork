@@ -1,8 +1,10 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static SaveController;
+using Random = UnityEngine.Random;
 
 //Refactoring is done! You may enter safely
 namespace Models
@@ -19,6 +21,8 @@ namespace Models
         [SerializeField] private Transform watchThrowPoint;
         [SerializeField] private ParticleSystem deliveryFX, retrievedFX;
         private Watch questWatch;
+
+        WatchSprites currentWatchSprites;
         private int watchesFixed;
 
         void Start()
@@ -129,16 +133,15 @@ namespace Models
             var newWatch = Instantiate(WatchTemplate, pos, Quaternion.identity);
             var watchItem = new Item();
             var WatchComponent = newWatch.GetComponent<Watch>();
+            WatchComponent.itemRenderer[0].gameObject.SetActive(true);
             LoadQuestWatch(_questWatch,watchItem);
             WatchComponent.WatchItem = new Item();
+            WatchComponent.WatchItem = watchItem;
             WatchComponent.WatchItem.SetParameters(watchItem);
-            WatchComponent.WatchItem.trueState = _questWatch.trueState;
-            WatchComponent.WatchItem.State = _questWatch.myState;
 
-            WatchComponent.isCompleteWatch = true;
-            WatchComponent.questWatch = true;
+            WatchComponent.SetItemType(ItemType.QuestWatch);
+
             WatchComponent.itemRenderer[0].sprite = _questWatch.QuestWatchSprites[0];
-            WatchComponent.itemRenderer[0].gameObject.SetActive(true);
             questWatch = WatchComponent;
         }
 
@@ -157,6 +160,8 @@ namespace Models
              LoadQuestWatch(_questWatch.Parts[i],myItem.components[i]);
             }
             myItem.State = _questWatch.myState;
+            myItem.trueState = _questWatch.trueState;
+            myItem.itemType = _questWatch.myType;
         }
         private void ThrowRandomWatch()
         {
@@ -170,7 +175,8 @@ namespace Models
             var newItem = new Item();
             newItem.SetParameters(randomWatches[watchIndex]);
             newWatch.GetComponent<Watch>().WatchItem = newItem;
-            newWatch.GetComponent<Watch>().isCompleteWatch = true;
+            newWatch.GetComponent<Watch>().WatchItem.SetParameters(newItem);
+            newWatch.GetComponent<Watch>().SetItemType(ItemType.FullWatch);
             newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
         }
         /*
@@ -181,7 +187,7 @@ namespace Models
      */
         private bool CheckWatch(Watch currentWatch)
         {
-            if(currentWatch.WatchItem.State == ItemState.Repaired&&currentWatch.isCompleteWatch&&!currentWatch.questWatch)
+            if(currentWatch.WatchItem.State == ItemState.Repaired&&currentWatch.WatchItem.itemType == ItemType.FullWatch&&currentWatch.WatchItem.itemType != ItemType.QuestWatch)
             {
                 for (int i = 0; i < randomWatches.Count; i++)
                 {
@@ -198,19 +204,11 @@ namespace Models
 
         }
 
-        private bool CheckQuestWatch(Watch currentWatch)
+        private static bool CheckQuestWatch(Watch currentWatch)
         {
             if(hasQuest)
             {
-                if (currentWatch.WatchItem.State == ItemState.Repaired && currentWatch.questWatch)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-                return true;
+                return currentWatch.WatchItem.itemType == ItemType.QuestWatch;
             }
             else
             {
@@ -227,34 +225,47 @@ namespace Models
             parentItem.components.Add(newItem);
             newItem.itemImages[0] = bases[randomNumber];
             parentItem.itemImages[itemSlots] = bases[randomNumber];
+            if (parentItem.itemType == ItemType.FullCasing)
+            {
+                newItem.itemType = ItemType.Casing;
+            }
         }
 
-        void GenerateCasing(WatchSprites casingSprites,Item newWatchCasing)
+        void GenerateCasing(Item newWatchCasing)
         {
-            MakeQuickParts(casingSprites.Glass,newWatchCasing,0);
+            MakeQuickParts(currentWatchSprites.Glass,newWatchCasing,0);
 
-            MakeQuickParts(casingSprites.Box ,newWatchCasing,1);
+            MakeQuickParts(currentWatchSprites.Box ,newWatchCasing,1);
 
-            MakeQuickParts(casingSprites.Belt ,newWatchCasing,2);
+            MakeQuickParts(currentWatchSprites.Belt ,newWatchCasing,2);
+
+            newWatchCasing.SetAllStates(ItemState.ComplexBroken);
         }
-        void GenerateMechanism(WatchSprites watchSprites,Item mechanism)
+
+        private void GenerateMechanism(Item mechanism)
         {
             for (int j = 0; j < Random.Range(workbenchLevelParams.mechMinParts, workbenchLevelParams.mechMaxParts); j++)
             {
                 var newItem = new Item
                 {
-                    itemImages = {[0] = watchSprites.Mechanical[Random.Range(0, watchSprites.Mechanical.Length-1)]}
+                    itemImages = { [0] = currentWatchSprites.Mechanical[Random.Range(0, currentWatchSprites.Mechanical.Length - 1)] },
+                    itemType = ItemType.Mechanism,
+                    parentItem = mechanism
                 };
-                newItem.parentItem = mechanism;
+
                 mechanism.components.Add(newItem);
             }
+
+            mechanism.SetAllStates(ItemState.ComplexBroken);
         }
-        void SimpleCasingWatch(WatchSprites watchSprites,Item item)
+
+        private void SimpleCasingWatch(Item item)
         {
-            item.itemImages[0] = watchSprites.Glass[Random.Range(0, watchSprites.Glass.Length)];
-            item.itemImages[1] = watchSprites.Box[Random.Range(0, watchSprites.Box.Length)];
-            item.itemImages[2] = watchSprites.Belt[Random.Range(0,  watchSprites.Belt.Length)];
+            item.itemImages[0] = currentWatchSprites.Glass[Random.Range(0, currentWatchSprites.Glass.Length)];
+            item.itemImages[1] = currentWatchSprites.Box[Random.Range(0, currentWatchSprites.Box.Length)];
+            item.itemImages[2] = currentWatchSprites.Belt[Random.Range(0,  currentWatchSprites.Belt.Length)];
         }
+
         //TODO making it cleaner
         private void CreateRandomWatches()
         {
@@ -264,119 +275,92 @@ namespace Models
             for(int i = 0; i < currentLevelParams.watchAmount; i++)
             {
 
-                Item newWatch = new Item {itemImages = new Sprite[5]};
+                Item newWatch = new Item {itemImages = new Sprite[5], itemType = ItemType.FullWatch};
+                newWatch.SetAllStates(ItemState.ComplexBroken);
                 newWatch.itemID = Random.Range(0, 99999);
 
                 //For choosing the watch type
                 var weights = currentLevelParams.pocketWatchWeight + currentLevelParams.wristWatchWeight;
 
-                WatchType watchType;
-                WatchSprites watchSprites;
-
-                //Selects the watch type
+                //Selects the watch type And Grants it the Correct Sprite
                 if (Random.Range(0, weights) < currentLevelParams.pocketWatchWeight)
                 {
-                    watchType = WatchType.HandWatch;
-                    watchSprites = watchTypes[(int) watchType];
-                    //newWatch.itemImages[0] = watchSprites.Housing[0];
-                    newWatch.itemImages[1] = watchSprites.Housing[0];
+                    currentWatchSprites = watchTypes[(int) WatchType.HandWatch];
+                    newWatch.itemImages[1] = currentWatchSprites.Housing[0];
                 }
                 else
                 {
-                    watchType = WatchType.PocketWatch;
-                    watchSprites = watchTypes[(int)watchType];
-                    //newWatch.itemImages[0] = watchSprites.Housing[0];
-                    newWatch.itemImages[1] = watchSprites.Housing[0];
+                    currentWatchSprites = watchTypes[(int)WatchType.PocketWatch];
+                    newWatch.itemImages[1] = currentWatchSprites.Housing[0];
                 }
 
-                newWatch.components = new List<Item>();
-                newWatch.State = ItemState.ComplexBroken;
-                newWatch.trueState = ItemState.ComplexBroken;
+                // Preparing Casing
+                Item newWatchCasing = new Item { itemImages = new Sprite[3], parentItem = newWatch, itemType = ItemType.FullCasing};
 
-                Item newWatchCasing = new Item {itemImages = new Sprite[3]};
-                Item newWatchMechanism = new Item();
+                // Preparing Mechanism
+                Item newWatchMechanism = new Item { itemImages = new Sprite[1], parentItem = newWatch, itemType = ItemType.FullMechanism};
+                newWatchMechanism.itemImages[0] = currentWatchSprites.Mechanical[currentWatchSprites.Mechanical.Length-1];
                 newWatchMechanism.itemID = Random.Range(99999, 199999);
 
-                if(currentLevelParams.eitherOfMechOrCasing)
+
+                switch (currentLevelParams.SpawningType)
                 {
-
-                    if (Random.Range(0, 2) == 0)
+                    case WatchSpawningTypes.Casing:
                     {
-                        GenerateCasing(watchSprites,newWatchCasing);
+                        GenerateCasing(newWatchCasing);
 
-                        newWatchCasing.State = ItemState.ComplexBroken;
-                        newWatchCasing.trueState = ItemState.ComplexBroken;
-
+                        break;
                     }
-                    else
+                    case WatchSpawningTypes.Mechanism:
                     {
-                        SimpleCasingWatch(watchSprites, newWatchCasing);
+                        SimpleCasingWatch(newWatchCasing);
 
-                        GenerateMechanism(watchSprites,newWatchMechanism);
-
-                        newWatchMechanism.State = ItemState.ComplexBroken;
-                        newWatchMechanism.trueState = ItemState.ComplexBroken;
+                        GenerateMechanism(newWatchMechanism);
+                        break;
                     }
-                }
-                else if (currentLevelParams.casingComponents || currentLevelParams.mechanismComponents)
-                {
-
-                    if (currentLevelParams.casingComponents)
+                    case WatchSpawningTypes.MechanismOrCasing:
                     {
-                        GenerateCasing(watchSprites,newWatchCasing);
-
-                        newWatchCasing.State = ItemState.ComplexBroken;
-                        newWatchCasing.trueState = ItemState.ComplexBroken;
-                    }
-                    else
-                    {
-                        SimpleCasingWatch(watchSprites, newWatchCasing);
-                    }
-
-                    newWatchMechanism.components = new List<Item>();
-
-                    if (currentLevelParams.mechanismComponents)
-                    {
-                        var rAmount = Random.Range(currentLevelParams.mechMinParts, currentLevelParams.mechMaxParts);
-                        for (int j = 0; j < rAmount; j++)
+                        if (Random.Range(0, 2) == 0)
                         {
-                            var newItem = new Item();
-                            newItem.itemImages[0] =  watchSprites.Mechanical[Random.Range(0, watchSprites.Mechanical.Length)];
-                            newItem.parentItem = newWatchMechanism;
-
-                            newWatchMechanism.components.Add(newItem);
+                            GenerateCasing(newWatchCasing);
                         }
-                        newWatchMechanism.State = ItemState.ComplexBroken;
-                        newWatchMechanism.trueState = ItemState.ComplexBroken;
+                        else
+                        {
+                            SimpleCasingWatch(newWatchCasing);
+
+                            GenerateMechanism(newWatchMechanism);
+                        }
+                        break;
+                    }
+                    case WatchSpawningTypes.MechanismAndCasing:
+                    {
+                        GenerateCasing(newWatchCasing);
+
+                        GenerateMechanism(newWatchMechanism);
+                        break;
+                    }
+                    case WatchSpawningTypes.None:
+                    {
+                        SimpleCasingWatch(newWatchCasing);
+                        break;
                     }
                 }
-                else
-                {
-                    SimpleCasingWatch(watchSprites, newWatchCasing);
-
-                    newWatchCasing.components = new List<Item>();
-
-                    newWatchMechanism.components = new List<Item>();
-                }
-                newWatchMechanism.itemImages[0] = watchSprites.Mechanical[watchSprites.Mechanical.Length-1];
-                newWatchCasing.parentItem = newWatch;
-                newWatchMechanism.parentItem = newWatch;
 
                 newWatch.components.Add(newWatchCasing);
                 newWatch.components.Add(newWatchMechanism);
 
                 newWatch.itemImages[1] = newWatchCasing.itemImages[0];
-                newWatch.itemImages[2] = watchSprites.Face[Random.Range(0, watchSprites.Face.Length)];
+                newWatch.itemImages[2] = currentWatchSprites.Face[Random.Range(0, currentWatchSprites.Face.Length)];
                 newWatch.itemImages[3] = newWatchCasing.itemImages[1];
                 newWatch.itemImages[4] = newWatchCasing.itemImages[2];
 
                 if (Random.Range(0, 100) < currentLevelParams.decorPercentChance)
                 {
-                    var decorID = Random.Range(0, watchSprites.Decoration.Length - 1);
+                    var decorID = Random.Range(0, currentWatchSprites.Decoration.Length - 1);
 
                     var newWatchDecor = new Item
                     {
-                        itemImages = {[0] = watchSprites.Decoration[decorID]},
+                        itemImages = {[0] = currentWatchSprites.Decoration[decorID]},
                         parentItem = newWatch
                     };
 
@@ -385,7 +369,7 @@ namespace Models
                     newWatch.itemImages[0] = newWatchDecor.itemImages[0];
                     if(decorID > 0)
                     {
-                        newWatch.itemImages[0] = watchSprites.Decoration[2];
+                        newWatch.itemImages[0] = currentWatchSprites.Decoration[2];
                     }
 
                 }
@@ -399,53 +383,38 @@ namespace Models
 
                 foreach(Item basicItem in newWatchBasicItems)
                 {
-                    basicItem.trueState = ItemState.Repaired;
-                    basicItem.State = ItemState.Repaired;
+                    basicItem.SetAllStates(ItemState.Repaired);
                 }
 
                 float brokenComponentPercentage = (Random.Range(currentLevelParams.brokenPartMinPercentage, currentLevelParams.brokenPartMaxPercentage));
-                Debug.Log(brokenComponentPercentage);
-                var brokenComponentAmount = Mathf.RoundToInt((brokenComponentPercentage/100) * newWatchBasicItems.Count);
-                Debug.LogWarning("BasicItems: " + newWatchBasicItems.Count);
-                Debug.LogWarning("BrokenComponents: " + brokenComponentAmount);
-                var safeguard = 100;
 
-                Debug.Log(brokenComponentAmount);
+                var brokenComponentAmount = Mathf.RoundToInt((brokenComponentPercentage/100) * newWatchBasicItems.Count);
+
+                var safeguard = 100;
 
                 while(brokenComponentAmount > 0 && safeguard > 0)
                 {
-                    Debug.Log("WHAT");
                     var temp = Random.Range(0, newWatchBasicItems.Count);
                     if(newWatchBasicItems[temp].trueState != ItemState.Unfixable && newWatchBasicItems[temp].trueState != ItemState.Broken)
                     {
-                        if (currentLevelParams.brokenState && currentLevelParams.unfixableState)
+                        switch (currentLevelParams.brokenState)
                         {
-                            if (Random.Range(0, 2) == 0)
+                            case true when currentLevelParams.unfixableState:
                             {
-                                Debug.LogWarning("Unfixable Part!");
-                                newWatchBasicItems[temp].trueState = ItemState.Unfixable;
-                                newWatchBasicItems[temp].State = newWatchBasicItems[temp].trueState;
+                                newWatchBasicItems[temp].SetAllStates(Random.Range(0, 2) == 0 ? ItemState.Unfixable : ItemState.Broken);
+                                break;
                             }
-                            else
+                            case true:
+                                newWatchBasicItems[temp].SetAllStates(ItemState.Broken);
+                                break;
+                            default:
                             {
-                                Debug.LogWarning("EHHH");
-                                newWatchBasicItems[temp].trueState = ItemState.Broken;
-                                newWatchBasicItems[temp].State = newWatchBasicItems[temp].trueState;
+                                if (currentLevelParams.unfixableState)
+                                {
+                                    newWatchBasicItems[temp].SetAllStates(ItemState.Unfixable);
+                                }
+                                break;
                             }
-
-                            newWatchBasicItems[temp].State = newWatchBasicItems[temp].trueState;
-                        }
-                        else if (currentLevelParams.brokenState)
-                        {
-                            Debug.LogWarning("UUHH");
-                            newWatchBasicItems[temp].trueState = ItemState.Broken;
-                            newWatchBasicItems[temp].State = newWatchBasicItems[temp].trueState;
-                        }
-                        else if (currentLevelParams.unfixableState)
-                        {
-                            Debug.LogWarning("Unfixable Part");
-                            newWatchBasicItems[temp].trueState = ItemState.Unfixable;
-                            newWatchBasicItems[temp].State = newWatchBasicItems[temp].trueState;
                         }
 
                         brokenComponentAmount--;
@@ -453,24 +422,21 @@ namespace Models
                     safeguard--;
                 }
 
-                for(int j = 0; j < newWatchBasicItems.Count; j++)
+                foreach (var item in newWatchBasicItems.Where(item => Random.Range(0, 100) < currentLevelParams.unknownStatePercentChance))
                 {
-                    if (Random.Range(0, 100) < currentLevelParams.unknownStatePercentChance)
-                    {
-                        newWatchBasicItems[j].State = ItemState.UnknownState;
-                    }
+                    item.State = ItemState.UnknownState;
                 }
                 randomWatches.Add(newWatch);
             }
         }
+
         List<Item> GetBasicItems(Item myItem)
         {
             var myList = new List<Item>();
             if (myItem.components.Count > 0)
             {
-                for (int i = 0; i < myItem.components.Count; i++)
+                foreach (var tmpList in myItem.components.Select(GetBasicItems))
                 {
-                    var tmpList = GetBasicItems(myItem.components[i]);
                     myList.AddRange(tmpList);
                 }
             }

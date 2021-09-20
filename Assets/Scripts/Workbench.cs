@@ -169,9 +169,11 @@ public class Workbench : MonoBehaviour
     protected Watch GenerateItem(Item parameters)
     {
         var newItem = Instantiate(WatchTemplate, transform.position, Quaternion.identity);
+
         var newItemData = new Item();
         newItemData.SetParameters(parameters);
         newItem.GetComponent<Watch>().WatchItem = newItemData;
+
         return newItem.GetComponent<Watch>();
     }
 

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class SaveSlotDisplay : MonoBehaviour
 {
    private SaveSlotManager myManager;
    public int saveID;
-   public Text saveInfo,saveName;
+   public TextMeshProUGUI saveInfo,saveName;
    public GameObject trophyImageTemplate,trophyImageList;
 
    public SaveSlotManager Manager { get  => myManager;
@@ -20,7 +21,11 @@ public class SaveSlotDisplay : MonoBehaviour
    {
       if (SaveController.CheckForSaves(saveID))
       {
+         Debug.Log(saveInfo);
+
          var mySave = SaveController.GetSave(saveID);
+         Debug.Log(mySave.levels[mySave.levels.Count-1].name);
+
          // Checking Completed Levels
          if (mySave.levels.Count >0)
          {
@@ -55,6 +60,6 @@ public class SaveSlotDisplay : MonoBehaviour
    {
       myManager.SelectSaveSlot(saveID);
    }
-   
-   
+
+
 }
