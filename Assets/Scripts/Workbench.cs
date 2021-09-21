@@ -187,22 +187,4 @@ public class Workbench : MonoBehaviour
         }
     }
 
-    //Sorts items in the workbench by their ID
-    //Empty slots are placed at the end
-    protected void SortItems()
-    {
-        List<Watch> temp = new List<Watch>();
-        for (int i = 0; i < numberOfSlots; i++)
-        {
-            if (itemSlots[i] != null)
-            {
-                temp.Add(itemSlots[i]);
-            }
-        }
-        temp = temp.OrderBy(item => item.WatchItem.itemID).ToList();
-        for (int i = 0; i < temp.Count; i++)
-        {
-            itemSlots[i] = temp[i];
-        }
-    }
 }

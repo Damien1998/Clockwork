@@ -112,7 +112,6 @@ public class WorkbenchBasic : Workbench
         //Again, this does not accept mechanisms
         else
         {
-            SortItems();
 
                 var recipeFilled = CheckForAllComponents(itemSlots);
 

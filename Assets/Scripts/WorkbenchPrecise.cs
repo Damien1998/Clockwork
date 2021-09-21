@@ -9,7 +9,6 @@ public class WorkbenchPrecise : Workbench
 {
     private Item watchToDrop;
 
-    private List<Item> mechanismComponents;
     [SerializeField] private ParticleSystem checkMark, crossMark;
 
     // Start is called before the first frame update
@@ -23,16 +22,6 @@ public class WorkbenchPrecise : Workbench
         workTimer = workTimerBase;
     }
 
-    //PlaceItem() remembers the components of an inserted mechanism
-    public override void PlaceItem(Watch itemToPlace)
-    {
-        base.PlaceItem(itemToPlace);
-
-        if (itemToPlace.WatchItem.itemType == ItemType.FullMechanism)
-        {
-            mechanismComponents = itemToPlace.WatchItem.components;
-        }
-    }
 
     // Update is called once per frame
     void Update()
@@ -83,7 +72,8 @@ public class WorkbenchPrecise : Workbench
                 else if (itemSlots[0].WatchItem.State != ItemState.EmptyState && itemSlots[0].WatchItem.itemType == ItemType.FullMechanism)
                 {
                     //endParticles.Play();
-                    itemSlots[0].WatchItem.State = ItemState.EmptyState;
+                    itemSlots[0].TrueState = ItemState.EmptyState;
+                    itemSlots[0].WatchItem.SetAllStates(ItemState.EmptyState);
                     itemSlots[0].WatchItem.itemType = ItemType.EmptyMechanism;
                     for (int i = 0; i < itemSlots[0].WatchItem.components.Count; i++)
                     {
@@ -101,11 +91,9 @@ public class WorkbenchPrecise : Workbench
             }
         }
         //If there are more items, the workbench tries to combine them using the mechanism's component list
-        else if(mechanismComponents != null)
+        else
         {
-            SortItems();
-
-            if (itemSlots[0].WatchItem.itemType == ItemType.Mechanism && itemSlots[0].WatchItem.State == ItemState.Repaired)
+            if ((itemSlots[0].WatchItem.itemType == ItemType.Mechanism  && itemSlots[0].WatchItem.State == ItemState.Repaired) || itemSlots[0].WatchItem.itemType == ItemType.EmptyMechanism)
             {
                 Debug.Log("Hlep");// there is no help, only salvation
 
@@ -137,10 +125,6 @@ public class WorkbenchPrecise : Workbench
                 isValid = false;
             }
         }
-        else
-        {
-            isValid = false;
-        }
 
         if (isValid)
         {
@@ -160,17 +144,29 @@ public class WorkbenchPrecise : Workbench
 
         var correctComponents = 0;
         var myParentItem = slots[0].WatchItem.parentItem;
+        if (slots[0].WatchItem.itemType == ItemType.EmptyMechanism)
+        {
+            myParentItem = slots[1].WatchItem.parentItem;
+            Debug.Log("Swap");
+        }
 
         for (int j = 0; j < filledSlots; j++)
         {
-            if ((slots[j].WatchItem.parentItem == myParentItem && slots[j].WatchItem.State == ItemState.Repaired && slots[j].WatchItem.itemType == ItemType.Mechanism)
-                || slots[j].WatchItem.itemType == ItemType.EmptyMechanism )
+            if (slots[j].WatchItem.itemType == ItemType.EmptyMechanism)
             {
+                Debug.Log("EmptyCheck");
                 correctComponents++;
             }
             else
             {
-                correctComponents--;
+                if (slots[j].WatchItem.parentItem == myParentItem && slots[j].WatchItem.State == ItemState.Repaired && slots[j].WatchItem.itemType == ItemType.Mechanism)
+                {
+                    correctComponents++;
+                }
+                else
+                {
+                    correctComponents--;
+                }
             }
         }
 
