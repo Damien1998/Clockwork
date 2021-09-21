@@ -54,6 +54,24 @@ public class WorkbenchBasic : Workbench
         KeepSlotsInPlace(true);
     }
 
+    public override void PlaceItem(Watch itemToPlace)
+    {
+        Debug.Log(itemToPlace.WatchItem.itemType);
+        if (itemToPlace.WatchItem.itemType == ItemType.Mechanism) return;
+
+        for (int i = 0; i < numberOfSlots; i++)
+        {
+            if (itemSlots[i] == null)
+            {
+                itemToPlace.transform.position = slotPositions[i].position;
+                itemToPlace.isPlacedOnWorkbench = true;
+                itemSlots[i] = itemToPlace;
+                break;
+            }
+        }
+    }
+
+
     protected override void DropItems()
     {
         bool isValid = true;
@@ -63,13 +81,12 @@ public class WorkbenchBasic : Workbench
         //This doesn't accept mechanisms
         if (itemSlots[1] == null && itemSlots[0].WatchItem.State != ItemState.UnknownState)
         {
-            if(itemSlots[0] != null && itemSlots[0].WatchItem.itemID != 10 && itemSlots[0].WatchItem.State == ItemState.ComplexBroken)
+            if(itemSlots[0].WatchItem.State == ItemState.ComplexBroken && itemSlots[0].WatchItem.itemType != ItemType.FullMechanism)
             {
                 var currentItem = itemSlots[0];
                 for (int i = 0; i < currentItem.WatchItem.components.Count; i++)
                 {
                     itemSlots[i] = GenerateItem(currentItem.WatchItem.components[i]);
-                    itemSlots[i].questWatch = currentItem.questWatch;
                     if(itemSlots[i].WatchItem.trueState == ItemState.Repaired && itemSlots[0].WatchItem.components.Count != 0)
                     {
                         itemSlots[i].WatchItem.State = itemSlots[i].WatchItem.trueState;
@@ -105,13 +122,8 @@ public class WorkbenchBasic : Workbench
                     Watch newWatch = WatchTemplate.GetComponent<Watch>();
                     Watch newPart = Instantiate(newWatch, dropLocation.position, Quaternion.identity);
                     newPart.WatchItem = watchToDrop;
-                    newPart.WatchItem.trueState = ItemState.Repaired;
-                    newPart.WatchItem.State = ItemState.Repaired;
-                    newPart.questWatch = CheckForQuestWatch();
-                    if (newPart.WatchItem.parentItem == null)
-                    {
-                        newPart.isCompleteWatch = true;
-                    }
+                    newPart.WatchItem.SetParameters(watchToDrop);
+                    newPart.WatchItem.SetAllStates(ItemState.Repaired);
 
                     RecipeListView.RemoveCheckForRecipes(newPart);
 
@@ -141,7 +153,7 @@ public class WorkbenchBasic : Workbench
         base.DropItems();
     }
 
-    bool CheckForQuestWatch()
+    ItemType CheckForQuestWatch()
     {
         var filledSlots = 0;
         for (int i = 0; i < itemSlots.Length; i++)
@@ -153,56 +165,43 @@ public class WorkbenchBasic : Workbench
         }
         for (int i = 0; i < filledSlots; i++)
         {
-            if (itemSlots[i].questWatch)
+            if (itemSlots[i].WatchItem.itemType == ItemType.QuestWatch)
             {
-                return true;
+                return ItemType.QuestWatch;
             }
         }
-        return false;
+        return ItemType.FullWatch;
     }
 
     bool CheckForAllComponents(Watch[] slots)
     {
-        var filledSlots = 0;
-        for (int i = 0; i < slots.Length; i++)
+        var filledSlots = slots.Count(watch => watch != null);
+
+        var correctComponents = 0;
+        var myParentItem = slots[0].WatchItem.parentItem;
+
+        if (myParentItem == null) { return false;}
+
+        for (int j = 0; j < filledSlots; j++)
         {
-            if (slots[i] != null)
-            {
-                filledSlots++;
-            }
-        }
-        for (int i = 0; i < filledSlots; i++)
-        {
-            var correctComponents = 0;
-            var myParentItem = slots[i].WatchItem.parentItem;
-            if (slots[i].WatchItem.State == ItemState.Repaired)
+            if (slots[j].WatchItem.parentItem == myParentItem && (slots[j].WatchItem.State == ItemState.Repaired || slots[j].WatchItem.State == ItemState.EmptyState))
             {
                 correctComponents++;
             }
             else
             {
-                goto SkipLoop;
+                correctComponents--;
             }
-            for (int j = 0; j < filledSlots; j++)
-            {
-                if (j != i)
-                {
-                    if (slots[j].WatchItem.parentItem == myParentItem&&slots[j].WatchItem.State == ItemState.Repaired&& slots[j].WatchItem != slots[i].WatchItem)
-                    {
-                        correctComponents++;
-                    }
-                }
-            }
-
-            if (correctComponents >= myParentItem.components.Count)
-            {
-                watchToDrop = new Item();
-                watchToDrop = myParentItem;
-                SoundManager.PlaySound(SoundManager.Sound.ClockCompleted);
-                return true;
-            }
-            SkipLoop: ;
         }
+
+        if (correctComponents >= myParentItem.components.Count)
+        {
+            watchToDrop = new Item();
+            watchToDrop.SetParameters(myParentItem);
+            SoundManager.PlaySound(SoundManager.Sound.ClockCompleted);
+            return true;
+        }
+
         return false;
     }
 }

@@ -5,13 +5,16 @@ using UnityEngine.Serialization;
 
 public enum ItemState { Broken,Unfixable,Repaired,UnknownState,ComplexBroken,EmptyState};
 
+public enum ItemType {FullWatch, QuestWatch ,FullCasing , FullMechanism, Casing, Normal, Decoration, Mechanism, EmptyMechanism, QuestParts}
+
 [CreateAssetMenu(fileName = "New Item",menuName = "Item")]
-public class Item 
+public class Item
 {
     private ItemState state;
     private Action<Item> itemStateChangeCb;
 
     public ItemState trueState;
+    public ItemType itemType;
     public int itemID;
     public Sprite[] itemImages = new Sprite[1];
     public List<Item> components = new List<Item>();
@@ -19,8 +22,8 @@ public class Item
     public List<ItemState> componentsStates = new List<ItemState>();
 
     //<summary>
-    //A Getter and setter to check if the type was changed 
-    //If it was it will perform itemStateChange Callback 
+    //A Getter and setter to check if the type was changed
+    //If it was it will perform itemStateChange Callback
     //</summary>
     public ItemState State
     {
@@ -32,9 +35,15 @@ public class Item
             if (itemStateChangeCb != null && oldState != state) itemStateChangeCb(this);
         }
     }
+
+    public void SetAllStates(ItemState State)
+    {
+        this.State = State;
+        trueState = State;
+    }
     //<summary>
     //Function to Set Parameters when creating the item
-    //It can be used when creating new items from scripts 
+    //It can be used when creating new items from scripts
     //</summary>
     public void SetParameters(Item templateitem)
     {
@@ -43,6 +52,7 @@ public class Item
         this.components = templateitem.components;
         this.itemID = templateitem.itemID;
         this.parentItem = templateitem.parentItem;
+        this.itemType = templateitem.itemType;
 
         itemImages = new Sprite[templateitem.itemImages.Length];
         for(int i = 0; i < templateitem.itemImages.Length; i++)

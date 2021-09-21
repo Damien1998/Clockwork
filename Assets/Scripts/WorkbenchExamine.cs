@@ -97,7 +97,9 @@ public class WorkbenchExamine : Workbench
 
     private void ShowComponentList(Watch _watchItem)
     {
-        if (_watchItem.isCompleteWatch) // If is The Highest Watch In Hierarchy
+        if(_watchItem.WatchItem.itemType == ItemType.QuestWatch){return;}
+
+        if (_watchItem.WatchItem.itemType == ItemType.FullWatch) // If is The Highest Watch In Hierarchy
         {
             RecipeListView.currentMainWatch = _watchItem;
             RecipeListView.AddRecipeToList(RecipeListView.currentMainWatch);

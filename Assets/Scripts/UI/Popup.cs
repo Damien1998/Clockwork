@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Popup : MonoBehaviour
 {
     public GameObject buttonExplanation;
-    public Text explanationText;
+    public TextMeshProUGUI explanationText;
 
     public void SetPopupPosition(Vector2 worldPos)
     {
