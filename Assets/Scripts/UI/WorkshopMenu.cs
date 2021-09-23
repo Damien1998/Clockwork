@@ -33,8 +33,9 @@ public class WorkshopMenu : MonoBehaviour
         AnalyticsController.SendAnalyticDictionary("StartedWorkshopLevel","Level", GameManager.instance.levelID);
         Time.timeScale = 1f;
         GameManager.instance.levelID = levelID;
-        UIManager.instance.LevelStart();
-        SceneManager.LoadScene($"Level{sceneID}");
+        //UIManager.instance.LevelStart();
+        //SceneManager.LoadScene($"Level{sceneID}");
+        StartCoroutine(WaitAndStartLevel($"Level{sceneID}"));
     }
 
     public void GoIntoWorkshop(int sceneID)
@@ -42,7 +43,25 @@ public class WorkshopMenu : MonoBehaviour
         AnalyticsController.SendAnalyticResult("WentIntoWorkshop");
         Time.timeScale = 1f;
         GameManager.instance.levelID = levelID;
-        SceneManager.LoadScene($"Level{sceneID}-Workshop");
+        //SceneManager.LoadScene($"Level{sceneID}-Workshop");
+        StartCoroutine(WaitAndLoadScene($"Level{sceneID}-Workshop"));
+    }
+
+    IEnumerator WaitAndLoadScene(string sceneName)
+    {
+        UIManager.instance.transitionScreen.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(0.7f);
+        SceneManager.LoadSceneAsync(sceneName);
+        
+    }
+
+    IEnumerator WaitAndStartLevel(string sceneName)
+    {
+        UIManager.instance.transitionScreen.SetTrigger("FadeOut");
+        yield return new WaitForSeconds(0.7f);
+        UIManager.instance.LevelStart();
+        SceneManager.LoadSceneAsync(sceneName);
+        
     }
 
     // Update is called once per frame
