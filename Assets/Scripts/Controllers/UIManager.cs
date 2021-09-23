@@ -99,9 +99,11 @@ public class UIManager : MonoBehaviour
             timerDisplay.value = 0;
             timerDisplay.maxValue = GameManager.instance.currentLevelParams.time;
             timerDisplay.gameObject.SetActive(true);
-
+            
         }
     }
+
+
 
     public void StopAllUIPrograms()
     {

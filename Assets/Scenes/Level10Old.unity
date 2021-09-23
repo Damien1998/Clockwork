@@ -309,8 +309,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 1, y: 0}
-  itemSnapPostition: {fileID: 721736963}
+  itemSnapPosition: {fileID: 0}
   speed: 3
+  changeDirection: 0
+  directionChangeTime: 0
 --- !u!61 &351735550
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -383,8 +385,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: -1, y: 0}
-  itemSnapPostition: {fileID: 1911602673}
+  itemSnapPosition: {fileID: 0}
   speed: 3
+  changeDirection: 0
+  directionChangeTime: 0
 --- !u!61 &358319342
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -481,7 +485,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 183476005
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 454477f955b6ebd4a8ae53a1300ef15b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -491,7 +495,7 @@ SpriteRenderer:
   m_Size: {x: 4, y: 1.3333334}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &393502430
@@ -618,8 +622,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a82a7068d8ac3947bbbc6c8185bdf07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  multipleSprites: 0
   frontPoint: {fileID: 1301785553}
   backPoint: {fileID: 1318614549}
+  multipleVariableSprites: []
 --- !u!61 &438289217
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -710,7 +716,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 183476005
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: 2435e71c8debac2439e05f117663b3d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -720,7 +726,7 @@ SpriteRenderer:
   m_Size: {x: 4, y: 1.3333334}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &449141682 stripped
@@ -1126,8 +1132,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: -1}
-  itemSnapPostition: {fileID: 226779624}
+  itemSnapPosition: {fileID: 0}
   speed: 3
+  changeDirection: 0
+  directionChangeTime: 0
 --- !u!61 &842258893
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1575,8 +1583,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 1}
-  itemSnapPostition: {fileID: 1543835775}
+  itemSnapPosition: {fileID: 0}
   speed: 3
+  changeDirection: 0
+  directionChangeTime: 0
 --- !u!61 &919614339
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1640,8 +1650,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: {x: 0, y: 1}
-  itemSnapPostition: {fileID: 883874345}
+  itemSnapPosition: {fileID: 0}
   speed: 3
+  changeDirection: 0
+  directionChangeTime: 0
 --- !u!61 &1025893066
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2996,7 +3008,7 @@ SpriteRenderer:
   m_Size: {x: 2.3476562, y: 1.3222656}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!4 &1553435582
