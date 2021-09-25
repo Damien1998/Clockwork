@@ -14,11 +14,11 @@ public class DialogueManager : MonoBehaviour
 {
     public static DialogueManager instance;
 
-    public GameObject dialogueBox,optionsBox;
-    public TextMeshProUGUI  dialogueText,dialogueHistoryText , optionText1, optionText2;
+    public GameObject dialogueBox, optionsBox;
+    public TextMeshProUGUI dialogueText, dialogueHistoryText, optionText1, optionText2;
     public Image portrait;
-    public Button option1, option2,progressButton;
-    public Scrollbar dialogueScrollBar,textDialogueScrollBar;
+    public Button option1, option2, progressButton;
+    public Scrollbar dialogueScrollBar, textDialogueScrollBar;
     public Slider SkipBar;
 
     private string[] dialogue;
@@ -27,6 +27,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]
     private float dialogueTextSpeed = .025f;
     private bool _isTyping = false, _skipping = false, options;
+    private bool isHoldingSkip;
 
     [SerializeField] private ParticleSystem extraSnow;
 
@@ -35,7 +36,7 @@ public class DialogueManager : MonoBehaviour
 
     void Awake()
     {
-        if(instance != null)
+        if (instance != null)
         {
             Destroy(gameObject);
         }
@@ -63,6 +64,7 @@ public class DialogueManager : MonoBehaviour
         dialogue = textFile.text.Split('\n');
         SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
         dialogueBox.SetActive(true);
+        dialogueBox.GetComponent<AnimatedPanel>().Appear();
         currentLine = 0;
         ProgressDialogue();
     }
@@ -70,9 +72,10 @@ public class DialogueManager : MonoBehaviour
     {
         StopAllCoroutines();
         ClearText();
-        dialogue = Resources.Load<TextAsset>("Dialogue/"+textFile).text.Split('\n');
+        dialogue = Resources.Load<TextAsset>("Dialogue/" + textFile).text.Split('\n');
         SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
         dialogueBox.SetActive(true);
+        dialogueBox.GetComponent<AnimatedPanel>().Appear();
         currentLine = 0;
         ProgressDialogue();
     }
@@ -80,7 +83,7 @@ public class DialogueManager : MonoBehaviour
     {
         ClearText();
         StopAllCoroutines();
-        dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
+        dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x, 40);
 
         currentLine = 0;
 
@@ -89,10 +92,18 @@ public class DialogueManager : MonoBehaviour
     void ExitDialogue()
     {
         _isTyping = false;
-        dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x,40);
-        dialogueBox.SetActive(false);
+        isHoldingSkip = false;
+        dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x, 40);
+        dialogueBox.GetComponent<AnimatedPanel>().Disappear();
         Time.timeScale = 1;
     }
+
+    public void ReturnToPreviousScene()
+    {
+        //For now this just resets dialogue. The return to previous screen feature is too complex to do while working on other stuff
+        //TODO
+    }
+
     public void ProgressDialogue()
     {
         if (currentLine >= dialogue.Length)
@@ -337,11 +348,11 @@ public class DialogueManager : MonoBehaviour
     }
     private void SkipBarProgress()
     {
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) || isHoldingSkip)
         {
             if (SkipBar.value<.95f)
             {
-                SkipBar.value += .5f*Time.deltaTime;
+                SkipBar.value += Time.deltaTime;
             }
             else
             {
@@ -353,6 +364,11 @@ public class DialogueManager : MonoBehaviour
         {
             SkipBar.value = 0;
         }
+    }
+
+    public void SetIsHoldingSkip(bool val)
+    {
+        isHoldingSkip = val;
     }
 
     public void StartDialogueByName(string fileName)

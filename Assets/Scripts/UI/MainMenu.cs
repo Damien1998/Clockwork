@@ -10,6 +10,12 @@ public class MainMenu : MonoBehaviour
 {
     [SerializeField]private string buttonSound;
 
+    private void Start()
+    {
+        //Makes the UI appear
+        GetComponent<Animator>().SetTrigger("Open");
+    }
+
     private void Update()
     {
         PlayButtonSound(buttonSound);

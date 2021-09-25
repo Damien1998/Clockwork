@@ -6,6 +6,9 @@ using UnityEngine.UI;
 public class SaveSlotInteractive : SaveSlotDisplay
 {
     public InputField nameField;
+    [SerializeField]
+    private Animator myAnimator;
+
     private void UpdateNameText(string nameText)
     {
         saveName.text = nameText;
@@ -14,11 +17,12 @@ public class SaveSlotInteractive : SaveSlotDisplay
     {
         if (SaveController.CheckForSaves(saveID))
         {
+            DisplayDelete();
             saveInfo.text = "Clear Save";
             saveName.text = "No Save!";
             SaveController.DeleteSave(saveID);
             Manager.DisplaySaveSlots();
-            DisplaySave();
+            DisplaySave();           
         }
     }
     public void ChangeSaveName(string name)
@@ -27,5 +31,15 @@ public class SaveSlotInteractive : SaveSlotDisplay
         SaveController.SaveGame();
         UpdateNameText(name);
         Manager.DisplaySaveSlots();
+    }
+
+    public void DisplayDelete()
+    {
+        myAnimator.SetTrigger("Delete");
+    }
+
+    public void DisplaySelect()
+    {
+        myAnimator.SetTrigger("Select");
     }
 }

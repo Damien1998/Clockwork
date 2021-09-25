@@ -8,6 +8,7 @@ public class PopupOpener : MonoBehaviour
     private Button button;
     [SerializeField]
     private Popup myPopup;
+   
 
     // Start is called before the first frame update
     void Start()
@@ -20,4 +21,6 @@ public class PopupOpener : MonoBehaviour
     {
         myPopup.SetPopupPosition(transform.position);
     }
+
+    
 }
