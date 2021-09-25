@@ -30,8 +30,11 @@ public class LevelSelect : MonoBehaviour
         GameManager.instance.levelID = selectedLevel;
         //LevelStart will be called at the end of a dialogue
         //UIManager.instance.LevelStart();
+        //Scene transition
+        UIManager.instance.transitionScreen.SetTrigger("FadeOut");
+        //LoadSceneAsync for that sweet sweet loading screen
         Debug.Log(selectedLevel);
-        SceneManager.LoadScene($"Level{selectedLevel}");
+        SceneManager.LoadSceneAsync($"Level{selectedLevel}");
     }
     public void NextLevelSelect()
     {
