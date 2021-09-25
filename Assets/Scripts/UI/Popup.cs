@@ -8,6 +8,7 @@ public class Popup : MonoBehaviour
 {
     public GameObject buttonExplanation;
     public TextMeshProUGUI explanationText;
+    public Animator myAnimator;
 
     public void SetPopupPosition(Vector2 worldPos)
     {
@@ -17,6 +18,8 @@ public class Popup : MonoBehaviour
         rectTransform.anchorMin = viewportPoint;
         rectTransform.anchorMax = viewportPoint;
         //rectTransform.position = Vector2.zero;
+
+        myAnimator.SetTrigger("Open");
     }
 
     public void ShowExplanationText(string text)
@@ -32,5 +35,15 @@ public class Popup : MonoBehaviour
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         yield return null;
         LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
+    }
+
+    public void HidePopup()
+    {
+        myAnimator.SetTrigger("Close");
+    }
+
+    public void Deactivate()
+    {
+        gameObject.SetActive(false);
     }
 }

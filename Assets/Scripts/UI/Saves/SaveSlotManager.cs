@@ -42,9 +42,24 @@ public class SaveSlotManager : MonoBehaviour
 
    public void SelectSaveSlot(int id)
    {
-      currentSlot.saveID = id;
-      currentSlot.DisplaySave();
-      SaveController.LoadGame(id);
+        currentSlot.saveID = id;
+        currentSlot.DisplaySave();
+        SaveController.LoadGame(id);
+
+        for(int i = 0; i < SaveSlotList.transform.childCount; i++)
+        {
+            var slot = SaveSlotList.transform.GetChild(0).GetComponent<SaveSlotDisplay>();
+            if(slot.saveID != id)
+            {
+                slot.gameObject.SetActive(true);
+            }
+            else
+            {
+                slot.gameObject.SetActive(false);
+            }
+        }
+
+        currentSlot.DisplaySelect();
    }
    static string GetSaveName(DirectoryInfo d,int fileIndex)
    {
