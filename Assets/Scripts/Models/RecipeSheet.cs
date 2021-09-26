@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 public class RecipeSheet : MonoBehaviour
 {
@@ -34,6 +35,16 @@ public class RecipeSheet : MonoBehaviour
             DisplayItem(WatchItem.components[i], tmpGO.transform);
         }
 
+        if(WatchItem.itemType == ItemType.FullMechanism)
+        {
+            tmpRecipe.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "-";
+        }
+        else
+        {
+            tmpRecipe.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = ":";
+        }
+
+        //tmpRecipe.GetComponent<Animator>().SetTrigger("Open");
         //DisplayRecipe();
     }
 

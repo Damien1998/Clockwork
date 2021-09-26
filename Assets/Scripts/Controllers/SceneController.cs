@@ -20,8 +20,10 @@ public class SceneController : MonoBehaviour
     }
     public void LoadMenu()
     {
-        SceneManager.LoadScene("Menu");
+        UIManager.instance.transitionScreen.SetTrigger("FadeOut");
+        SceneManager.LoadSceneAsync("Menu");
         UIManager.instance.StopAllUIPrograms();
+        
     }
 
 }

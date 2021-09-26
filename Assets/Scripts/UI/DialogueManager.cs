@@ -100,7 +100,6 @@ public class DialogueManager : MonoBehaviour
 
     public void ReturnToPreviousScene()
     {
-        //For now this just resets dialogue. The return to previous screen feature is too complex to do while working on other stuff
         //TODO
     }
 
