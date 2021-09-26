@@ -132,11 +132,18 @@ public class Player : MonoBehaviour
 
             if (isByWorkbench && Input.GetButton("Action" + playerNumber))
             {
-                nearbyWorkbench.isOperated = true;
+                if(nearbyWorkbench != null)
+                {
+                    nearbyWorkbench.isOperated = true;
+                }
+                //nearbyWorkbench.isOperated = true;
             }
             else if (isByWorkbench)
             {
-                nearbyWorkbench.isOperated = false;
+                if (nearbyWorkbench != null)
+                {
+                    nearbyWorkbench.isOperated = false;
+                }
             }
 
             if (isByWarpHole && Input.GetButtonUp("Action" + playerNumber) && !lockMovement && !isByWorkbench)

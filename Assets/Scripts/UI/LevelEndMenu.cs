@@ -9,11 +9,13 @@ public class LevelEndMenu : MonoBehaviour
 
     public void RestartLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        UIManager.instance.transitionScreen.SetTrigger("FadeOut");
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
     }
 
     public void EndLevel()
     {
-        SceneManager.LoadScene(mainMenuIndex);
+        UIManager.instance.transitionScreen.SetTrigger("FadeOut");
+        SceneManager.LoadSceneAsync(mainMenuIndex);
     }
 }

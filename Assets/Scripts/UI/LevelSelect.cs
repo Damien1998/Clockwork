@@ -12,6 +12,7 @@ public class LevelSelect : MonoBehaviour
     public int selectedLevel = 1;
     public TextMeshProUGUI levelText;
     [SerializeField] private GameObject selectScreen;
+    [SerializeField] private AnimatedPanel selectPanel;
     private bool interactable;
 
 
@@ -20,6 +21,7 @@ public class LevelSelect : MonoBehaviour
         if (interactable && Input.GetButtonDown("Pickup1"))
         {
             selectScreen.SetActive(true);
+            selectPanel.Appear();
             levelText.text = "Wybrany poziom " + selectedLevel;
         }
     }

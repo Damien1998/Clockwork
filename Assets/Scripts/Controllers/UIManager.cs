@@ -3,6 +3,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using static SaveController;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 public class UIManager : MonoBehaviour
 {
@@ -13,8 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject levelEndScren;
     [SerializeField] private GameObject levelFailureScren;
     [SerializeField] private GameObject TrophyScreen;
-    [SerializeField] private Text levelEndText;
-    [SerializeField] private Text levelFailureText;
+    [SerializeField] private TextMeshProUGUI levelEndText;
+    //[SerializeField] private Text levelFailureText;
     [SerializeField] private TextMeshProUGUI _QuestItemName, ItemFlavourText;
     [SerializeField] private Image trophyDisplay;
 
@@ -22,6 +24,12 @@ public class UIManager : MonoBehaviour
 
     public Animator transitionScreen;
     public bool transitionFinished;
+
+    private float currentBlurStrength;
+    private IEnumerator activePauseCoroutine;
+    [SerializeField]
+    private Volume pauseFXVolume;
+    private DepthOfField blur;
 
 
     void Start()
@@ -35,7 +43,7 @@ public class UIManager : MonoBehaviour
             instance = this;
         }
 
-        transitionScreen.SetTrigger("FadeIn");
+        pauseFXVolume.profile.TryGet(out blur);
     }
 
 
@@ -55,6 +63,9 @@ public class UIManager : MonoBehaviour
     {
         levelEndText.text = "Twój czas: " + timerDisplay.value.ToString();
         levelEndScren.SetActive(true);
+        levelEndScren.GetComponent<AnimatedPanel>().Appear();
+
+        PauseGame(true);
 
         ShowTrophyUI();
 
@@ -64,8 +75,11 @@ public class UIManager : MonoBehaviour
     public void ShowLevelFailure()
     {
         //StopCoroutine(timer);
-        levelFailureText.text = "Twój czas: " + timerDisplay.value.ToString();
+        //levelFailureText.text = "Twój czas: " + timerDisplay.value.ToString();
         levelFailureScren.SetActive(true);
+        levelFailureScren.GetComponent<AnimatedPanel>().Appear();
+
+        PauseGame(true);
 
         //trophyDisplay.SetActive(GameManager.instance.localQuestDone);
         SoundManager.PlaySound(SoundManager.Sound.AlarmRing);
@@ -81,15 +95,27 @@ public class UIManager : MonoBehaviour
 
     public void PauseGame(bool pause)
     {
-        if(pause)
+        if (pause)
         {
-            Time.timeScale = 0f;
+            if(activePauseCoroutine != null)
+            {
+                StopCoroutine(activePauseCoroutine);
+            }
+            activePauseCoroutine = StartPause(0.3f);
+            StartCoroutine(activePauseCoroutine);
         }
         else
         {
-            Time.timeScale = 1f;
+            if (activePauseCoroutine != null)
+            {
+                StopCoroutine(activePauseCoroutine);
+            }
+            activePauseCoroutine = StartUnpause(0.3f);
+            StartCoroutine(activePauseCoroutine);
         }
     }
+
+
 
     public void LevelStart()
     {
@@ -99,11 +125,39 @@ public class UIManager : MonoBehaviour
             timerDisplay.value = 0;
             timerDisplay.maxValue = GameManager.instance.currentLevelParams.time;
             timerDisplay.gameObject.SetActive(true);
-            
+
         }
     }
 
+    IEnumerator StartPause(float duration)
+    {
+        while(currentBlurStrength < 1)
+        {
+            currentBlurStrength += Time.deltaTime * (1 / duration);
+            blur.focalLength.value = 1 + (39 * currentBlurStrength);
+            yield return null;
+        }
 
+        currentBlurStrength = 1;
+        blur.focalLength.value = 1 + (39 * currentBlurStrength);
+        //Time.timeScale = 0f;
+    }
+
+    IEnumerator StartUnpause(float duration)
+    {
+        //Time.timeScale = 1f;
+
+        while (currentBlurStrength > 0)
+        {
+            currentBlurStrength -= Time.deltaTime * (1 / duration);
+            blur.focalLength.value = 1 + (39 * currentBlurStrength);
+            yield return null;
+        }
+
+        currentBlurStrength = 0;
+        blur.focalLength.value = 1 + (39 * currentBlurStrength);
+
+    }
 
     public void StopAllUIPrograms()
     {
