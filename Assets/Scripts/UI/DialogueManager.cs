@@ -169,7 +169,12 @@ public class DialogueManager : MonoBehaviour
             _name.Append(nameWord);
         }
         // Very Weird Symbol?
-        _name.Remove(_name.Length-1,1);
+        // Probably Fixed Now Was Due to Portrait thing
+        if (_name.Length - 1 > 0)
+        {
+            _name.Remove(_name.Length - 1, 1);
+        }
+
         _name.Append(": ");
         name = _name.ToString();
         int id = FindCharacterID(cName);
@@ -393,6 +398,11 @@ public class DialogueManager : MonoBehaviour
     public void SendAnalytics(string poiName)
     {
         AnalyticsController.SendAnalyticResult($"Clicked Poi {poiName}");
+    }
+
+    public void SendFinishedAnalytics(string poiName)
+    {
+        AnalyticsController.SendAnalyticResult($"Finished Reading {poiName}");
     }
 
 

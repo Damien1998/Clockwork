@@ -59,6 +59,11 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void WentIntoAdvancedSettings()
+    {
+        AnalyticsController.SendAnalyticResult($"Went Into Advanced Settings");
+    }
+
     public void ShowLevelEnd()
     {
         levelEndText.text = "Twój czas: " + timerDisplay.value.ToString();

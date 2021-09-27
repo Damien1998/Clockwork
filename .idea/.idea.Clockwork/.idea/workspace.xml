@@ -25,12 +25,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="24ebf151-db49-47b0-a8c7-dede33a08e73" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/contentModel.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/contentModel.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.Clockwork/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeSheet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/Models/RecipeSheet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_end.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_end.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_quest_end.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_quest_end.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_start.txt" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_start.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scenes/Menu.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/DialogueManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/DialogueManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,9 +73,6 @@
   </component>
   <component name="IdeDocumentHistory">
     <changedPaths>
-      <option value="$PROJECT_DIR$/Assets/Dialogue/lvl10_workshop.txt" />
-      <option value="$PROJECT_DIR$/Assets/Dialogue/lvl10_quest_end.txt" />
-      <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_quest_end.txt" />
       <option value="$PROJECT_DIR$/Assets/Scripts/SaveData.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/ComponentSprites.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/WatchSprites.cs" />
@@ -98,7 +96,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/AnalyticsController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Controllers/SaveController.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/WorkshopMenu.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" />
       <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_snow_importer.txt" />
       <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_ambush.txt" />
       <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_quest_philosopher.txt" />
@@ -111,7 +108,6 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/LevelParams.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Popup.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/Saves/SaveSlotDisplay.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogueManager.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/QuestWatch.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/DataModels/Item.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/Watch.cs" />
@@ -121,8 +117,13 @@
       <option value="$PROJECT_DIR$/Assets/Scripts/UI/LevelSelect.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/WorkbenchExamine.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/RecipeSheet.cs" />
-      <option value="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" />
       <option value="$PROJECT_DIR$/Assets/Scripts/Models/RecipeListView.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/Models/CheckoutTable.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/MainMenu.cs" />
+      <option value="$PROJECT_DIR$/Assets/Scripts/UI/DialogueManager.cs" />
+      <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_end.txt" />
+      <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_quest_end.txt" />
+      <option value="$PROJECT_DIR$/Assets/Resources/Dialogue/lvl10_start.txt" />
     </changedPaths>
   </component>
   <component name="ProjectId" id="1iy3MpVIIBx8khPeKCDjG6VTij5" />
@@ -263,7 +264,7 @@
       <workItem from="1631894398965" duration="5325000" />
       <workItem from="1632159629834" duration="19219000" />
       <workItem from="1632567066901" duration="350000" />
-      <workItem from="1632759354043" duration="5414000" />
+      <workItem from="1632759354043" duration="7744000" />
     </task>
     <servers />
   </component>
