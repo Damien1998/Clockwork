@@ -102,27 +102,23 @@ public class WorkbenchExamine : Workbench
         if (_watchItem.WatchItem.itemType == ItemType.FullWatch) // If is The Highest Watch In Hierarchy
         {
             RecipeListView.currentMainWatch = _watchItem;
-            RecipeListView.AddRecipeToList(RecipeListView.currentMainWatch);
+            RecipeListView.AddRecipeToList(_watchItem);
         } // If it isn't then check if it is a component
-        else if(_watchItem.WatchItem.parentItem.parentItem == null && _watchItem.WatchItem.components.Count >= 2)
+        else if(_watchItem.WatchItem.parentItem.itemType == ItemType.FullWatch && _watchItem.WatchItem.components.Count >= 2)
         {
             RecipeListView.recipeLists.Add(_watchItem);
         }
 
-        if (RecipeListView.recipeLists.Count > 1)
+        if (SceneManager.GetSceneByName("RecipeSheet").isLoaded)
         {
-            if (SceneManager.GetSceneByName("RecipeSheet").isLoaded)
-            {
-                RecipeListView.ReloadRecipeView();
-            }
+            RecipeListView.ReloadRecipeView();
         }
         else
         {
-            if (!SceneManager.GetSceneByName("RecipeSheet").isLoaded)
-            {
-                RecipeListView.LoadRecipeView();
-            }
+            RecipeListView.LoadRecipeView();
+
         }
+
     }
 
     //I'm leaving this in in case I need it later

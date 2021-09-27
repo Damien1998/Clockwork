@@ -175,7 +175,7 @@ namespace Models
             var newItem = new Item();
             newItem.SetParameters(randomWatches[watchIndex]);
             newWatch.GetComponent<Watch>().WatchItem = newItem;
-            newWatch.GetComponent<Watch>().WatchItem.SetParameters(newItem);
+            newWatch.GetComponent<Watch>().WatchItem.SetParameters(randomWatches[watchIndex]);
             newWatch.GetComponent<Watch>().SetItemType(ItemType.FullWatch);
             newWatch.GetComponent<Watch>().TrueState = ItemState.Broken;
         }

@@ -28,7 +28,7 @@ public static class RecipeListView
 
     public static void AddRecipeToList(Watch _watch)
     {
-        if (_watch.WatchItem.parentItem == null)
+        if (!recipeLists.Contains(_watch))
         {
             recipeLists.Add(_watch);
         }
