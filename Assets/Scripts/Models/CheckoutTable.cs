@@ -135,8 +135,9 @@ namespace Models
             var WatchComponent = newWatch.GetComponent<Watch>();
             WatchComponent.itemRenderer[0].gameObject.SetActive(true);
             LoadQuestWatch(_questWatch,watchItem);
-            WatchComponent.WatchItem = new Item();
-            WatchComponent.WatchItem = watchItem;
+            var newItem = new Item();
+            newItem.SetParameters(watchItem);
+            WatchComponent.WatchItem = newItem;
             WatchComponent.WatchItem.SetParameters(watchItem);
 
             WatchComponent.SetItemType(ItemType.QuestWatch);
