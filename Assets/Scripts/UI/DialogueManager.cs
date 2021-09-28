@@ -67,6 +67,7 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.GetComponent<AnimatedPanel>().Appear();
         currentLine = 0;
         ProgressDialogue();
+        UIManager.instance.PauseGameNoBlur(true);
     }
     public void StartDialogue(string textFile)
     {
@@ -78,6 +79,7 @@ public class DialogueManager : MonoBehaviour
         dialogueBox.GetComponent<AnimatedPanel>().Appear();
         currentLine = 0;
         ProgressDialogue();
+        UIManager.instance.PauseGameNoBlur(true);
     }
     public void ResetDialogue()
     {
@@ -96,6 +98,7 @@ public class DialogueManager : MonoBehaviour
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x, 40);
         dialogueBox.GetComponent<AnimatedPanel>().Disappear();
         Time.timeScale = 1;
+        UIManager.instance.PauseGameNoBlur(false);
     }
 
     public void ReturnToPreviousScene()

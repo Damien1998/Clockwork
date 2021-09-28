@@ -13,7 +13,7 @@ public class CityClickManager : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButtonDown(0) && !UIManager.instance.mouseBlocked && !UIManager.instance.IsPaused)
         {
             var v3 = Input.mousePosition;
             v3.z = 10f;

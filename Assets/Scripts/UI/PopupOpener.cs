@@ -19,7 +19,10 @@ public class PopupOpener : MonoBehaviour
 
     void ShowPopup()
     {
-        myPopup.SetPopupPosition(transform.position);
+        if(!UIManager.instance.mouseBlocked && !UIManager.instance.IsPaused)
+        {
+            myPopup.SetPopupPosition(transform.position);
+        }      
     }
 
     

@@ -19,6 +19,11 @@ public class ConveyorBelt : MonoBehaviour
     [SerializeField]
     private float directionChangeTime;
 
+    [SerializeField]
+    private Animator myAnimator;
+
+    private List<Rigidbody2D> itemsInside = new List<Rigidbody2D>();
+
     private void Start()
     {
         if (changeDirection)
@@ -26,6 +31,20 @@ public class ConveyorBelt : MonoBehaviour
             StartCoroutine(Platform());
         }
     }
+
+    public void SetAnimationSpeed(float speed)
+    {
+        myAnimator.speed = speed;
+
+        if(speed != 0)
+        {
+            foreach(Rigidbody2D rb in itemsInside)
+            {
+                rb.velocity = direction.normalized * speed;
+            }
+        }
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {       
         if (collision.TryGetComponent(out Rigidbody2D rigidbody) && (collision.TryGetComponent(out Watch watch) || collision.TryGetComponent(out Player player) || collision.CompareTag("water")))
@@ -38,6 +57,7 @@ public class ConveyorBelt : MonoBehaviour
             if(watch != null)
             {
                 rigidbody.velocity = Vector2.zero;
+                itemsInside.Add(rigidbody);
                 watch.ChangeSortingLayer("ItemsWorkbench");
                 player = null;
                 if (direction.x == 0)
@@ -94,7 +114,15 @@ public class ConveyorBelt : MonoBehaviour
                 {
                     collision.transform.position = new Vector3(collision.transform.position.x, itemSnapPosition.position.y);
                 }
-                rigidbody.velocity = direction.normalized * speed;
+
+                if(!UIManager.instance.IsPaused)
+                {
+                    rigidbody.velocity = direction.normalized * speed;
+                }
+                else
+                {
+                    rigidbody.velocity = Vector2.zero;
+                }
                 player = null;
             }
             else
@@ -103,7 +131,15 @@ public class ConveyorBelt : MonoBehaviour
             }
             if (player != null)
             {
-                player.additionalVelocity = direction.normalized * speed;
+                
+                if (!UIManager.instance.IsPaused)
+                {
+                    player.additionalVelocity = direction.normalized * speed;
+                }
+                else
+                {
+                    player.additionalVelocity = Vector2.zero;
+                }
             }
         }
     }
@@ -114,7 +150,10 @@ public class ConveyorBelt : MonoBehaviour
             player.isOnConveyor = false;
             player.additionalVelocity = Vector2.zero;
         }
-
+        else if(collision.TryGetComponent(out Rigidbody2D rigidbody) && (collision.TryGetComponent(out Watch watch)))
+        {
+            itemsInside.Remove(rigidbody);
+        }
     }
     IEnumerator Platform()
     {
