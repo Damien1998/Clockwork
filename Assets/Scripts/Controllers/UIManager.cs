@@ -30,7 +30,10 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Volume pauseFXVolume;
     private DepthOfField blur;
+    private bool walkableScene;
 
+    public bool IsPaused { get; private set; }
+    public bool mouseBlocked;
 
     void Start()
     {
@@ -44,6 +47,7 @@ public class UIManager : MonoBehaviour
         }
 
         pauseFXVolume.profile.TryGet(out blur);
+
     }
 
 
@@ -102,25 +106,112 @@ public class UIManager : MonoBehaviour
     {
         if (pause)
         {
+            IsPaused = true;
+
+            var conveyors = FindObjectsOfType<ConveyorBelt>();
+
+            foreach(ConveyorBelt c in conveyors)
+            {
+                c.SetAnimationSpeed(0);
+            }
+
             if(activePauseCoroutine != null)
             {
                 StopCoroutine(activePauseCoroutine);
             }
+
+            if(Player.CanInteract)
+            {
+                Player.CanInteract = false;
+                walkableScene = true;
+            }
+            else
+            {
+                walkableScene = false;
+            }
+
             activePauseCoroutine = StartPause(0.3f);
             StartCoroutine(activePauseCoroutine);
         }
         else
         {
+            var conveyors = FindObjectsOfType<ConveyorBelt>();
+
+            foreach (ConveyorBelt c in conveyors)
+            {
+                c.SetAnimationSpeed(1);
+            }
+
+            IsPaused = false;
+
             if (activePauseCoroutine != null)
             {
                 StopCoroutine(activePauseCoroutine);
             }
+
+            if(walkableScene)
+            {
+                Player.CanInteract = true;
+            }
+
             activePauseCoroutine = StartUnpause(0.3f);
             StartCoroutine(activePauseCoroutine);
         }
     }
 
+    public void PauseGameNoBlur(bool pause)
+    {
+        if (pause)
+        {
+            IsPaused = true;
 
+            var conveyors = FindObjectsOfType<ConveyorBelt>();
+
+            foreach (ConveyorBelt c in conveyors)
+            {
+                c.SetAnimationSpeed(0);
+            }
+
+            if (Player.CanInteract)
+            {
+                Player.CanInteract = false;
+                walkableScene = true;
+            }
+            else
+            {
+                walkableScene = false;
+            }
+        }
+        else
+        {
+            IsPaused = false;
+
+            var conveyors = FindObjectsOfType<ConveyorBelt>();
+
+            foreach (ConveyorBelt c in conveyors)
+            {
+                c.SetAnimationSpeed(1);
+            }
+
+            if (activePauseCoroutine != null)
+            {
+                StopCoroutine(activePauseCoroutine);
+            }
+
+            if (walkableScene)
+            {
+                Player.CanInteract = true;
+            }
+
+            activePauseCoroutine = StartUnpause(0.3f);
+            StartCoroutine(activePauseCoroutine);
+        }
+    }
+
+    public void SetMouseBlocked(bool block)
+    {
+        mouseBlocked = block;
+    }
 
     public void LevelStart()
     {
