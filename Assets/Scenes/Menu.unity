@@ -27217,7 +27217,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Delete
+  m_text: "Usu\u0144"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 14cbb285a87fc94438a7a29d6ce05eb5, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -37066,6 +37066,46 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 123600279, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_text
+      value: "Powr\xF3t"
+      objectReference: {fileID: 0}
+    - target: {fileID: 547392882, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_text
+      value: "Rozdzielczo\u015B\u0107"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1055171867, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_text
+      value: "Powr\xF3t"
+      objectReference: {fileID: 0}
+    - target: {fileID: 1256767252, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_text
+      value: Grafika
+      objectReference: {fileID: 0}
+    - target: {fileID: 1668086937, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_text
+      value: Edytuj
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914612830, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_text
+      value: "Tw\xF3rcy"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008738304, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_text
+      value: Zapisy
+      objectReference: {fileID: 0}
+    - target: {fileID: 2033733400, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_text
+      value: "Wyj\u015Bcie"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085058017, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_text
+      value: Graj
+      objectReference: {fileID: 0}
+    - target: {fileID: 2141186532, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_text
+      value: Zapis
+      objectReference: {fileID: 0}
     - target: {fileID: 1847965907139660745, guid: 6b5653c152a91294f9ca8f3f384beffd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -37311,6 +37351,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1847965908459331777, guid: 6b5653c152a91294f9ca8f3f384beffd,
+        type: 3}
+      propertyPath: m_text
+      value: Opcje
+      objectReference: {fileID: 0}
     - target: {fileID: 3572519053052095223, guid: 6b5653c152a91294f9ca8f3f384beffd,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -37326,6 +37371,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0.000030517578
       objectReference: {fileID: 0}
+    - target: {fileID: 3720644759890725179, guid: 6b5653c152a91294f9ca8f3f384beffd,
+        type: 3}
+      propertyPath: m_text
+      value: Stworzone przez
+      objectReference: {fileID: 0}
     - target: {fileID: 3833145885334902963, guid: 6b5653c152a91294f9ca8f3f384beffd,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -37340,6 +37390,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072441685711606387, guid: 6b5653c152a91294f9ca8f3f384beffd,
+        type: 3}
+      propertyPath: m_text
+      value: "Pe\u0142nyekran"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072441685854404152, guid: 6b5653c152a91294f9ca8f3f384beffd,
+        type: 3}
+      propertyPath: m_text
+      value: Sterowanie
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072441685906040989, guid: 6b5653c152a91294f9ca8f3f384beffd,
+        type: 3}
+      propertyPath: m_text
+      value: Grafika
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072441686699663035, guid: 6b5653c152a91294f9ca8f3f384beffd,
+        type: 3}
+      propertyPath: m_text
+      value: "Powr\xF3t"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072441686881368854, guid: 6b5653c152a91294f9ca8f3f384beffd,
+        type: 3}
+      propertyPath: m_text
+      value: Obraz
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072441686989816227, guid: 6b5653c152a91294f9ca8f3f384beffd,
+        type: 3}
+      propertyPath: m_text
+      value: "Rozdzielczo\u015B\u0107"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5072441687381518377, guid: 6b5653c152a91294f9ca8f3f384beffd,
+        type: 3}
+      propertyPath: m_text
+      value: "D\u017Awi\u0119k"
       objectReference: {fileID: 0}
     - target: {fileID: 5437723306234043609, guid: 6b5653c152a91294f9ca8f3f384beffd,
         type: 3}
@@ -37432,6 +37517,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 445235026194344934, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Opcje dialogowe
+      objectReference: {fileID: 0}
     - target: {fileID: 515109673007245745, guid: e5cbe9d1804311b4ba663e446bea231e,
         type: 3}
       propertyPath: m_AnchorMin.x
@@ -37466,6 +37556,46 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 735296043330424446, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Obraz
+      objectReference: {fileID: 0}
+    - target: {fileID: 735296043651591123, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "Wr\xF3\u0107"
+      objectReference: {fileID: 0}
+    - target: {fileID: 735296043830582593, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "D\u017Awi\u0119k"
+      objectReference: {fileID: 0}
+    - target: {fileID: 735296043975898315, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "Rozdzielczo\u015B\u0107"
+      objectReference: {fileID: 0}
+    - target: {fileID: 735296044308293403, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "Pe\u0142ny Ekran"
+      objectReference: {fileID: 0}
+    - target: {fileID: 735296044417125200, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Sterowanie
+      objectReference: {fileID: 0}
+    - target: {fileID: 735296045039721973, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Grafika
+      objectReference: {fileID: 0}
+    - target: {fileID: 872613493939053134, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "Pomi\u0144"
       objectReference: {fileID: 0}
     - target: {fileID: 1383957239641389642, guid: e5cbe9d1804311b4ba663e446bea231e,
         type: 3}
@@ -37507,6 +37637,66 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2960369396954669454, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Resetuj
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915720106338088, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "D\u017Awi\u0119k"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915720263715406, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Obraz
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915720587360100, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "Pe\u0142ny Ekran"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915720610295629, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Szybkie ustawienia
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915721232719841, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Dom
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915721315727189, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: 'przycisk powrotu '
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915721320728116, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Zaawansowane
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915721394277785, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Sterowanie
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915721468903083, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Grafika
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915721629073696, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "Rozdzielczo\u015B\u0107"
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678915721799339566, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "Powr\xF3t"
+      objectReference: {fileID: 0}
     - target: {fileID: 4328200911445088498, guid: e5cbe9d1804311b4ba663e446bea231e,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -37526,6 +37716,33 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089550196045472756, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: 'Przycisk
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089550196045472759, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Dziennik
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089550196045472762, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: Przycisk
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089550196045472765, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "Post\u0119p"
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089550196045472766, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "[SHIFT] Pomi\u0144"
       objectReference: {fileID: 0}
     - target: {fileID: 5089550196045472778, guid: e5cbe9d1804311b4ba663e446bea231e,
         type: 3}
@@ -37611,6 +37828,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6217273713357198678, guid: e5cbe9d1804311b4ba663e446bea231e,
+        type: 3}
+      propertyPath: m_text
+      value: "Pomi\u0144"
       objectReference: {fileID: 0}
     - target: {fileID: 6808776283313810004, guid: e5cbe9d1804311b4ba663e446bea231e,
         type: 3}
