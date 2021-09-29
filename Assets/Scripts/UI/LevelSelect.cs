@@ -22,7 +22,7 @@ public class LevelSelect : MonoBehaviour
         {
             selectScreen.SetActive(true);
             selectPanel.Appear();
-            levelText.text = "Wybrany poziom " + selectedLevel;
+            levelText.text = "Poziom " + selectedLevel;
         }
     }
 
