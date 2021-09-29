@@ -32,6 +32,9 @@ public class UIManager : MonoBehaviour
     private DepthOfField blur;
     private bool walkableScene;
 
+    [SerializeField]
+    private AnimatedPanel levelEndPanel, levelFailPanel;
+
     public bool IsPaused { get; private set; }
     public bool mouseBlocked;
 
@@ -70,15 +73,24 @@ public class UIManager : MonoBehaviour
 
     public void ShowLevelEnd()
     {
+        
+
         levelEndText.text = "Twój czas: " + timerDisplay.value.ToString();
         levelEndScren.SetActive(true);
-        levelEndScren.GetComponent<AnimatedPanel>().Appear();
+        //levelEndPanel.Appear();
+        levelEndScren.GetComponent<Animator>().SetTrigger("Open");
 
-        PauseGame(true);
+        StartCoroutine(WaitAndPause(true));
 
         ShowTrophyUI();
-
+        Debug.Log("asdasdad");
         timerDisplay.gameObject.SetActive(false);
+    }
+
+    IEnumerator WaitAndPause(bool pause)
+    {
+        yield return null;
+        PauseGame(pause);
     }
 
     public void ShowLevelFailure()
@@ -86,9 +98,10 @@ public class UIManager : MonoBehaviour
         //StopCoroutine(timer);
         //levelFailureText.text = "Twój czas: " + timerDisplay.value.ToString();
         levelFailureScren.SetActive(true);
-        levelFailureScren.GetComponent<AnimatedPanel>().Appear();
+        //levelFailPanel.Appear();
+        levelFailureScren.GetComponent<Animator>().SetTrigger("Open");
 
-        PauseGame(true);
+        StartCoroutine(WaitAndPause(true));
 
         //trophyDisplay.SetActive(GameManager.instance.localQuestDone);
         SoundManager.PlaySound(SoundManager.Sound.AlarmRing);
