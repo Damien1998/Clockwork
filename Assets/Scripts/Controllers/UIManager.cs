@@ -206,11 +206,6 @@ public class UIManager : MonoBehaviour
                 c.SetAnimationSpeed(1);
             }
 
-            if (activePauseCoroutine != null)
-            {
-                StopCoroutine(activePauseCoroutine);
-            }
-
             if (walkableScene)
             {
                 Player.CanInteract = true;
