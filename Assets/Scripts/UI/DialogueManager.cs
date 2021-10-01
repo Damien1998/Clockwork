@@ -114,7 +114,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            SoundManager.PlaySound(SoundManager.Sound.NextDialog);
+            SoundManager.PlaySound(SoundManager.Sound.ProgressDialogue);
 
             CheckIfCommand();
 
@@ -364,6 +364,7 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 Skip();
+                SoundManager.PlaySound(SoundManager.Sound.Skip);
                 SkipBar.value = 0;
             }
         }

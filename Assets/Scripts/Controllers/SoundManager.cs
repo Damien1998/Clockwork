@@ -14,8 +14,10 @@ public static class SoundManager
         PoiInteraction = 2,     // przy wejściu w interakcję z PoI lub QuestGiverem
         WorkshopInteraction = 3,
         SceneSwapOut = 4,          // odpalane przy zmianie sceny innej niż menu
-        SceneSwapIn = 5,
-        SceneSwapToMenu = 6,
+        MenuButton = 5,
+        ProgressDialogue = 6,
+        UIChange = 7,
+        Skip = 13,
         //wolne mijsce
         DefaultClick = 8,       //Jeśli gracz kliknie, ale w nic konkretnego
         SliderInteraction = 9,
