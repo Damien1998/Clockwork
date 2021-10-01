@@ -61,7 +61,7 @@ public class WorkbenchPrecise : Workbench
         //If there is only one item, it is either a mechanism or needs repair
         if (itemSlots[1] == null && itemSlots[0].WatchItem.State != ItemState.UnknownState)
         {
-            if (itemSlots[0] != null)
+            if (itemSlots[0] != null && itemSlots[0].WatchItem.State != ItemState.Unfixable)
             {
                 if (itemSlots[0].WatchItem.State == ItemState.Broken && itemSlots[0].WatchItem.components.Count == 0)
                 {
