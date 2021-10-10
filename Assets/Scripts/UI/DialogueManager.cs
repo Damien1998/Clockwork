@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Models;
+using Polyglot;
 using TMPro;
 
 public class DialogueManager : MonoBehaviour
@@ -73,7 +74,7 @@ public class DialogueManager : MonoBehaviour
     {
         StopAllCoroutines();
         ClearText();
-        dialogue = Resources.Load<TextAsset>("Dialogue/" + textFile).text.Split('\n');
+        dialogue = Resources.Load<TextAsset>($"Dialogue/{Localization.Instance.SelectedLanguage}/{textFile}").text.Split('\n');
         SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
         dialogueBox.SetActive(true);
         dialogueBox.GetComponent<AnimatedPanel>().Appear();
