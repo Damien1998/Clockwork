@@ -56,34 +56,27 @@ public class WorkbenchPrecise : Workbench
     protected override void DropItems()
     {
         bool isValid = true;
+        var firstItem = itemSlots[0];
+        var OnlyOneItem = itemSlots[1] == null;
         //Here the items are combined, broken down, or repaired
 
         //If there is only one item, it is either a mechanism or needs repair
-        if (itemSlots[1] == null && itemSlots[0].WatchItem.State != ItemState.UnknownState)
+        if (OnlyOneItem)
         {
-            if (itemSlots[0] != null && itemSlots[0].WatchItem.State != ItemState.Unfixable)
+            if (firstItem.WatchItem.itemType == ItemType.FullMechanism && firstItem.WatchItem.State == ItemState.ComplexBroken)
             {
-                if (itemSlots[0].WatchItem.State == ItemState.Broken && itemSlots[0].WatchItem.components.Count == 0)
+                itemSlots[0].TrueState = ItemState.EmptyState;
+                itemSlots[0].WatchItem.SetAllStates(ItemState.EmptyState);
+                itemSlots[0].WatchItem.itemType = ItemType.EmptyMechanism;
+                for (int i = 0; i < itemSlots[0].WatchItem.components.Count; i++)
                 {
-                    //endParticles.Play();
-                    checkMark.Play();
-                    itemSlots[0].WatchItem.State = ItemState.Repaired;
+                    itemSlots[i + 1] = GenerateItem(itemSlots[0].WatchItem.components[i]);
                 }
-                else if (itemSlots[0].WatchItem.State != ItemState.EmptyState && itemSlots[0].WatchItem.itemType == ItemType.FullMechanism)
-                {
-                    //endParticles.Play();
-                    itemSlots[0].TrueState = ItemState.EmptyState;
-                    itemSlots[0].WatchItem.SetAllStates(ItemState.EmptyState);
-                    itemSlots[0].WatchItem.itemType = ItemType.EmptyMechanism;
-                    for (int i = 0; i < itemSlots[0].WatchItem.components.Count; i++)
-                    {
-                        itemSlots[i + 1] = GenerateItem(itemSlots[0].WatchItem.components[i]);
-                    }
-                }
-                else
-                {
-                    isValid = false;
-                }
+            }
+            else if(firstItem.WatchItem.State == ItemState.Broken)
+            {
+                checkMark.Play();
+                itemSlots[0].WatchItem.State = ItemState.Repaired;
             }
             else
             {
@@ -93,7 +86,7 @@ public class WorkbenchPrecise : Workbench
         //If there are more items, the workbench tries to combine them using the mechanism's component list
         else
         {
-            if ((itemSlots[0].WatchItem.itemType == ItemType.Mechanism  && itemSlots[0].WatchItem.State == ItemState.Repaired) || itemSlots[0].WatchItem.itemType == ItemType.EmptyMechanism)
+            if ((firstItem.WatchItem.itemType == ItemType.Mechanism  && firstItem.WatchItem.State == ItemState.Repaired) || firstItem.WatchItem.itemType == ItemType.EmptyMechanism)
             {
                 Debug.Log("Hlep");// there is no help, only salvation
 

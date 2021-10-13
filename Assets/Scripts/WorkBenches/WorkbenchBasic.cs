@@ -177,30 +177,57 @@ public class WorkbenchBasic : Workbench
         var filledSlots = slots.Count(watch => watch != null);
 
         var correctComponents = 0;
-        var myParentItem = slots[0].WatchItem.parentItem;
+        var fixedItem = new Item();
+        if (slots[0].WatchItem.itemType != ItemType.FullMechanism)
+        {
+            fixedItem = slots[0].WatchItem.parentItem;
+        }
+        else
+        {
+            fixedItem = slots[1].WatchItem.parentItem;
+        }
 
-        if (myParentItem == null) { return false;}
+        if (fixedItem == null) { return false;}
 
         for (int j = 0; j < filledSlots; j++)
         {
-            if (slots[j].WatchItem.parentItem == myParentItem && (slots[j].WatchItem.State == ItemState.Repaired || slots[j].WatchItem.State == ItemState.EmptyState))
+            var currentItemPart = slots[j].WatchItem;
+            if(currentItemPart.State == ItemState.Repaired && currentItemPart.itemType != ItemType.FullMechanism)
             {
-                correctComponents++;
+                if (currentItemPart.parentItem == fixedItem)
+                {
+                    correctComponents++;
+                }
             }
             else
             {
-                correctComponents--;
+                if (HasMechanismIn(fixedItem))
+                {
+                    if (currentItemPart.State == ItemState.Repaired)
+                    {
+                        correctComponents++;
+                    }
+                }
+                else
+                {
+                    correctComponents--;
+                }
             }
         }
 
-        if (correctComponents >= myParentItem.components.Count)
+        if (correctComponents >= fixedItem.components.Count)
         {
             watchToDrop = new Item();
-            watchToDrop.SetParameters(myParentItem);
+            watchToDrop.SetParameters(fixedItem);
             SoundManager.PlaySound(SoundManager.Sound.ClockCompleted);
             return true;
         }
 
         return false;
+    }
+
+    private bool HasMechanismIn(Item parentItem)
+    {
+        return parentItem.components.Any(component => component.itemType == ItemType.FullMechanism);
     }
 }
