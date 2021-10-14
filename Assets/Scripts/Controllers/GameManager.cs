@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
             currentLevelParams = Resources.Load<LevelParams>("LevelParams/Level " + _levelID);
         }
     }
+
+
     private void Awake()
     {
         //Keeping the population of game managers in check
@@ -59,6 +61,12 @@ public class GameManager : MonoBehaviour
         {
             SaveController.InitializeSaveController();
         }
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        SoundManager.PlaySound(SoundManager.Sound.UIChange);
     }
 
     public void StartCityLevel(int mylevelID)

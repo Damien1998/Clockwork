@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using Models;
+using Polyglot;
 using TMPro;
 
 public class DialogueManager : MonoBehaviour
@@ -73,7 +74,7 @@ public class DialogueManager : MonoBehaviour
     {
         StopAllCoroutines();
         ClearText();
-        dialogue = Resources.Load<TextAsset>("Dialogue/" + textFile).text.Split('\n');
+        dialogue = Resources.Load<TextAsset>($"Dialogue/{Localization.Instance.SelectedLanguage}/{textFile}").text.Split('\n');
         SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
         dialogueBox.SetActive(true);
         dialogueBox.GetComponent<AnimatedPanel>().Appear();
@@ -114,7 +115,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            SoundManager.PlaySound(SoundManager.Sound.NextDialog);
+            SoundManager.PlaySound(SoundManager.Sound.ProgressDialogue);
 
             CheckIfCommand();
 
@@ -364,6 +365,7 @@ public class DialogueManager : MonoBehaviour
             else
             {
                 Skip();
+                SoundManager.PlaySound(SoundManager.Sound.Skip);
                 SkipBar.value = 0;
             }
         }

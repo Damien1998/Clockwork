@@ -33,7 +33,7 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame(int levelID)
     {
-        AnalyticsController.SendAnalyticResult($"StartedLevel {levelID}");
+        AnalyticsController.SendAnalyticResult($"Clicked Play");
         Time.timeScale = 1f;
         UIManager.instance.QuickSettingButton.SetActive(true);
         if (SaveController.currentSave == null)
@@ -73,9 +73,11 @@ public class MainMenu : MonoBehaviour
 
     public void PlayButtonSound(string sound)
     {
+
         if (EventSystem.current.currentSelectedGameObject != null)
         {
-            SoundManager.PlaySound((SoundManager.Sound)Enum.Parse(typeof(SoundManager.Sound),sound));
+            Debug.Log("VAR");
+            SoundManager.PlaySound(SoundManager.Sound.MenuButton);
             EventSystem.current.SetSelectedGameObject(null);
         }
     }
