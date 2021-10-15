@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: OutlinerMat
+  m_Name: OutlinerRed
   m_Shader: {fileID: -6465566751694194690, guid: 1f272ca61b3fa7a47a98efe82c1a8520,
     type: 3}
   m_ShaderKeywords: ETC1_EXTERNAL_ALPHA
@@ -21,13 +21,13 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 57dfc6eefb4670c4bb7bdc3727e0a42e, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_84D944B3: 0.035
     - Vector1_86633F9E: 0.025
     m_Colors:
-    - Color_9148E07C: {r: 271.17407, g: 271.17407, b: 271.17407, a: 0.4745098}
-    - Color_C64BBF2D: {r: 1.7411011, g: 1.7411011, b: 1.7411011, a: 0.6117647}
+    - Color_9148E07C: {r: 0.8039216, g: 0.21960783, b: 0.21960783, a: 0.69411767}
+    - Color_C64BBF2D: {r: 0.9882353, g: 0.19935288, b: 0.17647056, a: 0.78039217}
   m_BuildTextureStacks: []

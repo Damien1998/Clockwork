@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf7a9fdea92a09e45a6b71e2eab16613, type: 3}
   m_Name: DefaultItemStates
   m_EditorClassIdentifier: 
-  selected: {fileID: 2100000, guid: 699dddccea2eab64cb2fac7c5a840f92, type: 2}
+  selected: {fileID: 2100000, guid: 9abccd33087502947871ac4e1fac94fd, type: 2}
   notSelected: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  outlineBlue: {fileID: 2100000, guid: 01c1622194a63b14baebdfe483f4a99d, type: 2}
+  outlineRed: {fileID: 2100000, guid: 9abccd33087502947871ac4e1fac94fd, type: 2}
+  outlineGreen: {fileID: 2100000, guid: c7f7b263692e23c489db892e89aa8ddf, type: 2}
+  outlinePurple: {fileID: 2100000, guid: c7f7b263692e23c489db892e89aa8ddf, type: 2}
+  outlineOrange: {fileID: 2100000, guid: d8e246071517aaf4fb250813ac629200, type: 2}
   itemStates:
   - {fileID: 21300000, guid: d0308379e3603ef4c9d46a19c90235d3, type: 3}
   - {fileID: 21300000, guid: 706862c5c50162a47801f294e280133b, type: 3}
