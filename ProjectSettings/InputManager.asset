@@ -13,14 +13,14 @@ InputManager:
     positiveButton: d
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 3
+    gravity: 0
     dead: 0.2
-    sensitivity: 3
+    sensitivity: 0.5
     snap: 0
     invert: 0
     type: 2
     axis: 0
-    joyNum: 6
+    joyNum: 0
   - serializedVersion: 3
     m_Name: Horizontal2
     descriptiveName: 
@@ -45,14 +45,14 @@ InputManager:
     positiveButton: w
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 3
+    gravity: 0
     dead: 0.2
-    sensitivity: 3
+    sensitivity: 0.5
     snap: 0
     invert: 1
     type: 2
     axis: 1
-    joyNum: 6
+    joyNum: 0
   - serializedVersion: 3
     m_Name: Vertical2
     descriptiveName: 
@@ -77,6 +77,22 @@ InputManager:
     positiveButton: mouse 0
     altNegativeButton: 
     altPositiveButton: q
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 6
+  - serializedVersion: 3
+    m_Name: Pickup1
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: mouse 0
+    altNegativeButton: 
+    altPositiveButton: joystick button 2
     gravity: 1000
     dead: 0.001
     sensitivity: 1000
@@ -118,6 +134,22 @@ InputManager:
     axis: 0
     joyNum: 6
   - serializedVersion: 3
+    m_Name: Action1
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: mouse 1
+    altNegativeButton: 
+    altPositiveButton: joystick button 1
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 6
+  - serializedVersion: 3
     m_Name: Action2
     descriptiveName: 
     descriptiveNegativeName: 
@@ -147,8 +179,8 @@ InputManager:
     snap: 0
     invert: 0
     type: 0
-    axis: 1
-    joyNum: 2
+    axis: 0
+    joyNum: 0
   - serializedVersion: 3
     m_Name: Horizontal2
     descriptiveName: 
@@ -268,7 +300,7 @@ InputManager:
     negativeButton: 
     positiveButton: space
     altNegativeButton: 
-    altPositiveButton: 
+    altPositiveButton: joystick button 0
     gravity: 1000
     dead: 0.001
     sensitivity: 1000

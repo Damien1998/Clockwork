@@ -117,10 +117,48 @@ public class Watch : MonoBehaviour
     {
         if (isSelected == true)
         {
-            foreach(SpriteRenderer renderer in itemRenderer)
+            if(myItem.State == ItemState.UnknownState)
             {
-                renderer.material = _currentItemDisplay.selected;
+                //Blue
+                foreach (SpriteRenderer renderer in itemRenderer)
+                {
+                    renderer.material = _currentItemDisplay.outlineBlue;
+                }
             }
+            else if(myItem.State == ItemState.Unfixable)
+            {
+                //Red
+                foreach (SpriteRenderer renderer in itemRenderer)
+                {
+                    renderer.material = _currentItemDisplay.outlineRed;
+                }
+            }
+            else if(myItem.State == ItemState.Repaired && myItem.itemType == ItemType.FullWatch)
+            {
+                //Green
+                foreach (SpriteRenderer renderer in itemRenderer)
+                {
+                    renderer.material = _currentItemDisplay.outlineGreen;
+                }
+            }
+            else if(myItem.State == ItemState.Repaired || (myItem.State == ItemState.ComplexBroken && (myItem.itemType == ItemType.FullWatch || myItem.itemType == ItemType.FullCasing)) )
+            {
+                //Purple
+                foreach (SpriteRenderer renderer in itemRenderer)
+                {
+                    renderer.material = _currentItemDisplay.outlinePurple;
+                }
+            }
+            else
+            {
+                //Orange
+                foreach (SpriteRenderer renderer in itemRenderer)
+                {
+                    renderer.material = _currentItemDisplay.outlineOrange;
+                }
+            }
+
+            
         }
         else
         {
