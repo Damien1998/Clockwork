@@ -4,16 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 //Refactoring is done! You may enter safely
 public class MainMenu : MonoBehaviour
 {
     [SerializeField]private string buttonSound;
+    [SerializeField] private Button playButton;
+
 
     private void Start()
     {
         //Makes the UI appear
         GetComponent<Animator>().SetTrigger("Open");
+        playButton.Select();
     }
 
     private void Update()
