@@ -360,7 +360,7 @@ public class DialogueManager : MonoBehaviour
         {
             if (SkipBar.value<.95f)
             {
-                SkipBar.value += Time.deltaTime;
+                SkipBar.value += 1.75f * Time.deltaTime;
             }
             else
             {
