@@ -16,21 +16,18 @@ MonoBehaviour:
   time: 600
   questWatch: {fileID: 11400000, guid: 4dd31156b2bb703499dfa2495ada97b3, type: 2}
   levelTrophy: {fileID: 11400000, guid: e0fc88798995eba48a06a1566fa008aa, type: 2}
-  timedLevel: 0
-  SpawningType: 1
-  watchAmount: 3
-  pocketWatchWeight: 2
-  wristWatchWeight: 3
-  decorPercentChance: 70
+  timedLevel: 1
+  SpawningType: 0
+  watchAmount: 1
+  pocketWatchWeight: 1
+  wristWatchWeight: 1
+  decorPercentChance: 0
   brokenState: 1
   unfixableState: 1
-  brokenPartMinPercentage: 33
-  brokenPartMaxPercentage: 66
-  unknownStatePercentChance: 25
-  researchAllowed: 1
-  casingComponents: 0
-  mechanismComponents: 0
-  eitherOfMechOrCasing: 1
-  mechMinParts: 2
-  mechMaxParts: 3
+  brokenPartMinPercentage: 50
+  brokenPartMaxPercentage: 100
+  unknownStatePercentChance: 0
+  researchAllowed: 0
+  mechMinParts: 0
+  mechMaxParts: 0
   watchDispensingTime: 10
