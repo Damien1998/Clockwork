@@ -117,51 +117,66 @@ public class Watch : MonoBehaviour
     {
         if (isSelected == true)
         {
-            if(myItem.State == ItemState.UnknownState)
+            //Temporary - no highlighting for items placed on workbenches
+            if(!isPlacedOnWorkbench)
             {
-                //Blue
-                foreach (SpriteRenderer renderer in itemRenderer)
+                ChangeSortingLayer("ItemsHeld");
+                if (myItem.State == ItemState.UnknownState)
                 {
-                    renderer.material = _currentItemDisplay.outlineBlue;
+                    //Blue
+                    foreach (SpriteRenderer renderer in itemRenderer)
+                    {
+                        renderer.material = _currentItemDisplay.outlineBlue;
+                    }
+                }
+                else if (myItem.State == ItemState.Unfixable)
+                {
+                    //Red
+                    foreach (SpriteRenderer renderer in itemRenderer)
+                    {
+                        renderer.material = _currentItemDisplay.outlineRed;
+                    }
+                }
+                else if (myItem.State == ItemState.Repaired)
+                {
+                    //Green
+                    foreach (SpriteRenderer renderer in itemRenderer)
+                    {
+                        renderer.material = _currentItemDisplay.outlineGreen;
+                    }
+                }
+                else if ((myItem.State == ItemState.ComplexBroken && (myItem.itemType == ItemType.FullWatch || myItem.itemType == ItemType.FullCasing)))
+                {
+                    //Purple
+                    foreach (SpriteRenderer renderer in itemRenderer)
+                    {
+                        renderer.material = _currentItemDisplay.outlinePurple;
+                    }
+                }
+                else
+                {
+                    //Orange
+                    foreach (SpriteRenderer renderer in itemRenderer)
+                    {
+                        renderer.material = _currentItemDisplay.outlineOrange;
+                    }
                 }
             }
-            else if(myItem.State == ItemState.Unfixable)
-            {
-                //Red
-                foreach (SpriteRenderer renderer in itemRenderer)
-                {
-                    renderer.material = _currentItemDisplay.outlineRed;
-                }
-            }
-            else if(myItem.State == ItemState.Repaired && myItem.itemType == ItemType.FullWatch)
-            {
-                //Green
-                foreach (SpriteRenderer renderer in itemRenderer)
-                {
-                    renderer.material = _currentItemDisplay.outlineGreen;
-                }
-            }
-            else if(myItem.State == ItemState.Repaired || (myItem.State == ItemState.ComplexBroken && (myItem.itemType == ItemType.FullWatch || myItem.itemType == ItemType.FullCasing)) )
-            {
-                //Purple
-                foreach (SpriteRenderer renderer in itemRenderer)
-                {
-                    renderer.material = _currentItemDisplay.outlinePurple;
-                }
-            }
-            else
-            {
-                //Orange
-                foreach (SpriteRenderer renderer in itemRenderer)
-                {
-                    renderer.material = _currentItemDisplay.outlineOrange;
-                }
-            }
+            
 
             
         }
         else
         {
+            if(isPlacedOnWorkbench)
+            {
+                ChangeSortingLayer("ItemsWorkbench");
+            }
+            else
+            {
+                ChangeSortingLayer("Items");
+            }
+            
             foreach (SpriteRenderer renderer in itemRenderer)
             {
                 renderer.material = _currentItemDisplay.notSelected;
