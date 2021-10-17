@@ -8,7 +8,7 @@ public class WorkbenchPost : Workbench
 {
     private bool invalidItemInside, isEmpty;
 
-    [SerializeField] private ParticleSystem checkMark, crossMark;
+    [SerializeField] private ParticleSystem checkMark, crossMark, sendPrticles;
 
     // Start is called before the first frame update
     void Start()
@@ -70,7 +70,7 @@ public class WorkbenchPost : Workbench
                 {
                     invalidItemInside = true;
                 }
-
+                sendPrticles.Play();
                 isEmpty = false;
                 itemSlots[i] = itemToPlace;
                 itemToPlace.gameObject.SetActive(false);

@@ -90,6 +90,12 @@ public class CityClickManager : MonoBehaviour
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
+            case CityMaterialType.LIGHT:
+                ps = Instantiate(clickParticles[10], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
+                ps.Play();
+                Destroy(ps, 3f);
+                break;
             case CityMaterialType.NIGHT_METAL:
                 ps = Instantiate(clickParticles[8], mouseWorldPos, Quaternion.identity);
                 SoundManager.PlaySound(SoundManager.Sound.SFXMetal);
@@ -102,6 +108,7 @@ public class CityClickManager : MonoBehaviour
                 ps.Play();
                 Destroy(ps, 3f);
                 break;
+           
         }
     }
 }
