@@ -387,7 +387,20 @@ public class Player : MonoBehaviour
 
         //HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
         //HeldWatch.GetComponent<Rigidbody2D>().AddForce((new Vector2(lastDirection.x, lastDirection.y) * 4), ForceMode2D.Impulse);
-        StartCoroutine(LerpItemToPos(transform.position + new Vector3(lastDirection.x, lastDirection.y), 0.08f, 1));
+
+        var obstruction = Physics2D.Raycast(transform.position, lastDirection, 1f, LayerMask.GetMask("Object"));
+        
+
+        if(!obstruction)
+        {
+            StartCoroutine(LerpItemToPos(transform.position + new Vector3(lastDirection.x, lastDirection.y), 0.08f, 1));
+        }
+        else
+        {
+            StartCoroutine(LerpItemToPos(transform.position, 0.01f, 1));
+            Debug.DrawLine(transform.position, obstruction.point, Color.blue, 4f);
+        }
+        
         //StartCoroutine(ThrowItemToPos(new Vector3(lastDirection.x, lastDirection.y), 0.08f));
 
         _pickUpScript.HighLightItems = true;
