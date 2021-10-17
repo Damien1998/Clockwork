@@ -109,14 +109,15 @@ public class Player : MonoBehaviour
             {
                 if (isByWorkbench)
                 {
-                    if(nearbyWorkbench.requiredFacings.Contains(facing))
-                    {
-                        PlaceItemInWorkbench();
-                    }
-                    else
-                    {
-                        DropItem();
-                    }
+                    PlaceItemInWorkbench();
+                    //if (nearbyWorkbench.requiredFacings.Contains(facing))
+                    //{
+                    //    PlaceItemInWorkbench();
+                    //}
+                    //else
+                    //{
+                    //    DropItem();
+                    //}
                 }
                 else
                 {
