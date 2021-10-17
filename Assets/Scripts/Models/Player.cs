@@ -367,9 +367,10 @@ public class Player : MonoBehaviour
 
             _pickUpScript.HighLightItems = false;
             _pickUpScript.ResetID();
+            heldWatch.isSelected = false;
             heldWatch.ChangeSortingLayer("ItemsHeld");
             StartCoroutine(LerpItemToPos(ItemPosition.position, 0.08f, 0));
-            heldWatch.isSelected = false;
+            
             animator.SetBool("carriesItem", true);
         }
     }
