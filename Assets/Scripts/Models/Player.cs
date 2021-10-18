@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum PlayerFacing { DOWN, UP, LEFT, RIGHT}
 
@@ -370,7 +371,8 @@ public class Player : MonoBehaviour
             heldWatch.isSelected = false;
             heldWatch.ChangeSortingLayer("ItemsHeld");
             StartCoroutine(LerpItemToPos(ItemPosition.position, 0.08f, 0));
-            
+            ShowComponentList(heldWatch);
+
             animator.SetBool("carriesItem", true);
         }
     }
@@ -389,7 +391,7 @@ public class Player : MonoBehaviour
         //HeldWatch.GetComponent<Rigidbody2D>().AddForce((new Vector2(lastDirection.x, lastDirection.y) * 4), ForceMode2D.Impulse);
 
         var obstruction = Physics2D.Raycast(transform.position, lastDirection, 1f, LayerMask.GetMask("Object"));
-        
+
 
         if(!obstruction)
         {
@@ -400,7 +402,7 @@ public class Player : MonoBehaviour
             StartCoroutine(LerpItemToPos(transform.position, 0.01f, 1));
             Debug.DrawLine(transform.position, obstruction.point, Color.blue, 4f);
         }
-        
+
         //StartCoroutine(ThrowItemToPos(new Vector3(lastDirection.x, lastDirection.y), 0.08f));
 
         _pickUpScript.HighLightItems = true;
@@ -505,6 +507,32 @@ public class Player : MonoBehaviour
             itemDropParticles.transform.position = HeldWatch.transform.position;
             itemDropParticles.Play();
             HeldWatch = null;
+        }
+    }
+
+    private void ShowComponentList(Watch _watchItem)
+    {
+        switch (_watchItem.WatchItem.itemType)
+        {
+            case ItemType.QuestWatch:
+                return;
+            // If is The Highest Watch In Hierarchy
+            case ItemType.FullWatch:
+                if (_watchItem.WatchItem.State != ItemState.Repaired)
+                {
+                    RecipeListView.currentMainWatch = _watchItem;
+                    RecipeListView.AddRecipeToList(_watchItem);
+                }
+
+                break;
+            default:
+            {
+                if(_watchItem.WatchItem.parentItem.itemType == ItemType.FullWatch && _watchItem.WatchItem.components.Count >= 2)
+                {
+                    RecipeListView.AddRecipeToList(_watchItem);
+                }
+                break;
+            }
         }
     }
 

@@ -31,6 +31,14 @@ public static class RecipeListView
         if (!recipeLists.Contains(_watch))
         {
             recipeLists.Add(_watch);
+            if (SceneManager.GetSceneByName("RecipeSheet").isLoaded)
+            {
+                ReloadRecipeView();
+            }
+            else
+            {
+                LoadRecipeView();
+            }
         }
     }
 
