@@ -25,6 +25,6 @@ public class PersistentObject : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

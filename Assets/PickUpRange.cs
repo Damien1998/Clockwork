@@ -8,7 +8,9 @@ public class PickUpRange : MonoBehaviour
 {
     private List<Collider2D> nearbyItems = new List<Collider2D>();
     private int _itemId;
-    private int itemToPickUpID { get => _itemId;
+    private int itemToPickUpID
+    {
+        get => _itemId;
         set { _itemId = value; HighLightCurrentItem();}
     }
 
@@ -16,25 +18,26 @@ public class PickUpRange : MonoBehaviour
     {
         if (list1.Count != list2.Count)
         {
-            return false;
+            return true;
         }
         for (int i = 0; i < list1.Count; i++)
         {
             if (!list1[i].Equals(list2[i]))
             {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
-    public bool HighLightItems = true;
 
+    public bool HighLightItems = true;
 
     private void Update()
     {
-        if (nearbyItems.Count > 0 && !Input.GetButton("Pickup1")&&!Input.GetButtonUp("Pickup1"))
+        if (nearbyItems.Count > 0  && !Input.GetButton("Pickup1") && !Input.GetButtonUp("Pickup1"))
         {
             var tmpList = nearbyItems.OrderBy(item => Vector3.Distance(item.gameObject.transform.position, transform.position)).ToList();
+            Debug.Log(CheckForChanges(tmpList,nearbyItems));
             if(CheckForChanges(tmpList,nearbyItems))
             {
                 if (nearbyItems.Count > 0)
@@ -42,7 +45,7 @@ public class PickUpRange : MonoBehaviour
                     nearbyItems = tmpList;
                 }
 
-                if (itemToPickUpID > 0&&nearbyItems.Count > itemToPickUpID)
+                if (itemToPickUpID >= 0 && nearbyItems.Count > itemToPickUpID)
                 {
                     var tmpWatch = nearbyItems[itemToPickUpID];
                     if (tmpWatch != null&&nearbyItems[0] != null)
@@ -52,8 +55,11 @@ public class PickUpRange : MonoBehaviour
                     }
                 }
                 itemToPickUpID = 0;
-                
-            } 
+            }
+            else if (nearbyItems.Count == 1)
+            {
+                itemToPickUpID = 0;
+            }
         }
     }
 
@@ -121,5 +127,5 @@ public class PickUpRange : MonoBehaviour
             }
         }
     }
-    
+
 }

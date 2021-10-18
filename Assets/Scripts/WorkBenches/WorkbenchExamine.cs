@@ -97,31 +97,28 @@ public class WorkbenchExamine : Workbench
 
     private void ShowComponentList(Watch _watchItem)
     {
-        if(_watchItem.WatchItem.itemType == ItemType.QuestWatch){return;}
+        switch (_watchItem.WatchItem.itemType)
+        {
+            case ItemType.QuestWatch:
+                return;
+            // If is The Highest Watch In Hierarchy
+            case ItemType.FullWatch:
+                RecipeListView.currentMainWatch = _watchItem;
+                RecipeListView.AddRecipeToList(_watchItem); // If it isn't then check if it is a component
+                break;
+            default:
+            {
+                if(_watchItem.WatchItem.parentItem.itemType == ItemType.FullWatch && _watchItem.WatchItem.components.Count >= 2)
+                {
+                    RecipeListView.AddRecipeToList(_watchItem);
+                }
 
-        if (_watchItem.WatchItem.itemType == ItemType.FullWatch) // If is The Highest Watch In Hierarchy
-        {
-            RecipeListView.currentMainWatch = _watchItem;
-            RecipeListView.AddRecipeToList(_watchItem);
-        } // If it isn't then check if it is a component
-        else if(_watchItem.WatchItem.parentItem.itemType == ItemType.FullWatch && _watchItem.WatchItem.components.Count >= 2)
-        {
-            RecipeListView.recipeLists.Add(_watchItem);
+                break;
+            }
         }
-
-        if (SceneManager.GetSceneByName("RecipeSheet").isLoaded)
-        {
-            RecipeListView.ReloadRecipeView();
-        }
-        else
-        {
-            RecipeListView.LoadRecipeView();
-
-        }
-
     }
 
-    //I'm leaving this in in case I need it later
+    //I'm leaving this in, in case I need it later
 
     // private void UseExamineWorkbench(int playerID)
     // {

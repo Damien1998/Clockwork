@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     private void Awake()
     {
         //Keeping the population of game managers in check
@@ -62,6 +61,25 @@ public class GameManager : MonoBehaviour
             SaveController.InitializeSaveController();
         }
         SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F4))
+        {
+
+            int c = SceneManager.sceneCount;
+            for (int i = 0; i < c; i++) {
+                Scene scene = SceneManager.GetSceneAt (i);
+                SceneManager.UnloadSceneAsync (scene);
+            }
+
+            DialogueManager.instance.ExitDialogue();
+
+            RecipeListView.ResetRecipesList();
+
+            SceneManager.LoadScene("Menu");
+        }
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
