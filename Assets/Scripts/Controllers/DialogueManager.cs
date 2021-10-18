@@ -92,7 +92,7 @@ public class DialogueManager : MonoBehaviour
 
         ProgressDialogue();
     }
-    void ExitDialogue()
+    public void ExitDialogue()
     {
         _isTyping = false;
         isHoldingSkip = false;
