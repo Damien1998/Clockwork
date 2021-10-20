@@ -9,6 +9,7 @@ public class Workbench : MonoBehaviour
     [SerializeField]
     protected int numberOfSlots;
     protected Watch[] itemSlots;
+    public int slotsFilled;
 
     [SerializeField]
     protected float workTimerBase;
@@ -41,11 +42,50 @@ public class Workbench : MonoBehaviour
     //Use for filling slots with items
     //I'm not sure whether items will still be handled the same
     //For now I made the function deactivate items placed in slots
+
+    public int slotLimit;
+
+    private bool selected;
+
+    public bool isSelected
+    {
+        get => selected;
+        set
+        {
+            selected = value;
+            OnSelectChange();
+        }
+    }
+
+    [SerializeField]
+    private SpriteRenderer[] selectSprites;
+    [SerializeField]
+    private Material selectedMat, unselectedMat;
+
+    public void OnSelectChange()
+    {
+        if(selected)
+        {
+            foreach(SpriteRenderer renderer in selectSprites)
+            {
+                renderer.material = selectedMat;
+            }
+            
+        }
+        else
+        {
+            foreach (SpriteRenderer renderer in selectSprites)
+            {
+                renderer.material = unselectedMat;
+            }
+        }
+    }
+
     public virtual void PlaceItem(Watch itemToPlace)
     {
         for(int i = 0; i < numberOfSlots; i++)
         {
-            if(itemSlots[i] == null)
+            if(itemSlots[i] == null && i < slotLimit)
             {
                 //TODO - actual places for items
                 itemToPlace.transform.position = slotPositions[i].position;
@@ -56,10 +96,11 @@ public class Workbench : MonoBehaviour
                 //    StartCoroutine(LockItemCollision());
                 //}
                 //itemToPlace.gameObject.SetActive(false);
-
+                slotsFilled = i + 1;
                 break;
-            }
+            }           
         }
+        //StartCoroutine(ThrowItemBack(dropLocation.position, 0.2f, itemToPlace));
     }
 
     protected void KeepSlotsInPlace(bool yAxis)
@@ -104,6 +145,7 @@ public class Workbench : MonoBehaviour
     //Dropping items
     protected virtual void DropItems()
     {
+        slotsFilled = 0;
         //StartCoroutine(WaitAndDrop(0.1f));
         SoundManager.PlaySound(SoundManager.Sound.WorkItemEject);
         for(int i = 0; i< numberOfSlots; i++)
@@ -122,6 +164,7 @@ public class Workbench : MonoBehaviour
 
     protected IEnumerator WaitAndDrop(float timeToWait)
     {
+        slotsFilled = 0;
         yield return new WaitForSeconds(timeToWait);
         for (int i = 0; i < numberOfSlots; i++)
         {
@@ -164,6 +207,34 @@ public class Workbench : MonoBehaviour
         itemSlots[itemID].ChangeSortingLayer("Items");
         itemSlots[itemID].isPlacedOnWorkbench = false;
         itemSlots[itemID] = null;
+    }
+
+    IEnumerator ThrowItemBack(Vector2 targetPos, float duration, Watch itemToDrop)
+    {
+        float time = 0;
+        Vector2 startPos = slotPositions[0].position;
+
+        //if(!clearItem)
+        //{
+        //    lockMovement = true;
+        //}
+
+
+        while (time < duration)
+        {
+            float t = time / duration;
+            t = t * t * (3f - 2f * t);
+
+            itemToDrop.transform.position = Vector2.Lerp(startPos, targetPos, t);
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        //lockMovement = false;
+
+        itemToDrop.transform.position = targetPos;
+        itemToDrop.ChangeSortingLayer("Items");
+        itemToDrop.isPlacedOnWorkbench = false;
     }
 
     protected Watch GenerateItem(Item parameters)

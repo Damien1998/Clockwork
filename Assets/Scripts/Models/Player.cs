@@ -422,7 +422,7 @@ public class Player : MonoBehaviour
         HeldWatch.GetComponent<Watch>().ChangeSortingLayer("ItemsWorkbench");
         HeldWatch.GetComponent<Watch>().isSelected = false;
 
-        if(nearbyWorkbench.slotPositions.Length > 0)
+        if (nearbyWorkbench.slotPositions.Length > 0)
         {
             StartCoroutine(LerpItemToPos(nearbyWorkbench.slotPositions[0].position, 0.08f, 2));
         }
@@ -430,7 +430,32 @@ public class Player : MonoBehaviour
 
         _pickUpScript.HighLightItems = true;
         animator.SetBool("carriesItem", false);
+        /**
+        if(nearbyWorkbench.slotsFilled < nearbyWorkbench.slotLimit)
+        {
+            SoundManager.PlaySound(SoundManager.Sound.ItemPlaced);
+            if (HeldWatch.TryGetComponent(out Rigidbody2D itemRigidbody))
+            {
+                itemRigidbody.velocity = Vector2.zero;
+                HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
+            }
+            HeldWatch.GetComponent<Watch>().ChangeSortingLayer("ItemsWorkbench");
+            HeldWatch.GetComponent<Watch>().isSelected = false;
 
+            if (nearbyWorkbench.slotPositions.Length > 0)
+            {
+                StartCoroutine(LerpItemToPos(nearbyWorkbench.slotPositions[0].position, 0.08f, 2));
+            }
+
+
+            _pickUpScript.HighLightItems = true;
+            animator.SetBool("carriesItem", false);
+        }
+        else
+        {
+            StartCoroutine(LerpItemToPos(transform.position, 0.01f, 1));
+        }
+        **/
 
     }
 
@@ -541,6 +566,7 @@ public class Player : MonoBehaviour
         if(collision.CompareTag("Workbench"))
         {
             nearbyWorkbench = collision.GetComponent<Workbench>();
+            nearbyWorkbench.isSelected = true;
             isByWorkbench = true;
         }
         else if (collision.CompareTag("LevelStart"))
@@ -563,7 +589,7 @@ public class Player : MonoBehaviour
             {
                 nearbyWorkbench.isOperated = false;
             }
-
+            nearbyWorkbench.isSelected = false;
             nearbyWorkbench = null;
             isByWorkbench = false;
         }
