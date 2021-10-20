@@ -90,6 +90,7 @@ public class WorkbenchExamine : Workbench
                 ShowComponentList(itemToPlace);
                 itemSlots[i] = itemToPlace;
                 itemToPlace.gameObject.SetActive(false);
+                slotsFilled = i + 1;
                 break;
             }
         }
