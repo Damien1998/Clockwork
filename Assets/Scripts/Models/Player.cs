@@ -75,7 +75,14 @@ public class Player : MonoBehaviour
         CanInteract = true;
         animator = GetComponent<Animator>();
         rigidBody = GetComponent<Rigidbody2D>();
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        _pickUpScript.ClearList();
+    }
+
     void PickUp()
     {
         if (Input.GetButtonDown("Action" + playerNumber))
@@ -431,7 +438,7 @@ public class Player : MonoBehaviour
 
         //_pickUpScript.HighLightItems = true;
         //animator.SetBool("carriesItem", false);
-        
+
         if(nearbyWorkbench.slotsFilled < nearbyWorkbench.slotLimit)
         {
             SoundManager.PlaySound(SoundManager.Sound.ItemPlaced);
@@ -456,7 +463,7 @@ public class Player : MonoBehaviour
         {
             DropItem();
         }
-        
+
 
     }
 

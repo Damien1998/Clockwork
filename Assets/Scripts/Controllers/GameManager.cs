@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
 
             RecipeListView.ResetRecipesList();
 
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("Level10-City");
         }
     }
 

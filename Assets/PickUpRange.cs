@@ -37,7 +37,6 @@ public class PickUpRange : MonoBehaviour
         if (nearbyItems.Count > 0  && !Input.GetButton("Pickup1") && !Input.GetButtonUp("Pickup1"))
         {
             var tmpList = nearbyItems.OrderBy(item => Vector3.Distance(item.gameObject.transform.position, transform.position)).ToList();
-            Debug.Log(CheckForChanges(tmpList,nearbyItems));
             if(CheckForChanges(tmpList,nearbyItems))
             {
                 if (nearbyItems.Count > 0)
@@ -61,6 +60,11 @@ public class PickUpRange : MonoBehaviour
                 itemToPickUpID = 0;
             }
         }
+    }
+
+    public void ClearList()
+    {
+        nearbyItems = new List<Collider2D>();
     }
 
     public void ResetID()

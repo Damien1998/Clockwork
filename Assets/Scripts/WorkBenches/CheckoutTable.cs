@@ -89,7 +89,8 @@ namespace Models
                     else
                     {
                         AnalyticsController.SendAnalyticDictionary("CompletedLevel","Level",GameManager.instance.levelID);
-                        DialogueManager.instance.StartDialogue(endOfLevelDialogue);
+                        UIManager.instance.ShowLevelEnd();
+                       // DialogueManager.instance.StartDialogue(endOfLevelDialogue);
                     }
                     SaveGame();
                     SoundManager.PlaySound(SoundManager.Sound.WinPopup);

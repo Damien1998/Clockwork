@@ -7,7 +7,7 @@ public class PlayBGM : MonoBehaviour
 {
     public AudioClip _BGM;
 
-    private void Awake()
+    private void Start()
     {
         GameManager.instance.SoundController.ChangeBGM(_BGM);
     }

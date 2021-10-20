@@ -28,7 +28,7 @@ public class DialogueManager : MonoBehaviour
     [SerializeField]
     private float dialogueTextSpeed = .025f;
     private bool _isTyping = false, _skipping = false, options;
-    private bool isHoldingSkip;
+    private bool isHoldingSkip, isInDialogue;
 
     [SerializeField] private ParticleSystem extraSnow;
 
@@ -60,27 +60,36 @@ public class DialogueManager : MonoBehaviour
     }
     public void StartDialogue(TextAsset textFile)
     {
-        StopAllCoroutines();
-        ClearText();
-        dialogue = textFile.text.Split('\n');
-        SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
-        dialogueBox.SetActive(true);
-        dialogueBox.GetComponent<AnimatedPanel>().Appear();
-        currentLine = 0;
-        ProgressDialogue();
-        UIManager.instance.PauseGameNoBlur(true);
+        if (!isInDialogue)
+        {
+            StopAllCoroutines();
+            ClearText();
+            dialogue = textFile.text.Split('\n');
+            SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
+            dialogueBox.SetActive(true);
+            dialogueBox.GetComponent<AnimatedPanel>().Appear();
+            currentLine = 0;
+            isInDialogue = true;
+            ProgressDialogue();
+            UIManager.instance.PauseGameNoBlur(true);
+        }
     }
     public void StartDialogue(string textFile)
     {
-        StopAllCoroutines();
-        ClearText();
-        dialogue = Resources.Load<TextAsset>($"Dialogue/{Localization.Instance.SelectedLanguage}/{textFile}").text.Split('\n');
-        SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
-        dialogueBox.SetActive(true);
-        dialogueBox.GetComponent<AnimatedPanel>().Appear();
-        currentLine = 0;
-        ProgressDialogue();
-        UIManager.instance.PauseGameNoBlur(true);
+        if (!isInDialogue)
+        {
+            StopAllCoroutines();
+            ClearText();
+            dialogue = Resources.Load<TextAsset>($"Dialogue/{Localization.Instance.SelectedLanguage}/{textFile}").text
+                .Split('\n');
+            SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
+            dialogueBox.SetActive(true);
+            dialogueBox.GetComponent<AnimatedPanel>().Appear();
+            currentLine = 0;
+            ProgressDialogue();
+            isInDialogue = true;
+            UIManager.instance.PauseGameNoBlur(true);
+        }
     }
     public void ResetDialogue()
     {
@@ -99,6 +108,7 @@ public class DialogueManager : MonoBehaviour
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x, 40);
         dialogueBox.GetComponent<AnimatedPanel>().Disappear();
         Time.timeScale = 1;
+        isInDialogue = false;
         UIManager.instance.PauseGameNoBlur(false);
     }
 
@@ -219,6 +229,13 @@ public class DialogueManager : MonoBehaviour
         {
             string[] words = dialogue[currentLine].Split(' ');
             string firstWord = words[0];
+            Debug.Log(firstWord);
+            Debug.Log(firstWord.Length);
+            string result = firstWord.Remove(firstWord.Length-1);
+            if (result == "--level_start")
+            {
+                firstWord = result;
+            }
             switch (firstWord)
             {
                 case "--end":
@@ -243,6 +260,7 @@ public class DialogueManager : MonoBehaviour
                     OpenOptions(words[1],words[2]);
                     goto While_Break;
                 case "--level_start":
+                    Debug.Log("Started Level");
                     UIManager.instance.LevelStart();
                     FindObjectOfType<CheckoutTable>().InitLevel();
                     ExitDialogue();
