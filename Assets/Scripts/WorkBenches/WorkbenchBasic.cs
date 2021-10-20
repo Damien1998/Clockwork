@@ -63,6 +63,7 @@ public class WorkbenchBasic : Workbench
         {
             if (itemSlots[i] == null)
             {
+                itemToPlace.ChangeSortingLayer("ItemsWorkbench");
                 itemToPlace.transform.position = slotPositions[i].position;
                 itemToPlace.isPlacedOnWorkbench = true;
                 itemSlots[i] = itemToPlace;
