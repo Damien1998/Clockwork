@@ -55,6 +55,7 @@ public class WorkbenchPrecise : Workbench
 
     protected override void DropItems()
     {
+        slotsFilled = 0;
         bool isValid = true;
         var firstItem = itemSlots[0];
         var OnlyOneItem = itemSlots[1] == null;

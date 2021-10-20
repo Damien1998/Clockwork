@@ -391,9 +391,9 @@ public class Player : MonoBehaviour
         //HeldWatch.GetComponent<Rigidbody2D>().AddForce((new Vector2(lastDirection.x, lastDirection.y) * 4), ForceMode2D.Impulse);
 
         var obstruction = Physics2D.Raycast(transform.position, lastDirection, 1f, LayerMask.GetMask("Object"));
+        var obstruction2 = Physics2D.Raycast(transform.position, lastDirection, 1f, LayerMask.GetMask("PlayerOnly"));
 
-
-        if(!obstruction)
+        if (!obstruction && !obstruction2)
         {
             StartCoroutine(LerpItemToPos(transform.position + new Vector3(lastDirection.x, lastDirection.y), 0.08f, 1));
         }
@@ -413,24 +413,25 @@ public class Player : MonoBehaviour
 
     private void PlaceItemInWorkbench()
     {
-        SoundManager.PlaySound(SoundManager.Sound.ItemPlaced);
-        if (HeldWatch.TryGetComponent(out Rigidbody2D itemRigidbody))
-        {
-            itemRigidbody.velocity = Vector2.zero;
-            HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
-        }
-        HeldWatch.GetComponent<Watch>().ChangeSortingLayer("ItemsWorkbench");
-        HeldWatch.GetComponent<Watch>().isSelected = false;
 
-        if (nearbyWorkbench.slotPositions.Length > 0)
-        {
-            StartCoroutine(LerpItemToPos(nearbyWorkbench.slotPositions[0].position, 0.08f, 2));
-        }
+        //SoundManager.PlaySound(SoundManager.Sound.ItemPlaced);
+        //if (HeldWatch.TryGetComponent(out Rigidbody2D itemRigidbody))
+        //{
+        //    itemRigidbody.velocity = Vector2.zero;
+        //    HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
+        //}
+        //HeldWatch.GetComponent<Watch>().ChangeSortingLayer("ItemsWorkbench");
+        //HeldWatch.GetComponent<Watch>().isSelected = false;
+
+        //if (nearbyWorkbench.slotPositions.Length > 0)
+        //{
+        //    StartCoroutine(LerpItemToPos(nearbyWorkbench.slotPositions[0].position, 0.08f, 2));
+        //}
 
 
-        _pickUpScript.HighLightItems = true;
-        animator.SetBool("carriesItem", false);
-        /**
+        //_pickUpScript.HighLightItems = true;
+        //animator.SetBool("carriesItem", false);
+        
         if(nearbyWorkbench.slotsFilled < nearbyWorkbench.slotLimit)
         {
             SoundManager.PlaySound(SoundManager.Sound.ItemPlaced);
@@ -453,9 +454,9 @@ public class Player : MonoBehaviour
         }
         else
         {
-            StartCoroutine(LerpItemToPos(transform.position, 0.01f, 1));
+            DropItem();
         }
-        **/
+        
 
     }
 

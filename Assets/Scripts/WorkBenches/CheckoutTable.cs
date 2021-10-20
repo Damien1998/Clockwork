@@ -22,6 +22,8 @@ namespace Models
         [SerializeField] private ParticleSystem deliveryFX, retrievedFX;
         private Watch questWatch;
 
+        public bool PGAmode;
+
         WatchSprites currentWatchSprites;
         private int watchesFixed;
 
@@ -104,6 +106,10 @@ namespace Models
                 ThrowRandomWatch();
                 yield return new WaitForSeconds(workbenchLevelParams.watchDispensingTime);
                 watchIndex++;
+                if(PGAmode)
+                {
+                    break;
+                }
             }
         }
         IEnumerator CheckForQuests()
@@ -196,6 +202,12 @@ namespace Models
                     {
                         SoundManager.PlaySound(SoundManager.Sound.ClockCompleted);
                         watchesFixed++;
+                        if(PGAmode && watchIndex < workbenchLevelParams.watchAmount)
+                        {
+                            deliveryFX.Play();
+                            ThrowRandomWatch();
+                            watchIndex++;
+                        }
                         return true;
                     }
                 }

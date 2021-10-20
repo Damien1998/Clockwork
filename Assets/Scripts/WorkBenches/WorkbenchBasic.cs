@@ -66,6 +66,7 @@ public class WorkbenchBasic : Workbench
                 itemToPlace.transform.position = slotPositions[i].position;
                 itemToPlace.isPlacedOnWorkbench = true;
                 itemSlots[i] = itemToPlace;
+                slotsFilled = i + 1;
                 break;
             }
         }
@@ -74,6 +75,7 @@ public class WorkbenchBasic : Workbench
 
     protected override void DropItems()
     {
+        slotsFilled = 0;
         bool isValid = true;
         //Here the items are combined or broken down according to recipes
 

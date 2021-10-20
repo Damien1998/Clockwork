@@ -74,6 +74,7 @@ public class WorkbenchPost : Workbench
                 isEmpty = false;
                 itemSlots[i] = itemToPlace;
                 itemToPlace.gameObject.SetActive(false);
+                slotsFilled = i + 1;
                 break;
             }
         }        
