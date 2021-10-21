@@ -56,6 +56,12 @@ namespace Models
             StartCoroutine(DispenseWatches());
         }
 
+        public void ThrowWatches()
+        {
+            watchIndex = 0;
+            StartCoroutine(DispenseWatches());
+        }
+
         public override void PlaceItem(Watch itemToPlace)
         {
             if(CheckQuestWatch(itemToPlace))
@@ -90,11 +96,12 @@ namespace Models
                     {
                         AnalyticsController.SendAnalyticDictionary("CompletedLevel","Level",GameManager.instance.levelID);
                         UIManager.instance.ShowLevelEnd();
-                       // DialogueManager.instance.StartDialogue(endOfLevelDialogue);
+                        // DialogueManager.instance.StartDialogue(endOfLevelDialogue);
                     }
                     SaveGame();
                     SoundManager.PlaySound(SoundManager.Sound.WinPopup);
                     UIManager.instance.levelTimer.StopTimer();
+                    watchesFixed = 0;
                 }
             }
         }

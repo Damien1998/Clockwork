@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Models;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -85,6 +86,11 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         SoundManager.PlaySound(SoundManager.Sound.UIChange);
+    }
+
+    public void InitLevel(int levelID)
+    {
+        FindObjectOfType<CheckoutTable>().ThrowWatches();
     }
 
     public void StartCityLevel(int mylevelID)
