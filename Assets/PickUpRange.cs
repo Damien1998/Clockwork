@@ -103,6 +103,7 @@ public class PickUpRange : MonoBehaviour
     }
     public GameObject GetPickedUpObject()
     {
+        Debug.LogError(nearbyItems.Count);
         return nearbyItems.Count > 0 ? nearbyItems[itemToPickUpID].gameObject : null;
     }
     private void HighLightCurrentItem()
