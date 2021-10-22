@@ -104,6 +104,7 @@ public class Player : MonoBehaviour
     {
         if (CanInteract)
         {
+            Debug.Log("pupa");
             if (HeldWatch != null)
             {
                 HeldWatch.transform.position = /*transform.position +*/ ItemPosition.position;
@@ -167,6 +168,10 @@ public class Player : MonoBehaviour
                 isByWarpHole = false;
             }
             Dashing();
+        }
+        else
+        {
+            Debug.Log("dupa");
         }
     }
 
