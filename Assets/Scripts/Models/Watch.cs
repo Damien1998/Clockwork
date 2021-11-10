@@ -128,6 +128,7 @@ public class Watch : MonoBehaviour
                     {
                         renderer.material = _currentItemDisplay.outlineBlue;
                     }
+                    //stateRenderer.material = _currentItemDisplay.stateOutlineBlue;
                 }
                 else if (myItem.State == ItemState.Unfixable)
                 {
@@ -136,6 +137,7 @@ public class Watch : MonoBehaviour
                     {
                         renderer.material = _currentItemDisplay.outlineRed;
                     }
+                    //stateRenderer.material = _currentItemDisplay.stateOutlineRed;
                 }
                 else if (myItem.State == ItemState.Repaired)
                 {
@@ -144,14 +146,16 @@ public class Watch : MonoBehaviour
                     {
                         renderer.material = _currentItemDisplay.outlineGreen;
                     }
+                    //stateRenderer.material = _currentItemDisplay.stateOutlineGreen;
                 }
                 else if ((myItem.State == ItemState.ComplexBroken && (myItem.itemType == ItemType.FullWatch || myItem.itemType == ItemType.FullCasing)))
                 {
                     //Purple
                     foreach (SpriteRenderer renderer in itemRenderer)
                     {
-                        renderer.material = _currentItemDisplay.outlinePurple;
+                        renderer.material = _currentItemDisplay.outlineYellow;
                     }
+                    //stateRenderer.material = _currentItemDisplay.stateOutlineYellow;
                 }
                 else
                 {
@@ -160,6 +164,7 @@ public class Watch : MonoBehaviour
                     {
                         renderer.material = _currentItemDisplay.outlineOrange;
                     }
+                    //stateRenderer.material = _currentItemDisplay.stateOutlineOrange;
                 }
             }
             
@@ -181,6 +186,7 @@ public class Watch : MonoBehaviour
             {
                 renderer.material = _currentItemDisplay.notSelected;
             }
+            stateRenderer.material = _currentItemDisplay.notSelected;
         }
     }
 }

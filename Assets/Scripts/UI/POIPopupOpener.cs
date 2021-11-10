@@ -14,4 +14,10 @@ public class POIPopupOpener : PopupOpener
     {
         popup.myPOI = myPOI;
     }
+
+    public override void ShowPopup()
+    {
+        SetPOIToStart();
+        base.ShowPopup();
+    }
 }
