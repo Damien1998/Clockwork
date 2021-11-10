@@ -454,7 +454,7 @@ public class Player : MonoBehaviour
             }
             HeldWatch.GetComponent<Watch>().ChangeSortingLayer("ItemsWorkbench");
             HeldWatch.GetComponent<Watch>().isSelected = false;
-
+            HeldWatch.layer = 11;
             if (nearbyWorkbench.slotPositions.Length > 0)
             {
                 StartCoroutine(LerpItemToPos(nearbyWorkbench.slotPositions[0].position, 0.08f, 2));

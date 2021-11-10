@@ -205,6 +205,7 @@ public class Workbench : MonoBehaviour
 
         itemSlots[itemID].transform.position = targetPos;
         itemSlots[itemID].ChangeSortingLayer("Items");
+        itemSlots[itemID].gameObject.layer = 9;
         itemSlots[itemID].isPlacedOnWorkbench = false;
         itemSlots[itemID] = null;
     }
