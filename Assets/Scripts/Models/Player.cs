@@ -104,7 +104,7 @@ public class Player : MonoBehaviour
     {
         if (CanInteract)
         {
-            Debug.Log("pupa");
+           // Debug.Log("pupa");
             if (HeldWatch != null)
             {
                 HeldWatch.transform.position = /*transform.position +*/ ItemPosition.position;
@@ -171,7 +171,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("dupa");
+            //Debug.Log("dupa");
         }
     }
 

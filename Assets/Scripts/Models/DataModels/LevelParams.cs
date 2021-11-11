@@ -8,8 +8,8 @@ public class LevelParams : ScriptableObject
 {
     public string levelName;
     public int time;
-
-    public QuestWatch questWatch;
+    public int poiNumbers = 3;
+     public QuestWatch questWatch;
     public Trophy levelTrophy;
     public bool timedLevel;
 
