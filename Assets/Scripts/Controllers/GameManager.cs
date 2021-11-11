@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     //Which is changed when a level is selected
     */
     public LevelParams currentLevelParams;
+    public List<string> poiEncounters = new List<string>();
     public SoundAudioClip[] soundAudioClipArray;
     public AudioMixerGroup SFX;
     public SoundController SoundController;
@@ -42,7 +43,21 @@ public class GameManager : MonoBehaviour
         {
             _levelID = value;
 
+            poiEncounters.Clear();
             currentLevelParams = Resources.Load<LevelParams>("LevelParams/Level " + _levelID);
+        }
+    }
+
+    public void AddPoiEncounter(string poiName)
+    {
+        if (!poiEncounters.Contains(poiName))
+        {
+            poiEncounters.Add(poiName);
+            if (poiEncounters.Count == currentLevelParams.poiNumbers)
+            {
+                Debug.Log("TalkedToAll Poi");
+                AnalyticsController.SendAnalyticResult("TalkedToAllPoi");
+            }
         }
     }
 
