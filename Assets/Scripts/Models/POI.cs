@@ -17,6 +17,6 @@ public class POI : MonoBehaviour
     {
         Debug.Log("Attempting to start dialogue");
         GameManager.instance.AddPoiEncounter(poiName);
-        DialogueManager.instance.StartDialogue(textScript);
+        DialogueManager.instance.StartDialogue(textScript.name);
     }
 }
