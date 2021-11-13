@@ -22,6 +22,7 @@ public class Player : MonoBehaviour
     //Private properties
         //Currently held item
     private GameObject HeldWatch;
+    public bool isHoldingItem;
         //Running bool
     private bool isDashing;
         //Direction of the dash
@@ -385,7 +386,14 @@ public class Player : MonoBehaviour
             StartCoroutine(LerpItemToPos(ItemPosition.position, 0.08f, 0));
             ShowComponentList(heldWatch);
 
-            animator.SetBool("carriesItem", true);
+            animator.SetBool("carriesItem", true);           
+
+            isHoldingItem = true;
+
+            if (nearbyWorkbench != null)
+            {
+                nearbyWorkbench.OnSelectChange();
+            }
         }
     }
 
@@ -419,8 +427,13 @@ public class Player : MonoBehaviour
 
         _pickUpScript.HighLightItems = true;
         animator.SetBool("carriesItem", false);
+        isHoldingItem = false;
         _pickUpScript.RefreshItems();
 
+        if (nearbyWorkbench != null)
+        {
+            nearbyWorkbench.OnSelectChange();
+        }
     }
 
     private void PlaceItemInWorkbench()
@@ -463,6 +476,7 @@ public class Player : MonoBehaviour
 
             _pickUpScript.HighLightItems = true;
             animator.SetBool("carriesItem", false);
+            isHoldingItem = false;
         }
         else
         {
