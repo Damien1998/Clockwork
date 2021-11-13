@@ -64,8 +64,9 @@ public class Workbench : MonoBehaviour
 
     public void OnSelectChange()
     {
-        if(selected)
-        {
+        var player = FindObjectOfType<Player>();
+        if (selected && (slotsFilled > 0 || (slotsFilled < slotLimit && player.isHoldingItem)))
+        {                   
             foreach(SpriteRenderer renderer in selectSprites)
             {
                 renderer.material = selectedMat;
