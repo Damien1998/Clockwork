@@ -384,9 +384,8 @@ public class Player : MonoBehaviour
             heldWatch.isSelected = false;
             heldWatch.ChangeSortingLayer("ItemsHeld");
             StartCoroutine(LerpItemToPos(ItemPosition.position, 0.08f, 0));
-            ShowComponentList(heldWatch);
 
-            animator.SetBool("carriesItem", true);           
+            animator.SetBool("carriesItem", true);
 
             isHoldingItem = true;
 

@@ -73,9 +73,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowLevelEnd()
     {
-        
-
-        levelEndText.text = "Twój czas: " + timerDisplay.value.ToString();
+        levelEndText.text = "Twój czas: " + levelTimer.timerValue.ToString();
         levelEndScren.SetActive(true);
         //levelEndPanel.Appear();
         levelEndScren.GetComponent<Animator>().SetTrigger("Open");

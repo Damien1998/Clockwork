@@ -77,7 +77,9 @@ namespace Models
                 retrievedFX.Play();
                 //I'm not sure whether we really need that there:
                 itemToPlace.transform.position = transform.position;
+                RecipeListView.RemoveCheckForRecipes(itemToPlace);
                 Destroy(itemToPlace.gameObject);
+
                 if(workbenchLevelParams.watchAmount <= watchesFixed)
                 {
                     //ThrowNewWatch(workbenchLevelParams.listOfWatches[watchIndex]);
@@ -95,8 +97,8 @@ namespace Models
                     else
                     {
                         AnalyticsController.SendAnalyticDictionary("CompletedLevel","Level",GameManager.instance.levelID);
-                        UIManager.instance.ShowLevelEnd();
-                        // DialogueManager.instance.StartDialogue(endOfLevelDialogue);
+                        //UIManager.instance.ShowLevelEnd();
+                        DialogueManager.instance.StartDialogue(endOfLevelDialogue);
                     }
                     SaveGame();
                     SoundManager.PlaySound(SoundManager.Sound.WinPopup);

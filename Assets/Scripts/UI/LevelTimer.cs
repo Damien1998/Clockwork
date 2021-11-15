@@ -8,7 +8,7 @@ public class LevelTimer : MonoBehaviour
     [SerializeField] private GameObject clockHand;
     [SerializeField] private ProgressWheel progressWheel;
 
-    private int timerValue, maxTimerValue;
+    public int timerValue, maxTimerValue;
     private IEnumerator timer;
 
 
