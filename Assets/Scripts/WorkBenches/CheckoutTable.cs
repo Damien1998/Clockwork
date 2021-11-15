@@ -91,14 +91,15 @@ namespace Models
                     {
                         AnalyticsController.SendAnalyticDictionary("CompletedQuestWithLevel", "Level", GameManager.instance.levelID);
                         SoundManager.PlaySound(SoundManager.Sound.WinPopup);
-                        DialogueManager.instance.StartDialogue(questEndDialogue);
+                        DialogueManager.instance.StartDialogue($"lvl{GameManager.instance.levelID}_quest_end");
                         hasQuest = false;
                     }
                     else
                     {
                         AnalyticsController.SendAnalyticDictionary("CompletedLevel","Level",GameManager.instance.levelID);
                         //UIManager.instance.ShowLevelEnd();
-                        DialogueManager.instance.StartDialogue(endOfLevelDialogue);
+                        Debug.Log($"lvl{GameManager.instance.levelID}_end");
+                        DialogueManager.instance.StartDialogue($"lvl{GameManager.instance.levelID}_end");
                     }
                     SaveGame();
                     SoundManager.PlaySound(SoundManager.Sound.WinPopup);

@@ -1,10 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ModestTree;
 using UnityEngine;
 
 public class StartOfLevelDialogue : MonoBehaviour
 {
-    public string poiName;
+    public string textName;
     public TextAsset textScript;
 
     private void Start()
@@ -14,6 +15,13 @@ public class StartOfLevelDialogue : MonoBehaviour
 
     public void StartDialogue()
     {
-        DialogueManager.instance.StartDialogue(textScript);
+        if (!textName.IsEmpty())
+        {
+            DialogueManager.instance.StartDialogue(textName);
+        }
+        else
+        {
+            DialogueManager.instance.StartDialogue(textScript);
+        }
     }
 }
