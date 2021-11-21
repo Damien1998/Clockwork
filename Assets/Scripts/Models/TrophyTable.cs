@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Polyglot;
 
 public class TrophyTable : MonoBehaviour
 {
     private bool _playerInRange,opened;
     [SerializeField] private TextMeshProUGUI trophyDescription;
     [SerializeField] private TextMeshProUGUI trophyName;
-    [SerializeField] private Animator bigTrophyAnimator; 
+    [SerializeField] private Animator bigTrophyAnimator;
     [SerializeField] private Image TrophyImage;
     [SerializeField] private GameObject trophyDisplayTemplate;
     [SerializeField] private GameObject trophyDisplayList,trophyList,trophyDetails;
@@ -67,8 +68,8 @@ public class TrophyTable : MonoBehaviour
     {
         var myTrophy = Resources.Load<Trophy>($"Trophies/Trophy {TrophyID}");
         TrophyImage.sprite = myTrophy.trophyImage;
-        trophyDescription.text = myTrophy.Description;
-        trophyName.text = myTrophy.trophyName;
+        trophyDescription.text = Localization.Get($"TROPHY_{myTrophy.trophyName}_DESCRIPTION", Localization.Instance.SelectedLanguage);;
+        trophyName.text = Localization.Get($"TROPHY_{myTrophy.trophyName}_NAME", Localization.Instance.SelectedLanguage);;
         trophyDetails.SetActive(true);
         trophyList.SetActive(false);
         bigTrophyAnimator.SetTrigger("Open");

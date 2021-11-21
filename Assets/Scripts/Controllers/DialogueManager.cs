@@ -76,21 +76,22 @@ public class DialogueManager : MonoBehaviour
     }
     public void StartDialogue(string textFile)
     {
-        if (!isInDialogue)
-        {
-            StopAllCoroutines();
-            ClearText();
-            dialogue = Resources.Load<TextAsset>($"Dialogue/{Localization.Instance.SelectedLanguage}/{textFile}").text
-                .Split('\n');
-            SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
-            dialogueBox.SetActive(true);
-            dialogueBox.GetComponent<AnimatedPanel>().Appear();
-            currentLine = 0;
-            ProgressDialogue();
-            isInDialogue = true;
-            UIManager.instance.PauseGameNoBlur(true);
-        }
-    }
+        SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
+
+        ClearText();
+        StopAllCoroutines();
+        dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x, 40);
+        currentLine = 0;
+
+        dialogue = Resources.Load<TextAsset>($"Dialogue/{Localization.Instance.SelectedLanguage}/{textFile}").text
+            .Split('\n');
+        dialogueBox.SetActive(true);
+        dialogueBox.GetComponent<AnimatedPanel>().Appear();
+        ProgressDialogue();
+        isInDialogue = true;
+
+        UIManager.instance.PauseGameNoBlur(true);
+}
     public void ResetDialogue()
     {
         ClearText();
@@ -400,17 +401,9 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogueByName(string fileName)
     {
-
         fileName = fileName.Remove(fileName.Length-1);
-        var data = Resources.Load<TextAsset>($"Dialogue/{fileName}");
-        if (data != null)
-        {
-            StartDialogue(data);
-        }
-        else
-        {
-            Debug.Log("No Dialogue file!");
-        }
+        StartDialogue(fileName);
+
     }
 
     public void RainSnow()

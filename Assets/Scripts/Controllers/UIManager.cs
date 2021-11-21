@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Polyglot;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -60,8 +61,8 @@ public class UIManager : MonoBehaviour
         var levelQuest = ReturnLevel(GameManager.instance.levelID).Value.levelSideQuest;
         TrophyScreen.SetActive(levelQuest.completed);
         var myTrophy = Resources.Load<Trophy>($"Trophies/Trophy {levelQuest.TrophyID}");
-        _QuestItemName.text = myTrophy.trophyName;
-        ItemFlavourText.text = myTrophy.Description;
+        _QuestItemName.text = $"{Localization.Get($"TROPHY_{myTrophy.trophyName}_NAME",Localization.Instance.SelectedLanguage)}";
+        ItemFlavourText.text = $"{Localization.Get($"TROPHY_{myTrophy.trophyName}_DESCRIPTION",Localization.Instance.SelectedLanguage)}";
         trophyDisplay.sprite = myTrophy.trophyImage;
 
     }
@@ -73,7 +74,7 @@ public class UIManager : MonoBehaviour
 
     public void ShowLevelEnd()
     {
-        levelEndText.text = "Twój czas: " + levelTimer.timerValue.ToString();
+        levelEndText.text = $"{Localization.Get("WORKSHOP_TIME_END_UI",Localization.Instance.SelectedLanguage)}: {levelTimer.timerValue.ToString()}";
         levelEndScren.SetActive(true);
         //levelEndPanel.Appear();
         levelEndScren.GetComponent<Animator>().SetTrigger("Open");
@@ -81,7 +82,6 @@ public class UIManager : MonoBehaviour
         StartCoroutine(WaitAndPause(true));
 
         ShowTrophyUI();
-        Debug.Log("asdasdad");
         timerDisplay.gameObject.SetActive(false);
     }
 
@@ -94,7 +94,6 @@ public class UIManager : MonoBehaviour
     public void ShowLevelFailure()
     {
         //StopCoroutine(timer);
-        //levelFailureText.text = "Twój czas: " + timerDisplay.value.ToString();
         levelFailureScren.SetActive(true);
         //levelFailPanel.Appear();
         levelFailureScren.GetComponent<Animator>().SetTrigger("Open");

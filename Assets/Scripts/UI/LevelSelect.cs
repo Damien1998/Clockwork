@@ -22,7 +22,7 @@ public class LevelSelect : MonoBehaviour
         {
             selectScreen.SetActive(true);
             selectPanel.Appear();
-            levelText.text = "Poziom " + selectedLevel;
+            //levelText.text = "Poziom " + selectedLevel;
         }
     }
 
@@ -41,7 +41,7 @@ public class LevelSelect : MonoBehaviour
     public void NextLevelSelect()
     {
         selectedLevel++;
-        levelText.text = "Wybrany poziom " + selectedLevel;
+       // levelText.text = "Wybrany poziom " + selectedLevel;
     }
     public void PreviousLevelSelect()
     {
@@ -49,7 +49,7 @@ public class LevelSelect : MonoBehaviour
         {
             selectedLevel--;
         }
-        levelText.text = "Wybrany poziom " + selectedLevel;
+       // levelText.text = "Wybrany poziom " + selectedLevel;
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
