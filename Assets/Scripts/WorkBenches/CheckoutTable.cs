@@ -115,7 +115,19 @@ namespace Models
             {
                 deliveryFX.Play();
                 ThrowRandomWatch();
-                yield return new WaitForSeconds(workbenchLevelParams.watchDispensingTime);
+
+                var timer = workbenchLevelParams.watchDispensingTime;
+                while(timer > 0)
+                {
+                    if(!UIManager.instance.IsPaused)
+                    {
+                        timer -= Time.deltaTime;
+                    }
+                    
+                    yield return null;
+                }
+
+                //yield return new WaitForSeconds(workbenchLevelParams.watchDispensingTime);
                 watchIndex++;
                 if(PGAmode)
                 {

@@ -92,7 +92,7 @@ public class CityClickManager : MonoBehaviour
                 break;
             case CityMaterialType.LIGHT:
                 ps = Instantiate(clickParticles[10], mouseWorldPos, Quaternion.identity);
-                SoundManager.PlaySound(SoundManager.Sound.PoiInteraction);
+                SoundManager.PlaySound(SoundManager.Sound.SFXLight);
                 ps.Play();
                 Destroy(ps, 3f);
                 break;

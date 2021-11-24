@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edae97f3f7e0dcd4d80e15ba3a41ef85, type: 3}
+  m_Name: SFX_Light
+  m_EditorClassIdentifier: 
+  sound: 71
+  audioClip:
+  - {fileID: 8300000, guid: 45fb31938271e674987a97a5abb7b309, type: 3}
+  - {fileID: 8300000, guid: a49c3ee3cf6b10248add3edbc198349c, type: 3}
+  - {fileID: 8300000, guid: 3d5da56323a36814c9255df86a0e1fc8, type: 3}
+  - {fileID: 8300000, guid: d67f57964217e1944b9f16acf36e9544, type: 3}

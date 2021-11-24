@@ -25,7 +25,7 @@ public class LevelTimer : MonoBehaviour
     {
         StopCoroutine(timer);
     }
-    private void StartTimer()
+    public void StartTimer()
     {
         StartCoroutine(timer);
     }
