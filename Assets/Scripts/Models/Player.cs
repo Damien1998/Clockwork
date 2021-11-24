@@ -363,6 +363,9 @@ public class Player : MonoBehaviour
         isDashing = true;
         yield return new WaitForSeconds(dashDuration);
         isDashing = false;
+        yield return new WaitForSeconds(0.05f);
+        SoundManager.PlaySound(SoundManager.Sound.DashStop);
+
     }
 
     private void PickUpItem(GameObject pickedupItem)
@@ -404,13 +407,19 @@ public class Player : MonoBehaviour
             itemRigidbody.velocity = Vector2.zero;
             HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
         }
-        HeldWatch.GetComponent<Watch>().ChangeSortingLayer("Items");
+        
 
         //HeldWatch.transform.position = transform.position + new Vector3(lastDirection.x, lastDirection.y);
         //HeldWatch.GetComponent<Rigidbody2D>().AddForce((new Vector2(lastDirection.x, lastDirection.y) * 4), ForceMode2D.Impulse);
 
         var obstruction = Physics2D.Raycast(transform.position, lastDirection, 1f, LayerMask.GetMask("Object"));
         var obstruction2 = Physics2D.Raycast(transform.position, lastDirection, 1f, LayerMask.GetMask("PlayerOnly"));
+        var conveyor = Physics2D.Raycast(transform.position, lastDirection, 1f, LayerMask.GetMask("Conveyor"));
+
+        if(!conveyor)
+        {
+            HeldWatch.GetComponent<Watch>().ChangeSortingLayer("Items");
+        }
 
         if (!obstruction && !obstruction2)
         {

@@ -140,6 +140,8 @@ public class UIManager : MonoBehaviour
                 walkableScene = false;
             }
 
+            levelTimer.StopTimer();
+
             activePauseCoroutine = StartPause(0.3f);
             StartCoroutine(activePauseCoroutine);
         }
@@ -163,6 +165,8 @@ public class UIManager : MonoBehaviour
             {
                 Player.CanInteract = true;
             }
+
+            levelTimer.StartTimer();
 
             activePauseCoroutine = StartUnpause(0.3f);
             StartCoroutine(activePauseCoroutine);

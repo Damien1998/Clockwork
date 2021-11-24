@@ -46,6 +46,7 @@ public static class SoundManager
         Dash = 51,
         WinPopup = 52,
         LosePopup = 53,
+        DashStop = 54,
         AlarmRing,
 
 
@@ -62,8 +63,8 @@ public static class SoundManager
         SFXMetal,
         SFXBuilding,
         SFXWater,
-        SFXGrass
-
+        SFXGrass,
+        SFXLight
 
     }
 
