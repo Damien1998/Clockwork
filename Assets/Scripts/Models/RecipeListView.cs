@@ -44,10 +44,8 @@ public static class RecipeListView
 
     public static void RemoveCheckForRecipes(Watch watch)
     {
-        Debug.Log(watch.WatchItem.itemID);
         for (int i = 0; i < recipeLists.Count; i++)
         {
-            Debug.Log(recipeLists[i].WatchItem.itemID);
             if (watch.WatchItem.itemID == recipeLists[i].WatchItem.itemID)
             {
                 recipeLists.Remove(recipeLists[i]);

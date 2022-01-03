@@ -101,8 +101,6 @@ public class WorkbenchExamine : Workbench
         switch (_watchItem.WatchItem.itemType)
         {
             case ItemType.QuestWatch:
-                return;
-            // If is The Highest Watch In Hierarchy
             case ItemType.FullWatch:
                 RecipeListView.currentMainWatch = _watchItem;
                 RecipeListView.AddRecipeToList(_watchItem); // If it isn't then check if it is a component

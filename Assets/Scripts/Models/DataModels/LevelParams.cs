@@ -26,6 +26,7 @@ public class LevelParams : ScriptableObject
     public int mechMinParts, mechMaxParts;
     public float watchDispensingTime;
 
+    public Sprite ImageQuestWatchList;
 }
 
 public enum WatchSpawningTypes {None, MechanismOrCasing, MechanismAndCasing, Mechanism, Casing}

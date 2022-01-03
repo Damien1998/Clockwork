@@ -70,6 +70,7 @@ namespace Models
                 itemToPlace.transform.position = transform.position;
                 Destroy(itemToPlace.gameObject);
                 retrievedFX.Play();
+                RecipeListView.RemoveCheckForRecipes(itemToPlace);
                 CompleteQuest(GameManager.instance.levelID);
             }
             if(CheckWatch(itemToPlace))
@@ -123,7 +124,7 @@ namespace Models
                     {
                         timer -= Time.deltaTime;
                     }
-                    
+
                     yield return null;
                 }
 

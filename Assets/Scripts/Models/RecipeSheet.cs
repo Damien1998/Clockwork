@@ -10,6 +10,7 @@ public class RecipeSheet : MonoBehaviour
 {
     public GameObject[] ComponentsLists;
     public GameObject Image,RecipeTemplate,RecipesList;
+    public Image QuestRecipeList;
     [SerializeField] private GameObject NormalObject;
     public UILineRenderer line;
     private bool displayingRecipe = false;
@@ -17,6 +18,7 @@ public class RecipeSheet : MonoBehaviour
 
     private void Awake()
     {
+        QuestRecipeList.gameObject.SetActive(false);
         DisplayAllRecipes();
     }
 
@@ -150,12 +152,25 @@ public class RecipeSheet : MonoBehaviour
         }
     }
 
+    private void DisplayQuestWatch()
+    {
+        QuestRecipeList.sprite = GameManager.instance.currentLevelParams.ImageQuestWatchList;
+        QuestRecipeList.gameObject.SetActive(true);
+    }
+
     IEnumerator DisplayRecipes()
     {
         foreach (var t in RecipeListView.recipeLists)
         {
             RecipeListView.currentMainWatch = t;
-            AddRecipe();
+            if (t.WatchItem.itemType != ItemType.QuestWatch)
+            {
+                AddRecipe();
+            }
+            else
+            {
+                DisplayQuestWatch();
+            }
             yield return new WaitForSeconds(.05f);
         }
     }
