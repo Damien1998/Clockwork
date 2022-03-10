@@ -7,6 +7,7 @@ public static class RecipeListView
 {
     public static Watch currentMainWatch;
     public static List<Watch> recipeLists = new List<Watch>();
+    public static List<Watch> recipesFilled = new List<Watch>();
 
     public static void LoadRecipeView()
     {
@@ -31,6 +32,7 @@ public static class RecipeListView
         if (!recipeLists.Contains(_watch))
         {
             recipeLists.Add(_watch);
+            recipesFilled.Add(_watch);
             if (SceneManager.GetSceneByName("RecipeSheet").isLoaded)
             {
                 ReloadRecipeView();

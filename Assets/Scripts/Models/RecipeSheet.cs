@@ -9,7 +9,7 @@ using TMPro;
 public class RecipeSheet : MonoBehaviour
 {
     public GameObject[] ComponentsLists;
-    public GameObject Image,RecipeTemplate,RecipesList;
+    public GameObject Image, RecipeTemplate, RecipesList;
     public Image QuestRecipeList;
     [SerializeField] private GameObject NormalObject;
     public UILineRenderer line;
@@ -46,6 +46,9 @@ public class RecipeSheet : MonoBehaviour
         {
             tmpRecipe.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = ":";
         }
+
+        tmpRecipe.transform.GetChild(0).GetChild(2).GetChild(0).gameObject.GetComponent<TextMeshProUGUI>().text =
+            (RecipeListView.recipesFilled.IndexOf(RecipeListView.currentMainWatch) + 1).ToString();
 
         //tmpRecipe.GetComponent<Animator>().SetTrigger("Open");
         //DisplayRecipe();
