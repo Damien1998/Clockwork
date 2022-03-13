@@ -1,37 +1,53 @@
 ﻿--Invoke SendAnalytics Lis
+--portrait 0 Edward_Snow <color=#4537a1><b>Edward</b></color>
+--portrait 1 Anna_Snow <color=#b84604><b>Anna</b></color>
 --description
 December is the perfect season for shopkeepers - the festive period motivates people to shop. This year, however, a new individual joins the otherwise familiar faces. His premises are filled with all sorts of machinery and trucks encourage potential customers with the mysterious words: “NORTHERN SNOW FOR EVERY OCCASION“
---portrait Fox Fox
+--animate 2 EnterUp
+--portrait 2 Fox <color=#067c9c><b>Fox</b></color>
 Welcome, welcome! Sir, ma’am, perhaps you could be convinced to buy some snow?
---portrait Anna_Snow_Surprised Anna
+--portrait 1 Anna_Snow_Surprised <color=#b84604><b>Anna</b></color>
+--talk 1 <color=#b84604><b>Anna</b></color>
 Snow?
---portrait Fox_Excited Fox
+--portrait 2 Fox_Excited <color=#067c9c><b>Fox</b></color>
+--talk 2 <color=#067c9c><b>Fox</b></color>
 But of course! Fine snow, powdery snow, clustered snow - I’ve got snow for every occasion!
---portrait Edward_Snow_Sceptical Edward
+--portrait 0 Edward_Snow_Sceptical <color=#4537a1><b>Edward</b></color>
+--talk 0 <color=#4537a1><b>Edward</b></color>
 It’s already snowing. Why would we need more snow?
---portrait Fox_Proud Fox
+--portrait 2 Fox_Proud <color=#067c9c><b>Fox</b></color>
+--talk 2 <color=#067c9c><b>Fox</b></color>
 See, sir, business is booming!
---portrait Edward_Snow_Embarassed Edward
+--portrait 0 Edward_Snow_Embarassed <color=#4537a1><b>Edward</b></color>
+--talk 0 <color=#4537a1><b>Edward</b></color>
 What?
---portrait Fox Fox
+--portrait 2 Fox <color=#067c9c><b>Fox</b></color>
+--talk 2 <color=#067c9c><b>Fox</b></color>
 Here, my pricing.
---portrait Fox_Scheming Fox
+--portrait 2 Fox_Scheming <color=#067c9c><b>Fox</b></color>
+--talk 2 <color=#067c9c><b>Fox</b></color>
 If you were to purchase snow for an entire week, you’d get a special sale for the next few days. For valued customers.
---portrait Edward_Snow_Sceptical Edward
+--portrait 0 Edward_Snow_Sceptical <color=#4537a1><b>Edward</b></color>
+--talk 0 <color=#4537a1><b>Edward</b></color>
 That’s pricey.
---portrait Fox Fox
+--portrait 2 Fox <color=#067c9c><b>Fox</b></color>
+--talk 2 <color=#067c9c><b>Fox</b></color>
 Unfortunately, snow imported straight from the North Pole has its price…
---portrait Fox_ButteringUp Fox
+--portrait 2 Fox_Sucking_Up <color=#067c9c><b>Fox</b></color>
+--talk 2 <color=#067c9c><b>Fox</b></color>
 But you, sir, are an expert, you can surely tell good quality products. No other snow crunches under one’s shoes as mine does!
---portrait Fox_Scheming Fox
+--portrait 2 Fox_Scheming <color=#067c9c><b>Fox</b></color>
+--talk 2 <color=#067c9c><b>Fox</b></color>
 Well, then, are you buying?
---options 31 34 Fox
+--options 45 49 Fox
 Do not buy snow
 Buy snow
+--animate 2 ExitDown
 --description
 You leave the shopkeeper behind and breathe a sigh of relief. He failed to convince you to buy his snow. What’s on the ground right now is definitely enough. The fox cleans up his stall, puffing angrily.
 --end
 --Invoke RainSnow
+--animate 2 ExitDown
 --description
 The fox gladly accepts your bill, sneakily hiding it in his pocket, as if afraid you’d change your mind. He disappears inside the premises, leaving the two of you with a giant snow machine.
 --end

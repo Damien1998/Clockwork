@@ -1,45 +1,53 @@
 ﻿--Invoke SendAnalytics Philosopher
+--portrait 1 Edward_Snow Edward
+--portrait 3 Philosopher ???
+--portrait 0 Anna_Snow <color=#b84604><b>Anna</b></color>
 --description
 Contrary to expectations, the Christmas fever does not affect everyone. A perfect example of that is a young man, slowly strolling in his own pace, paying no mind to the crowds. He is most certainly not dressed warm enough for the weather. He seems lost… But in his own way, free.
---Anna
---portrait Anna_Snow_Concerned Anna
+--portrait 0 Anna_Snow_Concerned Anna
+--talk 0 <color=#b84604><b>Anna</b></color>
 Isn’t it too cold for this outfit?
---???
---portrait Philosopher ???
+--portrait 3 Philosopher ???
+--talk 3 <color=#45291c><b>???</b></color>
 No, no… I mean, yes, but it means nothing.
---Edward
---portrait Edward_Snow_Surprised Edward
+--portrait 1 Edward_Snow_Surprised <color=#4537a1><b>Edward</b></color>
+--talk 1 <color=#4537a1><b>Edward</b></color>
 So many people running around and you’re just strolling down the alley without any hurry… How?
---Contemplative existentialist
---portrait Philosopher Philosopher
+--portrait 3 Philosopher Philosopher
+--talk 3 <color=#45291c><b>Philosopher</b></color>
 Ah, but it’s so simple… Existing among others, we are subject to norms and customs, even if they’re harmful for us…
---portrait Philosopher_Smiling Philosopher
+--portrait 3 Philosopher_Smiling Philosopher
+--talk 3 <color=#45291c><b>Philosopher</b></color>
 Meanwhile, I do not stand for this absurdity and simply live by my own rules.
---Edward
---portrait Edward_Snow_Embarassed Edward
+--portrait 1 Edward_Snow_Embarassed Edward
+--talk 1 <color=#4537a1><b>Edward</b></color>
 Um… Are you trying to say the chaotic pursuit of all those people is absurd?
---Contemplative existentialist
---portrait Philosopher Philosopher
+--portrait 3 Philosopher Philosopher
+--talk 3 <color=#45291c><b>Philosopher</b></color>
 Oh, not just that. Take life itself, for example. It doesn’t have an objective goal to it.
---portrait Philosopher_Focused Philosopher
+--portrait 3 Philosopher_Focused Philosopher
+--talk 3 <color=#45291c><b>Philosopher</b></color>
 We are being pushed into this world without any guiding signs or methods to exist that are proven to work.
---portrait Philosopher Philosopher
+--portrait 3 Philosopher Philosopher
+--talk 3 <color=#45291c><b>Philosopher</b></color>
 Isn’t that simply foolish?
---Anna
---portrait Anna_Snow_Abashed Anna
+--portrait 0 Anna_Snow_Abashed Anna
+--talk 0 <color=#b84604><b>Anna</b></color>
 I… Suppose so?
---Contemplative existentialist
---portrait Philosopher_Smiling Philosopher
+--portrait 3 Philosopher_Smiling Philosopher
+--talk 3 <color=#45291c><b>Philosopher</b></color>
 Thankfully, one can deal with that.
---portrait Philosopher Philosopher
+--portrait 3 Philosopher Philosopher
+--talk 3 <color=#45291c><b>Philosopher</b></color>
 I wonder what hour is it… Damn it, something’s wrong with my watch again!
---portrait Philosopher_Focused Philosopher
+--portrait 3 Philosopher_Focused Philosopher
+--talk 3 <color=#45291c><b>Philosopher</b></color>
 Wait, aren’t you two those famous watchmakers?
---Anna
---portrait Anna_Snow Anna
+--portrait 0 Anna_Snow Anna
+--talk 0 <color=#b84604><b>Anna</b></color>
 Indeed, that’s us. I suppose you know where our workshop is?
---Contemplative existentialist
---portrait Philosopher_Smiling Philosopher
+--portrait 3 Philosopher_Smiling Philosopher
+--talk 3 <color=#45291c><b>Philosopher</b></color>
 Yes, I do. What a hilarious absurdity, to meet you right at this moment! Well, then, I’ll be very grateful for your help. Of course, I’ll come over myself to pick up my watch.
 --quest_start Kamień Syzyfa
 --end

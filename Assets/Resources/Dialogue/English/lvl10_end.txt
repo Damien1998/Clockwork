@@ -1,80 +1,94 @@
-﻿--Anna
---portrait Anna_Sad Anna
+﻿--portrait 0 Anna_Sad Anna
+--portrait 1 Edward_Sad Edward
+--exit 2
+--exit 3
+--talk 0 Anna
 It’s a shame mom and dad couldn’t make it.
---Edward
---portrait Edward_Sad Edward
+--talk 1 Edward
 They told me on the phone that something held them up. At least they’re healthy and doing well.
---Vladyslav IX
---portrait Vlad_Snow Vlad
+--animate 2 EnterUp
+--portrait 2 Vlad_Snow Vlad
 Ania, there you are! Come over here, we have yet to give each other wishes. 
---Anna
---portrait Anna_Happy Anna
+--animate 0 ExitDown
+--animate 2 ExitDown
+--portrait 0 Anna_Happy Anna
 I'm coming!
---Mr. Jasper
---portrait Jasper_Snow Pan Jasper
+--animate 3 EnterUp
+--portrait 3 Jasper_Snow Mr. Jasper
 Edward, I don’t think we’ve had the pleasure…
---Edward
---portrait Edward_Delighted Edward
+--portrait 1 Edward_Delighted Edward
+--talk 1 Edward
 Oh, Mr. Jasper. Yes, I believe we haven’t.
---Mr. Jasper
---portrait Jasper_Snow_Smiling Pan Jasper
+--portrait 3 Jasper_Snow_Smiling Mr. Jasper
+--talk 3 Mr. Jasper
 Please, call me by my name. This is not a business meeting for us to refer to each other so officially.
---Edward
---portrait Edward_Mildly_Stressed Edward
+--portrait 1 Edward_Mildly_Stressed Edward
+--talk 1 Edward
 Of course… Jasper…
---portrait Edward Edward
+--portrait 1 Edward Edward
+--talk 1 Edward
 Well, what can I wish you? Surely, a lot of strength, health and patience.
+--talk 1 Edward
 I’m sure you could use them with all the work you have.
+--talk 1 Edward
 And happiness. Just like that.
---Jasper
---portrait Jasper_Snow_Smiling Jasper
+--portrait 3 Jasper_Snow_Smiling Jasper
+--talk 3 Jasper
 Thank you. Even if those things don’t help, they surely will do no harm, either.
+--talk 3 Jasper
 And I wish you a lot of success.
---portrait Jasper_Snow_Contemplative Jasper
+--portrait 3 Jasper_Snow_Contemplative Jasper
+--talk 3 Jasper
 Although now that I think about it, you two are doing quite well in that field.
---portrait Jasper_Snow_Smiling Jasper
+--portrait 3 Jasper_Snow_Smiling Jasper
+--talk 3 Jasper
 Well, then, I wish you to use your time as best as you can.
---portrait Jasper_Snow Jasper
+--portrait 3 Jasper_Snow Jasper
+--talk 3 Jasper
 Seriously, you cannot imagine how many people waste it just like that. I hope you two will take the opposite course.
---Edward
---portrait Edward Edward
+--portrait 1 Edward Edward
+--talk 1 Edward
 I’ll make sure of it.
---Vladyslav IX
---portrait Vlad_Snow_Intrigued Vlad
+--animate 2 EnterUp
+--portrait 2 Vlad_Snow_Intrigued Vlad
 Ania, the postman has dropped off some packages. What could it be?
---Anna
---portrait Anna_Snow_Surprised Anna
+--portrait 0 Anna_Snow_Surprised Anna
+--animate 0 EnterUp
 Edward, there’s a letter attached, too. Read it and I’ll try to open the package.
---Jasper
---portrait Jasper_Snow_Scared Jasper
+--portrait 3 Jasper_Snow_Scared Jasper
+--talk 3 Jasper
 Oh dear, that looks suspiciously similar to the tax office packages…
---Anna
---portrait Anna_Happy Anna
+--portrait 0 Anna_Happy Anna
+--talk 0 Anna
 Hey, we got a watch! Red and white, with a golden case… There’s even a mistletoe branch.
---portrait Anna_Happy Anna
+--portrait 0 Anna_Happy Anna
+--portrait 3 Jasper_Snow Jasper
+--talk 0 Anna
 I think I know who sent this.
---Vladyslav IX
---portrait Vlad_Snow_Annoyed Vlad
+--portrait 2 Vlad_Snow_Annoyed Vlad
+--talk 2 Vlad
 It’s always clocks, nothing but clocks. They’re haunting me, those ticking vampires.
---Edward
---portrait Edward Edward
+--portrait 1 Edward Edward
+--talk 1 Edward
 Izabela thanks us for our gift… So it came on time. Aside from that, she wishes us good tidings.
---portrait Edward_Surprised Edward
+--portrait 1 Edward_Surprised Edward
 …
+--talk 1 Edward
 And asks us to come to the North Pole. Apparently it will be a mess after Christmas and they’ll need any help they can get.
---Anna
---portrait Anna_Surprised Anna
+--portrait 0 Anna_Surprised Anna
+--talk 0 Anna
 We- We’re going to the North Pole?
---portrait Anna_Happy Anna
+--portrait 0 Anna_Happy Anna
+--talk 0 Anna
 Edward, we’re going to the North Pole!
---Vladyslav IX
---portrait Vlad_Snow Vlad
+--portrait 2 Vlad_Snow Vlad
+--talk 2 Vlad
 Well, what are you standing here for? We need to celebrate! Bring out the drinks!
---Anna
---portrait Anna_Happy Anna
+--portrait 0 Anna_Happy Anna
+--talk 0 Anna
 Oh, dear, I prefer to avoid such things… Ah, whatever. Pour me one.
---Edward
---portrait Edward_Mildly_Stressed Edward
+--portrait 1 Edward_Mildly_Stressed Edward
+--talk 1 Edward
 I’ve got a bad feeling about this…
 --Invoke SendFinishedAnalytics lv10End
 --level_end

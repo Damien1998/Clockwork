@@ -5,6 +5,7 @@ using System.Linq;
 using Models;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 //Refactoring is done! You may enter safely
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour
     public SoundAudioClip[] soundAudioClipArray;
     public AudioMixerGroup SFX;
     public SoundController SoundController;
+    public Camera UICamera;
 
     public int levelID
     {
@@ -101,6 +103,9 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         SoundManager.PlaySound(SoundManager.Sound.UIChange);
+        var cameraData = Camera.main.GetUniversalAdditionalCameraData();
+        cameraData.cameraStack.Add(UICamera);
+
     }
 
     public void InitLevel(int levelID)

@@ -17,7 +17,7 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject dialogueBox, optionsBox;
     public TextMeshProUGUI dialogueText, dialogueHistoryText, optionText1, optionText2;
-    public Image[] actors;
+    public DialogueActor[] actors;
 
     [SerializeField]
     private Color idleColor, talkColor;
@@ -39,6 +39,8 @@ public class DialogueManager : MonoBehaviour
     public Sprite[] portraits;
     public string[] characters;
 
+    private List<DialogueSpriteData> dialoguePortraits;
+
     void Awake()
     {
         if (instance != null)
@@ -48,6 +50,7 @@ public class DialogueManager : MonoBehaviour
         else
         {
             instance = this;
+            Initialize();
         }
     }
 
@@ -62,6 +65,24 @@ public class DialogueManager : MonoBehaviour
             SkipBarProgress();
         }
     }
+    private void Initialize()
+    {
+        var dPortraits = Resources.LoadAll("DialoguePortraits", typeof(DialogueSpriteData));
+
+        List<DialogueSpriteData> portraitList = new List<DialogueSpriteData>();
+
+        foreach (var portrait in dPortraits)
+        {
+            portraitList.Add((DialogueSpriteData)portrait);
+        }
+
+        dialoguePortraits = new List<DialogueSpriteData>();
+        foreach (var portrait in portraitList)
+        {
+            dialoguePortraits.Add(portrait);
+        }
+    }
+
     public void StartDialogue(TextAsset textFile)
     {
         if (!isInDialogue)
@@ -108,6 +129,10 @@ public class DialogueManager : MonoBehaviour
     }
     public void ExitDialogue()
     {
+        foreach(DialogueActor actor in actors)
+        {
+            actor.gameObject.SetActive(false);
+        }
         _isTyping = false;
         isHoldingSkip = false;
         dialogueText.rectTransform.sizeDelta = new Vector2(dialogueText.rectTransform.sizeDelta.x, 40);
@@ -166,20 +191,30 @@ public class DialogueManager : MonoBehaviour
         return nameToDisplay;
     }
 
-    private Sprite FindPortrait(string characterName)
+    private Sprite FindPortrait(string characterName, int actorID)
     {
         var cName = characterName.Trim();
-        int id = FindCharacterID(cName);
-        if(id != -1)
+        for (int i = 0; i < dialoguePortraits.Count; i++)
         {
-            return portraits[id];
+            if (dialoguePortraits[i].characterID == characterName)
+            {
+                actors[actorID].sound = dialoguePortraits[i].sound;
+                actors[actorID].emoteFX = dialoguePortraits[i].particleFX;
+                return dialoguePortraits[i].portrait;
+            }
         }
-        else
-        {
-            return null;
-        }
+        return null;
+        //int id = FindCharacterID(cName);
+        //if(id != -1)
+        //{
+        //    return portraits[id];
+        //}
+        //else
+        //{
+        //    return null;
+        //}
     }
-    private Sprite FindPortrait(string characterName,string[] _nameToDisplay)
+    private Sprite FindPortrait(string characterName,string[] _nameToDisplay, int actorID)
     {
         var cName = characterName.Trim();
         StringBuilder _name = new StringBuilder();
@@ -196,15 +231,25 @@ public class DialogueManager : MonoBehaviour
 
         _name.Append(": ");
         name = _name.ToString();
-        int id = FindCharacterID(cName);
-        if(id != -1)
+        for (int i = 0; i < dialoguePortraits.Count; i++)
         {
-            return portraits[id];
+            if (dialoguePortraits[i].characterID == characterName)
+            {
+                actors[actorID].sound = dialoguePortraits[i].sound;
+                actors[actorID].emoteFX = dialoguePortraits[i].particleFX;
+                return dialoguePortraits[i].portrait;
+            }
         }
-        else
-        {
-            return null;
-        }
+        return null;
+        //int id = FindCharacterID(cName);
+        //if(id != -1)
+        //{
+        //    return portraits[id];
+        //}
+        //else
+        //{
+        //    return null;
+        //}
     }
 
     private void SetName(string[] _nameToDisplay)
@@ -276,7 +321,7 @@ public class DialogueManager : MonoBehaviour
                 case "--portrait":                   
                     int.TryParse(words[1], out actorID);
                     actors[actorID].gameObject.SetActive(true);
-                    actors[actorID].sprite = FindPortrait(words[2], GetName(3));
+                    actors[actorID].image.sprite = FindPortrait(words[2], GetName(3), actorID);
                     //actors.gameObject.SetActive(true);
                     //actors.sprite = FindPortrait(words[1],GetName(2));
                     break;
@@ -285,34 +330,44 @@ public class DialogueManager : MonoBehaviour
                     actors[actorID].gameObject.SetActive(true);
                     for(int i = 0; i < actors.Length; i++)
                     {
-                        actors[i].color = idleColor;
+                        actors[i].image.color = idleColor;
                         //actors[i].GetComponent<Canvas>().sortingLayerName = "UIBackground";
-                        actors[i].GetComponent<Animator>().Play("PanelActive");
+                        //actors[i].GetComponent<Animator>().Play("PanelActive");
                     }
-                    actors[actorID].color = talkColor;
+                    actors[actorID].image.color = talkColor;
                     //actors[actorID].GetComponent<Canvas>().sortingLayerName = "UIFront";
-                    actors[actorID].GetComponent<Animator>().Play("Talk");
+                    actors[actorID].animator.Play("Talk");
+                    if(actors[actorID].sound != SoundManager.Sound.NONE)
+                    {
+                        SoundManager.PlaySound(actors[actorID].sound);
+                    }
+                    
                     SetName(GetName(2));
                     break;
                 case "--animate":
                     int.TryParse(words[1], out actorID);
                     actors[actorID].gameObject.SetActive(true);
-                    for (int i = 0; i < actors.Length; i++)
-                    {
-                        actors[i].color = idleColor;
-                        //actors[i].GetComponent<Canvas>().sortingLayerName = "UIBackground";
-                        actors[i].GetComponent<Animator>().Play("PanelActive");
-                    }
-                    actors[actorID].color = talkColor;
+                    actors[actorID].image.color = talkColor;
                     //actors[actorID].GetComponent<Canvas>().sortingLayerName = "UIFront";
-                    actors[actorID].GetComponent<Animator>().Play(words[2].Trim());
+                    actors[actorID].animator.Play(words[2].Trim());
                     break;
                 case "--sound":
-                    int sound = 0;
-                    int.TryParse(words[1], out sound);
+                        int sound = 0;
+                        int.TryParse(words[1], out sound);
 
-                    SoundManager.PlaySound((SoundManager.Sound)Enum.ToObject(typeof(SoundManager.Sound), sound));
+                        SoundManager.PlaySound((SoundManager.Sound)Enum.ToObject(typeof(SoundManager.Sound), sound));
+                    break;
+                case "--fx":
+                        int fx = 0;
+                        int.TryParse(words[1], out fx);
+                        int.TryParse(words[2], out actorID);
 
+                        FXManager.PlayFX((FXManager.ParticleFX)Enum.ToObject(typeof(FXManager.ParticleFX), fx), actors[actorID].transform.position);
+                    break;
+                case "--emote":
+                    int.TryParse(words[1], out actorID);
+
+                    FXManager.PlayFX(actors[actorID].emoteFX, actors[actorID].transform.position);
                     break;
                 case "--exit":
                     int.TryParse(words[1], out actorID);
@@ -323,8 +378,8 @@ public class DialogueManager : MonoBehaviour
                 case "--options":
                     textDialogueScrollBar.value = 0;
                     _skipping = false;
-                    int.TryParse(words[3], out actorID);
-                    actors[actorID].sprite = FindPortrait(words[4]);
+                    //int.TryParse(words[3], out actorID);
+                    //actors[actorID].image.sprite = FindPortrait(words[3], actorID);
                     OpenOptions(words[1],words[2]);
                     goto While_Break;
                 case "--level_start":
@@ -348,6 +403,12 @@ public class DialogueManager : MonoBehaviour
                     break;
                 case "--description":
                     //actors.gameObject.SetActive(false);
+                    for (int i = 0; i < actors.Length; i++)
+                    {
+                        actors[i].image.color = idleColor;
+                        //actors[i].GetComponent<Canvas>().sortingLayerName = "UIBackground";
+                        actors[i].GetComponent<Animator>().Play("PanelActive");
+                    }
                     name = "";
                     break;
                 default:

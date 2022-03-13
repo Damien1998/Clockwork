@@ -1,38 +1,49 @@
 ﻿--Invoke SendAnalytics Ambush
+--portrait 1 Anna_Snow_Happy Anna
+--portrait 0 Edward_Snow Edward
 --description
 This year’s first snow has fallen - the entire town burrows under a layer of white fluff. You decide to take the opportunity to go out for a walk. You want to appreciate the winter landscape before the weather decides to take it away.
---Anna
---portrait Anna_Snow_Happy Anna
+--portrait 1 Anna_Snow_Happy Anna
+--talk 1 <color=#b84604><b>Anna</b></color>
 I’ve missed winter!
---Edward
---portrait Edward_Snow_Sceptical Edward
+--portrait 0 Edward_Snow_Sceptical Edward
+--talk 0 <color=#4537a1><b>Edward</b></color>
 Yeah… Maybe because you didn’t have to shovel the snow.
---Anna
---portrait Anna_Snow Anna
+--portrait 1 Anna_Snow Anna
+--talk 1 <color=#b84604><b>Anna</b></color>
 Oh, I’ll help next time. If I don’t forget....
---portrait Anna_Snow Anna
+--portrait 1 Anna_Snow Anna
+--talk 1 <color=#b84604><b>Anna</b></color>
 But don’t worry about that!
---portrait Anna_Snow_Happy Anna
+--portrait 1 Anna_Snow_Happy Anna
+--talk 1 <color=#b84604><b>Anna</b></color>
 We can finally feel like kids again!
---Edward
---portrait Edward_Snow Edward
+--portrait 0 Edward_Snow Edward
+--talk 0 <color=#4537a1><b>Edward</b></color>
 Surely, you struggle with that daily.
---Anna
---portrait Anna_Snow_Stuck_Out_Tongue Anna
+--portrait 1 Anna_Snow_Stuck_Out_Tongue Anna
+--talk 1 <color=#b84604><b>Anna</b></color>
 Hey, hey, hey. I’m mature and responsible!
---portrait Anna_Snow_Thoughtful Anna
+--portrait 1 Anna_Snow_Thoughtful <color=#b84604><b>Anna</b></color>
 ...
---portrait Anna_Snow_Mischievous Anna
+--portrait 1 Anna_Snow_Mischievous <color=#b84604><b>Anna</b></color>
 ...
---portrait Anna_Snow_Happy Anna
+--portrait 1 Anna_Snow_Happy <color=#b84604><b>Anna</b></color>
+--animate 1 ExitDown
 Hey, Edward!
---Edward
---portrait Edward_Snowball Edward
+--animate 3 EnterUp
+--portrait 3 Anna_Snow_Happy Anna
+--portrait 0 Edward_Snowball <color=#4537a1><b>Edward</b></color>
+--animate 0 Shake
+--fx 1 0
 ...
---portrait Edward_Snow_Surprised Edward
+--portrait 0 Edward_Snow_Surprised Edward
+--talk 0 <color=#4537a1><b>Edward</b></color>
 Anka!
---Anna
---portrait Anna_Snowball Anna
+--portrait 0 Edward_Snow_Delighted Edward
+--portrait 3 Anna_Snowball <color=#b84604><b>Anna</b></color>
+--animate 3 Shake
+--fx 1 3
 ...
 --description
 And that is how a snowball fight on a scale you haven’t had in years started. You return to your workshop cold, wet and delighted.
