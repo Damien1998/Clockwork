@@ -1,32 +1,50 @@
-﻿--portrait Anna_Snow_Panicked Anna
+﻿--portrait 1 Edward_Snow_Indifferent Edward
+--portrait 0 Anna_Snow_Panicked Anna
+--talk 0 Anna
 If this keeps up, we won’t make it to the workshop on time!
---portrait Edward_Snow_Indifferent Edward
+--portrait 1 Edward_Snow_Indifferent Edward
+--talk 1 Edward
 Blame the crowd, not me…
---portrait Anna_Snow_Concerned Anna
+--portrait 0 Anna_Snow_Concerned Anna
+--talk 0 Anna
 I just hope there aren’t any clients yet.
---portrait Edward_Snow Edward
+--portrait 1 Edward_Snow Edward
+--talk 1 Edward
 I bet they were too busy hunting down presents.
---portrait Anna_Snow Anna
+--portrait 0 Anna_Snow Anna
+--talk 0 Anna
 You’re probably right.
+--talk 0 Anna
 I have to say, as bothersome as this crowd is, I’m really happy to see the happiness of all those people.
---portrait Edward_Snow Edward
+--portrait 1 Edward_Snow Edward
+--talk 1 Edward
 What can I say? It’s Christmas.
---portrait Anna_Snow_Happy Anna
+--portrait 0 Anna_Snow_Happy Anna
+--talk 0 Anna
 And all the snow! Ah, it’s the best time of year.
---portrait Edward_Snow_Indifferent Edward
+--portrait 1 Edward_Snow_Indifferent Edward
+--talk 1 Edward
 Wait until you’ll have to shovel that snow off the roof.
---portrait Anna_Snow_Happy Anna
+--portrait 0 Anna_Snow_Happy Anna
+--talk 0 Anna
 Edward, you’ll be taking care of that.
---portrait Edward_Snow_Delighted Edward
+--portrait 1 Edward_Snow_Delighted Edward
+--talk 1 Edward
 And in the meantime you’ll have first dibs on decorating the Christmas tree?
+--talk 1 Edward
 No way, sis. I won’t give up easily this year.
---portrait Anna_Snow Anna
+--portrait 0 Anna_Snow Anna
+--talk 0 Anna
 We’ll see about tha--
---portrait Anna_Snow_Panicked Anna
+--portrait 0 Anna_Snow_Panicked Anna
+--animate 0 Shake
+--sound 2
 AAAAAAAAA
---portrait Edward_Snow_Concerned Edward
+--portrait 1 Edward_Snow_Concerned Edward
+--talk 1 Edward
 Are you okay?!
---portrait Anna_Snow_Embarassed Anna
+--portrait 0 Anna_Snow_Embarassed Anna
+--talk 0 Anna
 Yes, yes... Hah, it’s a little slippery…
 --Invoke SendFinishedAnalytics lv10Start
 --end

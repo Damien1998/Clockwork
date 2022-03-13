@@ -17,7 +17,11 @@ public class DialogueManager : MonoBehaviour
 
     public GameObject dialogueBox, optionsBox;
     public TextMeshProUGUI dialogueText, dialogueHistoryText, optionText1, optionText2;
-    public Image portrait;
+    public Image[] actors;
+
+    [SerializeField]
+    private Color idleColor, talkColor;
+
     public Button option1, option2, progressButton;
     public Scrollbar dialogueScrollBar, textDialogueScrollBar;
     public Slider SkipBar;
@@ -203,6 +207,24 @@ public class DialogueManager : MonoBehaviour
         }
     }
 
+    private void SetName(string[] _nameToDisplay)
+    {
+        StringBuilder _name = new StringBuilder();
+        foreach (var nameWord in _nameToDisplay)
+        {
+            _name.Append(nameWord);
+        }
+        // Very Weird Symbol?
+        // Probably Fixed Now Was Due to Portrait thing
+        if (_name.Length - 1 > 0)
+        {
+            _name.Remove(_name.Length - 1, 1);
+        }
+
+        _name.Append(": ");
+        name = _name.ToString();
+    }
+
     private void Skip()
     {
         _skipping = true;
@@ -237,6 +259,7 @@ public class DialogueManager : MonoBehaviour
             {
                 firstWord = result;
             }
+            int actorID = 0;
             switch (firstWord)
             {
                 case "--end":
@@ -250,14 +273,58 @@ public class DialogueManager : MonoBehaviour
                     UIManager.instance.ShowLevelEnd();
                     ExitDialogue();
                     break;
-                case "--portrait":
-                    portrait.gameObject.SetActive(true);
-                    portrait.sprite = FindPortrait(words[1],GetName(2));
+                case "--portrait":                   
+                    int.TryParse(words[1], out actorID);
+                    actors[actorID].gameObject.SetActive(true);
+                    actors[actorID].sprite = FindPortrait(words[2], GetName(3));
+                    //actors.gameObject.SetActive(true);
+                    //actors.sprite = FindPortrait(words[1],GetName(2));
+                    break;
+                case "--talk":
+                    int.TryParse(words[1], out actorID);
+                    actors[actorID].gameObject.SetActive(true);
+                    for(int i = 0; i < actors.Length; i++)
+                    {
+                        actors[i].color = idleColor;
+                        //actors[i].GetComponent<Canvas>().sortingLayerName = "UIBackground";
+                        actors[i].GetComponent<Animator>().Play("PanelActive");
+                    }
+                    actors[actorID].color = talkColor;
+                    //actors[actorID].GetComponent<Canvas>().sortingLayerName = "UIFront";
+                    actors[actorID].GetComponent<Animator>().Play("Talk");
+                    SetName(GetName(2));
+                    break;
+                case "--animate":
+                    int.TryParse(words[1], out actorID);
+                    actors[actorID].gameObject.SetActive(true);
+                    for (int i = 0; i < actors.Length; i++)
+                    {
+                        actors[i].color = idleColor;
+                        //actors[i].GetComponent<Canvas>().sortingLayerName = "UIBackground";
+                        actors[i].GetComponent<Animator>().Play("PanelActive");
+                    }
+                    actors[actorID].color = talkColor;
+                    //actors[actorID].GetComponent<Canvas>().sortingLayerName = "UIFront";
+                    actors[actorID].GetComponent<Animator>().Play(words[2].Trim());
+                    break;
+                case "--sound":
+                    int sound = 0;
+                    int.TryParse(words[1], out sound);
+
+                    SoundManager.PlaySound((SoundManager.Sound)Enum.ToObject(typeof(SoundManager.Sound), sound));
+
+                    break;
+                case "--exit":
+                    int.TryParse(words[1], out actorID);
+
+                    actors[actorID].gameObject.SetActive(false);
+
                     break;
                 case "--options":
                     textDialogueScrollBar.value = 0;
                     _skipping = false;
-                    portrait.sprite = FindPortrait(words[3]);
+                    int.TryParse(words[3], out actorID);
+                    actors[actorID].sprite = FindPortrait(words[4]);
                     OpenOptions(words[1],words[2]);
                     goto While_Break;
                 case "--level_start":
@@ -280,11 +347,11 @@ public class DialogueManager : MonoBehaviour
                     }
                     break;
                 case "--description":
-                    portrait.gameObject.SetActive(false);
+                    //actors.gameObject.SetActive(false);
                     name = "";
                     break;
                 default:
-                    portrait.gameObject.SetActive(false);
+                    //actors.gameObject.SetActive(false);
                     name = "";
                     break;
             }
