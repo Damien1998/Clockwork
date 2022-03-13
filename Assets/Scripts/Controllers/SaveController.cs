@@ -7,15 +7,24 @@ using System.IO;
 
 public static class SaveController
 {
-    public static bool _initialized = false,hasQuest;
+    public static bool _initialized = false, hasQuest;
     public static SaveData currentSave;
 
-    private static List<SaveData.Level> levels;
+    public static List<SaveData.Level> levels;
     public static List<SaveData.SideQuest> completedSideQuests;
 
     public static int CompletedLevels()
-   {
-       return levels.Count;
+    {
+        var completed = 0;
+        for (int i = 0; i < levels.Count; i++)
+        {
+            if (levels[i].completed)
+            {
+                completed++;
+            }
+        }
+
+        return completed;
    }
     public static void ChangeSaveName(string name)
    {
@@ -115,13 +124,6 @@ public static class SaveController
     }
     public static void UnlockLevel(int levelID)
     {
-        for (int i = 0; i < levels.Count; i++)
-        {
-            if (levels[i].levelID == levelID)
-            {
-                break;
-            }
-        }
         var tmpLevel = new SaveData.Level();
         tmpLevel.levelSideQuest.TrophyID = levelID;
         tmpLevel.name = Resources.Load<LevelParams>($"LevelParams/Level {GameManager.instance.levelID}").levelName;
@@ -129,6 +131,20 @@ public static class SaveController
         levels.Add(tmpLevel);
 
     }
+    
+    public static void UnlockAllLevels()
+    {
+        for (int i = 1; i < 13; i++)
+        {
+            var tmpLevel = new SaveData.Level();
+            tmpLevel.levelSideQuest.TrophyID = i;
+            tmpLevel.name = Resources.Load<LevelParams>($"LevelParams/Level {GameManager.instance.levelID}").levelName;
+            tmpLevel.levelID = i;
+            tmpLevel.completed = true;
+            levels.Add(tmpLevel);
+        }
+    }
+    
     public static void CompleteQuest(int levelID)
     {
         AnalyticsController.SendAnalyticDictionary("CompletedQuest", "Level", GameManager.instance.levelID);

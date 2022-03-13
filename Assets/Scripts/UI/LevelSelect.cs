@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Polyglot;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,7 +12,8 @@ public class LevelSelect : MonoBehaviour
 {
     public int selectedLevel = 1;
     public TextMeshProUGUI levelText;
-    [SerializeField] private GameObject selectScreen;
+    [SerializeField] private GameObject selectScreen, nextLevelButton, previousLevelButton;
+    [SerializeField] private LocalizedTextMeshProUGUI levelNameText, dayText, namesText, descriptionText;
     [SerializeField] private AnimatedPanel selectPanel;
     private bool interactable;
 
@@ -21,6 +23,7 @@ public class LevelSelect : MonoBehaviour
         if (interactable && Input.GetButtonDown("Pickup1"))
         {
             selectScreen.SetActive(true);
+            RenderLevelSelect();
             selectPanel.Appear();
             //levelText.text = "Poziom " + selectedLevel;
         }
@@ -38,18 +41,52 @@ public class LevelSelect : MonoBehaviour
         Debug.Log(selectedLevel);
         SceneManager.LoadSceneAsync($"Level{selectedLevel}");
     }
+
+    private void RenderLevelSelect()
+    {
+        var completedLevels = SaveController.CompletedLevels();
+        levelText.text = "Wybrany poziom " + selectedLevel;
+
+        if (completedLevels > selectedLevel)
+        {
+            nextLevelButton.SetActive(SaveController.levels[selectedLevel].completed);
+        }
+        else
+        {
+            nextLevelButton.SetActive(false);
+        }
+        if(1 < selectedLevel)
+        {
+            previousLevelButton.SetActive(SaveController.levels[selectedLevel - 1].completed);
+        }
+        else
+        {
+            previousLevelButton.SetActive(false);
+        }
+        
+        var levelName = SaveController.levels[selectedLevel - 1].name;
+        
+        ChangeLocalization(levelNameText, $"WORKSHOP_{levelName}");
+        ChangeLocalization(dayText, $"WORKSHOP_{levelName}_DAY");
+        ChangeLocalization(namesText, $"WORKSHOP_{levelName}_CALENDAR_NAMES");
+        ChangeLocalization(descriptionText, $"WORKSHOP_{levelName}_DESCRIPTION");
+    }
+
+    private void ChangeLocalization(LocalizedTextMeshProUGUI text, string key)
+    {
+        text.Key = key;
+        text.OnLocalize();
+    }
+    
     public void NextLevelSelect()
     {
         selectedLevel++;
-       // levelText.text = "Wybrany poziom " + selectedLevel;
+        RenderLevelSelect();
     }
     public void PreviousLevelSelect()
     {
-        if (selectedLevel > 1)
-        {
-            selectedLevel--;
-        }
-       // levelText.text = "Wybrany poziom " + selectedLevel;
+        selectedLevel--;
+        RenderLevelSelect();
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

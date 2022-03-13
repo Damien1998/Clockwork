@@ -12,24 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64b5489919ff9494992175c3ebf859d2, type: 3}
   m_Name: Level 3
   m_EditorClassIdentifier: 
+  levelName: MARCH
   time: 190
-  questItem: {fileID: 0}
-  questRecipes: []
+  poiNumbers: 3
+  questWatch: {fileID: 0}
+  levelTrophy: {fileID: 0}
+  timedLevel: 1
+  SpawningType: 0
   watchAmount: 3
   pocketWatchWeight: 2
   wristWatchWeight: 3
-  timedLevel: 1
   decorPercentChance: 100
   brokenState: 1
   unfixableState: 0
   brokenPartMinPercentage: 33
   brokenPartMaxPercentage: 66
   unknownStatePercentChance: 0
-  tierTwoUnknownState: 0
   researchAllowed: 0
-  casingComponents: 0
-  mechanismComponents: 0
-  eitherOfMechOrCasing: 0
   mechMinParts: 0
   mechMaxParts: 0
   watchDispensingTime: 10
+  ImageQuestWatchList: {fileID: 0}
