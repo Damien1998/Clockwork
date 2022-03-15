@@ -89,6 +89,19 @@ public class Watch : MonoBehaviour
             myItem.components[i].State = myItem.componentsStates[i];
         }
     }
+
+ 
+
+    IEnumerator StartMoving()
+    {
+        var VelocityRange = 5;
+        while (WatchItem.extraState == ItemState.Moving)
+        {
+            GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-VelocityRange , VelocityRange), Random.Range(-VelocityRange, VelocityRange)));
+            yield return new WaitForSeconds(1.5f);
+        }
+        yield break;
+    }
     
     //<summary>
     //Watch Item callback that can be adjusted if needed for the sake of unique items
@@ -96,22 +109,21 @@ public class Watch : MonoBehaviour
     //</summary>
     private void OnItemStateChange(Item item)
     {
-        switch (item.State)
+        stateRenderer.sprite = _currentItemDisplay.itemStates[(int)item.State];
+
+        switch (item.extraState)
         {
-            case ItemState.UnknownState:
-                stateRenderer.sprite = _currentItemDisplay.itemStates[0];
+            case ItemState.Frozen:
+                stateRenderer.sprite = _currentItemDisplay.itemStates[5];
                 break;
-            case ItemState.Unfixable:
-                stateRenderer.sprite = _currentItemDisplay.itemStates[1];
+            case ItemState.Tower:
+                stateRenderer.sprite = _currentItemDisplay.itemStates[5];
                 break;
-            case ItemState.Broken:
-                stateRenderer.sprite = _currentItemDisplay.itemStates[2];
+            case ItemState.Moving:
+                StartCoroutine(StartMoving());
                 break;
-            case ItemState.Repaired:
-                stateRenderer.sprite = _currentItemDisplay.itemStates[3];
-                break;
-            case ItemState.ComplexBroken:
-                stateRenderer.sprite = _currentItemDisplay.itemStates[4];
+            case ItemState.Death:
+                stateRenderer.sprite = _currentItemDisplay.itemStates[5];
                 break;
             default:
                 stateRenderer.sprite = null;

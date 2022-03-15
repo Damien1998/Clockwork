@@ -193,6 +193,7 @@ namespace Models
             myItem.State = _questWatch.myState;
             myItem.trueState = _questWatch.trueState;
             myItem.itemType = _questWatch.myType;
+            myItem.extraState = _questWatch.extraState;
         }
         private void ThrowRandomWatch()
         {

@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
+using UnityEngine.UIElements;
 
-public enum ItemState { Broken, Unfixable, Repaired, UnknownState, ComplexBroken, EmptyState, Soaked, Frozen, Tower, Moving, Death};
+public enum ItemState {UnknownState, Unfixable, Broken, Repaired, ComplexBroken, EmptyState, Soaked, Frozen, Tower, Moving, Death};
 
 public enum ItemType
 {
@@ -16,7 +17,7 @@ public class Item
     private ItemState state;
     private Action<Item> itemStateChangeCb;
 
-    public ItemState trueState;
+    public ItemState trueState , extraState;
     public ItemType itemType;
     public int itemID;
     public Sprite[] itemImages = new Sprite[1];
@@ -41,7 +42,7 @@ public class Item
 
     public void SetToTrueState()
     {
-        state = trueState;
+        State = trueState;
     }
 
     public void SetAllStates(ItemState State)
@@ -61,6 +62,7 @@ public class Item
         this.itemID = templateitem.itemID;
         this.parentItem = templateitem.parentItem;
         this.itemType = templateitem.itemType;
+        this.extraState = templateitem.extraState;
 
         itemImages = new Sprite[templateitem.itemImages.Length];
         for(int i = 0; i < templateitem.itemImages.Length; i++)
