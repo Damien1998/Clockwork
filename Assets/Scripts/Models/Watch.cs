@@ -89,8 +89,9 @@ public class Watch : MonoBehaviour
             myItem.components[i].State = myItem.componentsStates[i];
         }
     }
+    
     //<summary>
-    //Watch Item callback that can adjusted if needed for the sake of unique items
+    //Watch Item callback that can be adjusted if needed for the sake of unique items
     //It operates the state images
     //</summary>
     private void OnItemStateChange(Item item)
@@ -171,9 +172,6 @@ public class Watch : MonoBehaviour
                     //stateRenderer.material = _currentItemDisplay.stateOutlineOrange;
                 }
             }
-            
-
-            
         }
         else
         {

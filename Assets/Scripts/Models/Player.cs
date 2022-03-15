@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 using UnityEngine.SceneManagement;
 
 public enum PlayerFacing { DOWN, UP, LEFT, RIGHT}
@@ -29,6 +30,9 @@ public class Player : MonoBehaviour
     private Vector2 dashDirection;
         //For repeating dashes etc
         private bool dashReleased;
+        
+    float moveX;
+    float moveY;
 
     public bool isOnConveyor;
 
@@ -78,7 +82,7 @@ public class Player : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
+    
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         _pickUpScript.ClearList();
@@ -105,7 +109,6 @@ public class Player : MonoBehaviour
     {
         if (CanInteract)
         {
-           // Debug.Log("pupa");
             if (HeldWatch != null)
             {
                 HeldWatch.transform.position = /*transform.position +*/ ItemPosition.position;
@@ -169,10 +172,6 @@ public class Player : MonoBehaviour
                 isByWarpHole = false;
             }
             Dashing();
-        }
-        else
-        {
-            //Debug.Log("dupa");
         }
     }
 
@@ -260,8 +259,8 @@ public class Player : MonoBehaviour
         //Player movement
         if (CanInteract)
         {
-            float moveX = Input.GetAxisRaw("Horizontal" + playerNumber);
-            float moveY = Input.GetAxisRaw("Vertical" + playerNumber);
+            moveX = Input.GetAxisRaw("Horizontal" + playerNumber);
+            moveY = Input.GetAxisRaw("Vertical" + playerNumber);
             movementInput = new Vector2(moveX, moveY).normalized;
 
             if (!lockMovement)
@@ -396,6 +395,16 @@ public class Player : MonoBehaviour
             {
                 nearbyWorkbench.OnSelectChange();
             }
+
+            switch (heldWatch.WatchItem.State)
+            {
+                case ItemState.Soaked:
+                    StopCoroutine(CheckFoDryingItems());
+                    StartCoroutine(CheckFoDryingItems());
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -406,6 +415,15 @@ public class Player : MonoBehaviour
         {
             itemRigidbody.velocity = Vector2.zero;
             HeldWatch.GetComponent<BoxCollider2D>().enabled = true;
+        }
+        
+        switch (HeldWatch.GetComponent<Watch>().WatchItem.State)
+        {
+            case ItemState.Soaked:
+                StopCoroutine(CheckFoDryingItems());
+                break;
+            default:
+                break;
         }
         
 
@@ -570,6 +588,34 @@ public class Player : MonoBehaviour
         }
     }
 
+    IEnumerator CheckFoDryingItems()
+    {
+        while (true)
+        {
+            Debug.Log(moveY + " " + moveX);
+            yield return new WaitUntil(() => moveY > 0 && moveX == 0);
+            Debug.Log(moveY + " " + moveX);
+            yield return new WaitUntil(() => moveY > 0 && moveX < 0 );
+            Debug.Log(moveY + " " + moveX);
+            yield return new WaitUntil(() => moveY == 0 && moveX < 0);
+            Debug.Log(moveY + " " + moveX);
+            yield return new WaitUntil(() => moveY < 0 && moveX < 0);
+            Debug.Log(moveY + " " + moveX);
+            yield return new WaitUntil(() => moveY < 0 && moveX == 0);
+            Debug.Log(moveY + " " + moveX);
+            yield return new WaitUntil(() => moveY < 0 && moveX > 0);
+            Debug.Log(moveY + " " + moveX);
+            yield return new WaitUntil(() => moveY == 0 && moveX > 0);
+            Debug.Log(moveY + " " + moveX);
+            yield return new WaitUntil(() => moveY > 0 && moveX > 0);
+            Debug.Log(moveY + " " + moveX);
+            Debug.Log("SuccefullyDriedItem");
+            
+            HeldWatch.GetComponent<Watch>().WatchItem.SetToTrueState(); 
+            yield break;
+        }
+    }
+
     private void ShowComponentList(Watch _watchItem)
     {
         switch (_watchItem.WatchItem.itemType)
@@ -623,8 +669,8 @@ public class Player : MonoBehaviour
             if(nearbyWorkbench != null)
             {
                 nearbyWorkbench.isOperated = false;
+                nearbyWorkbench.isSelected = false;
             }
-            nearbyWorkbench.isSelected = false;
             nearbyWorkbench = null;
             isByWorkbench = false;
         }

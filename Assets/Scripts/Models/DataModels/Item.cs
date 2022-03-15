@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public enum ItemState { Broken,Unfixable,Repaired,UnknownState,ComplexBroken,EmptyState};
+public enum ItemState { Broken, Unfixable, Repaired, UnknownState, ComplexBroken, EmptyState, Soaked, Frozen, Tower, Moving, Death};
 
-public enum ItemType {FullWatch, QuestWatch ,FullCasing , FullMechanism, Casing, Normal, Decoration, Mechanism, EmptyMechanism, QuestParts}
+public enum ItemType
+{
+    FullWatch, QuestWatch ,FullCasing , FullMechanism, Casing, Normal, Decoration, Mechanism, EmptyMechanism, QuestParts
+}
 
 [CreateAssetMenu(fileName = "New Item",menuName = "Item")]
 public class Item
@@ -34,6 +37,11 @@ public class Item
             state = value;
             if (itemStateChangeCb != null && oldState != state) itemStateChangeCb(this);
         }
+    }
+
+    public void SetToTrueState()
+    {
+        state = trueState;
     }
 
     public void SetAllStates(ItemState State)
