@@ -89,9 +89,7 @@ public class Watch : MonoBehaviour
             myItem.components[i].State = myItem.componentsStates[i];
         }
     }
-
- 
-
+    
     IEnumerator StartMoving()
     {
         var VelocityRange = 5;

@@ -422,6 +422,9 @@ public class Player : MonoBehaviour
             case ItemState.Soaked:
                 StopCoroutine(CheckFoDryingItems());
                 break;
+            case ItemState.Frozen:
+                HeldWatch.GetComponent<Watch>().WatchItem.SetToTrueState();
+                break;
             default:
                 break;
         }
@@ -592,23 +595,14 @@ public class Player : MonoBehaviour
     {
         while (true)
         {
-            Debug.Log(moveY + " " + moveX);
             yield return new WaitUntil(() => moveY > 0 && moveX == 0);
-            Debug.Log(moveY + " " + moveX);
             yield return new WaitUntil(() => moveY > 0 && moveX < 0 );
-            Debug.Log(moveY + " " + moveX);
             yield return new WaitUntil(() => moveY == 0 && moveX < 0);
-            Debug.Log(moveY + " " + moveX);
             yield return new WaitUntil(() => moveY < 0 && moveX < 0);
-            Debug.Log(moveY + " " + moveX);
             yield return new WaitUntil(() => moveY < 0 && moveX == 0);
-            Debug.Log(moveY + " " + moveX);
             yield return new WaitUntil(() => moveY < 0 && moveX > 0);
-            Debug.Log(moveY + " " + moveX);
             yield return new WaitUntil(() => moveY == 0 && moveX > 0);
-            Debug.Log(moveY + " " + moveX);
             yield return new WaitUntil(() => moveY > 0 && moveX > 0);
-            Debug.Log(moveY + " " + moveX);
             Debug.Log("SuccefullyDriedItem");
             
             HeldWatch.GetComponent<Watch>().WatchItem.SetToTrueState(); 
