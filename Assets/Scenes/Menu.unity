@@ -37287,6 +37287,10 @@ PrefabInstance:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 314415500, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -2.8
+      objectReference: {fileID: 0}
     - target: {fileID: 845133887, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
       propertyPath: m_AnchorMin.x
       value: 0
@@ -37309,7 +37313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1935494648, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
       propertyPath: m_text
-      value: Clockventure
+      value: ClockVenture
       objectReference: {fileID: 0}
     - target: {fileID: 1935494648, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
       propertyPath: m_fontAsset
@@ -37321,6 +37325,18 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3059577762912958788, guid: 9ad0c20dff21a7c46a37a189819a706e,
         type: 2}
+    - target: {fileID: 1935494648, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_fontSize
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 1935494648, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 72
+      objectReference: {fileID: 0}
+    - target: {fileID: 1935494648, guid: 6b5653c152a91294f9ca8f3f384beffd, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 33921787105709533, guid: 6b5653c152a91294f9ca8f3f384beffd,
         type: 3}
       propertyPath: m_IsActive
