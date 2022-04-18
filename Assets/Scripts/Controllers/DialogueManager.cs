@@ -383,7 +383,6 @@ public class DialogueManager : MonoBehaviour
                     OpenOptions(words[1],words[2]);
                     goto While_Break;
                 case "--level_start":
-                    Debug.Log("Started Level");
                     UIManager.instance.LevelStart();
                     FindObjectOfType<CheckoutTable>().InitLevel();
                     ExitDialogue();

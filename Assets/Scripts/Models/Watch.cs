@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 //Refactoring is done! You may enter safely
@@ -23,6 +21,7 @@ public class Watch : MonoBehaviour
             if (myItem != null && oldItem != myItem) myItem.RegisterItemCallback(OnItemStateChange);
             OnItemStateChange(myItem);
             OnItemChange(myItem);
+            myItem.SetParameters(value);
         }
     }
     public List<SpriteRenderer> itemRenderer;
@@ -88,6 +87,15 @@ public class Watch : MonoBehaviour
         {
             myItem.components[i].State = myItem.componentsStates[i];
         }
+
+        if (changedItem.extraState == ItemState.Death)
+        {
+            gameObject.tag = "Death";
+        }
+        else
+        {
+            gameObject.tag = "Untagged";
+        }
     }
     
     IEnumerator StartMoving()
@@ -107,6 +115,7 @@ public class Watch : MonoBehaviour
     //</summary>
     private void OnItemStateChange(Item item)
     {
+        Debug.Log( $"Changing State {item.State}");
         stateRenderer.sprite = _currentItemDisplay.itemStates[(int)item.State];
 
         switch (item.extraState)
@@ -121,13 +130,25 @@ public class Watch : MonoBehaviour
                 StartCoroutine(StartMoving());
                 break;
             case ItemState.Death:
-                stateRenderer.sprite = _currentItemDisplay.itemStates[5];
-                break;
-            default:
-                stateRenderer.sprite = null;
+                var deathWatches = GameObject.FindGameObjectsWithTag("Death");
+
+                //var sameItem = SearchForTheSameItemState(item);
+
+                foreach (var deathWatch in deathWatches)
+                {
+                    if (deathWatch.GetComponent<Watch>().WatchItem.State != item.State)
+                    {
+                        deathWatch.GetComponent<Watch>().WatchItem.State = item.State;
+                    }
+                }
+                //stateRenderer.sprite = _currentItemDisplay.itemStates[5];
+                // Add Particle Effects Here
                 break;
         }
     }
+
+
+    
     private void OnSelectChange()
     {
         if (isSelected == true)
@@ -200,6 +221,48 @@ public class Watch : MonoBehaviour
             }
             stateRenderer.material = _currentItemDisplay.notSelected;
         }
+    }
+    
+    public Item SearchForTheSameItemState(Item originalItem)
+    {
+        var HighestItem = originalItem;
+
+        if (HighestItem.parentItem != null)
+        {
+            while (HighestItem.parentItem != null)
+            {
+                HighestItem = HighestItem.parentItem;
+            }    
+        }
+
+        return GetSameTypeItem(HighestItem, originalItem); 
+    }
+
+    private Item GetSameTypeItem(Item highestItem, Item originalItem)
+    {
+
+        if (highestItem.itemImages.ToList().First() != null)
+        {
+            if (highestItem.extraState == originalItem.extraState &&
+                highestItem.itemImages.First().name != originalItem.itemImages.First().name)
+            {
+                return highestItem;
+            }
+        }
+
+        if (highestItem.components.Count > 0)
+        {
+            foreach (var component in highestItem.components)
+            {
+                var TypeItem = GetSameTypeItem(component, originalItem); 
+                if (TypeItem.extraState == originalItem.extraState && TypeItem.itemImages.First().name != originalItem.itemImages.First().name)
+                {
+                    return TypeItem;
+                }
+            }
+        }
+        
+        return highestItem;
     }
 }
 

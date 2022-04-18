@@ -164,32 +164,38 @@ namespace Models
             var watchItem = new Item();
             var WatchComponent = newWatch.GetComponent<Watch>();
             WatchComponent.itemRenderer[0].gameObject.SetActive(true);
-            LoadQuestWatch(_questWatch,watchItem);
+            
+            LoadQuestWatch(_questWatch, watchItem);
+            
             var newItem = new Item();
             newItem.SetParameters(watchItem);
             WatchComponent.WatchItem = newItem;
             WatchComponent.WatchItem.SetParameters(watchItem);
-
+            
             WatchComponent.SetItemType(ItemType.QuestWatch);
 
             WatchComponent.itemRenderer[0].sprite = _questWatch.QuestWatchSprites[0];
             questWatch = WatchComponent;
         }
 
-        private void LoadQuestWatch(QuestWatch _questWatch,Item myItem)
+        private void LoadQuestWatch(QuestWatch _questWatch, Item myItem)
         {
             myItem.itemImages = new Sprite[_questWatch.QuestWatchSprites.Length];
+            
             for (int i = 0; i < _questWatch.QuestWatchSprites.Length; i++)
             {
                 myItem.itemImages[i] = _questWatch.QuestWatchSprites[i];
             }
+            
             myItem.components = new List<Item>();
+            
             for (int i = 0; i <  _questWatch.Parts.Length; i++)
             {
-             myItem.components.Add(new Item());
-             myItem.components[i].parentItem = myItem;
-             LoadQuestWatch(_questWatch.Parts[i],myItem.components[i]);
+                 myItem.components.Add(new Item());
+                 myItem.components[i].parentItem = myItem;
+                 LoadQuestWatch(_questWatch.Parts[i],myItem.components[i]);
             }
+            
             myItem.State = _questWatch.myState;
             myItem.trueState = _questWatch.trueState;
             myItem.itemType = _questWatch.myType;

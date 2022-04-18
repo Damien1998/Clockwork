@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
-using UnityEngine.UIElements;
 
 public enum ItemState {UnknownState, Unfixable, Broken, Repaired, ComplexBroken, EmptyState, Soaked, Frozen, Tower, Moving, Death};
 
@@ -19,10 +17,12 @@ public class Item
 
     public ItemState trueState , extraState;
     public ItemType itemType;
+    
     public int itemID;
+    public Item parentItem;
+    
     public Sprite[] itemImages = new Sprite[1];
     public List<Item> components = new List<Item>();
-    public Item parentItem;
     public List<ItemState> componentsStates = new List<ItemState>();
 
     //<summary>
@@ -63,7 +63,7 @@ public class Item
         this.parentItem = templateitem.parentItem;
         this.itemType = templateitem.itemType;
         this.extraState = templateitem.extraState;
-
+        
         itemImages = new Sprite[templateitem.itemImages.Length];
         for(int i = 0; i < templateitem.itemImages.Length; i++)
         {
@@ -80,4 +80,5 @@ public class Item
     {
         if (itemStateChangeCb != null) itemStateChangeCb -= callback;
     }
+
 }
