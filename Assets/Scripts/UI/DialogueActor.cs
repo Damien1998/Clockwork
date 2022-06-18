@@ -9,6 +9,7 @@ public class DialogueActor : MonoBehaviour
     public Animator animator;
     public SoundManager.Sound sound;
     public FXManager.ParticleFX emoteFX;
+    public string nameColor;
 
     public void Deactivate()
     {

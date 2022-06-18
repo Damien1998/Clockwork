@@ -21,13 +21,14 @@ public class DialogueManager : MonoBehaviour
 
     [SerializeField]
     private Color idleColor, talkColor;
+    private List<CharacterColor> characterColors;
 
     public Button option1, option2, progressButton;
     public Scrollbar dialogueScrollBar, textDialogueScrollBar;
     public Slider SkipBar;
 
     private string[] dialogue;
-    private string name;
+    private string name, nameColorHex;
     private int currentLine;
     [SerializeField]
     private float dialogueTextSpeed = .025f;
@@ -68,6 +69,7 @@ public class DialogueManager : MonoBehaviour
     private void Initialize()
     {
         var dPortraits = Resources.LoadAll("DialoguePortraits", typeof(DialogueSpriteData));
+        var cColors = Resources.Load<DialogueNameColors>("CharacterColors");
 
         List<DialogueSpriteData> portraitList = new List<DialogueSpriteData>();
 
@@ -80,6 +82,12 @@ public class DialogueManager : MonoBehaviour
         foreach (var portrait in portraitList)
         {
             dialoguePortraits.Add(portrait);
+        }
+
+        characterColors = new List<CharacterColor>();
+        foreach (var color in cColors.characterColors)
+        {
+            characterColors.Add(color);
         }
     }
 
@@ -255,6 +263,9 @@ public class DialogueManager : MonoBehaviour
     private void SetName(string[] _nameToDisplay)
     {
         StringBuilder _name = new StringBuilder();
+
+        _name.Append($"<color={nameColorHex}><b>");
+
         foreach (var nameWord in _nameToDisplay)
         {
             _name.Append(nameWord);
@@ -266,8 +277,23 @@ public class DialogueManager : MonoBehaviour
             _name.Remove(_name.Length - 1, 1);
         }
 
-        _name.Append(": ");
+        _name.Append("</b></color>: ");
         name = _name.ToString();
+    }
+
+    private string GetColorHex(string characterName)
+    {
+        string color = "#000000";
+        foreach (var charColor in characterColors)
+        {
+            if(charColor.characterName == characterName)
+            {
+                color = charColor.ToString();
+                break;
+            }
+        }
+
+        return color;
     }
 
     private void Skip()
@@ -318,10 +344,16 @@ public class DialogueManager : MonoBehaviour
                     UIManager.instance.ShowLevelEnd();
                     ExitDialogue();
                     break;
-                case "--portrait":                   
+                case "--portrait":
                     int.TryParse(words[1], out actorID);
                     actors[actorID].gameObject.SetActive(true);
                     actors[actorID].image.sprite = FindPortrait(words[2], GetName(3), actorID);
+
+                    string[] portaritNameSegments = words[2].Split('_');
+
+                    actors[actorID].nameColor = GetColorHex(portaritNameSegments[0]);
+                    nameColorHex = actors[actorID].nameColor;
+                    SetName(GetName(3));
                     //actors.gameObject.SetActive(true);
                     //actors.sprite = FindPortrait(words[1],GetName(2));
                     break;
@@ -341,7 +373,9 @@ public class DialogueManager : MonoBehaviour
                     {
                         SoundManager.PlaySound(actors[actorID].sound);
                     }
-                    
+
+                    nameColorHex = actors[actorID].nameColor;
+
                     SetName(GetName(2));
                     break;
                 case "--animate":

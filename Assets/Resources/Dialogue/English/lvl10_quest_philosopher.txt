@@ -1,53 +1,53 @@
 ﻿--Invoke SendAnalytics Philosopher
 --portrait 1 Edward_Snow Edward
 --portrait 3 Philosopher ???
---portrait 0 Anna_Snow <color=#b84604><b>Anna</b></color>
+--portrait 0 Anna_Snow Anna
 --description
 Contrary to expectations, the Christmas fever does not affect everyone. A perfect example of that is a young man, slowly strolling in his own pace, paying no mind to the crowds. He is most certainly not dressed warm enough for the weather. He seems lost… But in his own way, free.
 --portrait 0 Anna_Snow_Concerned Anna
---talk 0 <color=#b84604><b>Anna</b></color>
+--talk 0 Anna
 Isn’t it too cold for this outfit?
 --portrait 3 Philosopher ???
---talk 3 <color=#45291c><b>???</b></color>
+--talk 3 ???
 No, no… I mean, yes, but it means nothing.
---portrait 1 Edward_Snow_Surprised <color=#4537a1><b>Edward</b></color>
---talk 1 <color=#4537a1><b>Edward</b></color>
+--portrait 1 Edward_Snow_Surprised Edward
+--talk 1 Edward
 So many people running around and you’re just strolling down the alley without any hurry… How?
 --portrait 3 Philosopher Philosopher
---talk 3 <color=#45291c><b>Philosopher</b></color>
+--talk 3 Philosopher
 Ah, but it’s so simple… Existing among others, we are subject to norms and customs, even if they’re harmful for us…
 --portrait 3 Philosopher_Smiling Philosopher
---talk 3 <color=#45291c><b>Philosopher</b></color>
+--talk 3 Philosopher
 Meanwhile, I do not stand for this absurdity and simply live by my own rules.
 --portrait 1 Edward_Snow_Embarassed Edward
---talk 1 <color=#4537a1><b>Edward</b></color>
+--talk 1 Edward
 Um… Are you trying to say the chaotic pursuit of all those people is absurd?
 --portrait 3 Philosopher Philosopher
---talk 3 <color=#45291c><b>Philosopher</b></color>
+--talk 3 Philosopher
 Oh, not just that. Take life itself, for example. It doesn’t have an objective goal to it.
 --portrait 3 Philosopher_Focused Philosopher
---talk 3 <color=#45291c><b>Philosopher</b></color>
+--talk 3 Philosopher
 We are being pushed into this world without any guiding signs or methods to exist that are proven to work.
 --portrait 3 Philosopher Philosopher
---talk 3 <color=#45291c><b>Philosopher</b></color>
+--talk 3 Philosopher
 Isn’t that simply foolish?
 --portrait 0 Anna_Snow_Abashed Anna
---talk 0 <color=#b84604><b>Anna</b></color>
+--talk 0 Anna
 I… Suppose so?
 --portrait 3 Philosopher_Smiling Philosopher
---talk 3 <color=#45291c><b>Philosopher</b></color>
+--talk 3 Philosopher
 Thankfully, one can deal with that.
 --portrait 3 Philosopher Philosopher
---talk 3 <color=#45291c><b>Philosopher</b></color>
+--talk 3 Philosopher
 I wonder what hour is it… Damn it, something’s wrong with my watch again!
 --portrait 3 Philosopher_Focused Philosopher
---talk 3 <color=#45291c><b>Philosopher</b></color>
+--talk 3 Philosopher
 Wait, aren’t you two those famous watchmakers?
 --portrait 0 Anna_Snow Anna
---talk 0 <color=#b84604><b>Anna</b></color>
+--talk 0 Anna
 Indeed, that’s us. I suppose you know where our workshop is?
 --portrait 3 Philosopher_Smiling Philosopher
---talk 3 <color=#45291c><b>Philosopher</b></color>
+--talk 3 Philosopher
 Yes, I do. What a hilarious absurdity, to meet you right at this moment! Well, then, I’ll be very grateful for your help. Of course, I’ll come over myself to pick up my watch.
 --quest_start Kamień Syzyfa
 --end
