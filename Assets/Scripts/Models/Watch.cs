@@ -118,6 +118,12 @@ public class Watch : MonoBehaviour
         Debug.Log( $"Changing State {item.State}");
         stateRenderer.sprite = _currentItemDisplay.itemStates[(int)item.State];
 
+        //clunky way of checking if whether we use the tick or boxes icons for repaired items
+        if(item.State == ItemState.Repaired && (WatchItem.itemType != ItemType.FullWatch && WatchItem.itemType != ItemType.QuestWatch))
+        {
+            stateRenderer.sprite = _currentItemDisplay.itemStates[11];
+        }
+
         switch (item.extraState)
         {
             case ItemState.Frozen:
