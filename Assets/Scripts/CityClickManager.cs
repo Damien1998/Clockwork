@@ -42,6 +42,8 @@ public class CityClickManager : MonoBehaviour
         mouseWorldPos = new Vector3(mouseWorldPos.x, mouseWorldPos.y, 0);
         switch (materialType)
         {
+            case CityMaterialType.NONE:
+                break;
             case CityMaterialType.NIGHT_SNOW:
                 ParticleSystem ps = Instantiate(clickParticles[0], mouseWorldPos, Quaternion.identity);
                 SoundManager.PlaySound(SoundManager.Sound.SFXSnow);
@@ -90,12 +92,6 @@ public class CityClickManager : MonoBehaviour
                 ps.Play();
                 Destroy(ps, 2f);
                 break;
-            case CityMaterialType.LIGHT:
-                ps = Instantiate(clickParticles[10], mouseWorldPos, Quaternion.identity);
-                SoundManager.PlaySound(SoundManager.Sound.SFXLight);
-                ps.Play();
-                Destroy(ps, 3f);
-                break;
             case CityMaterialType.NIGHT_METAL:
                 ps = Instantiate(clickParticles[8], mouseWorldPos, Quaternion.identity);
                 SoundManager.PlaySound(SoundManager.Sound.SFXMetal);
@@ -108,7 +104,42 @@ public class CityClickManager : MonoBehaviour
                 ps.Play();
                 Destroy(ps, 3f);
                 break;
-           
+            case CityMaterialType.LIGHT:
+                ps = Instantiate(clickParticles[10], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXLight);
+                ps.Play();
+                Destroy(ps, 3f);
+                break;
+            case CityMaterialType.LEAVES:
+                ps = Instantiate(clickParticles[11], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXMetal);
+                ps.Play();
+                Destroy(ps, 2f);
+                break;
+            case CityMaterialType.FLOWERS:
+                ps = Instantiate(clickParticles[12], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXMetal);
+                ps.Play();
+                Destroy(ps, 2f);
+                break;
+            case CityMaterialType.BRIDS:
+                ps = Instantiate(clickParticles[13], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXMetal);
+                ps.Play();
+                Destroy(ps, 2f);
+                break;
+            case CityMaterialType.ROOF:
+                ps = Instantiate(clickParticles[14], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXMetal);
+                ps.Play();
+                Destroy(ps, 2f);
+                break;
+            case CityMaterialType.DIRT:
+                ps = Instantiate(clickParticles[15], mouseWorldPos, Quaternion.identity);
+                SoundManager.PlaySound(SoundManager.Sound.SFXMetal);
+                ps.Play();
+                Destroy(ps, 2f);
+                break;
         }
     }
 }

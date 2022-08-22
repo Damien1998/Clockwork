@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2004553901264119833
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2004553901264119835}
+  - component: {fileID: 2004553901264119834}
+  m_Layer: 0
+  m_Name: PasserbySpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 3306451490063965843, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2004553901264119835
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004553901264119833}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 9.4, y: 0.31, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2004553901264119834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004553901264119833}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44fff9040595d3c408dc018447b9178f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnMinInterval: 2
+  spawnMaxInterval: 6
+  spawnPercent: 25
+  yRange: 0.1
+  burstMin: 1
+  burstMax: 2
+  direction: -1
+  passerbySprites:
+  - {fileID: 6009020563299930888, guid: 8ce139d43641a4b47bca260ecc338f45, type: 3}
+  - {fileID: -3847480670207731289, guid: 8ce139d43641a4b47bca260ecc338f45, type: 3}
+  - {fileID: 4584652834113998260, guid: 8ce139d43641a4b47bca260ecc338f45, type: 3}
+  passerbyColors:
+  - {r: 0.3019608, g: 0.10196079, b: 0.21960786, a: 1}
+  - {r: 0.9372549, g: 0.89411765, b: 0.7882353, a: 1}
+  - {r: 0.11764707, g: 0.11764707, b: 0.34117648, a: 1}
+  - {r: 0.2471342, g: 0.3405782, b: 0.49056602, a: 1}
+  - {r: 0.74509805, g: 0.2627451, b: 0.3137255, a: 1}
+  - {r: 0.46274513, g: 0.11764707, b: 0.13725491, a: 1}
+  - {r: 0.227451, g: 0.21176472, b: 0.19607845, a: 1}
+  - {r: 0.29803923, g: 0.6117647, b: 0.6039216, a: 1}
+  passerbySpeedMin: 0.6
+  passerbySpeedMax: 1.2
+  spawnerActive: 1
+  passerbyPrefab: {fileID: 6979232867981752121, guid: 079ad5372c798344596a9ac26d5c1621,
+    type: 3}

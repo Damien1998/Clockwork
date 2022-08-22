@@ -12,6 +12,7 @@ public class PasserbySpawner : MonoBehaviour
 
     public Sprite[] passerbySprites;
     public Color[] passerbyColors;
+    public int baseSortOrder;
 
     public float passerbySpeedMin, passerbySpeedMax;
 
@@ -37,7 +38,11 @@ public class PasserbySpawner : MonoBehaviour
                 var burst = Random.Range(burstMin, burstMax + 1);
                 for (int i = 0; i < burst; i++)
                 {
-                    float yPos = transform.position.y + Random.Range(-yRange, yRange);
+                    float yVar = Random.Range(-yRange, yRange);
+
+                    float yPos = transform.position.y + yVar;
+
+                    int sortOrderModificator = Mathf.FloorToInt((-(yVar - yRange)) / (yRange * 0.4f));
 
                     Vector2 spawnPos = new Vector2(transform.position.x, yPos);
 
@@ -46,6 +51,7 @@ public class PasserbySpawner : MonoBehaviour
                     passerby.speed = Random.Range(passerbySpeedMin, passerbySpeedMax);
                     passerby.spriteRenderer.color = passerbyColors[Random.Range(0, passerbyColors.Length)];
                     passerby.spriteRenderer.sprite = passerbySprites[Random.Range(0, passerbySprites.Length)];
+                    passerby.spriteRenderer.sortingOrder = baseSortOrder + sortOrderModificator;
                 }
             }
 
