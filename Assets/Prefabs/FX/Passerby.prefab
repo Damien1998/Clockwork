@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 872321200839153347}
   - component: {fileID: 872321200839153346}
   - component: {fileID: 872321200839153349}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: ClickFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,8 +168,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.5
-      minScalar: 0.5
+      scalar: 2
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -284,8 +284,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.6
-      minScalar: 0.1
+      scalar: 0.7
+      minScalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4901,7 +4901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6979232867597049624}
   - component: {fileID: 6979232867597049627}
-  m_Layer: 15
+  m_Layer: 12
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4985,9 +4985,10 @@ GameObject:
   - component: {fileID: 6979232867981752122}
   - component: {fileID: 6979232867981752121}
   - component: {fileID: 6979232867981752120}
-  - component: {fileID: 6979232867981752123}
+  - component: {fileID: 3164979167065943432}
   - component: {fileID: 6979232867981752117}
-  m_Layer: 15
+  - component: {fileID: 6732293622892072493}
+  m_Layer: 12
   m_Name: Passerby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5047,8 +5048,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!70 &6979232867981752123
-CapsuleCollider2D:
+--- !u!61 &3164979167065943432
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5061,8 +5062,18 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.55, y: 0.8}
-  m_Direction: 0
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.2, y: 1.2}
+  m_EdgeRadius: 0
 --- !u!95 &6979232867981752117
 Animator:
   serializedVersion: 3
@@ -5082,3 +5093,16 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6732293622892072493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6979232867981752116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e305fd88507940d41bf23206febfe227, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  materialType: 17

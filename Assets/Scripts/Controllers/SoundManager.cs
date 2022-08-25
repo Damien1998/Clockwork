@@ -64,7 +64,10 @@ public static class SoundManager
         SFXBuilding,
         SFXWater,
         SFXGrass,
-        SFXLight
+        SFXLight,
+
+        //Placeholder
+        Placeholder
 
     }
 

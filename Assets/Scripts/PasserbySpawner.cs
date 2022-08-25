@@ -44,7 +44,7 @@ public class PasserbySpawner : MonoBehaviour
 
                     int sortOrderModificator = Mathf.FloorToInt((-(yVar - yRange)) / (yRange * 0.4f));
 
-                    Vector2 spawnPos = new Vector2(transform.position.x, yPos);
+                    Vector3 spawnPos = new Vector3(transform.position.x, yPos, -1.2f);
 
                     Passerby passerby = Instantiate(passerbyPrefab, spawnPos, Quaternion.identity);
                     passerby.direction = direction;

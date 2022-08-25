@@ -39,9 +39,22 @@ public class Passerby : MonoBehaviour
 
     }
 
+    /*
     private void OnMouseOver()
     {
         if(Input.GetMouseButton(0) && !isJumpingUp)
+        {
+            animator.Play("JumpUp");
+            isJumpingUp = true;
+            direction = -direction;
+            spriteRenderer.flipX = !spriteRenderer.flipX;
+            clickFX.Play();
+        }
+    }
+    */
+    public void JumpUp()
+    {
+        if (!isJumpingUp)
         {
             animator.Play("JumpUp");
             isJumpingUp = true;
