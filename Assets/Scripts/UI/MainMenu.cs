@@ -52,7 +52,7 @@ public class MainMenu : MonoBehaviour
     {
         UIManager.instance.transitionScreen.SetTrigger("FadeOut");
         yield return new WaitForSeconds(0.7f);
-        GameManager.instance.StartCityLevel(10);
+        GameManager.instance.StartCityLevel(1);
 
     }
 
