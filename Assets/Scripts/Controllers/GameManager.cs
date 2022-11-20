@@ -20,9 +20,9 @@ public class GameManager : MonoBehaviour
     public bool hasQuest;
 
     private int points;
-
-
+    
     public List<WatchSprites> watchTypes;
+    
     /*
     //PS
     //<summary>
@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     //It will only be changed when levelID is changed ,until then it is null
     //Which is changed when a level is selected
     */
+    
     public LevelParams currentLevelParams;
     public List<string> poiEncounters = new List<string>();
     public SoundAudioClip[] soundAudioClipArray;
